@@ -1,0 +1,37 @@
+axiom_name,file,label,source_id,section,clause_text
+text-save-act-is-law,facts,TEXT_FACT,hr22-eh,§ 1,"This Act may be cited as the ""Safeguard American Voter Eligibility Act"" or the ""SAVE Act""."
+text-save-act-documentary-proof-requirement,facts,PROHIBITION,hr22-eh,§ 2(b) / NVRA § 4(b),"the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application"
+text-documentary-proof-from-qualifying-documents,facts,BRIDGE_RULE,hr22-eh,§ 2(a) / NVRA § 3(b),"the term 'documentary proof of United States citizenship' means any of the following: (1) REAL ID... (2) valid United States passport... (3) military ID... (4) govt photo ID showing US birth... (5) govt photo ID with supporting doc... (6) certified birth certificate... (7) naturalization certificate"
+challenger-fundamental-right-rule,challenger,DOCTRINAL_RULE,harper-v-virginia,383 U.S. at 670,"a State violates the Equal Protection Clause... whenever it makes the affluence of the voter or payment of any fee an electoral standard"
+challenger-fundamental-right-rule,challenger,DOCTRINAL_RULE,reynolds-v-sims,377 U.S. at 555,"the right of suffrage is a fundamental matter in a free and democratic society"
+challenger-documentary-proof-is-undue-burden,challenger,INTERPRETATION_CHALLENGER,crawford-v-marion,553 U.S. at 198-202 (Stevens plurality),"even rational restrictions on the right to vote are invidious if they are unrelated to voter qualifications... the relevant burden is not the requirement itself but its interaction with the particular circumstances of the voters"
+challenger-undue-burden-defeats-regulation,challenger,INTERPRETATION_CHALLENGER,anderson-v-celebrezze,460 U.S. at 789,"a court must... weigh the character and magnitude of the asserted injury... against the precise interests put forward by the State"
+challenger-bridge-right-to-vote,challenger,BRIDGE_RULE,const-amend5,Amend. V,"nor shall any person be... deprived of life, liberty, or property, without due process of law"
+challenger-bridge-regulation-invalid,challenger,BRIDGE_RULE,anderson-v-celebrezze,460 U.S. at 789,Anderson-Burdick balancing: severe burden + no sufficient justification = invalid regulation
+challenger-scenario-person,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a is a person
+challenger-scenario-citizen,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a is a U.S. citizen
+challenger-scenario-eligible,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a is eligible to vote
+challenger-scenario-application,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: registration-attempt-a is a voter registration application
+challenger-scenario-attempts-to-register,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a attempts to register via registration-attempt-a
+challenger-scenario-no-documentary-proof,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a does not possess documentary proof
+challenger-scenario-no-presentation,challenger,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a does not present documentary proof with application
+challenger-scenario-no-fault,challenger,EMPIRICAL_ASSUMPTION,fish-v-kobach,840 F.3d at 734,"approximately 18,000 applicants were unable to complete registration due to the documentary proof requirement"
+challenger-scenario-material-burden,challenger,EMPIRICAL_ASSUMPTION,crawford-v-marion,553 U.S. at 199 (Stevens plurality),"the burden of obtaining a birth certificate... will be nontrivial for some voters"
+challenger-scenario-alternative-process-denied,challenger,INTERPRETATION_CHALLENGER,hr22-eh,§ 2(f) / NVRA § 8(j)(2)(A),"such official shall make a determination — interpretation: the determination is discretionary and may result in denial"
+government-valid-regulation-rule,government,DOCTRINAL_RULE,crawford-v-marion,553 U.S. at 189-191 (Stevens plurality),"the interests advanced by the State are sufficient to defeat petitioners' facial attack"
+government-bridge-defense-validates,government,BRIDGE_RULE,crawford-v-marion,553 U.S. at 189-191,Crawford: regulation satisfying Anderson-Burdick is constitutionally valid
+government-election-integrity-interest,government,DOCTRINAL_RULE,crawford-v-marion,553 U.S. at 194-196,"there is no question about the legitimacy or importance of the State's interest in counting only the votes of eligible voters"
+government-important-interest,government,DOCTRINAL_RULE,crawford-v-marion,553 U.S. at 194-196,Crawford plurality: election integrity is an important governmental interest
+government-reasonable-requirement,government,INTERPRETATION_GOVERNMENT,crawford-v-marion,553 U.S. at 198,"for most voters who need them, the inconvenience of making a trip to the BMV... does not qualify as a substantial burden"
+government-procedure-evenhanded,government,INTERPRETATION_GOVERNMENT,burdick-v-takushi,504 U.S. at 434,"when an election regulation imposes only reasonable, nondiscriminatory restrictions... the State's important regulatory interests are generally sufficient"
+government-rationally-connected,government,INTERPRETATION_GOVERNMENT,crawford-v-marion,553 U.S. at 194,"the ID requirement is amply justified by the valid interest in protecting the integrity and reliability of the electoral process"
+government-adequate-alternative,government,INTERPRETATION_GOVERNMENT,hr22-eh,§ 2(f) / NVRA § 8(j)(2)(A),"each State shall establish a process under which an applicant who cannot provide documentary proof... may submit such other evidence — interpretation: the process provides an adequate safety valve"
+government-burden-not-severe,government,EMPIRICAL_ASSUMPTION,crawford-v-marion,553 U.S. at 198,"the inconvenience... does not qualify as a substantial burden on the right to vote"
+government-scenario-person,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a is a person
+government-scenario-citizen,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a is a U.S. citizen
+government-scenario-eligible,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a is eligible to vote
+government-scenario-application,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: registration-attempt-a is a voter registration application
+government-scenario-attempts-to-register,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a attempts to register via registration-attempt-a
+government-assume-right-to-vote-arguendo,government,INTERPRETATION_GOVERNMENT,n/a,n/a,Government concedes arguendo that citizen-a has a protected right to vote
+government-scenario-no-documentary-proof,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a lacks documentary proof (conceded)
+government-scenario-alternative-process-approved,government,INTERPRETATION_GOVERNMENT,hr22-eh,§ 2(f) / NVRA § 8(j)(2)(A),"the process provides a guaranteed path to registration — interpretation: mandatory approval when evidence satisfies standards"

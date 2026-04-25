@@ -2,6 +2,7 @@
 *.lx64fsl
 *.dx64fsl
 *.fasl
+*.port
 *.o
 *.date
 *.log

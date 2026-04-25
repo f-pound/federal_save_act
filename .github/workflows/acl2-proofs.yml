@@ -1,0 +1,83 @@
+name: ACL2 Proof Certification
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - '**.lisp'
+      - '.github/workflows/acl2-proofs.yml'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - '**.lisp'
+
+jobs:
+  certify:
+    name: Certify ACL2 Books
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pull ACL2 Docker image
+        run: docker pull atwalter/acl2:latest
+
+      - name: Certify core book
+        run: echo '(certify-book "federal_save_act_core" ?)' | docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
+
+      - name: Certify facts book
+        run: echo '(certify-book "federal_save_act_facts" ?)' | docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
+
+      - name: Run consistency check
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_consistency_check.lisp 2>&1 | tee reports/consistency_check.log
+
+      - name: Verify consistency check (no failures)
+        run: "! grep -q 'FAILED' reports/consistency_check.log"
+
+      - name: Run process model
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_process.lisp 2>&1 | tee reports/process_model.log
+
+      - name: Verify process model (no failures)
+        run: "! grep -q 'FAILED' reports/process_model.log"
+
+      - name: Run hinge theorems
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge.lisp 2>&1 | tee reports/hinge_theorems.log
+
+      - name: Verify hinge theorems (no failures)
+        run: "! grep -q 'FAILED' reports/hinge_theorems.log"
+
+      - name: Run challenger model
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_challenger_model.lisp 2>&1 | tee reports/challenger_model.log
+
+      - name: Verify challenger model (no failures)
+        run: "! grep -q 'FAILED' reports/challenger_model.log"
+
+      - name: Run government model
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_government_model.lisp 2>&1 | tee reports/government_model.log
+
+      - name: Verify government model (no failures)
+        run: "! grep -q 'FAILED' reports/government_model.log"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "=== ACL2 Proof Certification Summary ==="
+          for f in reports/*.log; do
+            name=$(basename "$f" .log)
+            qed=$(grep -c "Q\.E\.D\." "$f" || true)
+            failed=$(grep -c "FAILED" "$f" || true)
+            if [ "$failed" -gt 0 ]; then
+              echo "❌ $name: $qed Q.E.D., $failed FAILED"
+            else
+              echo "✅ $name: $qed Q.E.D."
+            fi
+          done
+
+      - name: Upload proof logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-logs
+          path: reports/*.log
+          retention-days: 30

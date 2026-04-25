@@ -81,11 +81,15 @@
 ;;; defaxiom. Each is a simple ground fact about 'federal-save-act.
 ;;; =========================================================================
 
-;; POLICY_ASSUMPTION: Election integrity interest
+;; DOCTRINAL_RULE: Election integrity interest
+;; Source: Crawford, 553 U.S. at 194-196 ("there is no question about
+;; the legitimacy or importance of the State's interest in counting
+;; only the votes of eligible voters")
 (defaxiom government-election-integrity-interest
   (election-integrity-interestp 'federal-save-act))
 
-;; POLICY_ASSUMPTION: The interest is important
+;; DOCTRINAL_RULE: The interest is important
+;; Source: Crawford, 553 U.S. at 194-196
 (defaxiom government-important-interest
   (important-government-interestp 'federal-save-act))
 
@@ -108,7 +112,9 @@
 (defaxiom government-adequate-alternative
   (adequate-alternative-processp 'federal-save-act))
 
-;; INTERPRETATION_GOVERNMENT: Burden is not severe
+;; EMPIRICAL_ASSUMPTION: Burden is not severe
+;; Source: Crawford, 553 U.S. at 198 ("the inconvenience... does not
+;; qualify as a substantial burden on the right to vote")
 (defaxiom government-burden-not-severe
   (burden-not-severep 'federal-save-act p))
 

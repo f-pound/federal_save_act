@@ -154,15 +154,21 @@
 (defaxiom challenger-scenario-no-presentation
   (not (presents-documentary-proofp 'citizen-a 'registration-attempt-a)))
 
-;; INTERPRETATION_CHALLENGER: citizen-a lacks documents through no fault
+;; EMPIRICAL_ASSUMPTION: citizen-a lacks documents through no fault
+;; Source: Fish v. Kobach, 840 F.3d at 734 (18,000 applicants unable
+;; to complete registration due to documentary proof requirement)
 (defaxiom challenger-scenario-no-fault
   (lacks-qualifying-documents-through-no-faultp 'citizen-a))
 
-;; INTERPRETATION_CHALLENGER: citizen-a cannot obtain docs without burden
+;; EMPIRICAL_ASSUMPTION: citizen-a cannot obtain docs without burden
+;; Source: Crawford, 553 U.S. at 199 (Stevens plurality) ("the burden
+;; of obtaining a birth certificate... will be nontrivial for some voters")
 (defaxiom challenger-scenario-material-burden
   (cannot-obtain-qualifying-documents-without-material-burdenp 'citizen-a))
 
 ;; INTERPRETATION_CHALLENGER: alternative process denied
+;; Source: SAVE Act § 2(f) / NVRA § 8(j)(2)(A) — "shall make a
+;; determination" interpreted as discretionary, may result in denial
 (defaxiom challenger-scenario-alternative-process-denied
   (not (alternative-process-approvedp 'citizen-a 'registration-attempt-a)))
 

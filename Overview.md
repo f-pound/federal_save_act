@@ -101,12 +101,12 @@ The text says officials "shall make a determination as to whether the applicant 
 | File | Role | Mechanism | Label |
 |---|---|---|---|
 | `federal_save_act_core.lisp` | Neutral vocabulary, factored intermediate predicates | `defstub` + `defun` | Neutral |
-| `federal_save_act_facts.lisp` | Text-derived prohibition and bridge rules | `encapsulate` + witness | TEXT_FACT, PROHIBITION, BRIDGE_RULE |
+| `federal_save_act_facts.lisp` | Text-derived prohibition and bridge rules | `defaxiom` | TEXT_FACT, PROHIBITION, BRIDGE_RULE |
 | `federal_save_act_challenger_model.lisp` | Assumptions proving constitutional conflict | `encapsulate` + witness | INTERPRETATION_CHALLENGER |
 | `federal_save_act_government_model.lisp` | Assumptions defeating constitutional conflict | `encapsulate` + witness | INTERPRETATION_GOVERNMENT |
 | `federal_save_act_consistency_check.lisp` | Core vocabulary sanity verification | `defthm` | Structural |
 
-> **v3 Note**: All `defaxiom` forms have been replaced with `encapsulate` blocks containing local witness functions. This guarantees that every axiom has at least one satisfying model, eliminating the risk of accidental inconsistency. See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the full technical rationale.
+> **v3 Note**: v3 uses a hybrid architecture. Interpretive predicates in the model files use `encapsulate` with local witness functions (consistency-checked). Text-derived facts and scenario ground truths use `defaxiom` (self-evidently consistent constraints on `defstub` functions). See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the full technical rationale.
 
 ## Model Separation
 

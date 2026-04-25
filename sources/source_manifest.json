@@ -1,0 +1,183 @@
+{
+  "version": "1.0",
+  "created": "2026-04-25",
+  "description": "Source provenance manifest for the Federal SAVE Act ACL2 stress-test. Maps every axiom and constraint to its authoritative source text.",
+  "sources": [
+    {
+      "id": "hr22-eh",
+      "title": "Safeguard American Voter Eligibility Act (SAVE Act)",
+      "citation": "H.R. 22, 119th Cong. (2025) (Engrossed in House)",
+      "govinfo_id": "BILLS-119hr22eh",
+      "url": "https://www.govinfo.gov/content/pkg/BILLS-119hr22eh/html/BILLS-119hr22eh.htm",
+      "local_file": "../federal_save_act_bill_text.txt",
+      "type": "statute",
+      "status": "Passed House 220-208, April 10, 2025; pending in Senate"
+    },
+    {
+      "id": "nvra-20503",
+      "title": "National Voter Registration Act — § 4 (Applicability)",
+      "citation": "52 U.S.C. § 20503",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20503&num=0&edition=prelim",
+      "type": "statute"
+    },
+    {
+      "id": "nvra-20504",
+      "title": "National Voter Registration Act — § 5 (Motor-voter registration)",
+      "citation": "52 U.S.C. § 20504",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20504&num=0&edition=prelim",
+      "type": "statute"
+    },
+    {
+      "id": "nvra-20505",
+      "title": "National Voter Registration Act — § 6 (Mail registration)",
+      "citation": "52 U.S.C. § 20505",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20505&num=0&edition=prelim",
+      "type": "statute"
+    },
+    {
+      "id": "nvra-20507",
+      "title": "National Voter Registration Act — § 8 (Administration of voter registration)",
+      "citation": "52 U.S.C. § 20507",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20507&num=0&edition=prelim",
+      "type": "statute",
+      "note": "SAVE Act § 2(f) adds subsections (j) and (k) to this section"
+    },
+    {
+      "id": "nvra-20508",
+      "title": "National Voter Registration Act — § 9 (Federal mail voter registration form)",
+      "citation": "52 U.S.C. § 20508",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20508&num=0&edition=prelim",
+      "type": "statute"
+    },
+    {
+      "id": "nvra-20510",
+      "title": "National Voter Registration Act — § 11 (Civil enforcement / private right of action)",
+      "citation": "52 U.S.C. § 20510",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20510&num=0&edition=prelim",
+      "type": "statute"
+    },
+    {
+      "id": "nvra-20511",
+      "title": "National Voter Registration Act — § 12 (Criminal penalties)",
+      "citation": "52 U.S.C. § 20511",
+      "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title52-section20511&num=0&edition=prelim",
+      "type": "statute"
+    },
+    {
+      "id": "const-art1-s2",
+      "title": "U.S. Constitution, Article I, § 2 (Voter Qualifications — House)",
+      "citation": "U.S. Const. art. I, § 2, cl. 1",
+      "url": "https://constitution.congress.gov/browse/article-1/section-2/",
+      "local_file": "../constitutional_language.txt",
+      "type": "constitution"
+    },
+    {
+      "id": "const-art1-s4",
+      "title": "U.S. Constitution, Article I, § 4 (Elections Clause)",
+      "citation": "U.S. Const. art. I, § 4, cl. 1",
+      "url": "https://constitution.congress.gov/browse/article-1/section-4/",
+      "local_file": "../constitutional_language.txt",
+      "type": "constitution"
+    },
+    {
+      "id": "const-amend5",
+      "title": "U.S. Constitution, Amendment V (Due Process — Federal Equal Protection)",
+      "citation": "U.S. Const. amend. V",
+      "url": "https://constitution.congress.gov/browse/amendment-5/",
+      "local_file": "../constitutional_language.txt",
+      "type": "constitution",
+      "note": "Equal protection component applied to federal action via Bolling v. Sharpe, 347 U.S. 497 (1954)"
+    },
+    {
+      "id": "const-amend14-s1",
+      "title": "U.S. Constitution, Amendment XIV, § 1 (Equal Protection — States; Citizenship)",
+      "citation": "U.S. Const. amend. XIV, § 1",
+      "url": "https://constitution.congress.gov/browse/amendment-14/section-1/",
+      "local_file": "../constitutional_language.txt",
+      "type": "constitution"
+    },
+    {
+      "id": "const-amend17",
+      "title": "U.S. Constitution, Amendment XVII (Voter Qualifications — Senate)",
+      "citation": "U.S. Const. amend. XVII",
+      "url": "https://constitution.congress.gov/browse/amendment-17/",
+      "local_file": "../constitutional_language.txt",
+      "type": "constitution"
+    },
+    {
+      "id": "const-amend24",
+      "title": "U.S. Constitution, Amendment XXIV (Poll Tax Prohibition)",
+      "citation": "U.S. Const. amend. XXIV, § 1",
+      "url": "https://constitution.congress.gov/browse/amendment-24/",
+      "local_file": "../constitutional_language.txt",
+      "type": "constitution"
+    },
+    {
+      "id": "arizona-v-intertribal",
+      "title": "Arizona v. Inter Tribal Council of Arizona, Inc.",
+      "citation": "570 U.S. 1 (2013)",
+      "docket": "12-71",
+      "url": "https://www.law.cornell.edu/supremecourt/text/12-71",
+      "type": "case",
+      "holding": "The Elections Clause gives Congress broad authority to regulate federal election procedures, including voter registration. Arizona's Proposition 200 (requiring documentary proof of citizenship for state voter registration) was preempted by the NVRA's 'accept and use' mandate for the federal mail registration form.",
+      "relevance": "Establishes that Congress's Elections Clause power preempts state registration requirements; provides the constitutional framework for evaluating whether Congress itself can impose documentary proof requirements."
+    },
+    {
+      "id": "crawford-v-marion",
+      "title": "Crawford v. Marion County Election Board",
+      "citation": "553 U.S. 181 (2008)",
+      "docket": "07-21",
+      "url": "https://www.law.cornell.edu/supremecourt/text/07-21",
+      "type": "case",
+      "holding": "Indiana's voter photo ID law did not violate the Fourteenth Amendment. The Anderson-Burdick balancing test applies: courts weigh the severity of the burden on voters against the state's regulatory interests. For most voters, the burden was minimal; for the narrow class of voters who lack ID and cannot easily obtain one, the record was insufficient to establish a constitutional violation.",
+      "relevance": "Primary doctrinal framework for the SAVE Act analysis. Both models use the Anderson-Burdick / Crawford framework but reach opposite conclusions about the severity of the documentary proof burden."
+    },
+    {
+      "id": "anderson-v-celebrezze",
+      "title": "Anderson v. Celebrezze",
+      "citation": "460 U.S. 780 (1983)",
+      "docket": "81-1635",
+      "url": "https://www.law.cornell.edu/supremecourt/text/460/780",
+      "type": "case",
+      "holding": "A court considering a challenge to a state election law must weigh 'the character and magnitude of the asserted injury to the rights protected by the First and Fourteenth Amendments' against 'the precise interests put forward by the State as justifications for the burden imposed by its rule.'",
+      "relevance": "Source of the Anderson-Burdick balancing test used in both challenger and government models."
+    },
+    {
+      "id": "burdick-v-takushi",
+      "title": "Burdick v. Takushi",
+      "citation": "504 U.S. 428 (1992)",
+      "docket": "91-535",
+      "url": "https://www.law.cornell.edu/supremecourt/text/504/428",
+      "type": "case",
+      "holding": "When an election regulation imposes only reasonable, nondiscriminatory restrictions on voters' rights, the State's important regulatory interests are generally sufficient to justify the restrictions. Strict scrutiny applies only when severe restrictions are at issue.",
+      "relevance": "Establishes the sliding scale for Anderson-Burdick: severe burdens get strict scrutiny, reasonable nondiscriminatory restrictions get rational basis."
+    },
+    {
+      "id": "harper-v-virginia",
+      "title": "Harper v. Virginia State Board of Elections",
+      "citation": "383 U.S. 663 (1966)",
+      "url": "https://www.law.cornell.edu/supremecourt/text/383/663",
+      "type": "case",
+      "holding": "The right to vote is a fundamental right. A state violates the Equal Protection Clause when it conditions the franchise on wealth or payment of a fee. Virginia's poll tax was unconstitutional.",
+      "relevance": "Doctrinal basis for the challenger's fundamental-right-rule. Also relevant to the poll tax theory (SAVE Act's document acquisition costs as de facto poll tax)."
+    },
+    {
+      "id": "reynolds-v-sims",
+      "title": "Reynolds v. Sims",
+      "citation": "377 U.S. 533 (1964)",
+      "url": "https://www.law.cornell.edu/supremecourt/text/377/533",
+      "type": "case",
+      "holding": "The right to vote freely for the candidate of one's choice is the essence of a democratic society, and any restrictions on that right strike at the heart of representative government.",
+      "relevance": "Supports the challenger's claim that voting is a fundamental right deserving heightened protection."
+    },
+    {
+      "id": "fish-v-kobach",
+      "title": "Fish v. Kobach",
+      "citation": "840 F.3d 710 (10th Cir. 2016)",
+      "url": "https://scholar.google.com/scholar_case?case=12321614370229386498",
+      "type": "case",
+      "holding": "Kansas's documentary proof-of-citizenship requirement for voter registration (the SAFE Act) likely violates § 5 of the NVRA because it adds a condition beyond the federal form's attestation requirement. The 10th Circuit affirmed the district court's preliminary injunction.",
+      "relevance": "Most directly analogous precedent: a state-level documentary proof requirement substantially similar to the SAVE Act was enjoined as inconsistent with the NVRA. Key factual finding: approximately 18,000 applicants were unable to complete registration due to the documentary proof requirement."
+    }
+  ]
+}
