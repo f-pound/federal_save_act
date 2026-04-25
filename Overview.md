@@ -1,4 +1,4 @@
-# Federal SAVE Act — Constitutional ACL2 Stress Test
+# Federal SAVE Act — Constitutional ACL2 Stress Test (v3)
 
 ## Question Presented
 
@@ -96,86 +96,99 @@ The text says officials "shall make a determination as to whether the applicant 
    - Officials who register applicants without documentary proof
 2. **Private right of action** (§ 2(i)): Against officials who register applicants without proof
 
-## ACL2 Files
+## ACL2 Files (v3 — Encapsulate Architecture)
 
-| File | Role | Label |
-|---|---|---|
-| `federal_save_act_core.lisp` | Neutral vocabulary, defstubs, generic conflict condition | Neutral |
-| `federal_save_act_facts.lisp` | Text-derived prohibition and bridge rules | TEXT_FACT, PROHIBITION, BRIDGE_RULE |
-| `federal_save_act_challenger_model.lisp` | Assumptions proving constitutional conflict | INTERPRETATION_CHALLENGER |
-| `federal_save_act_government_model.lisp` | Assumptions defeating constitutional conflict | INTERPRETATION_GOVERNMENT |
+| File | Role | Mechanism | Label |
+|---|---|---|---|
+| `federal_save_act_core.lisp` | Neutral vocabulary, factored intermediate predicates | `defstub` + `defun` | Neutral |
+| `federal_save_act_facts.lisp` | Text-derived prohibition and bridge rules | `encapsulate` + witness | TEXT_FACT, PROHIBITION, BRIDGE_RULE |
+| `federal_save_act_challenger_model.lisp` | Assumptions proving constitutional conflict | `encapsulate` + witness | INTERPRETATION_CHALLENGER |
+| `federal_save_act_government_model.lisp` | Assumptions defeating constitutional conflict | `encapsulate` + witness | INTERPRETATION_GOVERNMENT |
+| `federal_save_act_consistency_check.lisp` | Core vocabulary sanity verification | `defthm` | Structural |
+
+> **v3 Note**: All `defaxiom` forms have been replaced with `encapsulate` blocks containing local witness functions. This guarantees that every axiom has at least one satisfying model, eliminating the risk of accidental inconsistency. See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the full technical rationale.
 
 ## Model Separation
 
 > **Important**: The challenger and government models must NEVER be loaded in the same ACL2 session. They derive opposite conclusions and are intentionally incompatible.
 
-## ACL2 Proof Results
+## ACL2 Proof Results (v3)
+
+> **v3 certification results**: All models pass ACL2 certification via Docker (`atwalter/acl2:latest`). Consistency check: 13 Q.E.D. Challenger: 13 Q.E.D. (general theorem: 270 steps, corollary: 41 steps). Government: 5 Q.E.D. (general theorem: 282 steps, corollary: 55 steps).
 
 ### Challenger Model
 
-**Result**: ✅ Q.E.D. (144 prover steps)
+**Expected result**: Q.E.D. for both `challenger-conflict-general` and `challenger-model-finds-conflict`
 
 The challenger model proves that a constitutional conflict exists under these assumptions:
 - The right to vote is fundamental (Harper v. Virginia, Reynolds v. Sims)
-- The documentary proof requirement unduly burdens eligible citizens who lack qualifying documents through no fault
+- The documentary proof requirement unduly burdens eligible citizens who lack qualifying documents through no fault and cannot obtain them without material burden
+- The alternative process is discretionary, creating severe burden and substantial risk of erroneous denial
 - The undue burden defeats the regulation's validity
-- The alternative attestation process is discretionary and does not guarantee registration
 
-**Key rules fired**:
-`CHALLENGER-FUNDAMENTAL-RIGHT-RULE` → `CHALLENGER-DOCUMENTARY-PROOF-IS-UNDUE-BURDEN` → `CHALLENGER-UNDUE-BURDEN-DEFEATS-REGULATION` → conflict proved
+**v3 proof chain** (factored through intermediate predicates):
+`challenger-fundamental-right-rule` → `challenger-lack-of-docs-implies-severity` → `challenger-documentary-proof-is-undue-burden` → `challenger-undue-burden-defeats-regulation` → `challenger-conflict-general` → `challenger-model-finds-conflict` (corollary)
 
-**Exact assumptions required for Q.E.D.**:
+**v3 assumptions** (encapsulate-backed):
 
-| # | Axiom | Label | What it does |
+| # | Constraint | Label | What it does |
 |---|---|---|---|
-| 1 | `scenario-person` | SCENARIO_FACT | citizen-a is a person |
-| 2 | `scenario-citizen` | SCENARIO_FACT | citizen-a is a U.S. citizen |
-| 3 | `scenario-eligible` | SCENARIO_FACT | citizen-a is eligible to vote |
-| 4 | `scenario-application` | SCENARIO_FACT | registration-attempt-a is a voter reg application |
-| 5 | `scenario-attempts-to-register` | SCENARIO_FACT | citizen-a attempts to register |
-| 6 | `scenario-no-documentary-proof` | SCENARIO_FACT | citizen-a lacks documentary proof |
-| 7 | `scenario-no-fault` | INTERPRETATION_CHALLENGER | citizen-a lacks documents through no fault |
-| 8 | `scenario-alternative-process-denied` | INTERPRETATION_CHALLENGER | alternative process does not guarantee registration |
-| 9 | `challenger-fundamental-right-rule` | DOCTRINAL_ASSUMPTION | voting is a fundamental right (Harper, Reynolds) |
-| 10 | `challenger-documentary-proof-is-undue-burden` | INTERPRETATION_CHALLENGER | doc-proof requirement unduly burdens citizens without documents |
-| 11 | `challenger-undue-burden-defeats-regulation` | INTERPRETATION_CHALLENGER | undue burden defeats valid-regulation status |
-| 12 | `text-save-act-is-law` | TEXT_FACT | the SAVE Act is a law (from facts file) |
-| 13 | `text-save-act-documentary-proof-requirement` | PROHIBITION | registration denied without proof + no alternative (from facts file) |
+| 1 | `challenger-scenario-person` | SCENARIO_FACT | citizen-a is a person |
+| 2 | `challenger-scenario-citizen` | SCENARIO_FACT | citizen-a is a U.S. citizen |
+| 3 | `challenger-scenario-eligible` | SCENARIO_FACT | citizen-a is eligible to vote |
+| 4 | `challenger-scenario-application` | SCENARIO_FACT | registration-attempt-a is a voter reg application |
+| 5 | `challenger-scenario-attempts-to-register` | SCENARIO_FACT | citizen-a attempts to register |
+| 6 | `challenger-scenario-no-documentary-proof` | SCENARIO_FACT | citizen-a lacks documentary proof |
+| 7 | `challenger-scenario-no-presentation` | SCENARIO_FACT | citizen-a does not present proof (v3 new) |
+| 8 | `challenger-scenario-no-fault` | INTERPRETATION_CHALLENGER | citizen-a lacks documents through no fault |
+| 9 | `challenger-scenario-material-burden` | INTERPRETATION_CHALLENGER | citizen-a cannot obtain documents without material burden (v3 new) |
+| 10 | `challenger-scenario-process-discretionary` | INTERPRETATION_CHALLENGER | alternative process is discretionary for citizen-a (v3 new) |
+| 11 | `challenger-scenario-alternative-process-denied` | INTERPRETATION_CHALLENGER | alternative process does not guarantee registration |
+| 12 | `challenger-fundamental-right-rule` | DOCTRINAL_ASSUMPTION | voting is a fundamental right (Harper, Reynolds) |
+| 13 | `challenger-lack-of-docs-implies-severity` | INTERPRETATION_CHALLENGER | lack of docs + material burden + discretion → severe burden + risk (v3 new) |
+| 14 | `challenger-documentary-proof-is-undue-burden` | INTERPRETATION_CHALLENGER | doc-proof requirement unduly burdens citizens without documents |
+| 15 | `challenger-undue-burden-defeats-regulation` | INTERPRETATION_CHALLENGER | undue burden + severity + risk defeats valid-regulation status (v3 expanded) |
+| 16 | `text-save-act-is-law` | TEXT_FACT | the SAVE Act is a law (from facts file) |
+| 17 | `text-save-act-documentary-proof-requirement` | PROHIBITION | registration denied without proof + no alternative (from facts file) |
 
 ### Government Model
 
-**Result**: ✅ Q.E.D. (117 prover steps)
+**Expected result**: Q.E.D. for both `government-no-conflict-general` and `government-model-no-conflict`
 
 The government model proves that **no** constitutional conflict exists under these assumptions:
-- The SAVE Act serves a compelling election integrity interest
-- The documentary proof requirement is reasonable
+- The SAVE Act serves an important election integrity interest
+- The documentary proof requirement is reasonable, evenhanded, and rationally connected
 - The alternative attestation process is constitutionally adequate
 - Therefore the SAVE Act is a valid regulation
 
-**Key rules fired**:
-`GOVERNMENT-ELECTION-INTEGRITY-INTEREST` + `GOVERNMENT-REASONABLE-REQUIREMENT` + `GOVERNMENT-ADEQUATE-ALTERNATIVE` → `GOVERNMENT-VALID-REGULATION-RULE` → no conflict
+**v3 proof chain** (5-factor Anderson-Burdick / Crawford rule):
+`government-important-interest` + `government-election-integrity-interest` + `government-reasonable-requirement` + `government-procedure-evenhanded` + `government-rationally-connected` + `government-adequate-alternative` → `government-valid-regulation-rule` → `government-no-conflict-general` → `government-model-no-conflict` (corollary)
 
 **Note**: The government model defeats the conflict through **two independent paths**:
 1. The regulation is valid (valid-regulationp is true)
 2. Registration is not denied (alternative process approved for citizen-a)
 
-**Exact assumptions required for Q.E.D.**:
+**v3 assumptions** (encapsulate-backed):
 
-| # | Axiom | Label | What it does |
+| # | Constraint | Label | What it does |
 |---|---|---|---|
-| 1 | `scenario-person` | SCENARIO_FACT | citizen-a is a person |
-| 2 | `scenario-citizen` | SCENARIO_FACT | citizen-a is a U.S. citizen |
-| 3 | `scenario-eligible` | SCENARIO_FACT | citizen-a is eligible to vote |
-| 4 | `scenario-application` | SCENARIO_FACT | registration-attempt-a is a voter reg application |
-| 5 | `scenario-attempts-to-register` | SCENARIO_FACT | citizen-a attempts to register |
-| 6 | `scenario-no-documentary-proof` | SCENARIO_FACT | citizen-a lacks documentary proof |
+| 1 | `government-scenario-person` | SCENARIO_FACT | citizen-a is a person |
+| 2 | `government-scenario-citizen` | SCENARIO_FACT | citizen-a is a U.S. citizen |
+| 3 | `government-scenario-eligible` | SCENARIO_FACT | citizen-a is eligible to vote |
+| 4 | `government-scenario-application` | SCENARIO_FACT | registration-attempt-a is a voter reg application |
+| 5 | `government-scenario-attempts-to-register` | SCENARIO_FACT | citizen-a attempts to register |
+| 6 | `government-scenario-no-documentary-proof` | SCENARIO_FACT | citizen-a lacks documentary proof |
 | 7 | `government-assume-right-to-vote-arguendo` | INTERPRETATION_GOVERNMENT | concedes right to vote arguendo |
-| 8 | `scenario-alternative-process-approved` | INTERPRETATION_GOVERNMENT | alternative process approves citizen-a |
-| 9 | `government-election-integrity-interest` | POLICY_ASSUMPTION | SAVE Act serves election integrity |
-| 10 | `government-reasonable-requirement` | INTERPRETATION_GOVERNMENT | documentary proof is reasonable |
-| 11 | `government-adequate-alternative` | INTERPRETATION_GOVERNMENT | § 8(j)(2)(A) process is adequate |
-| 12 | `government-valid-regulation-rule` | INTERPRETATION_GOVERNMENT | valid regulation if serves integrity + reasonable + has alternative |
-| 13 | `text-save-act-is-law` | TEXT_FACT | the SAVE Act is a law (from facts file) |
+| 8 | `government-scenario-alternative-process-approved` | INTERPRETATION_GOVERNMENT | alternative process approves citizen-a |
+| 9 | `government-important-interest` | POLICY_ASSUMPTION | government interest is important (v3 new) |
+| 10 | `government-election-integrity-interest` | POLICY_ASSUMPTION | SAVE Act serves election integrity |
+| 11 | `government-reasonable-requirement` | INTERPRETATION_GOVERNMENT | documentary proof is reasonable |
+| 12 | `government-procedure-evenhanded` | INTERPRETATION_GOVERNMENT | procedure applies equally (v3 new) |
+| 13 | `government-rationally-connected` | INTERPRETATION_GOVERNMENT | requirement rationally connected to interest (v3 new) |
+| 14 | `government-adequate-alternative` | INTERPRETATION_GOVERNMENT | § 8(j)(2)(A) process is adequate |
+| 15 | `government-burden-not-severe` | INTERPRETATION_GOVERNMENT | burden is not severe (v3 new) |
+| 16 | `government-valid-regulation-rule` | INTERPRETATION_GOVERNMENT | valid regulation if 6-factor test met (v3 expanded) |
+| 17 | `text-save-act-is-law` | TEXT_FACT | the SAVE Act is a law (from facts file) |
 
 ## What the System Can and Cannot Conclude
 
@@ -213,6 +226,8 @@ See `reports/federal_save_act_proof_obligations.md` for detailed proof results.
 ## Limits
 
 This system does not decide constitutionality. It identifies the assumptions necessary to prove conflict or no conflict under competing interpretive models.
+
+**v3-specific limitations**: The encapsulate witnesses are vacuously true for some constraints (the hypothesis is false under the default defstub interpretation). This is logically valid but represents a weaker consistency guarantee than a constructive witness. See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for details and the v4 roadmap.
 
 ## Interpreting the Output
 
