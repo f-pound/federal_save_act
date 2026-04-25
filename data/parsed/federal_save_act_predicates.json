@@ -1,0 +1,84 @@
+[
+  {
+    "label": "DEFINED_TERM",
+    "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)",
+    "predicate": "(has-documentary-proofp p)",
+    "condition": "(or (has-real-id-indicating-citizenshipp p) (has-valid-us-passportp p) (has-military-id-with-us-birthp p) (has-govt-photo-id-showing-us-birthp p) (has-govt-photo-id-with-supporting-docp p))",
+    "confidence": 0.95,
+    "requires_human_review": false
+  },
+  {
+    "label": "PROHIBITION",
+    "source_ref": "SAVE Act § 2(b) / NVRA § 4(b)",
+    "predicate": "(statute-denies-registrationp 'federal-save-act p x)",
+    "condition": "(and (personp p) (voter-registration-applicationp x) (attempts-to-registerp p x) (not (has-documentary-proofp p)) (not (alternative-process-approvedp p x)))",
+    "confidence": 0.95,
+    "requires_human_review": false
+  },
+  {
+    "label": "PROHIBITION",
+    "source_ref": "SAVE Act § 2(f) / NVRA § 8(j)(1)",
+    "predicate": "(statute-denies-registrationp 'federal-save-act p x)",
+    "condition": "(and (personp p) (voter-registration-applicationp x) (not (has-documentary-proofp p)) (not (alternative-process-approvedp p x)))",
+    "confidence": 0.95,
+    "requires_human_review": false
+  },
+  {
+    "label": "EXCEPTION",
+    "source_ref": "SAVE Act § 2(f) / NVRA § 8(j)(2)(A)",
+    "predicate": "(alternative-process-approvedp p x)",
+    "condition": "(and (not (has-documentary-proofp p)) (signs-attestation-under-perjuryp p) (submits-other-evidencep p) (official-determines-citizenshipp p))",
+    "confidence": 0.80,
+    "requires_human_review": true,
+    "review_note": "Whether 'sufficiently established' is a guaranteed right or discretionary depends on interpretation."
+  },
+  {
+    "label": "PROHIBITION",
+    "source_ref": "SAVE Act § 2(f) / NVRA § 8(k)",
+    "predicate": "(state-removes-from-rollsp state p)",
+    "condition": "(and (personp p) (not (citizen-of-usp p)) (verified-noncitizen-informationp p))",
+    "confidence": 0.90,
+    "requires_human_review": true,
+    "review_note": "Due process implications of removal process depend on adequacy of notice and hearing."
+  },
+  {
+    "label": "PENALTY",
+    "source_ref": "SAVE Act § 2(j) / NVRA § 12(2)(B)-(C)",
+    "predicate": "(criminal-penalty-for-official-assistancep official)",
+    "condition": "(or (assists-noncitizen-to-registerp official) (registers-without-documentary-proofp official p))",
+    "confidence": 0.90,
+    "requires_human_review": false
+  },
+  {
+    "label": "PROCEDURAL_FACT",
+    "source_ref": "SAVE Act § 3",
+    "predicate": "(eac-guidance-deadline-10-daysp)",
+    "condition": "true",
+    "confidence": 0.95,
+    "requires_human_review": false
+  },
+  {
+    "label": "PROCEDURAL_FACT",
+    "source_ref": "SAVE Act § 2(f) / NVRA § 8(j)(3)",
+    "predicate": "(state-program-deadline-30-daysp)",
+    "condition": "true",
+    "confidence": 0.95,
+    "requires_human_review": false
+  },
+  {
+    "label": "PROCEDURAL_FACT",
+    "source_ref": "SAVE Act § 2(f) / NVRA § 8(j)(5)(A)",
+    "predicate": "(federal-response-deadline-24-hoursp)",
+    "condition": "true",
+    "confidence": 0.95,
+    "requires_human_review": false
+  },
+  {
+    "label": "EXCEPTION",
+    "source_ref": "SAVE Act § 6",
+    "predicate": "(provisional-ballot-preservedp p x)",
+    "condition": "(and (personp p) (casts-provisional-ballotp p x) (later-verified-citizenp p))",
+    "confidence": 0.90,
+    "requires_human_review": false
+  }
+]

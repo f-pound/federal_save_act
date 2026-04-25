@@ -1,0 +1,122 @@
+UNITED STATES CONSTITUTION — PROVISIONS RELEVANT TO SAVE ACT ANALYSIS
+
+========================================================================
+Article I, Section 2, Clause 1 (Voter Qualifications — House)
+========================================================================
+
+The House of Representatives shall be composed of Members chosen every
+second Year by the People of the several States, and the Electors in
+each State shall have the Qualifications requisite for Electors of the
+most numerous Branch of the State Legislature.
+
+========================================================================
+Article I, Section 4, Clause 1 (Elections Clause)
+========================================================================
+
+The Times, Places and Manner of holding Elections for Senators and
+Representatives, shall be prescribed in each State by the Legislature
+thereof; but the Congress may at any time by Law make or alter such
+Regulations, except as to the Places of chusing Senators.
+
+========================================================================
+Amendment V (Due Process — Federal Equal Protection Component)
+========================================================================
+
+No person shall be held to answer for a capital, or otherwise infamous
+crime, unless on a presentment or indictment of a Grand Jury, except
+in cases arising in the land or naval forces, or in the Militia, when
+in actual service in time of War or public danger; nor shall any person
+be subject for the same offence to be twice put in jeopardy of life or
+limb; nor shall be compelled in any criminal case to be a witness
+against himself, nor be deprived of life, liberty, or property, without
+due process of law; nor shall private property be taken for public use,
+without just compensation.
+
+========================================================================
+Amendment XIV, Section 1 (Equal Protection — States; Citizenship)
+========================================================================
+
+All persons born or naturalized in the United States, and subject to
+the jurisdiction thereof, are citizens of the United States and of the
+State wherein they reside. No State shall make or enforce any law which
+shall abridge the privileges or immunities of citizens of the United
+States; nor shall any State deprive any person of life, liberty, or
+property, without due process of law; nor deny to any person within its
+jurisdiction the equal protection of the laws.
+
+========================================================================
+Amendment XV, Section 1 (Right to Vote — Race)
+========================================================================
+
+The right of citizens of the United States to vote shall not be denied
+or abridged by the United States or by any State on account of race,
+color, or previous condition of servitude.
+
+========================================================================
+Amendment XXIV, Section 1 (Poll Tax Prohibition)
+========================================================================
+
+The right of citizens of the United States to vote in any primary or
+other election for President or Vice President, for electors for
+President or Vice President, or for Senator or Representative in
+Congress, shall not be denied or abridged by the United States or any
+State by reason of failure to pay any poll tax or other tax.
+
+========================================================================
+Amendment XXVI, Section 1 (Voting Age)
+========================================================================
+
+The right of citizens of the United States, who are eighteen years of
+age or older, to vote shall not be denied or abridged by the United
+States or by any State on account of age.
+
+========================================================================
+Amendment XVII (Voter Qualifications — Senate)
+========================================================================
+
+The Senate of the United States shall be composed of two Senators from
+each State, elected by the people thereof, for six years; and each
+Senator shall have one vote. The electors in each State shall have the
+qualifications requisite for electors of the most numerous branch of
+the State legislatures.
+
+========================================================================
+Notes
+========================================================================
+
+Article I, § 2 and the Seventeenth Amendment establish that voter
+qualifications for federal elections are set by state law (qualifications
+"requisite for Electors of the most numerous Branch of the State
+Legislature"). This reserves voter *qualification* authority to the
+states, distinct from the *manner* regulation power in Art. I, § 4.
+
+The Elections Clause (Art. I, § 4) grants Congress power over the
+"manner" of holding federal elections, which the Supreme Court has
+interpreted to include voter registration procedures. See Arizona v.
+Inter Tribal Council of Ariz., Inc., 570 U.S. 1 (2013). Whether
+"manner" encompasses documentary-proof-of-citizenship requirements
+— which arguably regulate voter *qualifications* rather than election
+*procedure* — is a key interpretive hinge.
+
+The SAVE Act is federal legislation. Equal protection challenges to
+federal action are brought under the Fifth Amendment's Due Process
+Clause, not the Fourteenth Amendment's Equal Protection Clause (which
+constrains only state action). See Bolling v. Sharpe, 347 U.S. 497
+(1954) (reverse incorporation). The Fourteenth Amendment remains
+relevant as the doctrinal source of equal protection principles, but
+the operative constitutional hook is the Fifth Amendment.
+
+The Fourteenth Amendment, Section 1 also defines U.S. citizenship
+("All persons born or naturalized in the United States... are citizens
+of the United States"). This is relevant as the constitutional basis
+for citizen-a's citizenship status.
+
+The NVRA (52 U.S.C. §§ 20501–20511) is the statutory baseline that
+the SAVE Act amends. It is not a constitutional provision. Before the
+SAVE Act, the NVRA prohibited states from requiring documentary proof
+of citizenship for federal voter registration (see Arizona v. ITCA).
+The SAVE Act reverses this statutory default.
+
+The Twenty-Fourth Amendment's poll-tax prohibition is relevant to any
+documentary-proof requirement that imposes a cost on obtaining the
+required documents.

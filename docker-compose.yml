@@ -1,0 +1,11 @@
+services:
+  acl2:
+    image: atwalter/acl2:latest
+    working_dir: /work
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/acl2/bin
+    volumes:
+      - .:/work
+    stdin_open: true
+    tty: true
+    command: /bin/bash

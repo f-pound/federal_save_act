@@ -1,0 +1,9 @@
+*.cert
+*.lx64fsl
+*.dx64fsl
+*.fasl
+*.o
+*.date
+*.log
+*.out
+data/raw/

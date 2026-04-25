@@ -1,0 +1,150 @@
+{
+  "slug": "federal_save_act",
+  "title": "Safeguard American Voter Eligibility Act",
+  "bill_number": "H.R. 22",
+  "congress": "119th Congress, 1st Session",
+  "sponsor": "Rep. Chip Roy (R-TX-21)",
+  "status": "Passed House 220-208, April 10, 2025; pending in Senate",
+  "effective_date": "Upon enactment (§ 8)",
+  "sections": [
+    {
+      "id": "sec-1",
+      "number": "1",
+      "title": "Short Title",
+      "type": "short_title",
+      "text": "This Act may be cited as the 'Safeguard American Voter Eligibility Act' or the 'SAVE Act'."
+    },
+    {
+      "id": "sec-2a",
+      "number": "2(a)",
+      "title": "Definition of Documentary Proof of United States Citizenship",
+      "type": "definition",
+      "amends": "NVRA § 3 (52 U.S.C. 20502)",
+      "text": "Adds new subsection (b) defining 'documentary proof of United States citizenship' as: (1) REAL ID indicating citizenship, (2) valid U.S. passport, (3) military ID + birth record showing U.S. birth, (4) government photo ID showing U.S. birth, (5) government photo ID + one of: certified birth certificate, hospital birth record, adoption decree, Consular Report of Birth Abroad, Naturalization Certificate, or American Indian Card (KIC)."
+    },
+    {
+      "id": "sec-2b",
+      "number": "2(b)",
+      "title": "Requiring Applicants to Present Documentary Proof",
+      "type": "prohibition",
+      "amends": "NVRA § 4 (52 U.S.C. 20503)",
+      "text": "Under any method of voter registration in a State, the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application."
+    },
+    {
+      "id": "sec-2c",
+      "number": "2(c)",
+      "title": "Registration With Application for Motor Vehicle Driver's License",
+      "type": "procedural",
+      "amends": "NVRA § 5 (52 U.S.C. 20504)",
+      "text": "Requires motor-voter registration applications to be subject to § 8(j) documentary proof requirements and to verify applicant citizenship."
+    },
+    {
+      "id": "sec-2d",
+      "number": "2(d)",
+      "title": "National Mail Voter Registration Form",
+      "type": "procedural",
+      "amends": "NVRA § 6 (52 U.S.C. 20505)",
+      "text": "Requires documentary proof for mail registration. Mail applicants must present proof in person to election official before deadline. States must notify applicants of requirement."
+    },
+    {
+      "id": "sec-2e",
+      "number": "2(e)",
+      "title": "Requirements for Voter Registration Agencies",
+      "type": "procedural",
+      "amends": "NVRA § 7 (52 U.S.C. 20506)",
+      "text": "Voter registration agencies must receive documentary proof of citizenship. Agencies must ask citizenship question and require documentary proof before providing registration forms."
+    },
+    {
+      "id": "sec-2f-j",
+      "number": "2(f) / NVRA § 8(j)",
+      "title": "Ensuring Only Citizens Are Registered To Vote",
+      "type": "prohibition",
+      "amends": "NVRA § 8 (52 U.S.C. 20507)",
+      "text": "A State may not register an individual to vote in elections for Federal office unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship."
+    },
+    {
+      "id": "sec-2f-j2a",
+      "number": "2(f) / NVRA § 8(j)(2)(A)",
+      "title": "Alternative Process for Those Without Documentary Proof",
+      "type": "exception",
+      "amends": "NVRA § 8 (52 U.S.C. 20507)",
+      "text": "States shall establish a process for applicants who cannot provide documentary proof to sign an attestation under penalty of perjury, submit other evidence, and have a State or local official determine whether citizenship has been sufficiently established."
+    },
+    {
+      "id": "sec-2f-j3",
+      "number": "2(f) / NVRA § 8(j)(3)",
+      "title": "State Requirements — 30-Day Program Establishment",
+      "type": "procedural",
+      "amends": "NVRA § 8 (52 U.S.C. 20507)",
+      "text": "Each State shall take affirmative steps to ensure only citizens are registered, including establishing a noncitizen identification program within 30 days of enactment."
+    },
+    {
+      "id": "sec-2f-j4",
+      "number": "2(f) / NVRA § 8(j)(4)",
+      "title": "Noncitizen Identification Program Sources",
+      "type": "procedural",
+      "amends": "NVRA § 8 (52 U.S.C. 20507)",
+      "text": "States may use DHS SAVE system, SSA verification, state DMV citizenship data, or other databases to identify noncitizens on voter rolls."
+    },
+    {
+      "id": "sec-2f-j5a",
+      "number": "2(f) / NVRA § 8(j)(5)(A)",
+      "title": "Federal Agency 24-Hour Response Requirement",
+      "type": "procedural",
+      "amends": "NVRA § 8 (52 U.S.C. 20507)",
+      "text": "Federal agencies must respond to state verification requests within 24 hours."
+    },
+    {
+      "id": "sec-2f-k",
+      "number": "2(f) / NVRA § 8(k)",
+      "title": "Removal of Noncitizens From Registration Rolls",
+      "type": "prohibition",
+      "amends": "NVRA § 8 (52 U.S.C. 20507)",
+      "text": "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters at any time upon receipt of documentation or verified information that a registrant is not a United States citizen."
+    },
+    {
+      "id": "sec-2i",
+      "number": "2(i)",
+      "title": "Private Right of Action",
+      "type": "enforcement",
+      "amends": "NVRA § 11(b)(1) (52 U.S.C. 20510(b)(1))",
+      "text": "Creates private right of action against election officials who register applicants without documentary proof of citizenship."
+    },
+    {
+      "id": "sec-2j",
+      "number": "2(j)",
+      "title": "Criminal Penalties",
+      "type": "penalty",
+      "amends": "NVRA § 12(2) (52 U.S.C. 20511(2))",
+      "text": "Criminal penalties for: executive branch officials assisting noncitizens to register or vote; registering an applicant who fails to present documentary proof of citizenship."
+    },
+    {
+      "id": "sec-3",
+      "number": "3",
+      "title": "Election Assistance Commission Guidance",
+      "type": "procedural",
+      "text": "EAC must adopt and transmit implementation guidance within 10 days of enactment."
+    },
+    {
+      "id": "sec-5",
+      "number": "5",
+      "title": "DHS Naturalization Notification Duty",
+      "type": "procedural",
+      "text": "Secretary of Homeland Security must promptly notify state election officials when an individual becomes a naturalized citizen."
+    },
+    {
+      "id": "sec-6",
+      "number": "6",
+      "title": "Provisional Ballot Rule of Construction",
+      "type": "exception",
+      "text": "Nothing in the Act restricts the ability to cast a provisional ballot if citizenship is later verified under § 8(j)."
+    },
+    {
+      "id": "sec-8",
+      "number": "8",
+      "title": "Effective Date",
+      "type": "procedural",
+      "text": "Act takes effect on date of enactment; applies to applications submitted on or after that date."
+    }
+  ]
+}
