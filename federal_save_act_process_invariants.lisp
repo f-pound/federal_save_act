@@ -159,3 +159,55 @@
                                       *evt-register*)
                                 trailing-events))
          *state-registered*))
+
+;;; =========================================================================
+;;; 7. REGISTERED IMPLIES PRIOR ACCEPTANCE PATH
+;;;
+;;; The richer invariant: if a trace from a non-terminal state reaches
+;;; *state-registered*, the trace must have passed through either
+;;; *state-doc-accepted* or *state-alt-approved*.
+;;;
+;;; This is stronger than "registered implies register event in trace"
+;;; because it proves the PRECONDITION for registration was met —
+;;; either documents were accepted or the alternative was approved.
+;;;
+;;; Proof strategy:
+;;;   1. Helper: reg-next-state producing registered requires the
+;;;      prior state to be doc-accepted or alt-approved (case analysis).
+;;;   2. Define trace-passed-through-acceptance-statep to check whether
+;;;      the trace passes through either acceptance state.
+;;;   3. Main theorem by induction on events.
+;;; =========================================================================
+
+;; Helper: The only states from which *evt-register* produces registered
+;; are doc-accepted and alt-approved.
+(defthm register-requires-acceptance-state
+  (implies (and (not (equal s *state-registered*))
+                (equal (reg-next-state s event) *state-registered*))
+           (or (equal s *state-doc-accepted*)
+               (equal s *state-alt-approved*)))
+  :hints (("Goal" :in-theory (enable reg-next-state)))
+  :rule-classes nil)
+
+;; Did the trace pass through an acceptance state?
+;; We check whether, at any point during execution, the intermediate
+;; state was doc-accepted or alt-approved.
+(defun trace-passed-through-acceptance-statep (start events)
+  (declare (xargs :measure (acl2-count events)))
+  (if (endp events)
+      (or (equal start *state-doc-accepted*)
+          (equal start *state-alt-approved*))
+    (or (equal start *state-doc-accepted*)
+        (equal start *state-alt-approved*)
+        (trace-passed-through-acceptance-statep
+         (reg-next-state start (car events))
+         (cdr events)))))
+
+;; Main theorem: if a trace from a non-registered start reaches
+;; registered, it passed through doc-accepted or alt-approved.
+(defthm registered-implies-prior-acceptance-path
+  (implies (and (not (equal start *state-registered*))
+                (equal (reg-run-trace start events) *state-registered*))
+           (trace-passed-through-acceptance-statep start events))
+  :hints (("Goal" :induct (reg-run-trace start events)))
+  :rule-classes nil)

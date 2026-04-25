@@ -31,15 +31,15 @@ cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_government_model.li
 |---|---|---|---|
 | Consistency check | 16 | defun decomposition, neutrality | ✅ All Q.E.D. |
 | Process model | 19 | recursive list induction | ✅ All Q.E.D. |
-| Process invariants | 13 | trace induction, absorbing states | ✅ All Q.E.D. |
+| Process invariants | 15 | trace induction, acceptance-path invariant | ✅ All Q.E.D. |
 | Hinge common | 4 | encapsulate | ✅ All Q.E.D. |
 | Hinge mandatory | 2 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
 | Hinge discretionary | 3 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
 | Existentials | 3 | defun-sk Skolemization | ✅ All Q.E.D. |
-| Independence | 3 | countermodel encapsulate | ✅ All Q.E.D. |
+| Independence | 3 | structural decomposition, pivot theorem | ✅ All Q.E.D. |
 | Challenger model | 13 | encapsulate + bridge rules | ✅ All Q.E.D. |
 | Government model | 5 | encapsulate + bridge rules | ✅ All Q.E.D. |
-| **Total** | **81** | | **✅ All Q.E.D.** |
+| **Total** | **83** | | **✅ All Q.E.D.** |
 
 **Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`hinge_mandatory.lisp` / `hinge_discretionary.lisp`) for the formal analysis.
 
@@ -56,7 +56,12 @@ federal_save_act/
 ├── federal_save_act_core.lisp               # Neutral vocabulary (defstub + defun)
 ├── federal_save_act_facts.lisp              # Text-derived facts (defaxiom)
 ├── federal_save_act_process.lisp            # Registration state machine + doc recognizers
-├── federal_save_act_hinge.lisp              # Alternative process hinge theorems
+├── federal_save_act_process_invariants.lisp # General state-machine invariants (induction)
+├── federal_save_act_hinge_common.lisp       # Shared hinge vocabulary (encapsulate)
+├── federal_save_act_hinge_mandatory.lisp    # Semantic A: mandatory approval interpretation
+├── federal_save_act_hinge_discretionary.lisp # Semantic B: discretionary denial interpretation
+├── federal_save_act_existentials.lisp       # Existential burden modeling (defun-sk)
+├── federal_save_act_independence.lisp       # Independence / non-entailment checks
 ├── federal_save_act_challenger_model.lisp   # Challenge-side model (encapsulate + defaxiom)
 ├── federal_save_act_government_model.lisp   # Government defense model (encapsulate + defaxiom)
 ├── federal_save_act_consistency_check.lisp  # Core vocabulary sanity + neutrality proofs
@@ -65,6 +70,8 @@ federal_save_act/
 ├── sources/
 │   ├── source_manifest.json                 # Provenance manifest (all cited sources)
 │   └── clause_trace.csv                     # Axiom → source clause traceability
+├── tools/
+│   └── validate_trace.py                    # Machine-checkable source trace validator
 ├── scripts/
 │   ├── certify-all.ps1                      # PowerShell certification script
 │   └── docker-certify-all.sh                # Bash/Docker certification script
@@ -74,6 +81,8 @@ federal_save_act/
 │       ├── federal_save_act_predicates.json # Normalized predicates
 │       └── federal_save_act_ace.json        # ACE-normalized clauses
 └── reports/
+    ├── axiom_inventory.md                   # Full defaxiom classification report
+    ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
     └── federal_save_act_proof_obligations.md # Proof results
 ```
 
@@ -109,7 +118,7 @@ federal_save_act/
 - **Conditional legal conclusions**: If the challenger's assumptions hold, constitutional conflict follows. If the government's assumptions hold, no conflict follows.
 - **Structural invariants**: The registration state machine is deterministic, terminal states are absorbing, and specific paths always reach expected outcomes.
 - **Source traceability**: Every axiom is classified and traced to authoritative legal text.
-- **Independence**: The neutral statutory facts alone do not force either outcome — the result depends on doctrinal, empirical, and interpretive assumptions.
+- **Independence (structural)**: The conflict condition structurally pivots on `valid-regulationp`. Since that predicate is an unconstrained defstub in the neutral model, ACL2's soundness guarantees neither outcome is derivable from text alone. (This is not an explicit two-model countermodel construction; it relies on metalogical properties of defstubs.)
 - **Existential modeling**: If ANY burdened citizen exists, the burden class is nontrivial.
 - **Hinge identification**: The mandatory-vs-discretionary reading of § 8(j)(2)(A) is the formal pivot that determines the outcome.
 

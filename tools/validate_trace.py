@@ -138,7 +138,7 @@ def main():
     for i, row in enumerate(trace_rows, 1):
         label = row.get("label", row.get("category", "")).strip()
         if label and label not in ALLOWED_LABELS:
-            warnings.append(f"CHECK 4 WARN: Row {i} has label '{label}' not in standard set")
+            errors.append(f"CHECK 4 FAIL: Row {i} has label '{label}' not in allowed set: {ALLOWED_LABELS}")
 
     # --- Print results ---
     if warnings:
