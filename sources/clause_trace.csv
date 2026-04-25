@@ -35,3 +35,5 @@ government-scenario-attempts-to-register,government,SCENARIO_FACT,n/a,n/a,Stipul
 government-assume-right-to-vote-arguendo,government,INTERPRETATION_GOVERNMENT,n/a,n/a,Government concedes arguendo that citizen-a has a protected right to vote
 government-scenario-no-documentary-proof,government,SCENARIO_FACT,n/a,n/a,Stipulated test scenario: citizen-a lacks documentary proof (conceded)
 government-scenario-alternative-process-approved,government,INTERPRETATION_GOVERNMENT,hr22-eh,§ 2(f) / NVRA § 8(j)(2)(A),"the process provides a guaranteed path to registration — interpretation: mandatory approval when evidence satisfies standards"
+semantic-a-mandatory-approval,hinge_mandatory,INTERPRETIVE_ASSUMPTION,hr22-eh,§ 2(f) / NVRA § 8(j)(2)(A)(i),"""shall make a determination"" — interpretation: mandatory duty to approve when attestation + evidence satisfies EAC standards"
+semantic-b-discretionary-denial,hinge_discretionary,INTERPRETIVE_ASSUMPTION,hr22-eh,§ 2(f) / NVRA § 8(j)(2)(A)(i),"""shall make a determination as to whether the applicant has sufficiently established"" — interpretation: duty to decide, but determination may be denial"

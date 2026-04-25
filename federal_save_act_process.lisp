@@ -72,6 +72,56 @@
   (has-qualifying-docs-from-listp (list *doc-nat-cert*)))
 
 ;;; =========================================================================
+;;; v5: General recursive document-list theorems
+;;;
+;;; These prove properties over ARBITRARY document lists, not just
+;;; specific named examples.  They use induction over the list structure.
+;;; =========================================================================
+
+;; If a qualifying document is a member of a list of qualifying docs,
+;; then the list has qualifying documents.
+;; (Induction on docs)
+(defthm member-qualifying-document-implies-has-qualifying-document
+  (implies (and (qualifying-document-listp docs)
+                (consp docs)
+                (member-equal d docs)
+                (qualifying-document-typep d))
+           (has-qualifying-docs-from-listp docs)))
+
+;; Appending two qualifying lists: if a has qualifying docs and b is
+;; a qualifying list, the result has qualifying docs.
+;; (Induction on a)
+(defthm append-preserves-qualifying-document-left
+  (implies (and (has-qualifying-docs-from-listp a)
+                (qualifying-document-listp b))
+           (has-qualifying-docs-from-listp (append a b))))
+
+;; Appending: if b has qualifying docs and a is a qualifying list,
+;; the result has qualifying docs.
+(defthm append-preserves-qualifying-document-right
+  (implies (and (qualifying-document-listp a)
+                (has-qualifying-docs-from-listp b))
+           (has-qualifying-docs-from-listp (append a b))))
+
+;; Qualifying-document-listp is preserved by append
+(defthm qualifying-document-listp-append
+  (implies (and (qualifying-document-listp a)
+                (qualifying-document-listp b))
+           (qualifying-document-listp (append a b))))
+
+;; Removing ANY element from a qualifying-document-listp
+;; preserves qualifying-document-listp.
+(defthm qualifying-document-listp-remove
+  (implies (qualifying-document-listp docs)
+           (qualifying-document-listp (remove-equal d docs))))
+
+;; A qualifying-document-listp with at least one element has qualifying docs
+(defthm nonempty-qualifying-list-has-docs
+  (implies (and (qualifying-document-listp docs)
+                (consp docs))
+           (has-qualifying-docs-from-listp docs)))
+
+;;; =========================================================================
 ;;; 3. REGISTRATION STATE MACHINE
 ;;; Source: SAVE Act § 2(b)-(f), NVRA §§ 4-8
 ;;;

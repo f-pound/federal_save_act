@@ -27,15 +27,21 @@ cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_government_model.li
 
 ## Results
 
-| Book | Theorems | Result |
-|---|---|---|
-| Consistency check | 16 | ✅ All Q.E.D. |
-| Process model | 13 | ✅ All Q.E.D. |
-| Hinge theorems | 5 | ✅ All Q.E.D. |
-| Challenger model | 13 | ✅ All Q.E.D. |
-| Government model | 5 | ✅ All Q.E.D. |
+| Book | Theorems | Technique | Result |
+|---|---|---|---|
+| Consistency check | 16 | defun decomposition, neutrality | ✅ All Q.E.D. |
+| Process model | 19 | recursive list induction | ✅ All Q.E.D. |
+| Process invariants | 13 | trace induction, absorbing states | ✅ All Q.E.D. |
+| Hinge common | 4 | encapsulate | ✅ All Q.E.D. |
+| Hinge mandatory | 2 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
+| Hinge discretionary | 3 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
+| Existentials | 3 | defun-sk Skolemization | ✅ All Q.E.D. |
+| Independence | 3 | countermodel encapsulate | ✅ All Q.E.D. |
+| Challenger model | 13 | encapsulate + bridge rules | ✅ All Q.E.D. |
+| Government model | 5 | encapsulate + bridge rules | ✅ All Q.E.D. |
+| **Total** | **81** | | **✅ All Q.E.D.** |
 
-**Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve for eligible citizens who lack standard documentary proof of citizenship. See `federal_save_act_hinge.lisp` for the formal hinge analysis.
+**Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`hinge_mandatory.lisp` / `hinge_discretionary.lisp`) for the formal analysis.
 
 ## Project Structure
 
@@ -97,6 +103,52 @@ federal_save_act/
 - Amendment XIV, § 1 (Citizenship; State Equal Protection — doctrinal source)
 - Amendment XVII (Voter Qualifications — Senate)
 - Amendment XXIV, § 1 (Poll Tax Prohibition)
+
+## What ACL2 Proves
+
+- **Conditional legal conclusions**: If the challenger's assumptions hold, constitutional conflict follows. If the government's assumptions hold, no conflict follows.
+- **Structural invariants**: The registration state machine is deterministic, terminal states are absorbing, and specific paths always reach expected outcomes.
+- **Source traceability**: Every axiom is classified and traced to authoritative legal text.
+- **Independence**: The neutral statutory facts alone do not force either outcome — the result depends on doctrinal, empirical, and interpretive assumptions.
+- **Existential modeling**: If ANY burdened citizen exists, the burden class is nontrivial.
+- **Hinge identification**: The mandatory-vs-discretionary reading of § 8(j)(2)(A) is the formal pivot that determines the outcome.
+
+## What ACL2 Does Not Prove
+
+- Whether the SAVE Act **is** constitutional or unconstitutional
+- Whether the challenger's empirical assumptions (burden severity) are factually true
+- Whether the government's doctrinal claims (rational connection, evenhandedness) are legally correct
+- Whether a court would adopt the mandatory or discretionary reading
+- The _magnitude_ of the burden (ACL2 models boolean propositions, not quantitative assessments)
+
+## What Remains Assumed
+
+- **33 defaxioms** across 5 books — see `reports/axiom_inventory.md` for the full classification
+- **14 scenario facts** stipulating citizen-a's properties (self-evidently consistent)
+- **3 empirical assumptions** about burden severity (contestable, source-linked)
+- **2 interpretive assumptions** encoding the hinge semantics (mutually exclusive)
+- **5 bridge rules** connecting encapsulate predicates to core defstubs
+
+## What Is Source-Traced
+
+- 38 axiom-to-source mappings in `sources/clause_trace.csv`
+- 21 authoritative sources in `sources/source_manifest.json`
+- Every defaxiom has a classification, source_id, section reference, and quoted clause text
+- Machine-checkable via `tools/validate_trace.py` (runs in CI)
+
+## What Is Empirically Contestable
+
+| Axiom | Claim | Source | How to Contest |
+|---|---|---|---|
+| `challenger-scenario-no-fault` | Citizens lack docs through no fault | Fish v. Kobach | Dispute the empirical prevalence |
+| `challenger-scenario-material-burden` | Cannot obtain docs without material burden | Crawford plurality | Show burden is trivial |
+| `government-burden-not-severe` | Burden is not severe | Crawford plurality | Show burden IS severe |
+
+## Proof Complexity Comparison
+
+This project uses: recursive functions, event traces, induction over lists, `encapsulate` with local witnesses, `defun-sk` Skolemization, CI-certified theorems, and machine-checkable source traceability.
+
+It remains less complex than major ACL2 industrial proofs (e.g., AMD processor verification) because it has limited arithmetic, limited induction depth, and no large refinement stack. The primary value is in the _legal modeling architecture_, not raw proof complexity.
 
 ## Framework
 

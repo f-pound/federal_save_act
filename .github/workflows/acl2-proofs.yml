@@ -5,74 +5,142 @@ on:
     branches: [ master, main ]
     paths:
       - '**.lisp'
+      - 'sources/**'
+      - 'tools/**'
       - '.github/workflows/acl2-proofs.yml'
   pull_request:
     branches: [ master, main ]
     paths:
       - '**.lisp'
+      - 'sources/**'
+      - 'tools/**'
 
 jobs:
+  validate-traces:
+    name: Validate Source Traces
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run trace validator
+        env:
+          PROJECT_ROOT: .
+        run: python tools/validate_trace.py
+
   certify:
     name: Certify ACL2 Books
     runs-on: ubuntu-latest
+    needs: validate-traces
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create reports directory
+        run: mkdir -p reports
+
       - name: Pull ACL2 Docker image
         run: docker pull atwalter/acl2:latest
 
+      # --- Dependency books ---
       - name: Certify core book
         run: echo '(certify-book "federal_save_act_core" ?)' | docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
 
       - name: Certify facts book
         run: echo '(certify-book "federal_save_act_facts" ?)' | docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
 
+      # --- Core verification ---
       - name: Run consistency check
         run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_consistency_check.lisp 2>&1 | tee reports/consistency_check.log
 
-      - name: Verify consistency check (no failures)
+      - name: Verify consistency check
         run: "! grep -q 'FAILED' reports/consistency_check.log"
 
+      # --- Process model ---
       - name: Run process model
         run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_process.lisp 2>&1 | tee reports/process_model.log
 
-      - name: Verify process model (no failures)
+      - name: Verify process model
         run: "! grep -q 'FAILED' reports/process_model.log"
 
-      - name: Run hinge theorems
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge.lisp 2>&1 | tee reports/hinge_theorems.log
+      - name: Run process invariants
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_process_invariants.lisp 2>&1 | tee reports/process_invariants.log
 
-      - name: Verify hinge theorems (no failures)
-        run: "! grep -q 'FAILED' reports/hinge_theorems.log"
+      - name: Verify process invariants
+        run: "! grep -q 'FAILED' reports/process_invariants.log"
 
+      # --- Hinge books (separate — NOT combined) ---
+      - name: Run hinge common
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge_common.lisp 2>&1 | tee reports/hinge_common.log
+
+      - name: Verify hinge common
+        run: "! grep -q 'FAILED' reports/hinge_common.log"
+
+      - name: Run hinge mandatory
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge_mandatory.lisp 2>&1 | tee reports/hinge_mandatory.log
+
+      - name: Verify hinge mandatory
+        run: "! grep -q 'FAILED' reports/hinge_mandatory.log"
+
+      - name: Run hinge discretionary
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge_discretionary.lisp 2>&1 | tee reports/hinge_discretionary.log
+
+      - name: Verify hinge discretionary
+        run: "! grep -q 'FAILED' reports/hinge_discretionary.log"
+
+      # --- Existentials and independence ---
+      - name: Run existentials
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_existentials.lisp 2>&1 | tee reports/existentials.log
+
+      - name: Verify existentials
+        run: "! grep -q 'FAILED' reports/existentials.log"
+
+      - name: Run independence
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_independence.lisp 2>&1 | tee reports/independence.log
+
+      - name: Verify independence
+        run: "! grep -q 'FAILED' reports/independence.log"
+
+      # --- Party models ---
       - name: Run challenger model
         run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_challenger_model.lisp 2>&1 | tee reports/challenger_model.log
 
-      - name: Verify challenger model (no failures)
+      - name: Verify challenger model
         run: "! grep -q 'FAILED' reports/challenger_model.log"
 
       - name: Run government model
         run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_government_model.lisp 2>&1 | tee reports/government_model.log
 
-      - name: Verify government model (no failures)
+      - name: Verify government model
         run: "! grep -q 'FAILED' reports/government_model.log"
 
+      # --- Summary ---
       - name: Summary
         if: always()
         run: |
           echo "=== ACL2 Proof Certification Summary ==="
+          total_qed=0
+          total_failed=0
           for f in reports/*.log; do
             name=$(basename "$f" .log)
             qed=$(grep -c "Q\.E\.D\." "$f" || true)
             failed=$(grep -c "FAILED" "$f" || true)
+            total_qed=$((total_qed + qed))
+            total_failed=$((total_failed + failed))
             if [ "$failed" -gt 0 ]; then
               echo "❌ $name: $qed Q.E.D., $failed FAILED"
             else
               echo "✅ $name: $qed Q.E.D."
             fi
           done
+          echo ""
+          echo "TOTAL: $total_qed Q.E.D., $total_failed FAILED"
 
       - name: Upload proof logs
         if: always()
