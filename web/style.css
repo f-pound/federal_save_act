@@ -1335,4 +1335,6 @@ footer p {
 }
 
 /* Hide mobile toggles on desktop */
-.mobile-panel-toggles { display: none; }
+@media (min-width: 769px) {
+  .mobile-panel-toggles { display: none; }
+}
