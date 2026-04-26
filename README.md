@@ -32,14 +32,19 @@ cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_government_model.li
 | Consistency check | 16 | defun decomposition, neutrality | ✅ All Q.E.D. |
 | Process model | 19 | recursive list induction | ✅ All Q.E.D. |
 | Process invariants | 15 | trace induction, acceptance-path invariant | ✅ All Q.E.D. |
+| **Deep process invariants** | **9** | **trace induction, terminal stability, no-skip** | ✅ All Q.E.D. |
 | Hinge common | 4 | encapsulate | ✅ All Q.E.D. |
 | Hinge mandatory | 2 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
 | Hinge discretionary | 3 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
-| Existentials | 3 | defun-sk Skolemization | ✅ All Q.E.D. |
+| Existentials | 6 | defun-sk Skolemization | ✅ All Q.E.D. |
 | Independence | 3 | structural decomposition, pivot theorem | ✅ All Q.E.D. |
 | Challenger model | 13 | encapsulate + bridge rules | ✅ All Q.E.D. |
 | Government model | 5 | encapsulate + bridge rules | ✅ All Q.E.D. |
-| **Total** | **83** | | **✅ All Q.E.D.** |
+| **Document proofs** | **9** | **list induction, structural denial** | ✅ All Q.E.D. |
+| **Burden proofs** | **8** | **derivation chain, contrapositives** | ✅ All Q.E.D. |
+| **Doctrine proofs** | **7** | **conditional doctrine, encapsulate** | ✅ All Q.E.D. |
+| **Model consistency** | **7** | **compositional decomposition** | ✅ All Q.E.D. |
+| **Total** | **126** | | **✅ All Q.E.D.** |
 
 **Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`hinge_mandatory.lisp` / `hinge_discretionary.lisp`) for the formal analysis.
 
@@ -57,11 +62,16 @@ federal_save_act/
 ├── federal_save_act_facts.lisp              # Text-derived facts (defaxiom)
 ├── federal_save_act_process.lisp            # Registration state machine + doc recognizers
 ├── federal_save_act_process_invariants.lisp # General state-machine invariants (induction)
+├── federal_save_act_deep_process_invariants.lisp # v5.2: deeper trace/terminal invariants
 ├── federal_save_act_hinge_common.lisp       # Shared hinge vocabulary (encapsulate)
 ├── federal_save_act_hinge_mandatory.lisp    # Semantic A: mandatory approval interpretation
 ├── federal_save_act_hinge_discretionary.lisp # Semantic B: discretionary denial interpretation
 ├── federal_save_act_existentials.lisp       # Existential burden modeling (defun-sk)
 ├── federal_save_act_independence.lisp       # Independence / non-entailment checks
+├── federal_save_act_document_proofs.lisp    # v5.2: document-list structural proofs
+├── federal_save_act_burden_proofs.lisp      # v5.2: burden derivation chain
+├── federal_save_act_doctrine_proofs.lisp    # v5.2: conditional doctrine theorem chains
+├── federal_save_act_model_consistency.lisp  # v5.2: model sanity / consistency checks
 ├── federal_save_act_challenger_model.lisp   # Challenge-side model (encapsulate + defaxiom)
 ├── federal_save_act_government_model.lisp   # Government defense model (encapsulate + defaxiom)
 ├── federal_save_act_consistency_check.lisp  # Core vocabulary sanity + neutrality proofs
@@ -82,7 +92,10 @@ federal_save_act/
 │       └── federal_save_act_ace.json        # ACE-normalized clauses
 └── reports/
     ├── axiom_inventory.md                   # Full defaxiom classification report
+    ├── axiom_pressure_report.md             # v5.2: axiom pressure + replacement paths
+    ├── proof_dependency_report.md           # v5.2: theorem dependency chains
     ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
+    ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
     └── federal_save_act_proof_obligations.md # Proof results
 ```
 
@@ -158,6 +171,22 @@ federal_save_act/
 This project uses: recursive functions, event traces, induction over lists, `encapsulate` with local witnesses, `defun-sk` Skolemization, CI-certified theorems, and machine-checkable source traceability.
 
 It remains less complex than major ACL2 industrial proofs (e.g., AMD processor verification) because it has limited arithmetic, limited induction depth, and no large refinement stack. The primary value is in the _legal modeling architecture_, not raw proof complexity.
+
+## v5.2: ACL2 Proof-Legitimacy Upgrade
+
+v5.2 does not build the future **A Computational Amicus Brief** engine. v5.2 strengthens the Federal SAVE Act proof development itself. The focus is on legitimate ACL2 theorem proving:
+
+- Recursive executable models
+- Induction over traces and document lists
+- Derived burden conclusions (5-step derivation chain replaces assumed burden axioms)
+- Doctrinal theorem chains (Anderson-Burdick encapsulate)
+- Encapsulated theory components with local witnesses
+- Source-traced trusted assumptions
+- Proof dependency reporting
+
+A future project may generalize these methods into **A Computational Amicus Brief**. For now, this repository remains focused on the Federal SAVE Act.
+
+See `reports/v5_2_acl2_proof_assessment.md` for full metrics.
 
 ## Framework
 

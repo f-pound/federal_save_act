@@ -107,6 +107,41 @@ jobs:
       - name: Verify independence
         run: "! grep -q 'FAILED' reports/independence.log"
 
+      # --- v5.2 deep process invariants ---
+      - name: Run deep process invariants
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_deep_process_invariants.lisp 2>&1 | tee reports/deep_process_invariants.log
+
+      - name: Verify deep process invariants
+        run: "! grep -q 'FAILED' reports/deep_process_invariants.log"
+
+      # --- v5.2 document proofs ---
+      - name: Run document proofs
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_document_proofs.lisp 2>&1 | tee reports/document_proofs.log
+
+      - name: Verify document proofs
+        run: "! grep -q 'FAILED' reports/document_proofs.log"
+
+      # --- v5.2 burden proofs ---
+      - name: Run burden proofs
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_burden_proofs.lisp 2>&1 | tee reports/burden_proofs.log
+
+      - name: Verify burden proofs
+        run: "! grep -q 'FAILED' reports/burden_proofs.log"
+
+      # --- v5.2 doctrine proofs ---
+      - name: Run doctrine proofs
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_doctrine_proofs.lisp 2>&1 | tee reports/doctrine_proofs.log
+
+      - name: Verify doctrine proofs
+        run: "! grep -q 'FAILED' reports/doctrine_proofs.log"
+
+      # --- v5.2 model consistency ---
+      - name: Run model consistency
+        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_model_consistency.lisp 2>&1 | tee reports/model_consistency.log
+
+      - name: Verify model consistency
+        run: "! grep -q 'FAILED' reports/model_consistency.log"
+
       # --- Party models ---
       - name: Run challenger model
         run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_challenger_model.lisp 2>&1 | tee reports/challenger_model.log
