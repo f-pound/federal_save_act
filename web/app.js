@@ -115,6 +115,40 @@
     if (!localStorage.getItem('explorer-seen')) {
       openModal();
     }
+
+    // Mobile panel toggles
+    setupMobileToggles();
+  }
+
+  function setupMobileToggles() {
+    const toggleLeft = document.getElementById('toggle-hypotheticals');
+    const toggleRight = document.getElementById('toggle-details');
+    const panelLeft = document.getElementById('panel-left');
+    const panelRight = document.getElementById('panel-right');
+
+    if (!toggleLeft || !toggleRight) return;
+
+    toggleLeft.addEventListener('click', () => {
+      const isOpen = panelLeft.classList.contains('mobile-open');
+      panelLeft.classList.toggle('mobile-open');
+      toggleLeft.classList.toggle('active');
+      // Close other panel
+      if (!isOpen) {
+        panelRight.classList.remove('mobile-open');
+        toggleRight.classList.remove('active');
+      }
+    });
+
+    toggleRight.addEventListener('click', () => {
+      const isOpen = panelRight.classList.contains('mobile-open');
+      panelRight.classList.toggle('mobile-open');
+      toggleRight.classList.toggle('active');
+      // Close other panel
+      if (!isOpen) {
+        panelLeft.classList.remove('mobile-open');
+        toggleLeft.classList.remove('active');
+      }
+    });
   }
 
   // ---- Audit Bar ----
