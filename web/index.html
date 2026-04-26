@@ -22,6 +22,11 @@
         <button class="audit-stat audit-stat-btn" data-audit="axioms"><span class="audit-num" id="stat-axioms">—</span><span class="audit-label">Traced Axioms</span></button>
         <button class="audit-stat audit-stat-btn" data-audit="existentials"><span class="audit-num" id="stat-existentials">—</span><span class="audit-label">Existentials</span></button>
       </div>
+      <label class="reviewer-toggle" title="Show ACL2 technical details">
+        <span class="reviewer-icon">🔬</span>
+        <input type="checkbox" id="reviewer-mode">
+        <span class="reviewer-label">Reviewer</span>
+      </label>
       <button id="about-btn" class="about-btn" title="About this tool">?</button>
     </div>
   </header>
@@ -49,6 +54,27 @@
     <aside id="panel-left" class="panel panel-left">
       <h2 class="panel-title">Hypotheticals</h2>
       <p class="panel-hint">Toggle assumptions to explore which conclusions remain supported.</p>
+
+      <div id="preset-bar" class="preset-bar">
+        <button class="preset-btn" data-preset="compare">Compare Both</button>
+        <button class="preset-btn" data-preset="challenger">Challenger</button>
+        <button class="preset-btn" data-preset="government">Government</button>
+        <button class="preset-btn" data-preset="neutral">Neutral</button>
+        <button class="preset-btn" data-preset="highrisk">High-Risk</button>
+      </div>
+
+      <div id="scenario-status" class="scenario-status">
+        <div class="scenario-title">Current Scenario</div>
+        <div class="scenario-row">
+          <span class="scenario-path-label path-challenger">Challenger conflict</span>
+          <span class="scenario-badge" id="scenario-challenger">—</span>
+        </div>
+        <div class="scenario-row">
+          <span class="scenario-path-label path-government">Government no-conflict</span>
+          <span class="scenario-badge" id="scenario-government">—</span>
+        </div>
+      </div>
+
       <div id="controls-container"></div>
 
       <div class="filter-section">

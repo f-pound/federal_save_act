@@ -10,7 +10,8 @@
     "authoritative_sources": 21,
     "trace_rows": 38,
     "ace_statements": 13,
-    "generated_at": "2026-04-26T18:51:57.577447+00:00"
+    "repo_url": "https://github.com/f-pound/federal_save_act",
+    "generated_at": "2026-04-26T19:27:03.682855+00:00"
   },
   "audit_details": {
     "books": [
@@ -595,7 +596,8 @@
       "label": "H.R. 22 — SAVE Act",
       "description": "Safeguard American Voter Eligibility Act, 119th Congress. Passed House 220-208, April 10, 2025.",
       "source_ref": "BILLS-119hr22eh",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "This is the bill being analyzed. Every formal conclusion traces back to its actual text."
     },
     {
       "id": "src-nvra",
@@ -604,7 +606,8 @@
       "label": "NVRA Baseline (52 U.S.C. §§ 20501–20511)",
       "description": "National Voter Registration Act — the statutory baseline that the SAVE Act amends.",
       "source_ref": "52 U.S.C. § 20501 et seq.",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The NVRA is the existing federal baseline for voter registration. The SAVE Act modifies this framework."
     },
     {
       "id": "src-const-5th",
@@ -613,7 +616,8 @@
       "label": "5th Amendment (Due Process / Equal Protection)",
       "description": "Equal protection component applied to federal action via Bolling v. Sharpe, 347 U.S. 497 (1954). Operative constitutional hook for the model.",
       "source_ref": "U.S. Const. amend. V",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The 5th Amendment's due process clause is the constitutional hook for challenging unreasonable voting burdens."
     },
     {
       "id": "src-const-14th",
@@ -631,7 +635,8 @@
       "label": "17th Amendment (Senate Voter Qualifications)",
       "description": "Extends voter qualification framework to Senate elections.",
       "source_ref": "U.S. Const. amend. XVII",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The 17th Amendment extended direct election to senators. It reinforces the constitutional right to vote."
     },
     {
       "id": "src-const-24th",
@@ -649,7 +654,8 @@
       "label": "Crawford v. Marion County (2008)",
       "description": "Supreme Court plurality upholding Indiana voter ID law under Anderson-Burdick framework. Key precedent for burden analysis.",
       "source_ref": "553 U.S. 181 (2008)",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Crawford v. Marion County is the Supreme Court's controlling framework for evaluating voter ID laws."
     },
     {
       "id": "src-anderson-burdick",
@@ -667,7 +673,8 @@
       "label": "Fish v. Kobach (10th Cir. 2016)",
       "description": "Kansas documentary proof-of-citizenship requirement. Found ~18,000 applicants unable to complete registration. Key empirical record.",
       "source_ref": "840 F.3d 710 (10th Cir. 2016)",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Fish v. Kobach found that strict proof-of-citizenship requirements blocked legitimate voters."
     },
     {
       "id": "src-bolling",
@@ -712,7 +719,8 @@
       "book": "federal_save_act_facts.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "This ground fact sets up the test scenario: a real citizen, eligible to vote, who wants to register."
     },
     {
       "id": "ax-citizen-a-lacks-docs",
@@ -724,7 +732,8 @@
       "book": "federal_save_act_facts.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The critical scenario fact: the citizen does not have any qualifying documents, which triggers the SAVE Act's proof requirement."
     },
     {
       "id": "ax-protected-right",
@@ -736,7 +745,8 @@
       "book": "federal_save_act_facts.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Establishes that voting is constitutionally protected — the foundation for any burden analysis."
     },
     {
       "id": "ax-law-is-law",
@@ -748,7 +758,8 @@
       "book": "federal_save_act_facts.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Grounds the formal analysis in real legislation. Without this, the model would be about a hypothetical law."
     },
     {
       "id": "ax-registration-transaction",
@@ -760,7 +771,8 @@
       "book": "federal_save_act_facts.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Classifies the act of registering as a formal transaction subject to the SAVE Act's requirements."
     },
     {
       "id": "ax-statute-denies",
@@ -772,7 +784,8 @@
       "book": "federal_save_act_facts.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "This is the crux: under the SAVE Act, lacking documents triggers a denial of registration."
     },
     {
       "id": "ax-no-fault",
@@ -785,7 +798,8 @@
       "source_ref": "Fish v. Kobach record",
       "trusted_base": true,
       "high_risk": true,
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "HIGH RISK — This empirical claim (the citizen lacks documents through no fault of their own) is the most contestable assumption in the challenger's case. ~18,000 applicants were blocked in Kansas under a similar requirement."
     },
     {
       "id": "ax-material-burden",
@@ -798,7 +812,8 @@
       "source_ref": "Crawford burden discussion",
       "trusted_base": true,
       "high_risk": true,
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "HIGH RISK — The claim that obtaining qualifying documents is materially burdensome. Based on Crawford plurality language, not a holding."
     },
     {
       "id": "ax-burden-not-severe",
@@ -811,7 +826,8 @@
       "source_ref": "Crawford plurality",
       "trusted_base": true,
       "high_risk": true,
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "HIGH RISK — The government's counter-claim that the documentation burden is not severe. Directly contradicts the challenger's burden claim."
     },
     {
       "id": "ax-adequate-alt",
@@ -823,7 +839,8 @@
       "book": "federal_save_act_government_model.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "The government's argument that the SAVE Act's alternative process provides an adequate safety valve."
     },
     {
       "id": "ax-mandatory-reading",
@@ -835,7 +852,8 @@
       "book": "federal_save_act_hinge_mandatory.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "Government's interpretation: 'shall make a determination' means mandatory approval when evidence meets standards."
     },
     {
       "id": "ax-discretionary-reading",
@@ -847,7 +865,8 @@
       "book": "federal_save_act_hinge_discretionary.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "Challenger's interpretation: 'shall make a determination' means the official may still deny registration."
     },
     {
       "id": "ax-election-integrity",
@@ -859,7 +878,8 @@
       "book": "federal_save_act_government_model.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "A doctrinal assumption from Crawford: protecting election integrity is an important government interest."
     },
     {
       "id": "ax-reasonable-evenhanded",
@@ -871,7 +891,8 @@
       "book": "federal_save_act_government_model.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "A doctrinal claim: the SAVE Act's requirement is reasonable and applies evenhandedly to all applicants."
     },
     {
       "id": "ax-severe-defeats",
@@ -883,7 +904,8 @@
       "book": "federal_save_act_challenger_model.lisp",
       "trusted_base": true,
       "high_risk": false,
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "Anderson-Burdick doctrine: if a voting regulation imposes a severe burden, it is constitutionally invalid."
     },
     {
       "id": "model-state-machine",
@@ -901,7 +923,8 @@
       "label": "Document Recognizer Model",
       "description": "Executable recognizers for REAL ID, passport, military ID, government photo ID, and supporting documents.",
       "book": "federal_save_act_process.lisp",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The document recognizer formally defines which documents satisfy the SAVE Act's proof-of-citizenship requirement."
     },
     {
       "id": "model-burden",
@@ -910,7 +933,8 @@
       "label": "Burden Derivation Chain (defun)",
       "description": "5-step executable burden chain: lacks-docs → cannot-obtain → material-burden → severe-burden → invalid-regulation.",
       "book": "federal_save_act_burden_proofs.lisp",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "This 5-step executable chain derives the severity of the burden rather than assuming it, making the conclusion more defensible."
     },
     {
       "id": "model-hinge",
@@ -919,7 +943,8 @@
       "label": "Interpretive Hinge Fork",
       "description": "Encapsulate-based model: § 8(j)(2)(A) 'sufficiently established' splits into mandatory (government) vs. discretionary (challenger) readings.",
       "book": "federal_save_act_hinge_common.lisp",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The interpretive fork is the key structural insight: the entire dispute reduces to how one statutory phrase is read."
     },
     {
       "id": "model-existentials",
@@ -928,7 +953,8 @@
       "label": "Existential Propositions (defun-sk)",
       "description": "4 Skolemized existential claims: exists-burdened-citizen, exists-no-fault-citizen, exists-documentless-eligible-voter, exists-citizen-facing-discretionary-denial.",
       "book": "federal_save_act_existentials.lisp",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Existential propositions prove that the affected class of voters is non-empty — real people are affected."
     },
     {
       "id": "model-anderson-burdick",
@@ -937,7 +963,8 @@
       "label": "Anderson-Burdick Doctrinal Standard",
       "description": "Encapsulate-based doctrinal standard: severe burden → strict scrutiny; not-severe → rational basis.",
       "book": "federal_save_act_doctrine_proofs.lisp",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The encapsulated doctrinal standard ensures the Anderson-Burdick test is applied consistently."
     },
     {
       "id": "deriv-denial",
@@ -945,7 +972,8 @@
       "layer": "derivations",
       "label": "Denial derivation",
       "description": "citizen-a's registration is denied because they lack documentary proof and no alternative process is approved.",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Shows that under the SAVE Act, citizen-a's registration is denied — the denial is a logical consequence of the statute."
     },
     {
       "id": "deriv-lacks-docs",
@@ -953,7 +981,8 @@
       "layer": "derivations",
       "label": "Lacks-documents derivation",
       "description": "citizen-a possesses no qualifying document from the SAVE Act list.",
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Formally derives that the citizen has no qualifying document from the SAVE Act's list."
     },
     {
       "id": "deriv-burden-chain",
@@ -962,7 +991,8 @@
       "label": "Full burden derivation chain",
       "description": "Executable defun chain: citizen-a-has-material-burden → citizen-a-burden-is-severe → regulation-is-invalid.",
       "book": "federal_save_act_burden_proofs.lisp",
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "The burden derivation chain transforms raw facts into the legal conclusion that the burden is severe."
     },
     {
       "id": "deriv-alt-process",
@@ -970,7 +1000,8 @@
       "layer": "derivations",
       "label": "Alternative-process derivation",
       "description": "Under mandatory reading: alternative process provides guaranteed registration path. Under discretionary reading: official may deny.",
-      "path": "contested"
+      "path": "contested",
+      "why_it_matters": "This is where the two models diverge: the mandatory reading provides a path to registration; the discretionary reading does not."
     },
     {
       "id": "deriv-hinge-fork",
@@ -978,7 +1009,8 @@
       "layer": "derivations",
       "label": "Interpretive hinge fork split",
       "description": "The outcome pivots on whether § 8(j)(2)(A) is read as mandatory approval or discretionary determination.",
-      "path": "contested"
+      "path": "contested",
+      "why_it_matters": "The interpretive hinge fork is the single point where the challenger and government models split. Everything above is shared."
     },
     {
       "id": "thm-registered-implies-acceptance",
@@ -989,7 +1021,8 @@
       "book": "federal_save_act_process_invariants.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "This pure structural theorem proves that registration must pass through an acceptance state. It depends on zero assumptions — genuine process verification."
     },
     {
       "id": "thm-denied-implies-denial",
@@ -1000,7 +1033,8 @@
       "book": "federal_save_act_deep_process_invariants.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The denial-side dual: reaching 'denied' requires passing through a denial-triggering state. Zero assumptions."
     },
     {
       "id": "thm-terminal-remains",
@@ -1011,7 +1045,8 @@
       "book": "federal_save_act_deep_process_invariants.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "Once registered or denied, the outcome is permanent. This guarantees the state machine has no anomalous loops."
     },
     {
       "id": "thm-nonqualifying-no-proof",
@@ -1022,7 +1057,8 @@
       "book": "federal_save_act_document_proofs.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "If a citizen's documents are all nonqualifying, they cannot satisfy the documentary proof requirement. Zero assumptions."
     },
     {
       "id": "thm-pivot",
@@ -1033,7 +1069,8 @@
       "book": "federal_save_act_model_consistency.lisp",
       "axiom_count": 0,
       "axiom_free": false,
-      "path": "neutral"
+      "path": "neutral",
+      "why_it_matters": "The most important structural theorem: the entire constitutional dispute reduces to a single predicate — valid-regulationp. If the regulation is valid, no conflict; if invalid, conflict."
     },
     {
       "id": "thm-full-burden",
@@ -1044,7 +1081,8 @@
       "book": "federal_save_act_burden_proofs.lisp",
       "axiom_count": 6,
       "axiom_free": false,
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "Derives the full burden chain: lacking documents + cannot obtain + no alternative → severe burden → invalid regulation. Uses the executable defun chain."
     },
     {
       "id": "thm-invalid-enables",
@@ -1055,7 +1093,8 @@
       "book": "federal_save_act_model_consistency.lisp",
       "axiom_count": 0,
       "axiom_free": false,
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "If the regulation is not valid, the formal conflict condition is established. The bridge from burden analysis to constitutional conflict."
     },
     {
       "id": "thm-valid-negates",
@@ -1066,7 +1105,8 @@
       "book": "federal_save_act_model_consistency.lisp",
       "axiom_count": 0,
       "axiom_free": false,
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "If the regulation is valid, the government wins — no formal conflict exists. The government's main defense."
     },
     {
       "id": "pivot-valid-regulation",
@@ -1074,7 +1114,8 @@
       "layer": "conclusions",
       "label": "valid-regulationp",
       "description": "The single interpretive/doctrinal predicate that determines the constitutional outcome. Not proved by ACL2 — determined by the assumption set.",
-      "path": "contested"
+      "path": "contested",
+      "why_it_matters": "This single predicate — valid-regulationp — is the constitutional pivot. It is not proved by ACL2; it is determined entirely by which assumptions the user selects."
     },
     {
       "id": "concl-challenger",
@@ -1083,7 +1124,8 @@
       "label": "Challenger: CONSTITUTIONAL CONFLICT",
       "description": "Under challenger assumptions (no-fault, material burden, severe burden, discretionary reading, invalid regulation), ACL2 derives that a formal constitutional conflict exists.",
       "book": "federal_save_act_challenger_model.lisp",
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "Under challenger assumptions (no-fault, material burden, discretionary reading, invalid regulation), ACL2 derives that a formal constitutional conflict exists."
     },
     {
       "id": "concl-government",
@@ -1092,7 +1134,8 @@
       "label": "Government: NO CONFLICT",
       "description": "Under government assumptions (burden not severe, adequate alternative, mandatory reading, election integrity, valid regulation), ACL2 derives that no formal constitutional conflict exists.",
       "book": "federal_save_act_government_model.lisp",
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "Under government assumptions (burden not severe, adequate alternative, mandatory reading, valid regulation), ACL2 derives that no formal constitutional conflict exists."
     }
   ],
   "edges": [

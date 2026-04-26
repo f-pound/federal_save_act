@@ -14,6 +14,34 @@
   let activeAssumptions = new Set();
   let dimmedNodes = new Set();
   let activeDrawer = null;
+  let activePreset = 'compare';
+  let reviewerMode = false;
+
+  // ---- Preset definitions ----
+  const PRESETS = {
+    compare: {
+      label: 'Compare Both',
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-adequate-alt',
+             'hyp-mandatory', 'hyp-discretionary', 'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats'],
+    },
+    challenger: {
+      label: 'Challenger',
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats'],
+    },
+    government: {
+      label: 'Government',
+      hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory',
+             'hyp-election-integrity', 'hyp-reasonable'],
+    },
+    neutral: {
+      label: 'Neutral',
+      hyps: [],
+    },
+    highrisk: {
+      label: 'High-Risk',
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe'],
+    },
+  };
 
   // ---- Node type display names ----
   const TYPE_LABELS = {
@@ -95,6 +123,12 @@
     });
     document.getElementById('audit-drawer-close').addEventListener('click', closeAuditDrawer);
 
+    // Preset buttons
+    setupPresets();
+
+    // Reviewer mode toggle
+    setupReviewerMode();
+
     // About modal
     const modal = document.getElementById('about-modal');
     const openModal = () => modal.classList.remove('hidden');
@@ -118,6 +152,59 @@
 
     // Mobile panel toggles
     setupMobileToggles();
+
+    // Initial scenario status
+    updateScenarioStatus();
+  }
+
+  // ---- Preset Buttons ----
+  function setupPresets() {
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyPreset(btn.dataset.preset);
+      });
+    });
+    // Mark default preset active
+    updatePresetHighlight();
+  }
+
+  function applyPreset(name) {
+    const preset = PRESETS[name];
+    if (!preset) return;
+
+    activePreset = name;
+    activeAssumptions.clear();
+    preset.hyps.forEach(id => activeAssumptions.add(id));
+
+    // Update all checkboxes to match
+    data.hypotheticals.forEach(h => {
+      const cb = document.getElementById(`hyp-${h.id}`);
+      if (cb) cb.checked = activeAssumptions.has(h.id);
+    });
+
+    // Check mutual exclusion warning
+    checkMutualExclusion();
+
+    recalculateDimming();
+    updateNodeStates();
+    updatePresetHighlight();
+    updateScenarioStatus();
+  }
+
+  function updatePresetHighlight() {
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.preset === activePreset);
+    });
+  }
+
+  // ---- Reviewer Mode ----
+  function setupReviewerMode() {
+    const toggle = document.getElementById('reviewer-mode');
+    if (!toggle) return;
+    toggle.addEventListener('change', () => {
+      reviewerMode = toggle.checked;
+      document.body.classList.toggle('reviewer-active', reviewerMode);
+    });
   }
 
   function setupMobileToggles() {
@@ -394,6 +481,10 @@
       activeAssumptions.delete(hyp.id);
     }
 
+    // Manual toggle clears active preset
+    activePreset = null;
+    updatePresetHighlight();
+
     // Check mutual exclusion warning
     checkMutualExclusion();
 
@@ -493,6 +584,7 @@
 
     // Update conclusion status badges
     updateConclusionStatuses();
+    updateScenarioStatus();
   }
 
   function updateConclusionStatuses() {
@@ -531,6 +623,41 @@
       } else {
         statusEl.textContent = 'Supported';
         statusEl.className = 'conclusion-status status-supported';
+      }
+    });
+  }
+
+  function updateScenarioStatus() {
+    const challengerEl = document.getElementById('scenario-challenger');
+    const governmentEl = document.getElementById('scenario-government');
+    if (!challengerEl || !governmentEl || !data) return;
+
+    const conclusions = data.nodes.filter(n => n.type === 'FINAL_CONCLUSION');
+    conclusions.forEach(concl => {
+      const targetEl = concl.id === 'concl-challenger' ? challengerEl : governmentEl;
+
+      if (dimmedNodes.has(concl.id)) {
+        targetEl.textContent = 'Unsupported';
+        targetEl.className = 'scenario-badge status-unsupported';
+        return;
+      }
+
+      const conclPath = concl.path;
+      const pathHyps = data.hypotheticals.filter(h => h.path === conclPath);
+      const anyHypOff = pathHyps.some(h => !activeAssumptions.has(h.id));
+      const directSupporters = data.edges.filter(e =>
+        e.to === concl.id && e.relation !== 'contests' && e.relation !== 'negates'
+      );
+      const anyDirectDimmed = directSupporters.some(e => dimmedNodes.has(e.from));
+
+      if (anyHypOff || anyDirectDimmed) {
+        targetEl.textContent = anyHypOff ? 'Unsupported' : 'Contested';
+        targetEl.className = anyHypOff
+          ? 'scenario-badge status-unsupported'
+          : 'scenario-badge status-contested';
+      } else {
+        targetEl.textContent = 'Supported';
+        targetEl.className = 'scenario-badge status-supported';
       }
     });
   }
@@ -643,6 +770,19 @@
 
     if (badges.childNodes.length > 0) el.appendChild(badges);
 
+    // Reviewer-mode detail line (hidden by default, shown via body.reviewer-active)
+    if (node.acl2_event || node.book || node.axiom_count !== undefined) {
+      const rev = document.createElement('div');
+      rev.className = 'reviewer-detail';
+      const parts = [];
+      if (node.acl2_event) parts.push(`<span class="reviewer-tag">Event</span>${node.acl2_event}`);
+      if (node.book) parts.push(`<span class="reviewer-tag">Book</span>${node.book.replace('.lisp', '')}`);
+      if (node.axiom_count !== undefined) parts.push(`<span class="reviewer-tag">Axioms</span>${node.axiom_count}`);
+      if (node.type) parts.push(`<span class="reviewer-tag">Type</span>${TYPE_LABELS[node.type] || node.type}`);
+      rev.innerHTML = parts.join('<br>');
+      el.appendChild(rev);
+    }
+
     // Conclusion status badge
     if (node.type === 'FINAL_CONCLUSION') {
       const statusEl = document.createElement('div');
@@ -695,6 +835,24 @@
     container.appendChild(typeBadge);
 
     addDivider(container);
+
+    // Why This Matters — curated plain-English callout
+    if (node.why_it_matters) {
+      const callout = document.createElement('div');
+      callout.className = 'detail-why-matters';
+
+      const calloutLabel = document.createElement('div');
+      calloutLabel.className = 'detail-label';
+      calloutLabel.textContent = 'Why This Matters';
+
+      const calloutValue = document.createElement('div');
+      calloutValue.className = 'detail-value';
+      calloutValue.textContent = node.why_it_matters;
+
+      callout.appendChild(calloutLabel);
+      callout.appendChild(calloutValue);
+      container.appendChild(callout);
+    }
 
     // Description
     if (node.description) {
@@ -755,6 +913,42 @@
 
     addDivider(container);
 
+    // Deep links to repo artifacts
+    const repoUrl = data.meta.repo_url || 'https://github.com/f-pound/federal_save_act';
+    const linksContainer = document.createElement('div');
+    linksContainer.className = 'detail-links';
+    let hasLinks = false;
+
+    if (node.book) {
+      addRepoLink(linksContainer, '📄', 'ACL2 Book', `${repoUrl}/blob/master/model/${node.book}`);
+      hasLinks = true;
+    }
+    if (node.type === 'FINAL_CONCLUSION' || node.type === 'THEOREM') {
+      addRepoLink(linksContainer, '🔗', 'Proof Dependencies', `${repoUrl}/blob/master/reports/proof_dependency_report.md`);
+      hasLinks = true;
+    }
+    if (node.high_risk || node.type === 'EMPIRICAL_ASSUMPTION') {
+      addRepoLink(linksContainer, '⚠', 'Axiom Pressure', `${repoUrl}/blob/master/reports/axiom_pressure_report.md`);
+      hasLinks = true;
+    }
+    if (node.trusted_base || node.type === 'SCENARIO_FACT' || node.type === 'TEXT_FACT') {
+      addRepoLink(linksContainer, '📋', 'Source Trace', `${repoUrl}/blob/master/reports/axiom_inventory.md`);
+      hasLinks = true;
+    }
+    if (node.book) {
+      addRepoLink(linksContainer, '✅', 'Certification', `${repoUrl}/blob/master/reports/certification_status.md`);
+      hasLinks = true;
+    }
+
+    if (hasLinks) {
+      const linksLabel = document.createElement('div');
+      linksLabel.className = 'detail-label';
+      linksLabel.textContent = 'Repository Artifacts';
+      container.appendChild(linksLabel);
+      container.appendChild(linksContainer);
+      addDivider(container);
+    }
+
     // Dependencies (incoming edges)
     const deps = data.edges.filter(e => e.to === node.id);
     if (deps.length > 0) {
@@ -774,6 +968,16 @@
       });
       addDetailBlock(container, 'Supports', supNames.join('\n'));
     }
+  }
+
+  function addRepoLink(container, icon, label, url) {
+    const a = document.createElement('a');
+    a.className = 'detail-link';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = `<span class="detail-link-icon">${icon}</span>${label}`;
+    container.appendChild(a);
   }
 
   function addDetailBlock(container, label, value, mono) {
