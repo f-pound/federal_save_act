@@ -20,19 +20,19 @@ The certified ACL2 books do not prove that the SAVE Act is constitutional or unc
 
 The project uses a **hybrid architecture**: `encapsulate` with local witness functions for interpretive predicates and doctrinal standards (where inconsistency risk is highest), `defaxiom` for text-derived facts and scenario ground truths (self-evidently consistent constraints on `defstub` functions), and executable `defun` chains for derived burden conclusions. This design puts consistency protection exactly where it matters most while making burden derivation mechanically auditable.
 
-See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the original v3 architectural rationale (still applicable to the hybrid core).
+See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectural rationale (still applicable to the hybrid core).
 
 ## Quick Start
 
 ```powershell
 # Run consistency check (verifies core vocabulary)
-cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_consistency_check.lisp"
+cmd /c "docker compose run --rm acl2 acl2 < model/federal_save_act_consistency_check.lisp"
 
 # Run challenger proof (expects constitutional conflict)
-cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_challenger_model.lisp"
+cmd /c "docker compose run --rm acl2 acl2 < model/federal_save_act_challenger_model.lisp"
 
 # Run government proof (expects no conflict)
-cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_government_model.lisp"
+cmd /c "docker compose run --rm acl2 acl2 < model/federal_save_act_government_model.lisp"
 ```
 
 > **Important**: Never load both models in the same ACL2 session. They derive opposite conclusions and are intentionally incompatible.
@@ -58,7 +58,7 @@ cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_government_model.li
 | **Model consistency** | **7** | **compositional decomposition** | ✅ All Q.E.D. |
 | **Total** | **126** | | **✅ All Q.E.D.** |
 
-**Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`hinge_mandatory.lisp` / `hinge_discretionary.lisp`) for the formal analysis.
+**Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`model/federal_save_act_hinge_mandatory.lisp` / `model/federal_save_act_hinge_discretionary.lisp`) for the formal analysis.
 
 ## Project Structure
 
@@ -67,30 +67,42 @@ federal_save_act/
 ├── README.md                                # This file
 ├── CHANGELOG.md                             # Version history
 ├── version.json                             # Machine-readable project metadata
-├── Overview.md                              # Full analysis report
-├── RIGOR_NOTES_V3.md                        # v3/v4 architecture & rigor notes
-├── agents-config.md                         # Project configuration
-├── constitutional_language.txt              # U.S. Constitution provisions
-├── federal_save_act_bill_text.txt           # H.R. 22 full text
-├── federal_save_act_core.lisp               # Neutral vocabulary (defstub + defun)
-├── federal_save_act_facts.lisp              # Text-derived facts (defaxiom)
-├── federal_save_act_process.lisp            # Registration state machine + doc recognizers
-├── federal_save_act_process_invariants.lisp # General state-machine invariants (induction)
-├── federal_save_act_deep_process_invariants.lisp # v5.2: deeper trace/terminal invariants
-├── federal_save_act_hinge_common.lisp       # Shared hinge vocabulary (encapsulate)
-├── federal_save_act_hinge_mandatory.lisp    # Semantic A: mandatory approval interpretation
-├── federal_save_act_hinge_discretionary.lisp # Semantic B: discretionary denial interpretation
-├── federal_save_act_existentials.lisp       # Existential burden modeling (defun-sk)
-├── federal_save_act_independence.lisp       # Independence / non-entailment checks
-├── federal_save_act_document_proofs.lisp    # v5.2: document-list structural proofs
-├── federal_save_act_burden_proofs.lisp      # v5.2: burden derivation chain
-├── federal_save_act_doctrine_proofs.lisp    # v5.2: conditional doctrine theorem chains
-├── federal_save_act_model_consistency.lisp  # v5.2: model sanity / consistency checks
-├── federal_save_act_challenger_model.lisp   # Challenge-side model (encapsulate + defaxiom)
-├── federal_save_act_government_model.lisp   # Government defense model (encapsulate + defaxiom)
-├── federal_save_act_consistency_check.lisp  # Core vocabulary sanity + neutrality proofs
+├── LICENSE                                  # Apache 2.0
+├── INVENTION_DISCLOSURE.md                  # Prior art disclosure
 ├── docker-compose.yml                       # ACL2 Docker config
 ├── .github/workflows/acl2-proofs.yml        # CI: automated proof certification
+│
+├── model/                                   # ACL2 formal model (.lisp files)
+│   ├── federal_save_act_core.lisp           # Neutral vocabulary (defstub + defun)
+│   ├── federal_save_act_process.lisp        # Registration state machine + doc recognizers
+│   ├── federal_save_act_facts.lisp          # Text-derived facts (defaxiom)
+│   ├── federal_save_act_hinge_common.lisp   # Shared hinge vocabulary (encapsulate)
+│   ├── federal_save_act_hinge_mandatory.lisp    # Semantic A: mandatory approval
+│   ├── federal_save_act_hinge_discretionary.lisp # Semantic B: discretionary denial
+│   ├── federal_save_act_existentials.lisp   # Existential burden modeling (defun-sk)
+│   ├── federal_save_act_burden_proofs.lisp  # Burden derivation chain
+│   ├── federal_save_act_doctrine_proofs.lisp    # Conditional doctrine theorems
+│   ├── federal_save_act_model_consistency.lisp  # Model sanity / consistency checks
+│   ├── federal_save_act_independence.lisp   # Independence / non-entailment
+│   ├── federal_save_act_challenger_model.lisp   # Challenger model (encapsulate + defaxiom)
+│   ├── federal_save_act_government_model.lisp   # Government defense model
+│   ├── federal_save_act_process_invariants.lisp # General state-machine invariants
+│   ├── federal_save_act_deep_process_invariants.lisp # Deeper trace invariants
+│   ├── federal_save_act_document_proofs.lisp    # Document-list structural proofs
+│   └── federal_save_act_consistency_check.lisp  # Core vocabulary sanity + neutrality
+│
+├── inputs/                                  # Source legislation & constitutional text
+│   ├── federal_save_act_bill_text.txt       # H.R. 22 full text
+│   └── constitutional_language.txt          # U.S. Constitution provisions
+│
+├── docs/                                    # Detailed documentation
+│   ├── Overview.md                          # Full analysis report
+│   ├── PROOF_TOUR.md                        # Proof architecture walkthrough
+│   ├── CERTIFICATION.md                     # Local certification guide
+│   ├── TOP_5_THEOREMS.md                    # Five strongest theorems
+│   ├── RIGOR_NOTES_V3.md                    # Architecture rationale
+│   └── agents-config.md                     # Project configuration
+│
 ├── sources/
 │   ├── source_manifest.json                 # Provenance manifest (all cited sources)
 │   └── clause_trace.csv                     # Axiom → source clause traceability
@@ -106,15 +118,16 @@ federal_save_act/
 │       ├── federal_save_act.json            # Parsed bill sections
 │       ├── federal_save_act_predicates.json # Normalized predicates
 │       └── federal_save_act_ace.json        # ACE-normalized clauses
-└── reports/
-    ├── certification_status.md              # certify-book status matrix
-    ├── axiom_inventory.md                   # Full defaxiom classification report
-    ├── axiom_pressure_report.md             # v5.2: axiom pressure + replacement paths
-    ├── proof_dependency_report.md           # v5.2: theorem dependency chains
-    ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
-    ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
-    ├── v5_3_review_hardening_assessment.md  # v5.3 review hardening assessment
-    └── federal_save_act_proof_obligations.md # Proof results
+├── reports/
+│   ├── certification_status.md              # certify-book status matrix
+│   ├── axiom_inventory.md                   # Full defaxiom classification report
+│   ├── axiom_pressure_report.md             # Axiom pressure + replacement paths
+│   ├── proof_dependency_report.md           # Theorem dependency chains
+│   ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
+│   ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
+│   ├── v5_3_review_hardening_assessment.md  # v5.3 review hardening assessment
+│   └── federal_save_act_proof_obligations.md # Proof results
+└── logs/                                    # Certification logs (gitignored)
 ```
 
 ## Key Features
@@ -208,15 +221,15 @@ See `reports/v5_2_acl2_proof_assessment.md` for full metrics.
 
 ## For ACL2 Reviewers
 
-1. **Run the proof suite**: `./scripts/certify_all.sh` (Linux/macOS) or `.\scripts\certify_all.ps1` (Windows). See [CERTIFICATION.md](CERTIFICATION.md).
+1. **Run the proof suite**: `./scripts/certify_all.sh` (Linux/macOS) or `.\scripts\certify_all.ps1` (Windows). See [CERTIFICATION.md](docs/CERTIFICATION.md).
 2. **Executable model**: `federal_save_act_process.lisp` — 7-state, 9-event registration state machine with recursive trace executor.
 3. **Induction proofs**: `federal_save_act_process_invariants.lisp` and `federal_save_act_deep_process_invariants.lisp` — 24 theorems, 5+ by induction over event traces.
 4. **Document-list induction**: `federal_save_act_document_proofs.lisp` — 9 theorems over recursive document lists.
 5. **Encapsulate usage**: Challenger model, government model, hinge common, and doctrine proofs (4 blocks total, each with local witnesses).
 6. **defun-sk usage**: `federal_save_act_existentials.lisp` — 4 Skolemized existential propositions.
 7. **Remaining defaxioms**: 33 total, classified in `reports/axiom_pressure_report.md`.
-8. **Top 5 theorems**: See [TOP_5_THEOREMS.md](TOP_5_THEOREMS.md) — all five depend on zero axioms.
-9. **Proof tour**: See [PROOF_TOUR.md](PROOF_TOUR.md) for the full architecture walkthrough.
+8. **Top 5 theorems**: See [TOP_5_THEOREMS.md](docs/TOP_5_THEOREMS.md) — all five depend on zero axioms.
+9. **Proof tour**: See [PROOF_TOUR.md](docs/PROOF_TOUR.md) for the full architecture walkthrough.
 
 ## For Legal Reviewers
 
@@ -224,7 +237,7 @@ See `reports/v5_2_acl2_proof_assessment.md` for full metrics.
 2. **Source tracing**: Every axiom traces to a specific clause in a public legal document via `sources/clause_trace.csv`. Machine-checkable via `tools/validate_trace.py`.
 3. **Empirical/interpretive assumptions**: 3 empirical (burden severity), 2 interpretive (hinge semantics), 2 doctrinal (case law holdings). See `reports/axiom_pressure_report.md`.
 4. **What ACL2 proves conditionally**: *If* these assumptions hold, *then* this legal conclusion follows. ACL2 does not evaluate which assumptions are correct.
-5. **Why this is not a judicial decision engine**: ACL2 models boolean properties, not burden magnitudes. It does not weigh competing interests, apply stare decisis, or evaluate legislative intent. See [PROOF_TOUR.md](PROOF_TOUR.md) §2.
+5. **Why this is not a judicial decision engine**: ACL2 models boolean properties, not burden magnitudes. It does not weigh competing interests, apply stare decisis, or evaluate legislative intent. See [PROOF_TOUR.md](docs/PROOF_TOUR.md) §2.
 6. **Challenger vs. government theories**: The challenger argues the documentary proof requirement is an undue burden on citizens who lack qualifying documents. The government argues the requirement is a valid regulation with an adequate alternative process. Both conclusions are formally derived from their respective assumption sets.
 
 ## Framework

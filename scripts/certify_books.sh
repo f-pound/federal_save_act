@@ -66,35 +66,35 @@ echo "Logs: $LOG_DIR/"
 echo ""
 
 # Layer 0: base clean
-certify_book federal_save_act_core clean
-certify_book federal_save_act_process clean
+certify_book model/federal_save_act_core clean
+certify_book model/federal_save_act_process clean
 
 # Layer 1: source-traced axiom book
-certify_book federal_save_act_facts defaxiom
+certify_book model/federal_save_act_facts defaxiom
 
 # Layer 2: hinge dependency (includes facts)
-certify_book federal_save_act_hinge_common defaxiom
+certify_book model/federal_save_act_hinge_common defaxiom
 
 # Layer 3: hinge interpretation (includes hinge_common)
-certify_book federal_save_act_hinge_mandatory defaxiom
-certify_book federal_save_act_hinge_discretionary defaxiom
+certify_book model/federal_save_act_hinge_mandatory defaxiom
+certify_book model/federal_save_act_hinge_discretionary defaxiom
 
 # Layer 4: downstream (includes facts)
-certify_book federal_save_act_existentials defaxiom
-certify_book federal_save_act_burden_proofs defaxiom
-certify_book federal_save_act_doctrine_proofs defaxiom
-certify_book federal_save_act_model_consistency defaxiom
-certify_book federal_save_act_independence defaxiom
-certify_book federal_save_act_challenger_model defaxiom
-certify_book federal_save_act_government_model defaxiom
+certify_book model/federal_save_act_existentials defaxiom
+certify_book model/federal_save_act_burden_proofs defaxiom
+certify_book model/federal_save_act_doctrine_proofs defaxiom
+certify_book model/federal_save_act_model_consistency defaxiom
+certify_book model/federal_save_act_independence defaxiom
+certify_book model/federal_save_act_challenger_model defaxiom
+certify_book model/federal_save_act_government_model defaxiom
 
 # Layer 5: clean process chain (no defaxiom dependency)
-certify_book federal_save_act_process_invariants clean
-certify_book federal_save_act_deep_process_invariants clean
-certify_book federal_save_act_document_proofs clean
+certify_book model/federal_save_act_process_invariants clean
+certify_book model/federal_save_act_deep_process_invariants clean
+certify_book model/federal_save_act_document_proofs clean
 
 # Layer 6: consistency check (includes core only)
-certify_book federal_save_act_consistency_check clean
+certify_book model/federal_save_act_consistency_check clean
 
 echo ""
 echo "=== Summary ==="

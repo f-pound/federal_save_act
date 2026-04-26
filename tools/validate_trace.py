@@ -98,8 +98,9 @@ def main():
         sys.exit(1)
 
     # --- Load data ---
-    all_axioms = find_defaxioms(project_root)
-    all_thms = find_defthms(project_root)
+    model_dir = project_root / "model"
+    all_axioms = find_defaxioms(model_dir)
+    all_thms = find_defthms(model_dir)
     all_events = {**all_axioms, **all_thms}
     trace_rows = load_clause_trace(csv_path)
     source_ids = load_source_manifest(json_path)

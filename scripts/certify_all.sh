@@ -6,20 +6,20 @@
 set -euo pipefail
 
 BOOKS=(
-  federal_save_act_consistency_check.lisp
-  federal_save_act_process_invariants.lisp
-  federal_save_act_deep_process_invariants.lisp
-  federal_save_act_hinge_common.lisp
-  federal_save_act_hinge_mandatory.lisp
-  federal_save_act_hinge_discretionary.lisp
-  federal_save_act_existentials.lisp
-  federal_save_act_independence.lisp
-  federal_save_act_document_proofs.lisp
-  federal_save_act_burden_proofs.lisp
-  federal_save_act_doctrine_proofs.lisp
-  federal_save_act_model_consistency.lisp
-  federal_save_act_challenger_model.lisp
-  federal_save_act_government_model.lisp
+  model/federal_save_act_consistency_check.lisp
+  model/federal_save_act_process_invariants.lisp
+  model/federal_save_act_deep_process_invariants.lisp
+  model/federal_save_act_hinge_common.lisp
+  model/federal_save_act_hinge_mandatory.lisp
+  model/federal_save_act_hinge_discretionary.lisp
+  model/federal_save_act_existentials.lisp
+  model/federal_save_act_independence.lisp
+  model/federal_save_act_document_proofs.lisp
+  model/federal_save_act_burden_proofs.lisp
+  model/federal_save_act_doctrine_proofs.lisp
+  model/federal_save_act_model_consistency.lisp
+  model/federal_save_act_challenger_model.lisp
+  model/federal_save_act_government_model.lisp
 )
 
 TOTAL_QED=0

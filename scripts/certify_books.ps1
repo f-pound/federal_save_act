@@ -11,35 +11,35 @@
 
 $books = @(
   # Layer 0: base clean
-  @("federal_save_act_core", "clean"),
-  @("federal_save_act_process", "clean"),
+  @("model/federal_save_act_core", "clean"),
+  @("model/federal_save_act_process", "clean"),
 
   # Layer 1: source-traced axiom book
-  @("federal_save_act_facts", "defaxiom"),
+  @("model/federal_save_act_facts", "defaxiom"),
 
   # Layer 2: hinge dependency (includes facts)
-  @("federal_save_act_hinge_common", "defaxiom"),
+  @("model/federal_save_act_hinge_common", "defaxiom"),
 
   # Layer 3: hinge interpretation (includes hinge_common)
-  @("federal_save_act_hinge_mandatory", "defaxiom"),
-  @("federal_save_act_hinge_discretionary", "defaxiom"),
+  @("model/federal_save_act_hinge_mandatory", "defaxiom"),
+  @("model/federal_save_act_hinge_discretionary", "defaxiom"),
 
   # Layer 4: downstream (includes facts)
-  @("federal_save_act_existentials", "defaxiom"),
-  @("federal_save_act_burden_proofs", "defaxiom"),
-  @("federal_save_act_doctrine_proofs", "defaxiom"),
-  @("federal_save_act_model_consistency", "defaxiom"),
-  @("federal_save_act_independence", "defaxiom"),
-  @("federal_save_act_challenger_model", "defaxiom"),
-  @("federal_save_act_government_model", "defaxiom"),
+  @("model/federal_save_act_existentials", "defaxiom"),
+  @("model/federal_save_act_burden_proofs", "defaxiom"),
+  @("model/federal_save_act_doctrine_proofs", "defaxiom"),
+  @("model/federal_save_act_model_consistency", "defaxiom"),
+  @("model/federal_save_act_independence", "defaxiom"),
+  @("model/federal_save_act_challenger_model", "defaxiom"),
+  @("model/federal_save_act_government_model", "defaxiom"),
 
   # Layer 5: clean process chain (no defaxiom dependency)
-  @("federal_save_act_process_invariants", "clean"),
-  @("federal_save_act_deep_process_invariants", "clean"),
-  @("federal_save_act_document_proofs", "clean"),
+  @("model/federal_save_act_process_invariants", "clean"),
+  @("model/federal_save_act_deep_process_invariants", "clean"),
+  @("model/federal_save_act_document_proofs", "clean"),
 
   # Layer 6: consistency check (includes core only)
-  @("federal_save_act_consistency_check", "clean")
+  @("model/federal_save_act_consistency_check", "clean")
 )
 
 $logDir = "logs\certify"

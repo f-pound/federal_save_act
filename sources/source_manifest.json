@@ -9,7 +9,7 @@
       "citation": "H.R. 22, 119th Cong. (2025) (Engrossed in House)",
       "govinfo_id": "BILLS-119hr22eh",
       "url": "https://www.govinfo.gov/content/pkg/BILLS-119hr22eh/html/BILLS-119hr22eh.htm",
-      "local_file": "../federal_save_act_bill_text.txt",
+      "local_file": "../inputs/federal_save_act_bill_text.txt",
       "type": "statute",
       "status": "Passed House 220-208, April 10, 2025; pending in Senate"
     },
@@ -68,7 +68,7 @@
       "title": "U.S. Constitution, Article I, § 2 (Voter Qualifications — House)",
       "citation": "U.S. Const. art. I, § 2, cl. 1",
       "url": "https://constitution.congress.gov/browse/article-1/section-2/",
-      "local_file": "../constitutional_language.txt",
+      "local_file": "../inputs/constitutional_language.txt",
       "type": "constitution"
     },
     {
@@ -76,7 +76,7 @@
       "title": "U.S. Constitution, Article I, § 4 (Elections Clause)",
       "citation": "U.S. Const. art. I, § 4, cl. 1",
       "url": "https://constitution.congress.gov/browse/article-1/section-4/",
-      "local_file": "../constitutional_language.txt",
+      "local_file": "../inputs/constitutional_language.txt",
       "type": "constitution"
     },
     {
@@ -84,7 +84,7 @@
       "title": "U.S. Constitution, Amendment V (Due Process — Federal Equal Protection)",
       "citation": "U.S. Const. amend. V",
       "url": "https://constitution.congress.gov/browse/amendment-5/",
-      "local_file": "../constitutional_language.txt",
+      "local_file": "../inputs/constitutional_language.txt",
       "type": "constitution",
       "note": "Equal protection component applied to federal action via Bolling v. Sharpe, 347 U.S. 497 (1954)"
     },
@@ -93,7 +93,7 @@
       "title": "U.S. Constitution, Amendment XIV, § 1 (Equal Protection — States; Citizenship)",
       "citation": "U.S. Const. amend. XIV, § 1",
       "url": "https://constitution.congress.gov/browse/amendment-14/section-1/",
-      "local_file": "../constitutional_language.txt",
+      "local_file": "../inputs/constitutional_language.txt",
       "type": "constitution"
     },
     {
@@ -101,7 +101,7 @@
       "title": "U.S. Constitution, Amendment XVII (Voter Qualifications — Senate)",
       "citation": "U.S. Const. amend. XVII",
       "url": "https://constitution.congress.gov/browse/amendment-17/",
-      "local_file": "../constitutional_language.txt",
+      "local_file": "../inputs/constitutional_language.txt",
       "type": "constitution"
     },
     {
@@ -109,7 +109,7 @@
       "title": "U.S. Constitution, Amendment XXIV (Poll Tax Prohibition)",
       "citation": "U.S. Const. amend. XXIV, § 1",
       "url": "https://constitution.congress.gov/browse/amendment-24/",
-      "local_file": "../constitutional_language.txt",
+      "local_file": "../inputs/constitutional_language.txt",
       "type": "constitution"
     },
     {
