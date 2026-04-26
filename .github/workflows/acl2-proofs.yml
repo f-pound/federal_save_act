@@ -49,7 +49,8 @@ jobs:
           for f in CERTIFICATION.md PROOF_TOUR.md TOP_5_THEOREMS.md \
                    reports/axiom_pressure_report.md \
                    reports/proof_dependency_report.md \
-                   reports/v5_3_review_hardening_assessment.md; do
+                   reports/v5_3_review_hardening_assessment.md \
+                   reports/certification_status.md; do
             if [ ! -f "$f" ]; then
               echo "MISSING: $f"
               missing=$((missing + 1))
@@ -77,153 +78,153 @@ jobs:
           echo "OK: trace coverage adequate"
 
   certify:
-    name: Certify ACL2 Books
+    name: Certify ACL2 Books (certify-book)
     runs-on: ubuntu-latest
     needs: [validate-traces, repo-check]
+
+    env:
+      ACL2_CMD: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create reports directory
-        run: mkdir -p reports
+      - name: Create log directory
+        run: mkdir -p logs/certify
 
       - name: Pull ACL2 Docker image
         run: docker pull atwalter/acl2:latest
 
-      # --- Dependency books ---
-      - name: Certify core book
-        run: echo '(certify-book "federal_save_act_core" ?)' | docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
-
-      - name: Certify facts book
-        run: echo '(certify-book "federal_save_act_facts" ?)' | docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
-
-      # --- Core verification ---
-      - name: Run consistency check
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_consistency_check.lisp 2>&1 | tee reports/consistency_check.log
-
-      - name: Verify consistency check
-        run: "! grep -q 'FAILED' reports/consistency_check.log"
-
-      # --- Process model ---
-      - name: Run process model
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_process.lisp 2>&1 | tee reports/process_model.log
-
-      - name: Verify process model
-        run: "! grep -q 'FAILED' reports/process_model.log"
-
-      - name: Run process invariants
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_process_invariants.lisp 2>&1 | tee reports/process_invariants.log
-
-      - name: Verify process invariants
-        run: "! grep -q 'FAILED' reports/process_invariants.log"
-
-      # --- Hinge books (separate — NOT combined) ---
-      - name: Run hinge common
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge_common.lisp 2>&1 | tee reports/hinge_common.log
-
-      - name: Verify hinge common
-        run: "! grep -q 'FAILED' reports/hinge_common.log"
-
-      - name: Run hinge mandatory
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge_mandatory.lisp 2>&1 | tee reports/hinge_mandatory.log
-
-      - name: Verify hinge mandatory
-        run: "! grep -q 'FAILED' reports/hinge_mandatory.log"
-
-      - name: Run hinge discretionary
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_hinge_discretionary.lisp 2>&1 | tee reports/hinge_discretionary.log
-
-      - name: Verify hinge discretionary
-        run: "! grep -q 'FAILED' reports/hinge_discretionary.log"
-
-      # --- Existentials and independence ---
-      - name: Run existentials
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_existentials.lisp 2>&1 | tee reports/existentials.log
-
-      - name: Verify existentials
-        run: "! grep -q 'FAILED' reports/existentials.log"
-
-      - name: Run independence
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_independence.lisp 2>&1 | tee reports/independence.log
-
-      - name: Verify independence
-        run: "! grep -q 'FAILED' reports/independence.log"
-
-      # --- v5.2 deep process invariants ---
-      - name: Run deep process invariants
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_deep_process_invariants.lisp 2>&1 | tee reports/deep_process_invariants.log
-
-      - name: Verify deep process invariants
-        run: "! grep -q 'FAILED' reports/deep_process_invariants.log"
-
-      # --- v5.2 document proofs ---
-      - name: Run document proofs
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_document_proofs.lisp 2>&1 | tee reports/document_proofs.log
-
-      - name: Verify document proofs
-        run: "! grep -q 'FAILED' reports/document_proofs.log"
-
-      # --- v5.2 burden proofs ---
-      - name: Run burden proofs
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_burden_proofs.lisp 2>&1 | tee reports/burden_proofs.log
-
-      - name: Verify burden proofs
-        run: "! grep -q 'FAILED' reports/burden_proofs.log"
-
-      # --- v5.2 doctrine proofs ---
-      - name: Run doctrine proofs
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_doctrine_proofs.lisp 2>&1 | tee reports/doctrine_proofs.log
-
-      - name: Verify doctrine proofs
-        run: "! grep -q 'FAILED' reports/doctrine_proofs.log"
-
-      # --- v5.2 model consistency ---
-      - name: Run model consistency
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_model_consistency.lisp 2>&1 | tee reports/model_consistency.log
-
-      - name: Verify model consistency
-        run: "! grep -q 'FAILED' reports/model_consistency.log"
-
-      # --- Party models ---
-      - name: Run challenger model
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_challenger_model.lisp 2>&1 | tee reports/challenger_model.log
-
-      - name: Verify challenger model
-        run: "! grep -q 'FAILED' reports/challenger_model.log"
-
-      - name: Run government model
-        run: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2 < federal_save_act_government_model.lisp 2>&1 | tee reports/government_model.log
-
-      - name: Verify government model
-        run: "! grep -q 'FAILED' reports/government_model.log"
-
-      # --- Summary ---
-      - name: Summary
-        if: always()
+      # === Layer 0: Clean books (no defaxiom) ===
+      - name: certify-book core
         run: |
-          echo "=== ACL2 Proof Certification Summary ==="
-          total_qed=0
-          total_failed=0
-          for f in reports/*.log; do
-            name=$(basename "$f" .log)
-            qed=$(grep -c "Q\.E\.D\." "$f" || true)
-            failed=$(grep -c "FAILED" "$f" || true)
-            total_qed=$((total_qed + qed))
-            total_failed=$((total_failed + failed))
-            if [ "$failed" -gt 0 ]; then
-              echo "❌ $name: $qed Q.E.D., $failed FAILED"
+          echo '(certify-book "federal_save_act_core" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/core.log
+          test -f federal_save_act_core.cert
+
+      - name: certify-book process
+        run: |
+          echo '(certify-book "federal_save_act_process" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/process.log
+          test -f federal_save_act_process.cert
+
+      - name: certify-book consistency_check
+        run: |
+          echo '(certify-book "federal_save_act_consistency_check" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/consistency_check.log
+          test -f federal_save_act_consistency_check.cert
+
+      # === Layer 1: Defaxiom books ===
+      - name: certify-book facts (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_facts" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/facts.log
+          test -f federal_save_act_facts.cert
+
+      # === Layer 2: Clean downstream (process chain) ===
+      - name: certify-book process_invariants
+        run: |
+          echo '(certify-book "federal_save_act_process_invariants" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/process_invariants.log
+          test -f federal_save_act_process_invariants.cert
+
+      - name: certify-book document_proofs
+        run: |
+          echo '(certify-book "federal_save_act_document_proofs" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/document_proofs.log
+          test -f federal_save_act_document_proofs.cert
+
+      - name: certify-book deep_process_invariants
+        run: |
+          echo '(certify-book "federal_save_act_deep_process_invariants" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/deep_process_invariants.log
+          test -f federal_save_act_deep_process_invariants.cert
+
+      # === Layer 2: Inherited defaxiom (includes facts) ===
+      - name: certify-book hinge_common (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_hinge_common" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_common.log
+          test -f federal_save_act_hinge_common.cert
+
+      - name: certify-book existentials (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_existentials" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/existentials.log
+          test -f federal_save_act_existentials.cert
+
+      - name: certify-book burden_proofs (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_burden_proofs" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/burden_proofs.log
+          test -f federal_save_act_burden_proofs.cert
+
+      - name: certify-book doctrine_proofs (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_doctrine_proofs" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/doctrine_proofs.log
+          test -f federal_save_act_doctrine_proofs.cert
+
+      - name: certify-book model_consistency (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_model_consistency" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/model_consistency.log
+          test -f federal_save_act_model_consistency.cert
+
+      - name: certify-book independence (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_independence" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/independence.log
+          test -f federal_save_act_independence.cert
+
+      # === Layer 2-3: Defaxiom books (hinge + party models) ===
+      - name: certify-book hinge_mandatory (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_hinge_mandatory" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_mandatory.log
+          test -f federal_save_act_hinge_mandatory.cert
+
+      - name: certify-book hinge_discretionary (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_hinge_discretionary" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_discretionary.log
+          test -f federal_save_act_hinge_discretionary.cert
+
+      - name: certify-book challenger_model (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_challenger_model" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/challenger_model.log
+          test -f federal_save_act_challenger_model.cert
+
+      - name: certify-book government_model (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_government_model" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/government_model.log
+          test -f federal_save_act_government_model.cert
+
+      # === Verification ===
+      - name: Verify all .cert files exist
+        run: |
+          echo "=== Certification Verification ==="
+          total=0; missing=0
+          for f in \
+            federal_save_act_core \
+            federal_save_act_facts \
+            federal_save_act_process \
+            federal_save_act_consistency_check \
+            federal_save_act_process_invariants \
+            federal_save_act_deep_process_invariants \
+            federal_save_act_document_proofs \
+            federal_save_act_hinge_common \
+            federal_save_act_hinge_mandatory \
+            federal_save_act_hinge_discretionary \
+            federal_save_act_existentials \
+            federal_save_act_burden_proofs \
+            federal_save_act_doctrine_proofs \
+            federal_save_act_model_consistency \
+            federal_save_act_independence \
+            federal_save_act_challenger_model \
+            federal_save_act_government_model; do
+            total=$((total + 1))
+            if [ -f "${f}.cert" ]; then
+              echo "✅ ${f}.cert"
             else
-              echo "✅ $name: $qed Q.E.D."
+              echo "❌ ${f}.cert MISSING"
+              missing=$((missing + 1))
             fi
           done
           echo ""
-          echo "TOTAL: $total_qed Q.E.D., $total_failed FAILED"
+          echo "TOTAL: $total books, $((total - missing)) certified, $missing missing"
+          [ "$missing" -eq 0 ] || exit 1
 
-      - name: Upload proof logs
+      - name: Upload certification logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: proof-logs
-          path: reports/*.log
+          name: certify-book-logs
+          path: logs/certify/*.log
           retention-days: 30
+
