@@ -4,6 +4,16 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
+## What This Project Proves
+
+Once law status, qualified-voter status, protected right, registration transaction, and statutory denial are established, the remaining formal pivot is whether the regulation is valid. The clean books prove that the model’s state machine has coherent registration and denial paths, including an alternative-approval path to registration. Whether the statute legally requires approval under that path is handled by a separate interpretive assumption.
+
+The government model’s no-conflict theorem depends on a package of scenario facts, doctrinal assumptions, interpretive assumptions, empirical assumptions, and bridge rules. The legal-defense factors are a subset of that trusted base.
+
+The government model formalizes a Crawford/Anderson-Burdick-style defense. ACL2 proves that if those modeled doctrinal, interpretive, and empirical premises are accepted, then the no-conflict theorem follows.
+
+The certified ACL2 books do not prove that the SAVE Act is constitutional or unconstitutional. They prove that, under explicitly stated and source-traced assumptions, the government model entails no constitutional conflict, while the challenger model entails conflict. The clean books independently prove process and document-list invariants with no trusted legal assumptions. The defaxiom-chain books introduce statutory, empirical, doctrinal, and interpretive assumptions. The principal value of the project is that it makes the legal pivot — especially `valid-regulationp` and the mandatory/discretionary alternative-process hinge — explicit and mechanically checkable.
+
 ## Architecture (v5.2 — Hybrid Encapsulate)
 
 The project uses a **hybrid architecture**: `encapsulate` with local witness functions for interpretive predicates and doctrinal standards (where inconsistency risk is highest), `defaxiom` for text-derived facts and scenario ground truths (self-evidently consistent constraints on `defstub` functions), and executable `defun` chains for derived burden conclusions. This design puts consistency protection exactly where it matters most while making burden derivation mechanically auditable.
