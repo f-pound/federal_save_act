@@ -1,0 +1,245 @@
+Yes, there is definitely prior work in the broad space. I would not claim “first computational law project” or “first legal theorem-proving project.” That would be too broad.
+
+But you may have a strong, defensible novelty claim if you phrase it narrowly:
+
+A public, certify-book-backed ACL2 Computational Amicus Brief for a live U.S. election-law controversy, with source-traced legal assumptions, ACE-style statutory normalization, competing challenger/government models, proof-dependency reporting, and an interactive assumptions explorer.
+
+I have not found a directly identical public artifact in the sources I checked. But there is enough adjacent work that you should position this as a specific fusion and implementation, not as inventing computational law from scratch.
+
+Prior work you should acknowledge
+
+There are several important neighboring lines of work.
+
+Computational law / rules as code is an established field. Stanford’s computational-law materials describe the field as using computational techniques to formalize and automate legal rules and legal reasoning.
+
+LegalRuleML is a mature standardization effort. The OASIS LegalRuleML specification extends RuleML with formal features specific to legal norms, policies, guidelines, and legal reasoning.
+
+Catala is probably the closest “law as executable formal system” precedent. It is a domain-specific language for literate programming of legislative texts, especially socio-fiscal law, where statutory text is annotated line-by-line with code to derive implementations with a high degree of code-law faithfulness. Its authors also report compiler-correctness work using F* and evaluations on tax/benefits law.
+
+Attempto Controlled English is also prior art for the controlled-language bridge. ACE is a controlled subset of English with restricted syntax and semantics, intended for precise, computer-processable knowledge representation; ACE/RACE work supports automatic reasoning over ACE texts. So your ACE-style layer is not new in isolation. What is interesting is how you use it as a traceability layer into ACL2 proof artifacts.
+
+LogiKEy / Isabelle legal and ethical reasoning is a serious theorem-prover line of work. The LogiKEy workbench supports development and deployment of formal logics and ethical/legal theories using Isabelle/HOL theory files.
+
+There are also emerging projects around legal formalization in Lean and multi-prover legal verification. For example, “LegalLean” advertises verified legal reasoning in Lean 4 with case studies, and Legalis-Verifier describes integrations with Coq, Lean, Isabelle/HOL, ACL2, and PVS for legal statute verification. I would treat those as adjacent, not necessarily equivalent.
+
+Finally, ACL2 itself is a serious industrial theorem prover. The official ACL2 site describes it as a logic/programming language for modeling systems and proving properties of those models, and ACL2 workshops are the established technical forum for ACL2 work. Your novelty needs to be framed inside that ecosystem, not as if theorem proving itself is new.
+
+What seems distinctive about your repo
+
+Based on the current public repo, the distinctive combination is not any one component. It is the bundle.
+
+Your repo is public, has 20 commits, includes ACL2 books, parsed ACE-style data, proof reports, source traces, scripts, tools, and a GitHub Pages explorer. The README says the project is a formal constitutional stress-test of the SAVE Act and that it separates text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
+
+The README reports 126 Q.E.D. theorems across the project, including process models, process invariants, deep process invariants, hinge books, existentials, challenger/government models, document proofs, burden proofs, doctrine proofs, and model consistency. It also identifies the interpretive hinge as whether the alternative attestation process is a constitutionally adequate safety valve.
+
+That lets you say something like:
+
+Prior work exists in computational law, controlled legal languages, rules-as-code, and theorem-prover-based legal reasoning. This project’s contribution is a concrete, public, reproducible ACL2 “Computational Amicus Brief” for a live U.S. election-law dispute, combining source-traced assumptions, certified ACL2 books, competing legal-theory models, proof-dependency reporting, and an interactive assumptions explorer.
+
+That is a strong but defensible stake.
+
+How to put a stake in the ground
+
+Do this in layers.
+
+1. Add a “Relation to Prior Work” section
+
+Create:
+
+RELATED_WORK.md
+
+or add a README section:
+
+Relation to Prior Work and Claimed Contribution
+
+Structure it honestly:
+
+This project is not the first work in computational law.
+It is not the first use of controlled English.
+It is not the first legal-rule formalization.
+It is not the first theorem-prover legal model.
+
+The claimed contribution is the particular fusion:
+- ACL2 certify-book-backed proof development;
+- source-traced assumptions from public legal sources;
+- ACE-style intermediate statutory normalization;
+- competing challenger/government constitutional models;
+- explicit axiom-pressure and proof-dependency reporting;
+- interactive assumptions explorer;
+- focused on a live U.S. election-law controversy.
+
+That kind of humility will make the novelty claim more credible.
+
+2. Add a precise “Claimed Contribution” section
+
+Use narrow language:
+
+Claimed contribution:
+To the author’s knowledge, this is the first public ACL2 certify-book-backed Computational Amicus Brief for the Federal SAVE Act that combines source-traced statutory assumptions, executable voter-registration process semantics, competing constitutional theories, certified theorem books, proof-dependency reporting, and an interactive assumption explorer.
+
+Avoid:
+
+first computational law system
+first theorem prover for law
+first AI legal proof tool
+first legal formalization
+
+Those are likely false or at least impossible to defend without a full literature review.
+
+3. Make a formal release
+
+Tag the current state:
+
+git tag -a v5.3.1-computational-amicus -m "Federal SAVE Act Computational Amicus Brief: certified ACL2 proof artifact"
+git push origin v5.3.1-computational-amicus
+
+Then create a GitHub Release with:
+
+Title:
+Federal SAVE Act Computational Amicus Brief — v5.3.1
+
+Release notes:
+- 17 ACL2 books certified with certify-book
+- 126 Q.E.D. theorems
+- 33 source-traced axioms
+- 4 defun-sk existentials
+- ACE-style traceability layer
+- proof-dependency and axiom-pressure reports
+- interactive GitHub Pages explorer
+
+GitHub’s own documentation explains that Zenodo can archive a repository and issue a new DOI when you create a GitHub release.
+
+4. Add CITATION.cff
+
+GitHub supports CITATION.cff files so users can cite software in APA and BibTeX formats. Add one at the repo root with:
+
+cff-version: 1.2.0
+title: "Federal SAVE Act Computational Amicus Brief"
+message: "If you use this software or proof artifact, please cite it as below."
+type: software
+authors:
+  - family-names: Pound
+    given-names: Frank
+repository-code: "https://github.com/f-pound/federal_save_act"
+url: "https://f-pound.github.io/federal_save_act/"
+version: "5.3.1"
+date-released: "2026-04-26"
+license: "Apache-2.0"
+keywords:
+  - ACL2
+  - theorem proving
+  - computational law
+  - election law
+  - formal methods
+  - statutory interpretation
+
+If you connect Zenodo later, add the DOI.
+
+5. Archive it externally
+
+Use at least two archival systems:
+
+Zenodo DOI for academic citation
+Software Heritage archive for source-code preservation
+Internet Archive snapshot of the GitHub Pages explorer
+
+Zenodo is specifically intended as an open digital archive for research outputs. Software Heritage describes itself as an archive for preserving software source code and making it accessible long-term.
+
+6. Publish a short white paper
+
+Create:
+
+papers/federal_save_act_computational_amicus_brief.md
+
+Then convert to PDF and post to SSRN or arXiv.
+
+For legal audiences, SSRN is especially appropriate because the Legal Scholarship Network is an open-access preprint venue for legal scholarship and early-stage research.
+
+Suggested title:
+
+A Computational Amicus Brief for the Federal SAVE Act:
+Source-Traced ACL2 Theorem Proving for Conditional Constitutional Argument
+
+Suggested abstract:
+
+This paper presents a public ACL2 formalization of competing constitutional theories concerning the Federal SAVE Act. The project combines ACE-style statutory normalization, source-traced assumptions, executable voter-registration process semantics, certified ACL2 books, proof-dependency reporting, and an interactive dependency explorer. The system does not decide constitutionality; it mechanically checks conditional consequences under disclosed factual, doctrinal, empirical, and interpretive assumptions.
+7. Submit to ACL2 / formal-methods venues
+
+Target:
+
+ACL2 Workshop
+ICAIL / JURIX / computational law workshops
+Rules as Code / computational law communities
+Legal tech conferences
+
+The ACL2 Workshop is a natural target because it is the established technical forum for ACL2 users and applications.
+
+8. Add reviewer-friendly artifacts
+
+Add these repo files if not already present:
+
+RELATED_WORK.md
+CLAIMED_CONTRIBUTION.md
+REPRODUCIBILITY.md
+REVIEWER_GUIDE.md
+CITATION.cff
+papers/
+  federal_save_act_computational_amicus_brief.md
+  federal_save_act_computational_amicus_brief.pdf
+9. Preserve proof artifacts
+
+Make sure the release includes or links to:
+
+.cert generation instructions
+certification logs
+proof dependency report
+axiom pressure report
+source manifest
+clause trace
+ACE JSON
+explorer JSON
+screenshots of explorer
+
+You do not necessarily need to commit .cert files if the repo convention is to generate them, but you should archive logs from the release run.
+
+10. Use a narrow novelty statement everywhere
+
+Use:
+
+“A first public example, to my knowledge, of an ACL2-certified Computational Amicus Brief for a live U.S. election-law controversy.”
+
+Do not use:
+
+“The first theorem prover for law.”
+
+The narrow claim is much easier to defend.
+
+Suggested README language
+
+You can use this:
+
+## Relation to Prior Work and Claimed Contribution
+
+This project builds on substantial prior work in computational law, rules-as-code, controlled natural languages, legal knowledge representation, and theorem proving. It is not the first attempt to formalize law, nor the first use of controlled English or formal logic in legal reasoning.
+
+The claimed contribution is narrower and more concrete: to the author's knowledge, this is the first public ACL2 `certify-book`-backed Computational Amicus Brief for the Federal SAVE Act, combining:
+
+- ACE-style statutory normalization;
+- source-traced legal assumptions;
+- executable voter-registration process semantics;
+- competing challenger and government constitutional models;
+- certified ACL2 books;
+- proof-dependency and axiom-pressure reporting; and
+- an interactive assumptions/dependency explorer.
+
+The project does not decide whether the SAVE Act is constitutional. It proves conditional consequences from disclosed premises and makes the legal pivot points mechanically inspectable.
+My overall view
+
+Yes, there is prior work. A lot of it.
+
+But your repo can still put a meaningful stake in the ground if you claim the specific artifact rather than the entire field:
+
+not “I invented computational law,”
+but “I built and released a public ACL2-certified computational amicus artifact for a contested federal election-law statute.”
+
+That is a credible, useful, and potentially novel contribution.

@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "Federal SAVE Act Computational Amicus Brief"
+message: "If you use this software or proof artifact, please cite it as below."
+type: software
+authors:
+  - family-names: Pound
+    given-names: Frank
+repository-code: "https://github.com/f-pound/federal_save_act"
+url: "https://f-pound.github.io/federal_save_act/"
+version: "5.3.2"
+date-released: "2026-04-26"
+license: "Apache-2.0"
+keywords:
+  - ACL2
+  - theorem proving
+  - computational law
+  - election law
+  - formal methods
+  - statutory interpretation
+  - Attempto Controlled English
+  - computational amicus brief

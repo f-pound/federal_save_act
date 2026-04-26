@@ -87,8 +87,10 @@ federal_save_act/
 ├── README.md                                # This file
 ├── CHANGELOG.md                             # Version history
 ├── version.json                             # Machine-readable project metadata
+├── CITATION.cff                             # GitHub citation metadata (APA/BibTeX)
 ├── LICENSE                                  # Apache 2.0
 ├── INVENTION_DISCLOSURE.md                  # Prior art disclosure
+├── RELATED_WORK.md                          # Prior work acknowledgment + claimed contribution
 ├── docker-compose.yml                       # ACL2 Docker config
 ├── .github/workflows/acl2-proofs.yml        # CI: automated proof certification
 │
@@ -272,6 +274,14 @@ See `reports/v5_2_acl2_proof_assessment.md` for full metrics.
 4. **What ACL2 proves conditionally**: *If* these assumptions hold, *then* this legal conclusion follows. ACL2 does not evaluate which assumptions are correct.
 5. **Why this is not a judicial decision engine**: ACL2 models boolean properties, not burden magnitudes. It does not weigh competing interests, apply stare decisis, or evaluate legislative intent. See [PROOF_TOUR.md](docs/PROOF_TOUR.md) §2.
 6. **Challenger vs. government theories**: The challenger argues the documentary proof requirement is an undue burden on citizens who lack qualifying documents. The government argues the requirement is a valid regulation with an adequate alternative process. Both conclusions are formally derived from their respective assumption sets.
+
+## Relation to Prior Work and Claimed Contribution
+
+This project builds on substantial prior work in computational law ([Stanford CompLaw](https://complaw.stanford.edu/)), rules-as-code ([LegalRuleML](https://www.oasis-open.org/committees/legalruleml/)), controlled natural languages ([Attempto ACE](https://attempto.ifi.uzh.ch/)), executable legal languages ([Catala](https://catala-lang.org/)), and theorem-prover-based legal reasoning ([LogiKEy/Isabelle](https://logikey.org/)). It is **not** the first attempt to formalize law, nor the first use of controlled English or formal logic in legal reasoning.
+
+The claimed contribution is narrower: to the author's knowledge, this is the first public ACL2 `certify-book`-backed **Computational Amicus Brief** for the Federal SAVE Act, combining source-traced statutory assumptions, ACE-style normalization, competing constitutional models, certified theorem books, proof-dependency reporting, and an interactive assumptions explorer.
+
+See [RELATED_WORK.md](RELATED_WORK.md) for full acknowledgment of prior work and a precise claimed-contribution statement.
 
 ## Framework
 
