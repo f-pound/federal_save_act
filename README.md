@@ -161,6 +161,8 @@ federal_save_act/
 │   ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
 │   ├── v5_3_review_hardening_assessment.md  # v5.3 review hardening assessment
 │   └── federal_save_act_proof_obligations.md # Proof results
+├── papers/
+│   └── federal_save_act_computational_amicus_brief.md  # SSRN/arXiv abstract
 └── logs/                                    # Certification logs (gitignored)
 ```
 
