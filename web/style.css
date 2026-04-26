@@ -1127,6 +1127,7 @@ footer p {
 
 /* ================================================================
    RESPONSIVE — Mobile (≤768px)
+   All panels stack vertically: graph → hypotheticals → details
    ================================================================ */
 @media (max-width: 768px) {
   :root {
@@ -1138,7 +1139,7 @@ footer p {
     overflow: auto;
   }
 
-  /* ---- Header stacks vertically ---- */
+  /* ---- Header ---- */
   header {
     height: auto;
     padding: 12px 16px;
@@ -1170,7 +1171,6 @@ footer p {
   }
 
   .audit-stat-btn::after { display: none; }
-
   .audit-num { font-size: 16px; }
   .audit-label { font-size: 8px; letter-spacing: 0.04em; }
 
@@ -1180,20 +1180,15 @@ footer p {
     right: 12px;
   }
 
-  /* ---- Audit Drawer full-width ---- */
-  .audit-drawer.open {
-    max-height: 60vh;
-  }
-
+  /* ---- Audit Drawer ---- */
+  .audit-drawer.open { max-height: 60vh; }
   .audit-drawer-header { padding: 10px 16px 6px; }
   .audit-drawer-content { padding: 0 16px 12px; }
-
   .drawer-table th,
   .drawer-table td { padding: 4px 6px; font-size: 11px; }
-
   .drawer-table .mono { font-size: 10px; }
 
-  /* ---- Main Layout: single column ---- */
+  /* ---- Main: single column vertical stack ---- */
   main {
     display: flex;
     flex-direction: column;
@@ -1201,103 +1196,48 @@ footer p {
     overflow: visible;
   }
 
-  /* ---- Left panel: collapsible ---- */
-  .panel-left {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease;
-    padding: 0 16px;
-  }
-
-  .panel-left.mobile-open {
-    max-height: 500px;
-    overflow-y: auto;
-    padding: 12px 16px;
-  }
-
-  /* ---- Center panel: full width ---- */
+  /* Graph first */
   .panel-center {
-    min-height: 50vh;
+    order: 1;
+    min-height: 60vh;
     padding: 12px;
-    order: -1;
   }
 
-  /* ---- Right panel: collapsible ---- */
+  /* Hypotheticals below graph — always visible, just scroll down */
+  .panel-left {
+    order: 2;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    padding: 16px;
+    overflow-y: visible;
+  }
+
+  /* Details last */
   .panel-right {
+    order: 3;
     border-left: none;
     border-top: 1px solid var(--border);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease;
-    padding: 0 16px;
+    padding: 16px;
+    overflow-y: visible;
   }
 
-  .panel-right.mobile-open {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 12px 16px;
-  }
+  /* Hide mobile toggle buttons — panels are always visible */
+  .mobile-panel-toggles { display: none !important; }
 
-  /* ---- Mobile toggle buttons ---- */
-  .mobile-panel-toggles {
-    display: flex;
-    gap: 8px;
-    padding: 8px 16px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .mobile-toggle-btn {
-    flex: 1;
-    padding: 8px 12px;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text-secondary);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-  }
-
-  .mobile-toggle-btn.active {
-    background: rgba(74, 144, 217, 0.1);
-    border-color: var(--border-focus);
-    color: var(--text-primary);
-  }
-
-  .mobile-toggle-btn:hover {
-    border-color: var(--border-focus);
-  }
-
-  /* ---- Graph nodes: smaller on mobile ---- */
+  /* ---- Smaller elements ---- */
   .node-card { padding: 10px 12px; }
   .node-title { font-size: 12px; }
   .node-badges { gap: 3px; }
   .badge { font-size: 8px; padding: 1px 5px; }
-
-  /* ---- Layer sections ---- */
   .layer-section { margin-bottom: 20px; }
   .layer-title { font-size: 11px; }
   .layer-nodes { gap: 8px; }
 
-  /* ---- Footer ---- */
-  footer {
-    height: auto;
-    padding: 12px 16px;
-  }
-
+  footer { height: auto; padding: 12px 16px; }
   footer p { font-size: 10px; }
-
-  /* ---- Warning banner ---- */
   .warning-banner { font-size: 11px; padding: 8px 12px; }
 
-  /* ---- Modal full-screen on mobile ---- */
+  /* ---- Modal ---- */
   .modal-content {
     width: 95vw;
     max-width: none;
@@ -1305,31 +1245,26 @@ footer p {
     margin: 5vh auto;
     padding: 20px;
   }
-
   .modal-title { font-size: 20px; }
   .modal-lead { font-size: 13px; }
   .modal-section h3 { font-size: 14px; }
   .modal-section p { font-size: 12px; }
-
   .modal-steps { gap: 12px; }
   .step-num { width: 26px; height: 26px; font-size: 12px; }
 }
 
 /* ================================================================
-   RESPONSIVE — Small phones (≤430px, iPhone Pro Max etc.)
+   RESPONSIVE — Small phones (≤430px)
    ================================================================ */
 @media (max-width: 430px) {
   .audit-num { font-size: 14px; }
   .audit-label { font-size: 7px; }
   .audit-stat-btn { padding: 3px 5px; }
-
   .header-title h1 { font-size: 14px; }
   .header-title .subtitle { font-size: 9px; }
-
   .drawer-chip { font-size: 8px; padding: 2px 6px; }
   .drawer-table th,
   .drawer-table td { padding: 3px 4px; font-size: 10px; }
-
   .node-card { padding: 8px 10px; }
   .node-title { font-size: 11px; }
 }
@@ -1338,3 +1273,5 @@ footer p {
 @media (min-width: 769px) {
   .mobile-panel-toggles { display: none; }
 }
+
+
