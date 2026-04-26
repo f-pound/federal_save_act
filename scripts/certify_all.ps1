@@ -1,7 +1,6 @@
 # certify_all.ps1 — Run the full Federal SAVE Act ACL2 proof suite.
-# Usage: .\scripts\certify_all.ps1
+# Usage: powershell -ExecutionPolicy Bypass -File .\scripts\certify_all.ps1
 # Requires: docker compose
-$ErrorActionPreference = "Stop"
 
 $books = @(
   "federal_save_act_consistency_check",
@@ -34,7 +33,7 @@ Write-Host ""
 # Step 2: ACL2 books
 Write-Host "--- ACL2 Books ---"
 foreach ($b in $books) {
-  $out = cmd /c "docker compose run --rm acl2 acl2 < ${b}.lisp" 2>&1
+  $out = cmd /c "docker compose run --rm acl2 acl2 < ${b}.lisp 2>NUL" 2>$null
   $qed = ($out | Select-String "Q\.E\.D\.").Count
   $fail = ($out | Select-String "FAILED").Count
   $totalQ += $qed; $totalF += $fail
