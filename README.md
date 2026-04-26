@@ -4,6 +4,8 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
+**Current version: 5.3.1** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+
 ## What This Project Proves
 
 Once law status, qualified-voter status, protected right, registration transaction, and statutory denial are established, the remaining formal pivot is whether the regulation is valid. The clean books prove that the model’s state machine has coherent registration and denial paths, including an alternative-approval path to registration. Whether the statute legally requires approval under that path is handled by a separate interpretive assumption.
@@ -63,6 +65,8 @@ cmd /c "docker compose run --rm acl2 acl2 < federal_save_act_government_model.li
 ```
 federal_save_act/
 ├── README.md                                # This file
+├── CHANGELOG.md                             # Version history
+├── version.json                             # Machine-readable project metadata
 ├── Overview.md                              # Full analysis report
 ├── RIGOR_NOTES_V3.md                        # v3/v4 architecture & rigor notes
 ├── agents-config.md                         # Project configuration

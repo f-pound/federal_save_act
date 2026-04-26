@@ -1,0 +1,39 @@
+{
+  "version": "5.3.1",
+  "model_version": "5.2",
+  "documentation_version": "5.3",
+  "project": "federal_save_act",
+  "legislation": {
+    "id": "hr22-eh",
+    "title": "Safeguard American Voter Eligibility Act (SAVE Act)",
+    "congress": "119th",
+    "session": "1st",
+    "status": "passed_house",
+    "vote": "220-208",
+    "vote_date": "2025-04-10"
+  },
+  "census": {
+    "theorems": 126,
+    "axioms": 33,
+    "books": 17,
+    "defun": 24,
+    "defstub": 45,
+    "defconst": 26,
+    "defun_sk": 4,
+    "encapsulate": 4,
+    "total_events": 262,
+    "authoritative_sources": 21,
+    "traced_propositions": 38
+  },
+  "certification": {
+    "all_passed": true,
+    "books_certified": 17,
+    "clean_books_no_axioms": 6
+  },
+  "high_risk_assumptions": [
+    "challenger-scenario-no-fault",
+    "challenger-scenario-material-burden",
+    "government-burden-not-severe"
+  ],
+  "last_updated": "2026-04-26"
+}
