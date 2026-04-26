@@ -37,6 +37,21 @@ cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_ac
 
 > **Important**: Never load both models in the same ACL2 session. They derive opposite conclusions and are intentionally incompatible.
 
+## Interactive Computational Amicus Explorer
+
+Visually explore the proof-dependency graph and toggle assumptions to see which conclusions remain supported:
+
+```bash
+python tools/serve_explorer.py
+# Opens http://127.0.0.1:8000
+```
+
+The explorer lets users toggle empirical, interpretive, and doctrinal assumptions to see which proof paths and conditional conclusions remain supported. It visualizes existing certified ACL2 proof dependencies across 6 layers (sources → formalization → executable model → derivations → theorems → conclusions).
+
+- **It does not run ACL2 live** — it renders pre-certified proof structure
+- **It does not decide constitutionality** — final conclusions are conditional on selected assumptions
+- See [reports/computational_amicus_explorer.md](reports/computational_amicus_explorer.md) for full documentation
+
 ## Results
 
 | Book | Theorems | Technique | Result |

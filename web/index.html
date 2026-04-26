@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive visual explorer for the Federal SAVE Act ACL2 constitutional stress-test. Toggle assumptions to see which proof paths remain supported.">
+  <title>Federal SAVE Act — Computational Amicus Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="app-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>Federal SAVE Act</h1>
+        <span class="subtitle">Computational Amicus Explorer</span>
+      </div>
+      <div id="audit-bar" class="audit-bar">
+        <div class="audit-stat"><span class="audit-num" id="stat-books">—</span><span class="audit-label">Books Certified</span></div>
+        <div class="audit-stat"><span class="audit-num" id="stat-theorems">—</span><span class="audit-label">Q.E.D. Theorems</span></div>
+        <div class="audit-stat"><span class="audit-num" id="stat-axioms">—</span><span class="audit-label">Traced Axioms</span></div>
+        <div class="audit-stat"><span class="audit-num" id="stat-existentials">—</span><span class="audit-label">Existentials</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div id="warning-banner" class="warning-banner hidden">
+    <span class="warning-icon">⚠</span>
+    <span id="warning-text"></span>
+    <button id="warning-close" class="warning-close">&times;</button>
+  </div>
+
+  <main id="app-main">
+    <aside id="panel-left" class="panel panel-left">
+      <h2 class="panel-title">Hypotheticals</h2>
+      <p class="panel-hint">Toggle assumptions to explore which conclusions remain supported.</p>
+      <div id="controls-container"></div>
+
+      <div class="filter-section">
+        <h3 class="filter-title">Filters</h3>
+        <label class="filter-toggle"><input type="checkbox" id="filter-axiom-free"> Highlight axiom-free theorems</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-high-risk"> Highlight high-risk assumptions</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-challenger" checked> Show challenger path</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-government" checked> Show government path</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-neutral" checked> Show neutral nodes</label>
+      </div>
+    </aside>
+
+    <section id="panel-center" class="panel panel-center">
+      <div id="graph-container"></div>
+    </section>
+
+    <aside id="panel-right" class="panel panel-right">
+      <h2 class="panel-title">Details</h2>
+      <div id="detail-content">
+        <p class="detail-placeholder">Click a node in the graph to view details.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="app-footer">
+    <p>This explorer visualizes certified ACL2 proof dependencies. It does not perform live ACL2 proof search and does not decide legal outcomes. Final conclusions are conditional on selected assumptions.</p>
+    <p class="footer-meta">
+      <span id="footer-version"></span> ·
+      <a href="https://github.com/f-pound/federal_save_act" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

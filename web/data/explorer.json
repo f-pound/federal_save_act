@@ -1,0 +1,966 @@
+{
+  "meta": {
+    "project": "federal_save_act",
+    "title": "Federal SAVE Act — Computational Amicus Explorer",
+    "version": "5.3.1",
+    "books_certified": 17,
+    "theorems": 126,
+    "axioms": 33,
+    "defun_sk_existentials": 4,
+    "authoritative_sources": 21,
+    "trace_rows": 38,
+    "ace_statements": 13,
+    "generated_at": "2026-04-26T17:27:07.027309+00:00"
+  },
+  "layers": [
+    {
+      "id": "sources",
+      "label": "Sources & Traceability",
+      "order": 1
+    },
+    {
+      "id": "formalization",
+      "label": "Formalization & Assumptions",
+      "order": 2
+    },
+    {
+      "id": "executable",
+      "label": "Executable ACL2 Model",
+      "order": 3
+    },
+    {
+      "id": "derivations",
+      "label": "Derivations & Intermediate Results",
+      "order": 4
+    },
+    {
+      "id": "theorems",
+      "label": "Representative Theorems & Lemmas",
+      "order": 5
+    },
+    {
+      "id": "conclusions",
+      "label": "Final Conditional Conclusions",
+      "order": 6
+    }
+  ],
+  "nodes": [
+    {
+      "id": "src-hr22",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "H.R. 22 — SAVE Act",
+      "description": "Safeguard American Voter Eligibility Act, 119th Congress. Passed House 220-208, April 10, 2025.",
+      "source_ref": "BILLS-119hr22eh",
+      "path": "neutral"
+    },
+    {
+      "id": "src-nvra",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "NVRA Baseline (52 U.S.C. §§ 20501–20511)",
+      "description": "National Voter Registration Act — the statutory baseline that the SAVE Act amends.",
+      "source_ref": "52 U.S.C. § 20501 et seq.",
+      "path": "neutral"
+    },
+    {
+      "id": "src-const-5th",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "5th Amendment (Due Process / Equal Protection)",
+      "description": "Equal protection component applied to federal action via Bolling v. Sharpe, 347 U.S. 497 (1954). Operative constitutional hook for the model.",
+      "source_ref": "U.S. Const. amend. V",
+      "path": "neutral"
+    },
+    {
+      "id": "src-const-14th",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "14th Amendment § 1 (Citizenship / Equal Protection)",
+      "description": "Defines citizenship and equal protection for state action. Provides the citizenship definition used in voter qualification analysis.",
+      "source_ref": "U.S. Const. amend. XIV, § 1",
+      "path": "neutral"
+    },
+    {
+      "id": "src-const-17th",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "17th Amendment (Senate Voter Qualifications)",
+      "description": "Extends voter qualification framework to Senate elections.",
+      "source_ref": "U.S. Const. amend. XVII",
+      "path": "neutral"
+    },
+    {
+      "id": "src-const-24th",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "24th Amendment (Poll Tax Prohibition)",
+      "description": "Prohibits poll taxes in federal elections. Relevant to whether document-acquisition costs constitute an impermissible tax.",
+      "source_ref": "U.S. Const. amend. XXIV, § 1",
+      "path": "neutral"
+    },
+    {
+      "id": "src-crawford",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Crawford v. Marion County (2008)",
+      "description": "Supreme Court plurality upholding Indiana voter ID law under Anderson-Burdick framework. Key precedent for burden analysis.",
+      "source_ref": "553 U.S. 181 (2008)",
+      "path": "neutral"
+    },
+    {
+      "id": "src-anderson-burdick",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Anderson-Burdick Framework",
+      "description": "Sliding-scale test: severe burdens trigger strict scrutiny; lesser burdens require only rational basis.",
+      "source_ref": "Anderson v. Celebrezze, 460 U.S. 780 (1983); Burdick v. Takushi, 504 U.S. 428 (1992)",
+      "path": "neutral"
+    },
+    {
+      "id": "src-fish",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Fish v. Kobach (10th Cir. 2016)",
+      "description": "Kansas documentary proof-of-citizenship requirement. Found ~18,000 applicants unable to complete registration. Key empirical record.",
+      "source_ref": "840 F.3d 710 (10th Cir. 2016)",
+      "path": "neutral"
+    },
+    {
+      "id": "src-bolling",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Bolling v. Sharpe (1954)",
+      "description": "Reverse incorporation: Fifth Amendment due process includes equal protection component binding the federal government.",
+      "source_ref": "347 U.S. 497 (1954)",
+      "path": "neutral"
+    },
+    {
+      "id": "trace-manifest",
+      "type": "TRACEABILITY_ARTIFACT",
+      "layer": "sources",
+      "label": "source_manifest.json",
+      "description": "Registry of 21 authoritative sources with URLs, citations, and local file references.",
+      "path": "traceability"
+    },
+    {
+      "id": "trace-csv",
+      "type": "TRACEABILITY_ARTIFACT",
+      "layer": "sources",
+      "label": "clause_trace.csv",
+      "description": "38-row mapping from every defaxiom to its authoritative source clause.",
+      "path": "traceability"
+    },
+    {
+      "id": "trace-ace",
+      "type": "TRACEABILITY_ARTIFACT",
+      "layer": "sources",
+      "label": "ACE Controlled-English Statements",
+      "description": "13 source provisions translated to Attempto Controlled English with predicate targets.",
+      "path": "traceability"
+    },
+    {
+      "id": "ax-citizen-a-qualified",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "citizen-a is a qualified voter",
+      "description": "Scenario ground truth: citizen-a is a U.S. citizen, eligible to vote, of legal age.",
+      "acl2_event": "citizen-a-is-qualified-voter",
+      "book": "federal_save_act_facts.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-citizen-a-lacks-docs",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "citizen-a lacks qualifying documents",
+      "description": "citizen-a does not possess any of the qualifying documents listed in the SAVE Act (no REAL ID, passport, birth certificate, etc.).",
+      "acl2_event": "citizen-a-lacks-documentary-proof",
+      "book": "federal_save_act_facts.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-protected-right",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "Voting is a constitutionally protected right",
+      "description": "Source-traced from constitutional provisions.",
+      "acl2_event": "voting-is-protected-right",
+      "book": "federal_save_act_facts.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-law-is-law",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "SAVE Act is a federal law",
+      "description": "Source-traced: H.R. 22 is a law regulating voter registration.",
+      "acl2_event": "save-act-is-federal-law",
+      "book": "federal_save_act_facts.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-registration-transaction",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "Registration attempt is a registration transaction",
+      "description": "The act of applying to register constitutes a registration transaction subject to SAVE Act requirements.",
+      "acl2_event": "registration-attempt-is-transaction",
+      "book": "federal_save_act_facts.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-statute-denies",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "Statute triggers denial for citizen-a",
+      "description": "Under the SAVE Act, citizen-a's registration is denied because they lack documentary proof.",
+      "acl2_event": "save-act-denial-trigger",
+      "book": "federal_save_act_facts.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-no-fault",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Citizen lacks documents through no fault",
+      "description": "Challenger-side empirical premise: citizen-a lacks qualifying documents through no personal fault (e.g., born at home in rural area, elderly, records destroyed).",
+      "acl2_event": "challenger-scenario-no-fault",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Fish v. Kobach record",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-material-burden",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Obtaining documents is materially burdensome",
+      "description": "Challenger-side empirical premise: obtaining qualifying documents imposes a material burden (cost, travel, time, bureaucratic barriers).",
+      "acl2_event": "challenger-scenario-material-burden",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Crawford burden discussion",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-burden-not-severe",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Government: burden is not severe",
+      "description": "Government-side empirical premise: the burden of obtaining documents is not severe, and an adequate alternative process exists.",
+      "acl2_event": "government-burden-not-severe",
+      "book": "federal_save_act_government_model.lisp",
+      "source_ref": "Crawford plurality",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "government"
+    },
+    {
+      "id": "ax-adequate-alt",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Adequate alternative process exists",
+      "description": "Government premise: the § 8(j)(2)(A) attestation process provides an adequate alternative path to registration.",
+      "acl2_event": "government-adequate-alternative",
+      "book": "federal_save_act_government_model.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "government"
+    },
+    {
+      "id": "ax-mandatory-reading",
+      "type": "INTERPRETIVE_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Mandatory alternative-process reading",
+      "description": "§ 8(j)(2)(A): 'sufficiently established' means the official must approve if evidence is adequate → guaranteed path to registration.",
+      "acl2_event": "hinge-mandatory-approval",
+      "book": "federal_save_act_hinge_mandatory.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "government"
+    },
+    {
+      "id": "ax-discretionary-reading",
+      "type": "INTERPRETIVE_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Discretionary alternative-process reading",
+      "description": "§ 8(j)(2)(A): 'sufficiently established' gives the official discretion → possible denial even with evidence → no guaranteed registration path.",
+      "acl2_event": "hinge-discretionary-denial",
+      "book": "federal_save_act_hinge_discretionary.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-election-integrity",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Election integrity is an important interest",
+      "description": "Government doctrinal premise: preventing noncitizen voting is an important or compelling government interest.",
+      "acl2_event": "government-important-interest",
+      "book": "federal_save_act_government_model.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "government"
+    },
+    {
+      "id": "ax-reasonable-evenhanded",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Requirement is reasonable and evenhanded",
+      "description": "Government doctrinal premise: the documentary proof requirement is reasonable, rationally connected to the interest, and evenhanded.",
+      "acl2_event": "government-reasonable-evenhanded",
+      "book": "federal_save_act_government_model.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "government"
+    },
+    {
+      "id": "ax-severe-defeats",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Severe burden defeats regulation",
+      "description": "Challenger doctrinal premise: under Anderson-Burdick, a severe burden on the right to vote makes the regulation constitutionally invalid.",
+      "acl2_event": "severe-burden-defeats-regulation",
+      "book": "federal_save_act_challenger_model.lisp",
+      "trusted_base": true,
+      "high_risk": false,
+      "path": "challenger"
+    },
+    {
+      "id": "model-state-machine",
+      "type": "PROCESS_MODEL",
+      "layer": "executable",
+      "label": "Registration State Machine",
+      "description": "10-state, 9-event executable model: :submitted → :pending → :approved → :registered or :denied, with :alt-pending → :alt-approved/:alt-denied alternative path.",
+      "book": "federal_save_act_process.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "model-documents",
+      "type": "DOCUMENT_MODEL",
+      "layer": "executable",
+      "label": "Document Recognizer Model",
+      "description": "Executable recognizers for REAL ID, passport, military ID, government photo ID, and supporting documents.",
+      "book": "federal_save_act_process.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "model-burden",
+      "type": "BURDEN_MODEL",
+      "layer": "executable",
+      "label": "Burden Derivation Chain (defun)",
+      "description": "5-step executable burden chain: lacks-docs → cannot-obtain → material-burden → severe-burden → invalid-regulation.",
+      "book": "federal_save_act_burden_proofs.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "model-hinge",
+      "type": "HINGE_MODEL",
+      "layer": "executable",
+      "label": "Interpretive Hinge Fork",
+      "description": "Encapsulate-based model: § 8(j)(2)(A) 'sufficiently established' splits into mandatory (government) vs. discretionary (challenger) readings.",
+      "book": "federal_save_act_hinge_common.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "model-existentials",
+      "type": "EXISTENTIAL_MODEL",
+      "layer": "executable",
+      "label": "Existential Propositions (defun-sk)",
+      "description": "4 Skolemized existential claims: exists-burdened-citizen, exists-no-fault-citizen, exists-documentless-eligible-voter, exists-citizen-facing-discretionary-denial.",
+      "book": "federal_save_act_existentials.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "model-anderson-burdick",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "executable",
+      "label": "Anderson-Burdick Doctrinal Standard",
+      "description": "Encapsulate-based doctrinal standard: severe burden → strict scrutiny; not-severe → rational basis.",
+      "book": "federal_save_act_doctrine_proofs.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "deriv-denial",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Denial derivation",
+      "description": "citizen-a's registration is denied because they lack documentary proof and no alternative process is approved.",
+      "path": "neutral"
+    },
+    {
+      "id": "deriv-lacks-docs",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Lacks-documents derivation",
+      "description": "citizen-a possesses no qualifying document from the SAVE Act list.",
+      "path": "neutral"
+    },
+    {
+      "id": "deriv-burden-chain",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Full burden derivation chain",
+      "description": "Executable defun chain: citizen-a-has-material-burden → citizen-a-burden-is-severe → regulation-is-invalid.",
+      "book": "federal_save_act_burden_proofs.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "deriv-alt-process",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Alternative-process derivation",
+      "description": "Under mandatory reading: alternative process provides guaranteed registration path. Under discretionary reading: official may deny.",
+      "path": "contested"
+    },
+    {
+      "id": "deriv-hinge-fork",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Interpretive hinge fork split",
+      "description": "The outcome pivots on whether § 8(j)(2)(A) is read as mandatory approval or discretionary determination.",
+      "path": "contested"
+    },
+    {
+      "id": "thm-registered-implies-acceptance",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "registered-implies-prior-acceptance-path",
+      "description": "Registration requires a prior acceptance path through the state machine. 0 axioms.",
+      "book": "federal_save_act_process_invariants.lisp",
+      "axiom_count": 0,
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-denied-implies-denial",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "denied-implies-prior-denial-path",
+      "description": "Denial requires a prior denial path through the state machine. 0 axioms.",
+      "book": "federal_save_act_deep_process_invariants.lisp",
+      "axiom_count": 0,
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-terminal-remains",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "terminal-state-remains-terminal",
+      "description": "Once registered or denied, later events do not change the terminal outcome. 0 axioms.",
+      "book": "federal_save_act_deep_process_invariants.lisp",
+      "axiom_count": 0,
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-nonqualifying-no-proof",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "all-nonqualifying-implies-no-documentary-proof",
+      "description": "A bundle of only nonqualifying documents cannot satisfy documentary proof. 0 axioms.",
+      "book": "federal_save_act_document_proofs.lisp",
+      "axiom_count": 0,
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-pivot",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "conflict-condition-pivots-on-valid-regulation",
+      "description": "The constitutional conflict condition is logically equivalent to (not (valid-regulationp law x)). The entire dispute reduces to this single predicate.",
+      "book": "federal_save_act_model_consistency.lisp",
+      "axiom_count": 0,
+      "axiom_free": false,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-full-burden",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "full-burden-chain",
+      "description": "Derives: citizen-a faces severe burden → regulation is invalid, using the executable defun chain.",
+      "book": "federal_save_act_burden_proofs.lisp",
+      "axiom_count": 6,
+      "axiom_free": false,
+      "path": "challenger"
+    },
+    {
+      "id": "thm-invalid-enables",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "invalid-regulation-enables-conflict-condition",
+      "description": "If the regulation is not valid, the formal conflict condition is established.",
+      "book": "federal_save_act_model_consistency.lisp",
+      "axiom_count": 0,
+      "axiom_free": false,
+      "path": "challenger"
+    },
+    {
+      "id": "thm-valid-negates",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "valid-regulation-negates-conflict-condition",
+      "description": "If the regulation is valid, no formal conflict condition exists.",
+      "book": "federal_save_act_model_consistency.lisp",
+      "axiom_count": 0,
+      "axiom_free": false,
+      "path": "government"
+    },
+    {
+      "id": "pivot-valid-regulation",
+      "type": "THEOREM",
+      "layer": "conclusions",
+      "label": "valid-regulationp",
+      "description": "The single interpretive/doctrinal predicate that determines the constitutional outcome. Not proved by ACL2 — determined by the assumption set.",
+      "path": "contested"
+    },
+    {
+      "id": "concl-challenger",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Challenger: CONSTITUTIONAL CONFLICT",
+      "description": "Under challenger assumptions (no-fault, material burden, severe burden, discretionary reading, invalid regulation), ACL2 derives that a formal constitutional conflict exists.",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "concl-government",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Government: NO CONFLICT",
+      "description": "Under government assumptions (burden not severe, adequate alternative, mandatory reading, election integrity, valid regulation), ACL2 derives that no formal constitutional conflict exists.",
+      "book": "federal_save_act_government_model.lisp",
+      "path": "government"
+    }
+  ],
+  "edges": [
+    {
+      "from": "src-hr22",
+      "to": "ax-law-is-law",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-hr22",
+      "to": "ax-statute-denies",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-nvra",
+      "to": "ax-law-is-law",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-const-5th",
+      "to": "ax-protected-right",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-const-14th",
+      "to": "ax-citizen-a-qualified",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-const-17th",
+      "to": "ax-protected-right",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-const-24th",
+      "to": "ax-protected-right",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-material-burden",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-burden-not-severe",
+      "relation": "source_traces",
+      "path": "government"
+    },
+    {
+      "from": "src-anderson-burdick",
+      "to": "model-anderson-burdick",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-anderson-burdick",
+      "to": "ax-severe-defeats",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-fish",
+      "to": "ax-no-fault",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-bolling",
+      "to": "src-const-5th",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "trace-manifest",
+      "to": "trace-csv",
+      "relation": "supports",
+      "path": "traceability"
+    },
+    {
+      "from": "trace-ace",
+      "to": "trace-csv",
+      "relation": "supports",
+      "path": "traceability"
+    },
+    {
+      "from": "ax-citizen-a-qualified",
+      "to": "deriv-denial",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-citizen-a-lacks-docs",
+      "to": "deriv-lacks-docs",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-protected-right",
+      "to": "thm-pivot",
+      "relation": "depends_on",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-law-is-law",
+      "to": "thm-pivot",
+      "relation": "depends_on",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-registration-transaction",
+      "to": "thm-pivot",
+      "relation": "depends_on",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-statute-denies",
+      "to": "deriv-denial",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-no-fault",
+      "to": "deriv-burden-chain",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-material-burden",
+      "to": "deriv-burden-chain",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-severe-defeats",
+      "to": "deriv-burden-chain",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-discretionary-reading",
+      "to": "deriv-hinge-fork",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-burden-not-severe",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-adequate-alt",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-mandatory-reading",
+      "to": "deriv-hinge-fork",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-election-integrity",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-reasonable-evenhanded",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-burden-not-severe",
+      "to": "deriv-burden-chain",
+      "relation": "contests",
+      "path": "contested",
+      "description": "Government disputes burden chain"
+    },
+    {
+      "from": "model-state-machine",
+      "to": "thm-registered-implies-acceptance",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-state-machine",
+      "to": "thm-denied-implies-denial",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-state-machine",
+      "to": "thm-terminal-remains",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-documents",
+      "to": "thm-nonqualifying-no-proof",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-burden",
+      "to": "thm-full-burden",
+      "relation": "supports",
+      "path": "challenger"
+    },
+    {
+      "from": "model-hinge",
+      "to": "deriv-alt-process",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-hinge",
+      "to": "deriv-hinge-fork",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "deriv-alt-process",
+      "to": "deriv-hinge-fork",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-existentials",
+      "to": "thm-full-burden",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-anderson-burdick",
+      "to": "thm-full-burden",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "deriv-denial",
+      "to": "thm-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "deriv-lacks-docs",
+      "to": "deriv-denial",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "deriv-burden-chain",
+      "to": "thm-full-burden",
+      "relation": "supports",
+      "path": "challenger"
+    },
+    {
+      "from": "deriv-hinge-fork",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "deriv-hinge-fork",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "thm-pivot",
+      "to": "pivot-valid-regulation",
+      "relation": "pivots_on",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-full-burden",
+      "to": "thm-invalid-enables",
+      "relation": "supports",
+      "path": "challenger"
+    },
+    {
+      "from": "thm-invalid-enables",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "thm-valid-negates",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "pivot-valid-regulation",
+      "to": "concl-challenger",
+      "relation": "negates",
+      "path": "challenger",
+      "description": "If NOT valid-regulationp"
+    },
+    {
+      "from": "pivot-valid-regulation",
+      "to": "concl-government",
+      "relation": "supports",
+      "path": "government",
+      "description": "If valid-regulationp"
+    }
+  ],
+  "hypotheticals": [
+    {
+      "id": "hyp-no-fault",
+      "category": "Empirical Assumptions",
+      "label": "Citizen lacks documents through no fault",
+      "default": true,
+      "controls": [
+        "ax-no-fault"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-material-burden",
+      "category": "Empirical Assumptions",
+      "label": "Obtaining qualifying documents is materially burdensome",
+      "default": true,
+      "controls": [
+        "ax-material-burden"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-burden-not-severe",
+      "category": "Empirical Assumptions",
+      "label": "Government: burden is not severe",
+      "default": true,
+      "controls": [
+        "ax-burden-not-severe"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-adequate-alt",
+      "category": "Empirical Assumptions",
+      "label": "Adequate alternative process exists",
+      "default": true,
+      "controls": [
+        "ax-adequate-alt"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-mandatory",
+      "category": "Interpretive Assumptions",
+      "label": "Mandatory alternative-process reading",
+      "default": true,
+      "controls": [
+        "ax-mandatory-reading"
+      ],
+      "path": "government",
+      "exclusive_with": "hyp-discretionary"
+    },
+    {
+      "id": "hyp-discretionary",
+      "category": "Interpretive Assumptions",
+      "label": "Discretionary alternative-process reading",
+      "default": true,
+      "controls": [
+        "ax-discretionary-reading"
+      ],
+      "path": "challenger",
+      "exclusive_with": "hyp-mandatory"
+    },
+    {
+      "id": "hyp-election-integrity",
+      "category": "Doctrinal Assumptions",
+      "label": "Election integrity is an important government interest",
+      "default": true,
+      "controls": [
+        "ax-election-integrity"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-reasonable",
+      "category": "Doctrinal Assumptions",
+      "label": "Requirement is reasonable and evenhanded",
+      "default": true,
+      "controls": [
+        "ax-reasonable-evenhanded"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-severe-defeats",
+      "category": "Doctrinal Assumptions",
+      "label": "Severe burden defeats regulation",
+      "default": true,
+      "controls": [
+        "ax-severe-defeats"
+      ],
+      "path": "challenger"
+    }
+  ]
+}
