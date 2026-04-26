@@ -93,19 +93,23 @@ federal_save_act/
 ├── tools/
 │   └── validate_trace.py                    # Machine-checkable source trace validator
 ├── scripts/
-│   ├── certify-all.ps1                      # PowerShell certification script
-│   └── docker-certify-all.sh                # Bash/Docker certification script
+│   ├── certify_books.ps1                    # certify-book script (Windows PowerShell)
+│   ├── certify_books.sh                     # certify-book script (Linux/macOS)
+│   ├── certify_all.ps1                      # Batch admission script (Windows PowerShell)
+│   └── certify_all.sh                       # Batch admission script (Linux/macOS)
 ├── data/
 │   └── parsed/
 │       ├── federal_save_act.json            # Parsed bill sections
 │       ├── federal_save_act_predicates.json # Normalized predicates
 │       └── federal_save_act_ace.json        # ACE-normalized clauses
 └── reports/
+    ├── certification_status.md              # certify-book status matrix
     ├── axiom_inventory.md                   # Full defaxiom classification report
     ├── axiom_pressure_report.md             # v5.2: axiom pressure + replacement paths
     ├── proof_dependency_report.md           # v5.2: theorem dependency chains
     ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
     ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
+    ├── v5_3_review_hardening_assessment.md  # v5.3 review hardening assessment
     └── federal_save_act_proof_obligations.md # Proof results
 ```
 

@@ -229,5 +229,3 @@ jobs:
           name: certify-book-logs
           path: logs/certify/*.log
           retention-days: 30
-
-
