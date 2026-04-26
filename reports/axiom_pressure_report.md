@@ -63,3 +63,44 @@ The axiom pressure has not decreased in count but has significantly decreased in
 - 11 interpretive/empirical/doctrinal claims (the genuine trusted base)
 - 2 hinge semantics (mutually exclusive by design)
 - 1 text fact
+
+## Trusted-Base Summary for Reviewers
+
+### What is proved by ACL2 (no axioms needed)
+
+- 126 theorems, including 5 induction proofs over traces, 3+ induction proofs over document lists
+- 24 executable functions (defun) — state machine, document recognizers, burden derivation chain
+- 4 defun-sk existential propositions with Skolemized witnesses
+- 4 encapsulate blocks with local witnesses proving consistency
+- All top 5 theorems depend on **zero axioms** — see `TOP_5_THEOREMS.md`
+
+### What is assumed from public source text (low risk)
+
+- 1 text fact: the SAVE Act is a law
+- 14 scenario facts: citizen-a's properties (person, citizen, eligible, etc.)
+- 5 bridge rules: structural connectors between encapsulate predicates and core defstubs
+
+### What remains empirical (high risk — contestable)
+
+- `challenger-scenario-no-fault`: citizens lack documents through no fault (Fish v. Kobach)
+- `challenger-scenario-material-burden`: cannot obtain documents without material burden (Crawford plurality)
+- `government-burden-not-severe`: burden is not severe (Crawford plurality)
+
+### What remains interpretive (medium risk — depends on statutory reading)
+
+- `challenger-scenario-alternative-process-denied`: alternative process denies citizen-a (discretionary reading)
+- `government-scenario-alternative-process-approved`: alternative process approves citizen-a (mandatory reading)
+
+### What remains doctrinal (medium risk — depends on case law application)
+
+- `government-election-integrity-interest`: election integrity is an important interest (Crawford)
+- `government-important-interest`: the government interest is important (Crawford)
+
+### What is now derived rather than assumed (v5.2 improvement)
+
+- `material-burdenp` — derived from `lacks-all-qualifying-documentsp` + `cannot-obtain...`
+- `denial-riskp` — derived from `material-burdenp` + `no-adequate-alternative-forp`
+- `severe-burdenp-derived` — derived from full chain
+- Anderson-Burdick doctrinal standard — encapsulated with local witnesses
+- Burden-class existence claims — derived from defun-sk existentials
+

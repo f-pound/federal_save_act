@@ -188,6 +188,27 @@ A future project may generalize these methods into **A Computational Amicus Brie
 
 See `reports/v5_2_acl2_proof_assessment.md` for full metrics.
 
+## For ACL2 Reviewers
+
+1. **Run the proof suite**: `./scripts/certify_all.sh` (Linux/macOS) or `.\scripts\certify_all.ps1` (Windows). See [CERTIFICATION.md](CERTIFICATION.md).
+2. **Executable model**: `federal_save_act_process.lisp` — 7-state, 9-event registration state machine with recursive trace executor.
+3. **Induction proofs**: `federal_save_act_process_invariants.lisp` and `federal_save_act_deep_process_invariants.lisp` — 24 theorems, 5+ by induction over event traces.
+4. **Document-list induction**: `federal_save_act_document_proofs.lisp` — 9 theorems over recursive document lists.
+5. **Encapsulate usage**: Challenger model, government model, hinge common, and doctrine proofs (4 blocks total, each with local witnesses).
+6. **defun-sk usage**: `federal_save_act_existentials.lisp` — 4 Skolemized existential propositions.
+7. **Remaining defaxioms**: 33 total, classified in `reports/axiom_pressure_report.md`.
+8. **Top 5 theorems**: See [TOP_5_THEOREMS.md](TOP_5_THEOREMS.md) — all five depend on zero axioms.
+9. **Proof tour**: See [PROOF_TOUR.md](PROOF_TOUR.md) for the full architecture walkthrough.
+
+## For Legal Reviewers
+
+1. **Legal sources**: H.R. 22 (SAVE Act), NVRA (52 U.S.C. §§ 20504–20511), U.S. Constitution (Art. I §§ 2, 4; Amends. V, XIV, XVII, XXIV), and case law (Crawford, Anderson, Harper, Reynolds, Burdick, Arizona v. ITCA). All in `sources/source_manifest.json`.
+2. **Source tracing**: Every axiom traces to a specific clause in a public legal document via `sources/clause_trace.csv`. Machine-checkable via `tools/validate_trace.py`.
+3. **Empirical/interpretive assumptions**: 3 empirical (burden severity), 2 interpretive (hinge semantics), 2 doctrinal (case law holdings). See `reports/axiom_pressure_report.md`.
+4. **What ACL2 proves conditionally**: *If* these assumptions hold, *then* this legal conclusion follows. ACL2 does not evaluate which assumptions are correct.
+5. **Why this is not a judicial decision engine**: ACL2 models boolean properties, not burden magnitudes. It does not weigh competing interests, apply stare decisis, or evaluate legislative intent. See [PROOF_TOUR.md](PROOF_TOUR.md) §2.
+6. **Challenger vs. government theories**: The challenger argues the documentary proof requirement is an undue burden on citizens who lack qualifying documents. The government argues the requirement is a valid regulation with an adequate alternative process. Both conclusions are formally derived from their respective assumption sets.
+
 ## Framework
 
 This project follows the [AGENTS.md](../AGENTS.md) constitutional stress-test framework. See [templates/NEW_PROJECT_PROMPT.md](../templates/NEW_PROJECT_PROMPT.md) for instructions on bootstrapping new stress tests.

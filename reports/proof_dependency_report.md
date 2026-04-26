@@ -152,6 +152,28 @@ For each major final theorem, this report lists exactly what ACL2 proved, what w
 
 ---
 
+## 6. `denied-implies-prior-denial-path` (v5.2)
+
+**Conclusion**: Any trace from a non-denied start that reaches denied must have passed through a denial-triggering state (doc-rejected, alt-denied, or submitted).
+
+**Status**: Q.E.D. (proved by induction)
+
+### Dependency Chain
+
+| Dependency | Classification |
+|---|---|
+| `reg-next-state` | EXECUTABLE_DEFINITION |
+| `reg-run-trace` | EXECUTABLE_DEFINITION |
+| `trace-passed-through-denial-statep` | EXECUTABLE_DEFINITION |
+| `denied-requires-denial-state` | PROVED (case analysis) |
+
+### What ACL2 Proved
+- Pure structural theorem — no axioms, no assumptions.
+- Proved by induction over the event list.
+- Denial-side dual of `registered-implies-prior-acceptance-path`.
+
+---
+
 ## Summary: Assumption Counts by Final Theorem
 
 | Final Theorem | Axioms Used | Encapsulate Rules | Definitions | Classification |
@@ -161,3 +183,5 @@ For each major final theorem, this report lists exactly what ACL2 proved, what w
 | conflict-condition-pivots-on-valid-regulation | 0 | 0 | 3 | Structural theorem |
 | full-burden-chain | 0 | 0 | 5 | Structural derivation |
 | registered-implies-prior-acceptance-path | 0 | 0 | 3 | Process invariant |
+| denied-implies-prior-denial-path | 0 | 0 | 4 | Process invariant |
+

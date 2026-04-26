@@ -5,13 +5,16 @@ on:
     branches: [ master, main ]
     paths:
       - '**.lisp'
+      - '**.md'
       - 'sources/**'
       - 'tools/**'
+      - 'scripts/**'
       - '.github/workflows/acl2-proofs.yml'
   pull_request:
     branches: [ master, main ]
     paths:
       - '**.lisp'
+      - '**.md'
       - 'sources/**'
       - 'tools/**'
 
@@ -33,10 +36,50 @@ jobs:
           PROJECT_ROOT: .
         run: python tools/validate_trace.py
 
+  repo-check:
+    name: Verify Review Documents
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required review documents
+        run: |
+          missing=0
+          for f in CERTIFICATION.md PROOF_TOUR.md TOP_5_THEOREMS.md \
+                   reports/axiom_pressure_report.md \
+                   reports/proof_dependency_report.md \
+                   reports/v5_3_review_hardening_assessment.md; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING: $f"
+              missing=$((missing + 1))
+            else
+              echo "OK: $f"
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "ERROR: $missing required review document(s) missing."
+            exit 1
+          fi
+
+      - name: Check defaxiom trace coverage
+        run: |
+          # Count defaxioms in .lisp files
+          axiom_count=$(grep -rh '(defaxiom ' *.lisp | wc -l)
+          # Count trace rows (minus header)
+          trace_count=$(($(wc -l < sources/clause_trace.csv) - 1))
+          echo "defaxioms in .lisp: $axiom_count"
+          echo "trace rows in CSV: $trace_count"
+          if [ "$trace_count" -lt "$axiom_count" ]; then
+            echo "ERROR: Not all defaxioms have trace entries ($trace_count < $axiom_count)"
+            exit 1
+          fi
+          echo "OK: trace coverage adequate"
+
   certify:
     name: Certify ACL2 Books
     runs-on: ubuntu-latest
-    needs: validate-traces
+    needs: [validate-traces, repo-check]
 
     steps:
       - name: Checkout
