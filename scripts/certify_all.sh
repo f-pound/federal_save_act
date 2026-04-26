@@ -31,7 +31,7 @@ mkdir -p "$LOG_DIR"
 
 # Determine ACL2 runner
 if command -v docker &>/dev/null && docker compose version &>/dev/null; then
-  run_acl2() { docker compose run --rm acl2 acl2 < "$1" 2>/dev/null; }
+  run_acl2() { docker compose run --rm -w /work/model acl2 acl2 < "$1" 2>/dev/null; }
 elif command -v acl2 &>/dev/null; then
   run_acl2() { acl2 < "$1" 2>&1; }
 else

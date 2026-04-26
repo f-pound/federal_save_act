@@ -40,7 +40,7 @@ Write-Host ""
 Write-Host "--- ACL2 Books ---"
 foreach ($b in $books) {
   $logFile = "$logDir/${b}.log"
-  $out = cmd /c "docker compose run --rm acl2 acl2 < model/${b}.lisp 2>NUL" 2>$null
+  $out = cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/${b}.lisp 2>NUL" 2>$null
   $out | Out-File -FilePath $logFile -Encoding utf8
   $qed = ($out | Select-String "Q\.E\.D\.").Count
   $fail = ($out | Select-String "FAILED").Count

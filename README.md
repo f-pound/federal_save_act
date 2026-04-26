@@ -26,13 +26,13 @@ See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectura
 
 ```powershell
 # Run consistency check (verifies core vocabulary)
-cmd /c "docker compose run --rm acl2 acl2 < model/federal_save_act_consistency_check.lisp"
+cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_act_consistency_check.lisp"
 
 # Run challenger proof (expects constitutional conflict)
-cmd /c "docker compose run --rm acl2 acl2 < model/federal_save_act_challenger_model.lisp"
+cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_act_challenger_model.lisp"
 
 # Run government proof (expects no conflict)
-cmd /c "docker compose run --rm acl2 acl2 < model/federal_save_act_government_model.lisp"
+cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_act_government_model.lisp"
 ```
 
 > **Important**: Never load both models in the same ACL2 session. They derive opposite conclusions and are intentionally incompatible.
