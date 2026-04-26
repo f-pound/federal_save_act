@@ -1136,7 +1136,10 @@ footer p {
   }
 
   html, body {
+    height: auto;
+    min-height: 100vh;
     overflow: auto;
+    overflow-x: hidden;
   }
 
   /* ---- Header ---- */
