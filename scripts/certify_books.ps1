@@ -1,43 +1,45 @@
 # certify_books.ps1 — Run ACL2 certify-book on all Federal SAVE Act books.
 #
-# This produces .cert files for each book, which is the standard ACL2
-# certification artifact. Books are certified in dependency order.
-#
-# Books containing defaxiom (or including books that do) are certified
-# with :defaxioms-okp t. Books with no defaxiom chain are certified
-# without that flag (clean certification).
+# Produces .cert files in strict dependency order.
+# Books with defaxiom (or inheriting it) use :defaxioms-okp t.
 #
 # Usage: powershell -ExecutionPolicy Bypass -File .\scripts\certify_books.ps1
 # Logs are saved to logs\certify\
 
-# --- Book classification ---
-$cleanBooks = @(
-  "federal_save_act_core",
-  "federal_save_act_process",
-  "federal_save_act_consistency_check"
-)
+# --- Strict dependency order ---
+# Each entry: @("book_name", "clean|defaxiom")
 
-$cleanDownstream = @(
-  "federal_save_act_process_invariants",
-  "federal_save_act_deep_process_invariants",
-  "federal_save_act_document_proofs"
-)
+$books = @(
+  # Layer 0: base clean
+  @("federal_save_act_core", "clean"),
+  @("federal_save_act_process", "clean"),
 
-$defaxiomBooks = @(
-  "federal_save_act_facts",
-  "federal_save_act_hinge_mandatory",
-  "federal_save_act_hinge_discretionary",
-  "federal_save_act_challenger_model",
-  "federal_save_act_government_model"
-)
+  # Layer 1: source-traced axiom book
+  @("federal_save_act_facts", "defaxiom"),
 
-$inheritedBooks = @(
-  "federal_save_act_hinge_common",
-  "federal_save_act_existentials",
-  "federal_save_act_burden_proofs",
-  "federal_save_act_doctrine_proofs",
-  "federal_save_act_model_consistency",
-  "federal_save_act_independence"
+  # Layer 2: hinge dependency (includes facts)
+  @("federal_save_act_hinge_common", "defaxiom"),
+
+  # Layer 3: hinge interpretation (includes hinge_common)
+  @("federal_save_act_hinge_mandatory", "defaxiom"),
+  @("federal_save_act_hinge_discretionary", "defaxiom"),
+
+  # Layer 4: downstream (includes facts)
+  @("federal_save_act_existentials", "defaxiom"),
+  @("federal_save_act_burden_proofs", "defaxiom"),
+  @("federal_save_act_doctrine_proofs", "defaxiom"),
+  @("federal_save_act_model_consistency", "defaxiom"),
+  @("federal_save_act_independence", "defaxiom"),
+  @("federal_save_act_challenger_model", "defaxiom"),
+  @("federal_save_act_government_model", "defaxiom"),
+
+  # Layer 5: clean process chain (no defaxiom dependency)
+  @("federal_save_act_process_invariants", "clean"),
+  @("federal_save_act_deep_process_invariants", "clean"),
+  @("federal_save_act_document_proofs", "clean"),
+
+  # Layer 6: consistency check (includes core only)
+  @("federal_save_act_consistency_check", "clean")
 )
 
 $logDir = "logs\certify"
@@ -73,17 +75,9 @@ Write-Host "=== ACL2 certify-book: Federal SAVE Act ==="
 Write-Host "Logs: $logDir\"
 Write-Host ""
 
-Write-Host "--- Layer 0: Clean books (no defaxiom) ---"
-foreach ($b in $cleanBooks) { Certify-Book -Book $b -Mode "clean" }
-
-Write-Host "--- Layer 1: Defaxiom books ---"
-foreach ($b in $defaxiomBooks) { Certify-Book -Book $b -Mode "defaxiom" }
-
-Write-Host "--- Layer 2: Inherited defaxiom (includes facts) ---"
-foreach ($b in $inheritedBooks) { Certify-Book -Book $b -Mode "defaxiom" }
-
-Write-Host "--- Layer 2-3: Clean downstream (process chain) ---"
-foreach ($b in $cleanDownstream) { Certify-Book -Book $b -Mode "clean" }
+foreach ($entry in $books) {
+  Certify-Book -Book $entry[0] -Mode $entry[1]
+}
 
 Write-Host ""
 Write-Host "=== Summary ==="

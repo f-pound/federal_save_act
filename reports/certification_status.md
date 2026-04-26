@@ -16,42 +16,50 @@ All **17 books** certify with ACL2 `certify-book`. This is the standard ACL2 cer
 | Book | Layer | certify-book | defaxiom | Source |
 |---|---|---|---|---|
 | `federal_save_act_core` | 0 | ✅ clean | None | — |
-| `federal_save_act_process` | 1 | ✅ clean | None | includes core |
-| `federal_save_act_consistency_check` | 1 | ✅ clean | None | includes core |
+| `federal_save_act_process` | 0 | ✅ clean | None | includes core |
 | `federal_save_act_facts` | 1 | ✅ defaxioms-okp | 3 own | includes core |
-| `federal_save_act_process_invariants` | 2 | ✅ clean | None | includes process |
-| `federal_save_act_document_proofs` | 2 | ✅ clean | None | includes process |
 | `federal_save_act_hinge_common` | 2 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
-| `federal_save_act_existentials` | 2 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
-| `federal_save_act_burden_proofs` | 2 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
-| `federal_save_act_doctrine_proofs` | 2 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
-| `federal_save_act_model_consistency` | 2 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
-| `federal_save_act_independence` | 2 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
-| `federal_save_act_challenger_model` | 2 | ✅ defaxioms-okp | 12 own | includes facts |
-| `federal_save_act_government_model` | 2 | ✅ defaxioms-okp | 15 own | includes facts |
 | `federal_save_act_hinge_mandatory` | 3 | ✅ defaxioms-okp | 2 own | includes hinge_common |
 | `federal_save_act_hinge_discretionary` | 3 | ✅ defaxioms-okp | 1 own | includes hinge_common |
-| `federal_save_act_deep_process_invariants` | 3 | ✅ clean | None | includes process_inv |
+| `federal_save_act_existentials` | 4 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
+| `federal_save_act_burden_proofs` | 4 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
+| `federal_save_act_doctrine_proofs` | 4 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
+| `federal_save_act_model_consistency` | 4 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
+| `federal_save_act_independence` | 4 | ✅ defaxioms-okp | 0 own, inherited | includes facts |
+| `federal_save_act_challenger_model` | 4 | ✅ defaxioms-okp | 12 own | includes facts |
+| `federal_save_act_government_model` | 4 | ✅ defaxioms-okp | 15 own | includes facts |
+| `federal_save_act_process_invariants` | 5 | ✅ clean | None | includes process |
+| `federal_save_act_deep_process_invariants` | 5 | ✅ clean | None | includes process_inv |
+| `federal_save_act_document_proofs` | 5 | ✅ clean | None | includes process |
+| `federal_save_act_consistency_check` | 6 | ✅ clean | None | includes core |
 
 ## Dependency Graph
 
 ```
-Layer 0:  core
-            ├──────────────────────────────────────┐
-Layer 1:  facts (defaxiom)      process            consistency_check
-            │                      │
-Layer 2:  hinge_common           process_invariants
-          existentials           document_proofs
-          burden_proofs
-          doctrine_proofs
-          model_consistency
-          independence
-          challenger_model (defaxiom)
-          government_model (defaxiom)
-            │                      │
-Layer 3:  hinge_mandatory        deep_process_invariants
-          hinge_discretionary
-          (both defaxiom)
+Layer 0:  core ──────────────────────────────────────────────┐
+          process ──────────────────┐                        │
+                                    │                        │
+Layer 1:  facts (defaxiom)          │                        │
+            │                       │                        │
+Layer 2:  hinge_common              │                        │
+            │                       │                        │
+Layer 3:  hinge_mandatory           │                        │
+          hinge_discretionary       │                        │
+          (both defaxiom)           │                        │
+                                    │                        │
+Layer 4:  existentials              │                        │
+          burden_proofs             │                        │
+          doctrine_proofs           │                        │
+          model_consistency         │                        │
+          independence              │                        │
+          challenger_model (defaxiom)                        │
+          government_model (defaxiom)                        │
+                                    │                        │
+Layer 5:  process_invariants ←──────┘                        │
+          deep_process_invariants                            │
+          document_proofs                                    │
+                                                             │
+Layer 6:  consistency_check ←────────────────────────────────┘
 ```
 
 ## What `:defaxioms-okp t` Means

@@ -95,7 +95,7 @@ jobs:
       - name: Pull ACL2 Docker image
         run: docker pull atwalter/acl2:latest
 
-      # === Layer 0: Clean books (no defaxiom) ===
+      # === Layer 0: Base clean books ===
       - name: certify-book core
         run: |
           echo '(certify-book "federal_save_act_core" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/core.log
@@ -106,39 +106,30 @@ jobs:
           echo '(certify-book "federal_save_act_process" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/process.log
           test -f federal_save_act_process.cert
 
-      - name: certify-book consistency_check
-        run: |
-          echo '(certify-book "federal_save_act_consistency_check" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/consistency_check.log
-          test -f federal_save_act_consistency_check.cert
-
-      # === Layer 1: Defaxiom books ===
+      # === Layer 1: Source-traced axiom book ===
       - name: certify-book facts (defaxioms-okp)
         run: |
           echo '(certify-book "federal_save_act_facts" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/facts.log
           test -f federal_save_act_facts.cert
 
-      # === Layer 2: Clean downstream (process chain) ===
-      - name: certify-book process_invariants
-        run: |
-          echo '(certify-book "federal_save_act_process_invariants" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/process_invariants.log
-          test -f federal_save_act_process_invariants.cert
-
-      - name: certify-book document_proofs
-        run: |
-          echo '(certify-book "federal_save_act_document_proofs" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/document_proofs.log
-          test -f federal_save_act_document_proofs.cert
-
-      - name: certify-book deep_process_invariants
-        run: |
-          echo '(certify-book "federal_save_act_deep_process_invariants" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/deep_process_invariants.log
-          test -f federal_save_act_deep_process_invariants.cert
-
-      # === Layer 2: Inherited defaxiom (includes facts) ===
+      # === Layer 2: Hinge dependency (includes facts) ===
       - name: certify-book hinge_common (defaxioms-okp)
         run: |
           echo '(certify-book "federal_save_act_hinge_common" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_common.log
           test -f federal_save_act_hinge_common.cert
 
+      # === Layer 3: Hinge interpretation (includes hinge_common) ===
+      - name: certify-book hinge_mandatory (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_hinge_mandatory" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_mandatory.log
+          test -f federal_save_act_hinge_mandatory.cert
+
+      - name: certify-book hinge_discretionary (defaxioms-okp)
+        run: |
+          echo '(certify-book "federal_save_act_hinge_discretionary" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_discretionary.log
+          test -f federal_save_act_hinge_discretionary.cert
+
+      # === Layer 4: Downstream (includes facts) ===
       - name: certify-book existentials (defaxioms-okp)
         run: |
           echo '(certify-book "federal_save_act_existentials" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/existentials.log
@@ -164,17 +155,6 @@ jobs:
           echo '(certify-book "federal_save_act_independence" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/independence.log
           test -f federal_save_act_independence.cert
 
-      # === Layer 2-3: Defaxiom books (hinge + party models) ===
-      - name: certify-book hinge_mandatory (defaxioms-okp)
-        run: |
-          echo '(certify-book "federal_save_act_hinge_mandatory" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_mandatory.log
-          test -f federal_save_act_hinge_mandatory.cert
-
-      - name: certify-book hinge_discretionary (defaxioms-okp)
-        run: |
-          echo '(certify-book "federal_save_act_hinge_discretionary" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/hinge_discretionary.log
-          test -f federal_save_act_hinge_discretionary.cert
-
       - name: certify-book challenger_model (defaxioms-okp)
         run: |
           echo '(certify-book "federal_save_act_challenger_model" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/challenger_model.log
@@ -185,6 +165,28 @@ jobs:
           echo '(certify-book "federal_save_act_government_model" ? nil :defaxioms-okp t)' | $ACL2_CMD 2>&1 | tee logs/certify/government_model.log
           test -f federal_save_act_government_model.cert
 
+      # === Layer 5: Clean process chain (no defaxiom dependency) ===
+      - name: certify-book process_invariants
+        run: |
+          echo '(certify-book "federal_save_act_process_invariants" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/process_invariants.log
+          test -f federal_save_act_process_invariants.cert
+
+      - name: certify-book deep_process_invariants
+        run: |
+          echo '(certify-book "federal_save_act_deep_process_invariants" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/deep_process_invariants.log
+          test -f federal_save_act_deep_process_invariants.cert
+
+      - name: certify-book document_proofs
+        run: |
+          echo '(certify-book "federal_save_act_document_proofs" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/document_proofs.log
+          test -f federal_save_act_document_proofs.cert
+
+      # === Layer 6: Consistency check (includes core only) ===
+      - name: certify-book consistency_check
+        run: |
+          echo '(certify-book "federal_save_act_consistency_check" ?)' | $ACL2_CMD 2>&1 | tee logs/certify/consistency_check.log
+          test -f federal_save_act_consistency_check.cert
+
       # === Verification ===
       - name: Verify all .cert files exist
         run: |
@@ -192,12 +194,8 @@ jobs:
           total=0; missing=0
           for f in \
             federal_save_act_core \
-            federal_save_act_facts \
             federal_save_act_process \
-            federal_save_act_consistency_check \
-            federal_save_act_process_invariants \
-            federal_save_act_deep_process_invariants \
-            federal_save_act_document_proofs \
+            federal_save_act_facts \
             federal_save_act_hinge_common \
             federal_save_act_hinge_mandatory \
             federal_save_act_hinge_discretionary \
@@ -207,7 +205,11 @@ jobs:
             federal_save_act_model_consistency \
             federal_save_act_independence \
             federal_save_act_challenger_model \
-            federal_save_act_government_model; do
+            federal_save_act_government_model \
+            federal_save_act_process_invariants \
+            federal_save_act_deep_process_invariants \
+            federal_save_act_document_proofs \
+            federal_save_act_consistency_check; do
             total=$((total + 1))
             if [ -f "${f}.cert" ]; then
               echo "✅ ${f}.cert"
@@ -227,4 +229,5 @@ jobs:
           name: certify-book-logs
           path: logs/certify/*.log
           retention-days: 30
+
 
