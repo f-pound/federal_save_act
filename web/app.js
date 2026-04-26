@@ -84,6 +84,22 @@
     document.getElementById('warning-close').addEventListener('click', () => {
       document.getElementById('warning-banner').classList.add('hidden');
     });
+
+    // About modal
+    const modal = document.getElementById('about-modal');
+    const openModal = () => modal.classList.remove('hidden');
+    const closeModal = () => { modal.classList.add('hidden'); localStorage.setItem('explorer-seen', '1'); };
+
+    document.getElementById('about-btn').addEventListener('click', openModal);
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-got-it').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+
+    // Show on first visit
+    if (!localStorage.getItem('explorer-seen')) {
+      openModal();
+    }
   }
 
   // ---- Audit Bar ----

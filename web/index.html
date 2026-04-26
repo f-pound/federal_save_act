@@ -22,6 +22,7 @@
         <div class="audit-stat"><span class="audit-num" id="stat-axioms">—</span><span class="audit-label">Traced Axioms</span></div>
         <div class="audit-stat"><span class="audit-num" id="stat-existentials">—</span><span class="audit-label">Existentials</span></div>
       </div>
+      <button id="about-btn" class="about-btn" title="About this tool">?</button>
     </div>
   </header>
 
@@ -66,6 +67,93 @@
       <a href="https://github.com/f-pound/federal_save_act" target="_blank" rel="noopener">GitHub</a>
     </p>
   </footer>
+
+  <!-- About Modal -->
+  <div id="about-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close">&times;</button>
+      <h2 class="modal-title">What Is This?</h2>
+      <p class="modal-lead">This is a <strong>Computational Amicus Explorer</strong> — an interactive tool that visualizes
+      how a formal mathematical proof system (ACL2) analyzes the constitutional implications of the
+      <strong>Federal SAVE Act</strong> (H.R. 22).</p>
+
+      <div class="modal-section">
+        <h3>What does ACL2 do here?</h3>
+        <p>ACL2 is a theorem prover used in hardware and software verification. In this project, it models
+        the SAVE Act's voter registration process as a state machine and derives conditional conclusions
+        about constitutional conflicts — <em>given a set of disclosed assumptions</em>.</p>
+        <p><strong>ACL2 does not decide the case.</strong> It proves conditional consequences from disclosed
+        assumptions. Humans still decide empirical truth, doctrinal soundness, and which interpretation a
+        court should adopt.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>How to Navigate</h3>
+        <div class="modal-steps">
+          <div class="modal-step">
+            <span class="step-num">1</span>
+            <div>
+              <strong>Read the graph top-to-bottom.</strong> The six layers flow from source materials
+              down through formalization, the executable model, derivations, theorems, and final conclusions.
+            </div>
+          </div>
+          <div class="modal-step">
+            <span class="step-num">2</span>
+            <div>
+              <strong>Click any node</strong> to see its details in the right panel — source references,
+              the ACL2 event name, which book it lives in, and what it depends on.
+            </div>
+          </div>
+          <div class="modal-step">
+            <span class="step-num">3</span>
+            <div>
+              <strong>Toggle assumptions</strong> in the left panel. Uncheck an assumption and watch
+              dependent nodes dim and conclusion status badges change from
+              <span class="inline-badge badge-supported">Supported</span> to
+              <span class="inline-badge badge-unsupported">Unsupported</span>.
+            </div>
+          </div>
+          <div class="modal-step">
+            <span class="step-num">4</span>
+            <div>
+              <strong>Try a scenario:</strong> Uncheck all challenger assumptions and keep only government
+              assumptions. The Government "NO CONFLICT" conclusion will show
+              <span class="inline-badge badge-supported">Supported</span> while the Challenger conclusion
+              shows <span class="inline-badge badge-unsupported">Unsupported</span>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>What Do the Colors Mean?</h3>
+        <div class="modal-legend">
+          <div class="legend-item"><span class="legend-swatch" style="background:#4A90D9"></span> Legal sources &amp; definitions</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#708090"></span> Traceability artifacts</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#E8A838"></span> Empirical assumptions (contestable)</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#9B59B6"></span> Interpretive / doctrinal assumptions</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#3498DB"></span> Executable model components</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#2ECC71"></span> Axiom-free structural theorems</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#E74C3C"></span> Challenger path / conflict</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Key Badges</h3>
+        <p><span class="inline-badge badge-axiom-free">0 Axioms</span> — Pure structural theorem, proved without any assumptions.<br>
+        <span class="inline-badge badge-high-risk">High Risk</span> — Contestable empirical premise that influences the outcome.<br>
+        <span class="inline-badge badge-trusted">Trusted Base</span> — Accepted as true but not proved by ACL2.</p>
+      </div>
+
+      <div class="modal-footer-note">
+        <p>Final conclusions are conditional, not judicial determinations.
+        This tool visualizes certified proof dependencies — it does not perform live theorem proving
+        or decide legal outcomes.</p>
+      </div>
+
+      <button id="modal-got-it" class="modal-got-it">Got It</button>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
