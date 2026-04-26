@@ -3,7 +3,7 @@
 (include-book "federal_save_act_process")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_process_invariants.lisp  —  v5
+;; federal_save_act_process_invariants.lisp  —  v5.2
 ;; General state-machine invariants over ARBITRARY event traces.
 ;;
 ;; These theorems prove properties that hold for ALL possible traces,

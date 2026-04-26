@@ -3,7 +3,7 @@
 (include-book "federal_save_act_core")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_consistency_check.lisp  —  v3
+;; federal_save_act_consistency_check.lisp  —  v5.2
 ;; Standalone consistency check for the neutral core vocabulary.
 ;;
 ;; This book proves that the core vocabulary is satisfiable by providing

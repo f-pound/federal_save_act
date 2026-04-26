@@ -1,4 +1,4 @@
-# Federal SAVE Act — Constitutional ACL2 Stress Test (v3)
+# Federal SAVE Act — Constitutional ACL2 Stress Test (v5.2)
 
 ## Question Presented
 
@@ -106,15 +106,15 @@ The text says officials "shall make a determination as to whether the applicant 
 | `federal_save_act_government_model.lisp` | Assumptions defeating constitutional conflict | `encapsulate` + witness | INTERPRETATION_GOVERNMENT |
 | `federal_save_act_consistency_check.lisp` | Core vocabulary sanity verification | `defthm` | Structural |
 
-> **v3 Note**: v3 uses a hybrid architecture. Interpretive predicates in the model files use `encapsulate` with local witness functions (consistency-checked). Text-derived facts and scenario ground truths use `defaxiom` (self-evidently consistent constraints on `defstub` functions). See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the full technical rationale.
+> **Architecture note**: The project uses a hybrid architecture (introduced in v3, extended in v5.2). Interpretive predicates and doctrinal standards use `encapsulate` with local witness functions (consistency-checked). Text-derived facts and scenario ground truths use `defaxiom` (self-evidently consistent constraints on `defstub` functions). Derived burden conclusions use executable `defun` chains. See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the original v3 rationale and `reports/v5_2_acl2_proof_assessment.md` for v5.2 metrics.
 
 ## Model Separation
 
 > **Important**: The challenger and government models must NEVER be loaded in the same ACL2 session. They derive opposite conclusions and are intentionally incompatible.
 
-## ACL2 Proof Results (v3)
+## ACL2 Proof Results
 
-> **v3 certification results**: All models pass ACL2 certification via Docker (`atwalter/acl2:latest`). Consistency check: 13 Q.E.D. Challenger: 13 Q.E.D. (general theorem: 270 steps, corollary: 41 steps). Government: 5 Q.E.D. (general theorem: 282 steps, corollary: 55 steps).
+> **v5.2 certification results**: All 17 books pass ACL2 certification via Docker (`atwalter/acl2:latest`). 126 total theorems, all Q.E.D. See `reports/v5_2_acl2_proof_assessment.md` for the full event census.
 
 ### Challenger Model
 
@@ -126,10 +126,10 @@ The challenger model proves that a constitutional conflict exists under these as
 - The alternative process is discretionary, creating severe burden and substantial risk of erroneous denial
 - The undue burden defeats the regulation's validity
 
-**v3 proof chain** (factored through intermediate predicates):
+**Proof chain** (factored through intermediate predicates):
 `challenger-fundamental-right-rule` → `challenger-lack-of-docs-implies-severity` → `challenger-documentary-proof-is-undue-burden` → `challenger-undue-burden-defeats-regulation` → `challenger-conflict-general` → `challenger-model-finds-conflict` (corollary)
 
-**v3 assumptions** (encapsulate-backed):
+**Assumptions** (encapsulate-backed):
 
 | # | Constraint | Label | What it does |
 |---|---|---|---|
@@ -139,7 +139,7 @@ The challenger model proves that a constitutional conflict exists under these as
 | 4 | `challenger-scenario-application` | SCENARIO_FACT | registration-attempt-a is a voter reg application |
 | 5 | `challenger-scenario-attempts-to-register` | SCENARIO_FACT | citizen-a attempts to register |
 | 6 | `challenger-scenario-no-documentary-proof` | SCENARIO_FACT | citizen-a lacks documentary proof |
-| 7 | `challenger-scenario-no-presentation` | SCENARIO_FACT | citizen-a does not present proof (v3 new) |
+| 7 | `challenger-scenario-no-presentation` | SCENARIO_FACT | citizen-a does not present proof |
 | 8 | `challenger-scenario-no-fault` | INTERPRETATION_CHALLENGER | citizen-a lacks documents through no fault |
 | 9 | `challenger-scenario-material-burden` | INTERPRETATION_CHALLENGER | citizen-a cannot obtain documents without material burden (v3 new) |
 | 10 | `challenger-scenario-process-discretionary` | INTERPRETATION_CHALLENGER | alternative process is discretionary for citizen-a (v3 new) |
@@ -161,14 +161,14 @@ The government model proves that **no** constitutional conflict exists under the
 - The alternative attestation process is constitutionally adequate
 - Therefore the SAVE Act is a valid regulation
 
-**v3 proof chain** (5-factor Anderson-Burdick / Crawford rule):
+**Proof chain** (5-factor Anderson-Burdick / Crawford rule):
 `government-important-interest` + `government-election-integrity-interest` + `government-reasonable-requirement` + `government-procedure-evenhanded` + `government-rationally-connected` + `government-adequate-alternative` → `government-valid-regulation-rule` → `government-no-conflict-general` → `government-model-no-conflict` (corollary)
 
 **Note**: The government model defeats the conflict through **two independent paths**:
 1. The regulation is valid (valid-regulationp is true)
 2. Registration is not denied (alternative process approved for citizen-a)
 
-**v3 assumptions** (encapsulate-backed):
+**Assumptions** (encapsulate-backed):
 
 | # | Constraint | Label | What it does |
 |---|---|---|---|
@@ -227,7 +227,7 @@ See `reports/federal_save_act_proof_obligations.md` for detailed proof results.
 
 This system does not decide constitutionality. It identifies the assumptions necessary to prove conflict or no conflict under competing interpretive models.
 
-**v3-specific limitations**: The encapsulate witnesses are vacuously true for some constraints (the hypothesis is false under the default defstub interpretation). This is logically valid but represents a weaker consistency guarantee than a constructive witness. See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for details and the v4 roadmap.
+**Limitations**: The encapsulate witnesses are vacuously true for some constraints (the hypothesis is false under the default defstub interpretation). This is logically valid but represents a weaker consistency guarantee than a constructive witness. See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for details.
 
 ## Interpreting the Output
 

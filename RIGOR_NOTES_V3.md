@@ -183,16 +183,28 @@ While interpretive predicates are protected by `encapsulate`, the **bridge rules
 
 The generalized theorems are universal claims proved from the constrained axioms. A more rigorous approach would prove them via `functional-instantiation`, demonstrating the theorem holds for any functions satisfying the encapsulate constraints.
 
-### 3. No Quantifier Depth
+### 3. No Quantifier Depth (v3 only)
 
-The models do not use `defun-sk` or `defchoose` for existentially quantified properties. All quantification is implicit in the universal scope of `defthm`.
+The v3 models did not use `defun-sk` or `defchoose` for existentially quantified properties. This limitation was addressed in v5 with the addition of `federal_save_act_existentials.lisp`, which introduces 4 `defun-sk` propositions with Skolemized witnesses.
 
-## Next Steps (v4 Roadmap)
+## Roadmap Status (as of v5.2)
 
-1. **Monolithic witness book**: A single encapsulate that introduces ALL functions with a comprehensive concrete witness, eliminating all `defaxiom` usage
-2. **Functional instantiation**: Prove generalized theorems via `:functional-instance` hints
-3. **Quantified properties**: Use `defun-sk` to express "there exists a citizen in class C who is denied"
-4. **Poll tax theory**: Formalize the Amend. XXIV argument as a second independent proof chain
-5. **Manner vs. qualification**: Formalize the Art. I §2 / Art. I §4 structural argument
-6. **Due process / removal**: Model the § 8(k) removal process and procedural due process
-7. **Multi-scenario testing**: Add `citizen-b` (naturalized citizen), `citizen-c` (Native American with tribal ID), etc.
+Items from the original v3 roadmap:
+
+1. ~~Monolithic witness book~~ — **Not pursued**. The hybrid architecture proved more practical for legal modeling than a single monolithic encapsulate.
+2. ~~Functional instantiation~~ — **Not yet implemented**. Remains a future refinement opportunity.
+3. ~~Quantified properties~~ — **Completed (v5)**. `defun-sk` existentials introduced in `federal_save_act_existentials.lisp` (4 existential propositions).
+4. ~~Poll tax theory~~ — **Not yet formalized**. The Amend. XXIV argument remains informal.
+5. ~~Manner vs. qualification~~ — **Not yet formalized**. The Art. I §2 / Art. I §4 structural argument remains informal.
+6. ~~Due process / removal~~ — **Not yet modeled**. The § 8(k) removal process is not modeled.
+7. ~~Multi-scenario testing~~ — **Not yet implemented**. Parameterized test scenarios remain a future extension.
+
+Additional v5.2 accomplishments not anticipated in the v3 roadmap:
+- Registration state machine with 7 states and 9 events (`federal_save_act_process.lisp`)
+- 24 process invariant theorems proved by induction over traces
+- Burden derivation chain (5 executable `defun` predicates)
+- Anderson-Burdick doctrinal encapsulate with local witnesses
+- Document-list structural proofs (9 theorems)
+- Model consistency checks (7 theorems)
+- Axiom pressure reporting and proof dependency analysis
+

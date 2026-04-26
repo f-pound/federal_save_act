@@ -3,7 +3,7 @@
 (include-book "federal_save_act_facts")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_hinge_common.lisp  —  v5
+;; federal_save_act_hinge_common.lisp  —  v5.2
 ;; Shared definitions for the alternative-attestation semantic hinge.
 ;;
 ;; This book introduces the NEW predicates used by both the mandatory

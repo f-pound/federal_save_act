@@ -1,5 +1,7 @@
 # v5 Formal Methods Assessment
 
+> **Note**: This report covers the v5 release. For the current assessment, see [`v5_2_acl2_proof_assessment.md`](v5_2_acl2_proof_assessment.md).
+
 ## Summary
 
 The Federal SAVE Act ACL2 model has been upgraded from a source-traced prototype (v4, 52 theorems) to a stronger formal-theorem-proving legal tool (v5, 81 theorems) with general invariants, existential modeling, separated semantic interpretations, and machine-checkable source traceability.

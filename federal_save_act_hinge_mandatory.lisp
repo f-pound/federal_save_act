@@ -3,7 +3,7 @@
 (include-book "federal_save_act_hinge_common")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_hinge_mandatory.lisp  —  v5
+;; federal_save_act_hinge_mandatory.lisp  —  v5.2
 ;; Semantic A: Mandatory approval when evidence satisfies standards.
 ;;
 ;; Under this reading of SAVE Act § 2(f) / NVRA § 8(j)(2)(A):

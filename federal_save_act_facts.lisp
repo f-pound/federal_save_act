@@ -3,7 +3,7 @@
 (include-book "federal_save_act_core")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_facts.lisp  —  v3 (hybrid architecture)
+;; federal_save_act_facts.lisp  —  v5.2 (hybrid architecture)
 ;; Text-derived statutory facts only.
 ;;
 ;; EVERY axiom in this file must be directly traceable to source text.
@@ -13,7 +13,7 @@
 ;; Do NOT include INTERPRETATION_*, DOCTRINAL_ASSUMPTION, or
 ;; POLICY_ASSUMPTION in this file.
 ;;
-;; v3 architecture note:
+;; v3 architecture note (retained in v5.2):
 ;;   Text-derived facts use defaxiom because they constrain defstub
 ;;   predicates already introduced in core.lisp.  ACL2's encapsulate
 ;;   cannot prove ground facts about defstub functions (defstubs are
@@ -23,7 +23,7 @@
 ;;   The risk of inconsistency lies in INTERPRETIVE axioms, which are
 ;;   handled via encapsulate in the model files.
 ;;
-;; v3 changes (from v2):
+;; v3 changes (retained in v5.2):
 ;;   • Denial condition now uses presents-documentary-proofp
 ;;     (statutory requirement is presentation, not mere possession)
 ;;   • Added bridge rule: possession + presentation → proof presented

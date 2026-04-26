@@ -3,10 +3,10 @@
 (include-book "federal_save_act_facts")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_government_model.lisp  —  v3 (hybrid architecture)
+;; federal_save_act_government_model.lisp  —  v5.2 (hybrid architecture)
 ;; Interpretive model favoring government defense of the SAVE Act.
 ;;
-;; v3 architecture:
+;; v3 architecture (retained in v5.2):
 ;;   • Interpretive predicates introduced via encapsulate with local
 ;;     witness functions — this proves their constraints are consistent
 ;;   • Scenario ground facts use defaxiom (constraining existing defstubs)
