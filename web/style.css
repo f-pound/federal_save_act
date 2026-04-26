@@ -1196,20 +1196,20 @@ footer p {
     overflow: visible;
   }
 
-  /* Graph first */
-  .panel-center {
-    order: 1;
-    min-height: 60vh;
-    padding: 12px;
-  }
-
-  /* Hypotheticals below graph — always visible, just scroll down */
+  /* Hypotheticals first — most important on mobile */
   .panel-left {
-    order: 2;
+    order: 1;
     border-right: none;
-    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     padding: 16px;
     overflow-y: visible;
+  }
+
+  /* Graph second */
+  .panel-center {
+    order: 2;
+    min-height: 50vh;
+    padding: 12px;
   }
 
   /* Details last */
