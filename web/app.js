@@ -13,6 +13,7 @@
   let selectedNodeId = null;
   let activeAssumptions = new Set();
   let dimmedNodes = new Set();
+  let activeDrawer = null;
 
   // ---- Node type display names ----
   const TYPE_LABELS = {
@@ -85,6 +86,15 @@
       document.getElementById('warning-banner').classList.add('hidden');
     });
 
+    // Audit stat drill-down
+    document.querySelectorAll('.audit-stat-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const key = btn.dataset.audit;
+        toggleAuditDrawer(key);
+      });
+    });
+    document.getElementById('audit-drawer-close').addEventListener('click', closeAuditDrawer);
+
     // About modal
     const modal = document.getElementById('about-modal');
     const openModal = () => modal.classList.remove('hidden');
@@ -94,7 +104,12 @@
     document.getElementById('modal-close').addEventListener('click', closeModal);
     document.getElementById('modal-got-it').addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!modal.classList.contains('hidden')) closeModal();
+        if (activeDrawer) closeAuditDrawer();
+      }
+    });
 
     // Show on first visit
     if (!localStorage.getItem('explorer-seen')) {
@@ -114,6 +129,178 @@
   // ---- Footer ----
   function renderFooter() {
     document.getElementById('footer-version').textContent = `v${data.meta.version}`;
+  }
+
+  // ---- Audit Drawer ----
+  function toggleAuditDrawer(key) {
+    const drawer = document.getElementById('audit-drawer');
+
+    // If same drawer is open, close it
+    if (activeDrawer === key) {
+      closeAuditDrawer();
+      return;
+    }
+
+    // Highlight active stat
+    document.querySelectorAll('.audit-stat-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.querySelector(`.audit-stat-btn[data-audit="${key}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    activeDrawer = key;
+    const titleEl = document.getElementById('audit-drawer-title');
+    const contentEl = document.getElementById('audit-drawer-content');
+
+    switch (key) {
+      case 'books':   titleEl.textContent = `${data.meta.books_certified} Certified ACL2 Books`; renderBooksDrawer(contentEl); break;
+      case 'theorems': titleEl.textContent = `${data.meta.theorems} Q.E.D. Theorems`; renderTheoremsDrawer(contentEl); break;
+      case 'axioms':  titleEl.textContent = `${data.meta.axioms} Source-Traced Axioms`; renderAxiomsDrawer(contentEl); break;
+      case 'existentials': titleEl.textContent = `${data.meta.defun_sk_existentials} Existential Propositions (defun-sk)`; renderExistentialsDrawer(contentEl); break;
+    }
+
+    // Open the drawer (CSS handles the animation via max-height)
+    drawer.classList.add('open');
+  }
+
+  function closeAuditDrawer() {
+    const drawer = document.getElementById('audit-drawer');
+    drawer.classList.remove('open');
+    document.querySelectorAll('.audit-stat-btn').forEach(b => b.classList.remove('active'));
+    activeDrawer = null;
+  }
+
+  function renderBooksDrawer(container) {
+    const ad = data.audit_details;
+    if (!ad || !ad.books) { container.innerHTML = '<p>No book data available.</p>'; return; }
+
+    const clean = ad.books.filter(b => b.clean);
+    const axiom = ad.books.filter(b => !b.clean);
+
+    let html = '<div class="drawer-summary">';
+    html += `<span class="drawer-chip chip-clean">${clean.length} clean (no axioms)</span>`;
+    html += `<span class="drawer-chip chip-axiom">${axiom.length} defaxiom-chain</span>`;
+    html += '</div>';
+
+    html += '<table class="drawer-table">';
+    html += '<thead><tr><th>Book</th><th>Layer</th><th>Theorems</th><th>Axioms</th><th>Status</th></tr></thead><tbody>';
+    ad.books.forEach(b => {
+      const statusClass = b.clean ? 'status-clean' : 'status-axiom';
+      const statusLabel = b.clean ? 'Clean' : 'defaxioms-okp';
+      const shortName = b.name.replace('federal_save_act_', '');
+      html += `<tr>`;
+      html += `<td class="mono">${shortName}</td>`;
+      html += `<td class="center">${b.layer}</td>`;
+      html += `<td class="center">${b.theorems}</td>`;
+      html += `<td class="center">${b.axioms}</td>`;
+      html += `<td><span class="table-badge ${statusClass}">${statusLabel}</span></td>`;
+      html += `</tr>`;
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  function renderTheoremsDrawer(container) {
+    const ad = data.audit_details;
+    if (!ad || !ad.theorems_by_book) { container.innerHTML = '<p>No theorem data available.</p>'; return; }
+
+    let totalCount = 0;
+    Object.values(ad.theorems_by_book).forEach(arr => totalCount += arr.length);
+
+    let html = `<div class="drawer-summary"><span class="drawer-chip chip-theorem">${totalCount} theorems across ${Object.keys(ad.theorems_by_book).length} books</span></div>`;
+
+    for (const [book, thms] of Object.entries(ad.theorems_by_book)) {
+      const shortName = book.replace('federal_save_act_', '');
+      const bookInfo = ad.books.find(b => b.name === book);
+      const isClean = bookInfo ? bookInfo.clean : false;
+      html += `<div class="drawer-book-group">`;
+      html += `<div class="drawer-book-header">`;
+      html += `<span class="mono">${shortName}</span>`;
+      html += `<span class="drawer-count">${thms.length}</span>`;
+      if (isClean) html += `<span class="table-badge status-clean">0 Axioms</span>`;
+      html += `</div>`;
+      html += `<div class="drawer-theorem-list">`;
+      thms.forEach(t => {
+        html += `<span class="drawer-theorem-name">${t}</span>`;
+      });
+      html += `</div></div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  function renderAxiomsDrawer(container) {
+    const ad = data.audit_details;
+    if (!ad || !ad.axioms_by_book) { container.innerHTML = '<p>No axiom data available.</p>'; return; }
+
+    let totalCount = 0;
+    Object.values(ad.axioms_by_book).forEach(arr => totalCount += arr.length);
+
+    // Count by label
+    const labelCounts = {};
+    Object.values(ad.axioms_by_book).forEach(arr => {
+      arr.forEach(ax => {
+        const lbl = ax.label || 'UNKNOWN';
+        labelCounts[lbl] = (labelCounts[lbl] || 0) + 1;
+      });
+    });
+
+    let html = '<div class="drawer-summary">';
+    for (const [lbl, cnt] of Object.entries(labelCounts)) {
+      const cls = labelChipClass(lbl);
+      html += `<span class="drawer-chip ${cls}">${cnt} ${lbl.replace(/_/g, ' ').toLowerCase()}</span>`;
+    }
+    html += '</div>';
+
+    for (const [book, axms] of Object.entries(ad.axioms_by_book)) {
+      const shortName = book.replace('federal_save_act_', '');
+      html += `<div class="drawer-book-group">`;
+      html += `<div class="drawer-book-header">`;
+      html += `<span class="mono">${shortName}</span>`;
+      html += `<span class="drawer-count">${axms.length}</span>`;
+      html += `</div>`;
+      html += `<div class="drawer-axiom-list">`;
+      axms.forEach(ax => {
+        const labelCls = labelChipClass(ax.label);
+        html += `<div class="drawer-axiom-row">`;
+        html += `<span class="drawer-axiom-name mono">${ax.name}</span>`;
+        html += `<span class="drawer-chip-small ${labelCls}">${(ax.label || '').replace(/_/g, ' ')}</span>`;
+        if (ax.source_id && ax.source_id !== 'n/a') html += `<span class="drawer-axiom-source">${ax.source_id}</span>`;
+        if (ax.clause_text) html += `<div class="drawer-axiom-clause">${ax.clause_text}</div>`;
+        html += `</div>`;
+      });
+      html += `</div></div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  function renderExistentialsDrawer(container) {
+    const ad = data.audit_details;
+    if (!ad || !ad.existentials) { container.innerHTML = '<p>No existential data available.</p>'; return; }
+
+    let html = `<div class="drawer-summary"><span class="drawer-chip chip-existential">${ad.existentials.length} defun-sk Skolemized existential propositions</span></div>`;
+    html += '<div class="drawer-existential-list">';
+    ad.existentials.forEach(ex => {
+      const shortBook = ex.book.replace('federal_save_act_', '');
+      html += `<div class="drawer-existential-row">`;
+      html += `<span class="drawer-existential-name mono">${ex.name}</span>`;
+      html += `<span class="drawer-existential-book">${shortBook}</span>`;
+      html += `</div>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function labelChipClass(label) {
+    switch (label) {
+      case 'SCENARIO_FACT': return 'chip-scenario';
+      case 'TEXT_FACT': return 'chip-text';
+      case 'BRIDGE_RULE': return 'chip-bridge';
+      case 'PROHIBITION': return 'chip-text';
+      case 'EMPIRICAL_ASSUMPTION': return 'chip-empirical';
+      case 'INTERPRETIVE_ASSUMPTION': return 'chip-interpretive';
+      case 'INTERPRETATION_CHALLENGER': return 'chip-challenger';
+      case 'INTERPRETATION_GOVERNMENT': return 'chip-government';
+      case 'DOCTRINAL_RULE': return 'chip-doctrinal';
+      default: return 'chip-neutral';
+    }
   }
 
   // ---- Controls ----

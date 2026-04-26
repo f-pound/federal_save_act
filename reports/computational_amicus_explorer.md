@@ -101,10 +101,30 @@ Four structural theorems carry the "0 AXIOMS" badge:
 
 These are pure logical consequences of the executable model — they require no assumptions.
 
+## Audit Stat Drill-Downs
+
+Click any of the four stats in the header bar to expand a detail drawer:
+
+| Stat | What It Shows |
+|---|---|
+| **17 Books Certified** | All 17 books with layer, theorem count, axiom count, and clean/defaxioms-okp status |
+| **126 Q.E.D. Theorems** | Every theorem grouped by book, with axiom-free badges for clean books |
+| **33 Traced Axioms** | Every axiom with classification label (SCENARIO_FACT, EMPIRICAL_ASSUMPTION, etc.), source ID, and quoted clause text |
+| **4 Existentials** | All defun-sk Skolemized propositions with their source book |
+
+Click the same stat again to close the drawer. Click a different stat to switch. Press **Escape** to close.
+
+## Deployment
+
+The explorer is deployed via GitHub Pages and accessible at:
+
+**[https://f-pound.github.io/federal_save_act/](https://f-pound.github.io/federal_save_act/)**
+
+No installation, checkout, or local server required.
+
 ## Future Improvements
 
 - SVG connector arrows between nodes showing dependency flow
 - Keyboard navigation (arrow keys to move between nodes)
 - URL-encoded state (shareable links for specific assumption configurations)
-- GitHub Pages deployment for public access
 - Integration with ACE parser for live controlled-English input

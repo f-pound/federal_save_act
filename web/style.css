@@ -100,7 +100,7 @@ header {
 
 .audit-bar {
   display: flex;
-  gap: 24px;
+  gap: 16px;
 }
 
 .audit-stat {
@@ -110,11 +110,57 @@ header {
   min-width: 64px;
 }
 
+.audit-stat-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.audit-stat-btn::after {
+  content: '▾';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.audit-stat-btn:hover {
+  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.audit-stat-btn:hover::after {
+  opacity: 1;
+}
+
+.audit-stat-btn.active {
+  border-color: var(--border-focus);
+  background: rgba(74, 144, 217, 0.08);
+}
+
+.audit-stat-btn.active::after {
+  opacity: 1;
+  color: var(--border-focus);
+}
+
+.audit-stat-btn.active .audit-num {
+  color: var(--border-focus);
+}
+
 .audit-num {
   font-size: 22px;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
   color: var(--color-success);
+  transition: color 0.2s;
 }
 
 .audit-label {
@@ -122,6 +168,285 @@ header {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+/* ---- Audit Drawer ---- */
+.audit-drawer {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease;
+  opacity: 0;
+  z-index: 90;
+}
+
+.audit-drawer.open {
+  max-height: 50vh;
+  opacity: 1;
+  overflow-y: auto;
+}
+
+.audit-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px 8px;
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  z-index: 2;
+}
+
+.audit-drawer-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.audit-drawer-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.audit-drawer-close:hover { color: var(--text-primary); }
+
+.audit-drawer-content {
+  padding: 0 24px 16px;
+}
+
+/* Drawer summary chips */
+.drawer-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.drawer-chip {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.drawer-chip-small {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chip-clean { background: rgba(46, 204, 113, 0.15); color: var(--color-theorem-clean); }
+.chip-axiom { background: rgba(155, 89, 182, 0.15); color: var(--color-interpretive); }
+.chip-theorem { background: rgba(46, 204, 113, 0.15); color: var(--color-theorem-clean); }
+.chip-existential { background: rgba(52, 152, 219, 0.15); color: var(--color-executable); }
+.chip-scenario { background: rgba(93, 173, 226, 0.15); color: var(--color-scenario); }
+.chip-text { background: rgba(74, 144, 217, 0.15); color: var(--color-source); }
+.chip-bridge { background: rgba(26, 188, 156, 0.15); color: var(--color-bridge); }
+.chip-empirical { background: rgba(231, 76, 60, 0.15); color: var(--color-danger); }
+.chip-interpretive { background: rgba(243, 156, 18, 0.15); color: var(--color-contested); }
+.chip-challenger { background: rgba(231, 76, 60, 0.15); color: var(--color-challenger); }
+.chip-government { background: rgba(52, 152, 219, 0.15); color: var(--color-government); }
+.chip-doctrinal { background: rgba(142, 68, 173, 0.15); color: var(--color-doctrinal); }
+.chip-neutral { background: rgba(112, 128, 144, 0.15); color: var(--color-trace); }
+
+/* Drawer table */
+.drawer-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.drawer-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.drawer-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(42, 46, 63, 0.5);
+  color: var(--text-secondary);
+}
+
+.drawer-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.drawer-table .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-primary);
+}
+
+.drawer-table .center { text-align: center; }
+
+.table-badge {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.status-clean { background: rgba(46, 204, 113, 0.15); color: var(--color-theorem-clean); }
+.status-axiom { background: rgba(155, 89, 182, 0.15); color: var(--color-interpretive); }
+
+/* Drawer book groups (for theorems / axioms) */
+.drawer-book-group {
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.drawer-book-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
+}
+
+.drawer-book-header .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.drawer-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-success);
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(46, 204, 113, 0.12);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+
+/* Theorem list */
+.drawer-theorem-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px 12px;
+}
+
+.drawer-theorem-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  background: rgba(46, 204, 113, 0.06);
+  border: 1px solid rgba(46, 204, 113, 0.12);
+  padding: 2px 8px;
+  border-radius: 3px;
+  transition: all 0.15s;
+}
+
+.drawer-theorem-name:hover {
+  background: rgba(46, 204, 113, 0.12);
+  color: var(--text-primary);
+}
+
+/* Axiom list */
+.drawer-axiom-list {
+  padding: 4px 0;
+}
+
+.drawer-axiom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(42, 46, 63, 0.4);
+  transition: background 0.15s;
+}
+
+.drawer-axiom-row:last-child { border-bottom: none; }
+
+.drawer-axiom-row:hover { background: rgba(255, 255, 255, 0.02); }
+
+.drawer-axiom-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-primary);
+}
+
+.drawer-axiom-source {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.drawer-axiom-clause {
+  width: 100%;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding: 4px 0 2px;
+  border-left: 2px solid var(--border);
+  padding-left: 10px;
+  margin-top: 2px;
+}
+
+/* Existential list */
+.drawer-existential-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.drawer-existential-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+
+.drawer-existential-row:hover {
+  border-color: var(--border-focus);
+}
+
+.drawer-existential-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.drawer-existential-book {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* ---- Warning Banner ---- */

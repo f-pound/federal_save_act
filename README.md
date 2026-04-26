@@ -41,6 +41,10 @@ cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_ac
 
 Visually explore the proof-dependency graph and toggle assumptions to see which conclusions remain supported:
 
+**Live Demo**: [https://f-pound.github.io/federal_save_act/](https://f-pound.github.io/federal_save_act/) (no installation required)
+
+Or run locally:
+
 ```bash
 python tools/serve_explorer.py
 # Opens http://127.0.0.1:8000
@@ -48,6 +52,7 @@ python tools/serve_explorer.py
 
 The explorer lets users toggle empirical, interpretive, and doctrinal assumptions to see which proof paths and conditional conclusions remain supported. It visualizes existing certified ACL2 proof dependencies across 6 layers (sources → formalization → executable model → derivations → theorems → conclusions).
 
+- **Click the audit stats** in the header bar to drill into books, theorems, axioms, and existentials
 - **It does not run ACL2 live** — it renders pre-certified proof structure
 - **It does not decide constitutionality** — final conclusions are conditional on selected assumptions
 - See [reports/computational_amicus_explorer.md](reports/computational_amicus_explorer.md) for full documentation
@@ -122,7 +127,10 @@ federal_save_act/
 │   ├── source_manifest.json                 # Provenance manifest (all cited sources)
 │   └── clause_trace.csv                     # Axiom → source clause traceability
 ├── tools/
-│   └── validate_trace.py                    # Machine-checkable source trace validator
+│   ├── validate_trace.py                    # Machine-checkable source trace validator
+│   ├── build_explorer_data.py               # Build web/data/explorer.json from repo artifacts
+│   ├── serve_explorer.py                    # Serve explorer at http://127.0.0.1:8000
+│   └── validate_explorer_data.py            # Validate explorer.json graph integrity
 ├── scripts/
 │   ├── certify_books.ps1                    # certify-book script (Windows PowerShell)
 │   ├── certify_books.sh                     # certify-book script (Linux/macOS)
@@ -132,12 +140,20 @@ federal_save_act/
 │   └── parsed/
 │       ├── federal_save_act.json            # Parsed bill sections
 │       ├── federal_save_act_predicates.json # Normalized predicates
-│       └── federal_save_act_ace.json        # ACE-normalized clauses
+│       ├── federal_save_act_ace.json        # ACE-normalized clauses
+│       └── explorer_graph.json              # Curated proof-dependency graph
+├── web/                                     # Interactive explorer (static HTML/JS/CSS)
+│   ├── index.html                           # Main page
+│   ├── app.js                               # Graph renderer + assumption engine
+│   ├── style.css                            # Dark-theme stylesheet
+│   └── data/
+│       └── explorer.json                    # Generated data (built by tools/build_explorer_data.py)
 ├── reports/
 │   ├── certification_status.md              # certify-book status matrix
 │   ├── axiom_inventory.md                   # Full defaxiom classification report
 │   ├── axiom_pressure_report.md             # Axiom pressure + replacement paths
 │   ├── proof_dependency_report.md           # Theorem dependency chains
+│   ├── computational_amicus_explorer.md     # Explorer documentation
 │   ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
 │   ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
 │   ├── v5_3_review_hardening_assessment.md  # v5.3 review hardening assessment

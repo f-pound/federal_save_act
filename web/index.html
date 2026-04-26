@@ -17,14 +17,22 @@
         <span class="subtitle">Computational Amicus Explorer</span>
       </div>
       <div id="audit-bar" class="audit-bar">
-        <div class="audit-stat"><span class="audit-num" id="stat-books">—</span><span class="audit-label">Books Certified</span></div>
-        <div class="audit-stat"><span class="audit-num" id="stat-theorems">—</span><span class="audit-label">Q.E.D. Theorems</span></div>
-        <div class="audit-stat"><span class="audit-num" id="stat-axioms">—</span><span class="audit-label">Traced Axioms</span></div>
-        <div class="audit-stat"><span class="audit-num" id="stat-existentials">—</span><span class="audit-label">Existentials</span></div>
+        <button class="audit-stat audit-stat-btn" data-audit="books"><span class="audit-num" id="stat-books">—</span><span class="audit-label">Books Certified</span></button>
+        <button class="audit-stat audit-stat-btn" data-audit="theorems"><span class="audit-num" id="stat-theorems">—</span><span class="audit-label">Q.E.D. Theorems</span></button>
+        <button class="audit-stat audit-stat-btn" data-audit="axioms"><span class="audit-num" id="stat-axioms">—</span><span class="audit-label">Traced Axioms</span></button>
+        <button class="audit-stat audit-stat-btn" data-audit="existentials"><span class="audit-num" id="stat-existentials">—</span><span class="audit-label">Existentials</span></button>
       </div>
       <button id="about-btn" class="about-btn" title="About this tool">?</button>
     </div>
   </header>
+
+  <div id="audit-drawer" class="audit-drawer">
+    <div class="audit-drawer-header">
+      <h3 id="audit-drawer-title"></h3>
+      <button id="audit-drawer-close" class="audit-drawer-close">&times;</button>
+    </div>
+    <div id="audit-drawer-content" class="audit-drawer-content"></div>
+  </div>
 
   <div id="warning-banner" class="warning-banner hidden">
     <span class="warning-icon">⚠</span>
@@ -115,6 +123,14 @@
           </div>
           <div class="modal-step">
             <span class="step-num">4</span>
+            <div>
+              <strong>Click the audit stats</strong> in the header bar (17 Books, 126 Theorems, 33 Axioms, 4 Existentials).
+              A detail drawer slides open showing the full supporting data — every book with its theorem/axiom count, every
+              theorem grouped by book, every axiom with its source trace, or every existential proposition.
+            </div>
+          </div>
+          <div class="modal-step">
+            <span class="step-num">5</span>
             <div>
               <strong>Try a scenario:</strong> Uncheck all challenger assumptions and keep only government
               assumptions. The Government "NO CONFLICT" conclusion will show

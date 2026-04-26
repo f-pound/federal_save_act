@@ -10,7 +10,550 @@
     "authoritative_sources": 21,
     "trace_rows": 38,
     "ace_statements": 13,
-    "generated_at": "2026-04-26T17:27:07.027309+00:00"
+    "generated_at": "2026-04-26T18:20:40.097383+00:00"
+  },
+  "audit_details": {
+    "books": [
+      {
+        "name": "federal_save_act_burden_proofs",
+        "file": "federal_save_act_burden_proofs.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 8,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_challenger_model",
+        "file": "federal_save_act_challenger_model.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 13,
+        "axioms": 12,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_consistency_check",
+        "file": "federal_save_act_consistency_check.lisp",
+        "layer": 6,
+        "clean": true,
+        "theorems": 16,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_core",
+        "file": "federal_save_act_core.lisp",
+        "layer": 0,
+        "clean": true,
+        "theorems": 0,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_deep_process_invariants",
+        "file": "federal_save_act_deep_process_invariants.lisp",
+        "layer": 5,
+        "clean": true,
+        "theorems": 9,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_doctrine_proofs",
+        "file": "federal_save_act_doctrine_proofs.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 7,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_document_proofs",
+        "file": "federal_save_act_document_proofs.lisp",
+        "layer": 5,
+        "clean": true,
+        "theorems": 9,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_existentials",
+        "file": "federal_save_act_existentials.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 6,
+        "axioms": 0,
+        "existentials": 4
+      },
+      {
+        "name": "federal_save_act_facts",
+        "file": "federal_save_act_facts.lisp",
+        "layer": 1,
+        "clean": false,
+        "theorems": 0,
+        "axioms": 3,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_government_model",
+        "file": "federal_save_act_government_model.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 5,
+        "axioms": 16,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_hinge_common",
+        "file": "federal_save_act_hinge_common.lisp",
+        "layer": 2,
+        "clean": false,
+        "theorems": 4,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_hinge_discretionary",
+        "file": "federal_save_act_hinge_discretionary.lisp",
+        "layer": 3,
+        "clean": false,
+        "theorems": 3,
+        "axioms": 1,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_hinge_mandatory",
+        "file": "federal_save_act_hinge_mandatory.lisp",
+        "layer": 3,
+        "clean": false,
+        "theorems": 2,
+        "axioms": 1,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_independence",
+        "file": "federal_save_act_independence.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 3,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_model_consistency",
+        "file": "federal_save_act_model_consistency.lisp",
+        "layer": 4,
+        "clean": false,
+        "theorems": 7,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_process",
+        "file": "federal_save_act_process.lisp",
+        "layer": 0,
+        "clean": true,
+        "theorems": 19,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_process_invariants",
+        "file": "federal_save_act_process_invariants.lisp",
+        "layer": 5,
+        "clean": true,
+        "theorems": 15,
+        "axioms": 0,
+        "existentials": 0
+      }
+    ],
+    "theorems_by_book": {
+      "federal_save_act_burden_proofs": [
+        "lacks-documents-and-cannot-obtain-implies-material-burden",
+        "material-burden-plus-no-alternative-implies-denial-risk",
+        "material-burden-plus-denial-risk-implies-severe-burden",
+        "full-burden-chain",
+        "severe-burden-implies-material-burden",
+        "severe-burden-implies-denial-risk",
+        "adequate-alternative-negates-severe-burden",
+        "qualifying-documents-negate-material-burden"
+      ],
+      "federal_save_act_challenger_model": [
+        "challenger-fundamental-right-rule",
+        "challenger-documentary-proof-is-undue-burden",
+        "challenger-undue-burden-defeats-regulation",
+        "challenger-lemma-qualified-voter",
+        "challenger-lemma-right-established",
+        "challenger-lemma-protected-right",
+        "challenger-lemma-registration-transaction",
+        "challenger-lemma-undue-burden",
+        "challenger-lemma-regulation-invalid",
+        "challenger-lemma-not-valid-regulation",
+        "challenger-lemma-denial",
+        "challenger-conflict-general",
+        "challenger-model-finds-conflict"
+      ],
+      "federal_save_act_consistency_check": [
+        "consistency-check-qualifying-document-passport",
+        "consistency-check-qualifying-document-birth-cert",
+        "consistency-check-qualifying-document-nat-cert",
+        "consistency-check-qualified-voter-decomposition",
+        "consistency-check-registration-transaction-decomposition",
+        "consistency-check-denial-trigger-decomposition",
+        "consistency-check-conflict-decomposition",
+        "consistency-check-valid-regulation-defeats-conflict",
+        "consistency-check-non-voter-no-conflict",
+        "consistency-check-no-denial-no-conflict",
+        "consistency-check-non-law-no-conflict",
+        "consistency-check-presentation-defeats-denial",
+        "consistency-check-alternative-defeats-denial",
+        "proof-obligation-denial-trigger-iff",
+        "neutrality-valid-regulation-prevents-conflict",
+        "neutrality-conflict-reduces-to-regulation-validity"
+      ],
+      "federal_save_act_deep_process_invariants": [
+        "terminal-state-remains-terminal-under-run-trace",
+        "no-single-step-submission-to-registration",
+        "no-single-step-unsubmitted-to-registration",
+        "denied-requires-denial-state",
+        "denied-implies-prior-denial-path",
+        "unsubmitted-requires-submit-to-leave",
+        "no-registration-without-submission",
+        "alt-denied-path-always-denies",
+        "doc-rejected-direct-denial-path"
+      ],
+      "federal_save_act_doctrine_proofs": [
+        "severe-burden-supports-invalidity",
+        "important-interest-supports-validity",
+        "invalid-regulation-enables-conflict-condition",
+        "valid-regulation-negates-conflict-condition",
+        "severe-burden-and-denial-supports-challenger-conflict",
+        "important-interest-and-adequate-alternative-supports-validity",
+        "denial-trigger-with-statute-implies-conflict-preconditions"
+      ],
+      "federal_save_act_document_proofs": [
+        "empty-document-list-has-no-qualifying-document",
+        "singleton-qualifying-list-has-proof",
+        "all-nonqualifying-implies-not-qualifying-list",
+        "all-nonqualifying-implies-no-documentary-proof",
+        "filter-qualifying-is-qualifying-list",
+        "member-qualifying-implies-filter-nonempty",
+        "filter-qualifying-has-proof-when-member-qualifies",
+        "all-nonqualifying-append",
+        "qualifying-list-implies-not-all-nonqualifying"
+      ],
+      "federal_save_act_existentials": [
+        "exists-burdened-citizen-implies-lacking-proof",
+        "exists-no-fault-citizen-implies-lacking-proof",
+        "unreasonable-burden-witness-is-qualified",
+        "exists-documentless-eligible-voter-implies-burden-class-nonempty",
+        "exists-burdened-voter-implies-law-has-nontrivial-burden",
+        "discretionary-denial-witness-implies-erroneous-denial-risk"
+      ],
+      "federal_save_act_government_model": [
+        "government-valid-regulation-rule",
+        "government-lemma-defense-established",
+        "government-lemma-regulation-valid",
+        "government-no-conflict-general",
+        "government-model-no-conflict"
+      ],
+      "federal_save_act_hinge_common": [
+        "hinge-evidence-type",
+        "hinge-denial-type",
+        "hinge-common-presentation-defeats-denial",
+        "hinge-common-alternative-defeats-denial"
+      ],
+      "federal_save_act_hinge_discretionary": [
+        "hinge-discretionary-denial-trigger-fires",
+        "hinge-discretionary-statute-denies",
+        "hinge-discretionary-qualified-voter-can-be-denied"
+      ],
+      "federal_save_act_hinge_mandatory": [
+        "hinge-mandatory-no-denial-trigger",
+        "hinge-mandatory-alternative-approved"
+      ],
+      "federal_save_act_independence": [
+        "neutral-model-does-not-force-conflict",
+        "neutral-model-does-not-force-no-conflict",
+        "independence-pivot-is-regulation-validity"
+      ],
+      "federal_save_act_model_consistency": [
+        "no-trace-produces-both-registered-and-denied",
+        "conflict-condition-pivots-on-valid-regulation",
+        "neutral-valid-regulation-defeats-conflict",
+        "neutral-invalid-regulation-enables-conflict",
+        "denial-trigger-requires-transaction",
+        "qualified-voter-is-compositional",
+        "conflict-condition-is-compositional"
+      ],
+      "federal_save_act_process": [
+        "no-docs-implies-no-proof",
+        "passport-is-qualifying",
+        "birth-cert-is-qualifying",
+        "nat-cert-is-qualifying",
+        "member-qualifying-document-implies-has-qualifying-document",
+        "append-preserves-qualifying-document-left",
+        "append-preserves-qualifying-document-right",
+        "qualifying-document-listp-append",
+        "qualifying-document-listp-remove",
+        "nonempty-qualifying-list-has-docs",
+        "process-inv-doc-path-registers",
+        "process-inv-alt-path-registers",
+        "process-inv-rejection-no-alt-denies",
+        "process-inv-alt-denied-denies",
+        "process-inv-no-docs-denies",
+        "process-inv-no-skip-to-registered",
+        "process-inv-no-skip-from-submitted",
+        "process-inv-denial-trigger-requires-no-presentation",
+        "process-inv-denial-trigger-requires-no-alternative"
+      ],
+      "federal_save_act_process_invariants": [
+        "terminal-state-registered-not-denied",
+        "terminal-state-denied-not-registered",
+        "terminal-state-exclusive",
+        "register-requires-register-event",
+        "registered-implies-path-contains-register-event",
+        "denied-requires-deny-event",
+        "denied-implies-path-contains-deny-event",
+        "registered-is-absorbing",
+        "denied-is-absorbing",
+        "registered-stays-registered",
+        "denied-stays-denied",
+        "approval-path-always-registers",
+        "doc-acceptance-path-always-registers",
+        "register-requires-acceptance-state",
+        "registered-implies-prior-acceptance-path"
+      ]
+    },
+    "axioms_by_book": {
+      "federal_save_act_challenger_model": [
+        {
+          "name": "challenger-bridge-right-to-vote",
+          "label": "BRIDGE_RULE",
+          "source_id": "const-amend5",
+          "clause_text": "nor shall any person be... deprived of life, liberty, or property, without due process of law"
+        },
+        {
+          "name": "challenger-bridge-regulation-invalid",
+          "label": "BRIDGE_RULE",
+          "source_id": "anderson-v-celebrezze",
+          "clause_text": "Anderson-Burdick balancing: severe burden + no sufficient justification = invalid regulation"
+        },
+        {
+          "name": "challenger-scenario-person",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a is a person"
+        },
+        {
+          "name": "challenger-scenario-citizen",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a is a U.S. citizen"
+        },
+        {
+          "name": "challenger-scenario-eligible",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a is eligible to vote"
+        },
+        {
+          "name": "challenger-scenario-application",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: registration-attempt-a is a voter registration application"
+        },
+        {
+          "name": "challenger-scenario-attempts-to-register",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a attempts to register via registration-attempt-a"
+        },
+        {
+          "name": "challenger-scenario-no-documentary-proof",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a does not possess documentary proof"
+        },
+        {
+          "name": "challenger-scenario-no-presentation",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a does not present documentary proof with application"
+        },
+        {
+          "name": "challenger-scenario-no-fault",
+          "label": "EMPIRICAL_ASSUMPTION",
+          "source_id": "fish-v-kobach",
+          "clause_text": "approximately 18,000 applicants were unable to complete registration due to the documentary proof requirement"
+        },
+        {
+          "name": "challenger-scenario-material-burden",
+          "label": "EMPIRICAL_ASSUMPTION",
+          "source_id": "crawford-v-marion",
+          "clause_text": "the burden of obtaining a birth certificate... will be nontrivial for some voters"
+        },
+        {
+          "name": "challenger-scenario-alternative-process-denied",
+          "label": "INTERPRETATION_CHALLENGER",
+          "source_id": "hr22-eh",
+          "clause_text": "such official shall make a determination — interpretation: the determination is discretionary and may result in denial"
+        }
+      ],
+      "federal_save_act_facts": [
+        {
+          "name": "text-save-act-is-law",
+          "label": "TEXT_FACT",
+          "source_id": "hr22-eh",
+          "clause_text": "This Act may be cited as the \"Safeguard American Voter Eligibility Act\" or the \"SAVE Act\"."
+        },
+        {
+          "name": "text-save-act-documentary-proof-requirement",
+          "label": "PROHIBITION",
+          "source_id": "hr22-eh",
+          "clause_text": "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application"
+        },
+        {
+          "name": "text-documentary-proof-from-qualifying-documents",
+          "label": "BRIDGE_RULE",
+          "source_id": "hr22-eh",
+          "clause_text": "the term 'documentary proof of United States citizenship' means any of the following: (1) REAL ID... (2) valid United States passport... (3) military ID... (4) govt photo ID showing US birth... (5) govt photo ID with supporting doc... (6) certified birth certificate... (7) naturalization certificate"
+        }
+      ],
+      "federal_save_act_government_model": [
+        {
+          "name": "government-bridge-defense-validates",
+          "label": "BRIDGE_RULE",
+          "source_id": "crawford-v-marion",
+          "clause_text": "Crawford: regulation satisfying Anderson-Burdick is constitutionally valid"
+        },
+        {
+          "name": "government-election-integrity-interest",
+          "label": "DOCTRINAL_RULE",
+          "source_id": "crawford-v-marion",
+          "clause_text": "there is no question about the legitimacy or importance of the State's interest in counting only the votes of eligible voters"
+        },
+        {
+          "name": "government-important-interest",
+          "label": "DOCTRINAL_RULE",
+          "source_id": "crawford-v-marion",
+          "clause_text": "Crawford plurality: election integrity is an important governmental interest"
+        },
+        {
+          "name": "government-reasonable-requirement",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "crawford-v-marion",
+          "clause_text": "for most voters who need them, the inconvenience of making a trip to the BMV... does not qualify as a substantial burden"
+        },
+        {
+          "name": "government-procedure-evenhanded",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "burdick-v-takushi",
+          "clause_text": "when an election regulation imposes only reasonable, nondiscriminatory restrictions... the State's important regulatory interests are generally sufficient"
+        },
+        {
+          "name": "government-rationally-connected",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "crawford-v-marion",
+          "clause_text": "the ID requirement is amply justified by the valid interest in protecting the integrity and reliability of the electoral process"
+        },
+        {
+          "name": "government-adequate-alternative",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "hr22-eh",
+          "clause_text": "each State shall establish a process under which an applicant who cannot provide documentary proof... may submit such other evidence — interpretation: the process provides an adequate safety valve"
+        },
+        {
+          "name": "government-burden-not-severe",
+          "label": "EMPIRICAL_ASSUMPTION",
+          "source_id": "crawford-v-marion",
+          "clause_text": "the inconvenience... does not qualify as a substantial burden on the right to vote"
+        },
+        {
+          "name": "government-scenario-person",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a is a person"
+        },
+        {
+          "name": "government-scenario-citizen",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a is a U.S. citizen"
+        },
+        {
+          "name": "government-scenario-eligible",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a is eligible to vote"
+        },
+        {
+          "name": "government-scenario-application",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: registration-attempt-a is a voter registration application"
+        },
+        {
+          "name": "government-scenario-attempts-to-register",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a attempts to register via registration-attempt-a"
+        },
+        {
+          "name": "government-assume-right-to-vote-arguendo",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "n/a",
+          "clause_text": "Government concedes arguendo that citizen-a has a protected right to vote"
+        },
+        {
+          "name": "government-scenario-no-documentary-proof",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario: citizen-a lacks documentary proof (conceded)"
+        },
+        {
+          "name": "government-scenario-alternative-process-approved",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "hr22-eh",
+          "clause_text": "the process provides a guaranteed path to registration — interpretation: mandatory approval when evidence satisfies standards"
+        }
+      ],
+      "federal_save_act_hinge_discretionary": [
+        {
+          "name": "semantic-b-discretionary-denial",
+          "label": "INTERPRETIVE_ASSUMPTION",
+          "source_id": "hr22-eh",
+          "clause_text": "\"shall make a determination as to whether the applicant has sufficiently established\" — interpretation: duty to decide, but determination may be denial"
+        }
+      ],
+      "federal_save_act_hinge_mandatory": [
+        {
+          "name": "semantic-a-mandatory-approval",
+          "label": "INTERPRETIVE_ASSUMPTION",
+          "source_id": "hr22-eh",
+          "clause_text": "\"shall make a determination\" — interpretation: mandatory duty to approve when attestation + evidence satisfies EAC standards"
+        }
+      ]
+    },
+    "existentials": [
+      {
+        "name": "exists-citizen-lacking-proofp",
+        "book": "federal_save_act_existentials"
+      },
+      {
+        "name": "exists-citizen-with-unreasonable-burdenp",
+        "book": "federal_save_act_existentials"
+      },
+      {
+        "name": "exists-citizen-lacking-docs-no-faultp",
+        "book": "federal_save_act_existentials"
+      },
+      {
+        "name": "exists-citizen-facing-discretionary-denialp",
+        "book": "federal_save_act_existentials"
+      }
+    ]
   },
   "layers": [
     {

@@ -35,6 +35,109 @@ def load_csv(path):
     return rows
 
 
+def scan_lisp_events(model_dir):
+    """Scan model/*.lisp files for defthm, defaxiom, and defun-sk events."""
+    import re
+    books = []
+    theorems_by_book = {}
+    axioms_by_book = {}
+    existentials = []
+
+    # Build trace lookup: axiom_name -> {label, source_id, clause_text}
+    trace_lookup = {}
+    trace_path = model_dir.parent / "sources" / "clause_trace.csv"
+    if trace_path.exists():
+        with open(trace_path, "r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                trace_lookup[row.get("axiom_name", "")] = {
+                    "label": row.get("label", ""),
+                    "source_id": row.get("source_id", ""),
+                    "clause_text": row.get("clause_text", ""),
+                }
+
+    pat_defthm = re.compile(r'^\s*\(defthm\s+(\S+)', re.IGNORECASE)
+    pat_defaxiom = re.compile(r'^\s*\(defaxiom\s+(\S+)', re.IGNORECASE)
+    pat_defunsk = re.compile(r'^\s*\(defun-sk\s+(\S+)', re.IGNORECASE)
+
+    # Classify books by whether they use :defaxioms-okp
+    clean_books = {
+        "federal_save_act_core", "federal_save_act_process",
+        "federal_save_act_process_invariants",
+        "federal_save_act_deep_process_invariants",
+        "federal_save_act_document_proofs",
+        "federal_save_act_consistency_check",
+    }
+
+    # Layer assignments for human-readable grouping
+    book_layers = {
+        "federal_save_act_core": 0,
+        "federal_save_act_process": 0,
+        "federal_save_act_facts": 1,
+        "federal_save_act_hinge_common": 2,
+        "federal_save_act_hinge_mandatory": 3,
+        "federal_save_act_hinge_discretionary": 3,
+        "federal_save_act_existentials": 4,
+        "federal_save_act_burden_proofs": 4,
+        "federal_save_act_doctrine_proofs": 4,
+        "federal_save_act_model_consistency": 4,
+        "federal_save_act_independence": 4,
+        "federal_save_act_challenger_model": 4,
+        "federal_save_act_government_model": 4,
+        "federal_save_act_process_invariants": 5,
+        "federal_save_act_deep_process_invariants": 5,
+        "federal_save_act_document_proofs": 5,
+        "federal_save_act_consistency_check": 6,
+    }
+
+    for lisp_file in sorted(model_dir.glob("*.lisp")):
+        book_name = lisp_file.stem
+        thms = []
+        axms = []
+        sks = []
+
+        with open(lisp_file, "r", encoding="utf-8") as f:
+            for line in f:
+                m = pat_defthm.match(line)
+                if m:
+                    thms.append(m.group(1))
+                m = pat_defaxiom.match(line)
+                if m:
+                    name = m.group(1)
+                    trace_info = trace_lookup.get(name, {})
+                    axms.append({
+                        "name": name,
+                        "label": trace_info.get("label", ""),
+                        "source_id": trace_info.get("source_id", ""),
+                        "clause_text": trace_info.get("clause_text", ""),
+                    })
+                m = pat_defunsk.match(line)
+                if m:
+                    sks.append(m.group(1))
+
+        is_clean = book_name in clean_books
+        layer = book_layers.get(book_name, -1)
+
+        books.append({
+            "name": book_name,
+            "file": lisp_file.name,
+            "layer": layer,
+            "clean": is_clean,
+            "theorems": len(thms),
+            "axioms": len(axms),
+            "existentials": len(sks),
+        })
+
+        if thms:
+            theorems_by_book[book_name] = thms
+        if axms:
+            axioms_by_book[book_name] = axms
+        if sks:
+            existentials.extend([{"name": s, "book": book_name} for s in sks])
+
+    return books, theorems_by_book, axioms_by_book, existentials
+
+
 def build():
     # --- Load inputs ---
     graph = load_json(ROOT / "data" / "parsed" / "explorer_graph.json")
@@ -56,6 +159,17 @@ def build():
         "trace_rows": len(trace_rows),
         "ace_statements": len(ace.get("ace_statements", [])),
         "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    # --- Scan .lisp files for audit details ---
+    model_dir = ROOT / "model"
+    books, theorems_by_book, axioms_by_book, existentials_list = scan_lisp_events(model_dir)
+
+    audit_details = {
+        "books": books,
+        "theorems_by_book": theorems_by_book,
+        "axioms_by_book": axioms_by_book,
+        "existentials": existentials_list,
     }
 
     # --- Enrich nodes with ACE data ---
@@ -89,6 +203,7 @@ def build():
     # --- Assemble output ---
     output = {
         "meta": meta,
+        "audit_details": audit_details,
         "layers": graph["layers"],
         "nodes": nodes,
         "edges": edges,
