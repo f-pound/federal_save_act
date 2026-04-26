@@ -6,6 +6,32 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [5.3.2] — 2026-04-26
+
+### Added
+- `tools/validate_ace_statements.py` — Automated ACE validator against the [Attempto APE webservice](https://attempto.ifi.uzh.ch/ape/)
+- README "Appendix: ACE Formal Prose" — 13 prose paragraphs converted to APE-validated Attempto Controlled English in collapsible `<details>` blocks
+- ACE validation runs in **strict mode** (no `Guess unknown words`) matching the APE web client defaults
+
+### Changed
+- `data/parsed/federal_save_act_ace.json` — All 13 `ace_text` fields rewritten with:
+  - `n:` prefix on all domain-specific compound nouns
+  - `v:` prefix on compound verbs (`v:register-to-vote`, `v:mechanically-checkable`)
+  - `a:` prefix on compound adjectives (`a:explicit`)
+  - Proper determiners (`a`/`the`) before every `n:` noun
+  - Anaphor chains resolved (first mention uses `a n:X`, subsequent uses `the n:X`)
+  - Restructured clauses: `cannot` → `can not`, `whether...has` → `determines`, `verified as` → `somebody verifies`, `in-person` → removed, `to vote in` → `for`
+  - `ape_status`, `ape_error`, and `notes` fields updated from live APE responses
+- ACE validation result: **13/13 PASS, 0 errors, 0 warnings**
+- README project structure: added `validate_ace_statements.py`
+- README Key Features: added ACE formal prose bullet
+
+### Unchanged
+- Theorem count: 126
+- Axiom count: 33
+- Book count: 17
+- No ACL2 model files modified
+
 ## [5.3.1] — 2026-04-26
 
 ### Fixed

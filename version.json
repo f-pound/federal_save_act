@@ -1,7 +1,7 @@
 {
-  "version": "5.3.1",
+  "version": "5.3.2",
   "model_version": "5.2",
-  "documentation_version": "5.3",
+  "documentation_version": "5.3.2",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -23,12 +23,16 @@
     "encapsulate": 4,
     "total_events": 262,
     "authoritative_sources": 21,
-    "traced_propositions": 38
+    "traced_propositions": 38,
+    "ace_statements": 13,
+    "ace_readme_paragraphs": 13
   },
   "certification": {
     "all_passed": true,
     "books_certified": 17,
-    "clean_books_no_axioms": 6
+    "clean_books_no_axioms": 6,
+    "ace_ape_strict_pass": 13,
+    "ace_ape_strict_fail": 0
   },
   "high_risk_assumptions": [
     "challenger-scenario-no-fault",

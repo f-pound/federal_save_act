@@ -4,7 +4,7 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 5.3.1** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 5.3.2** — See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## What This Project Proves
 
@@ -128,6 +128,7 @@ federal_save_act/
 │   └── clause_trace.csv                     # Axiom → source clause traceability
 ├── tools/
 │   ├── validate_trace.py                    # Machine-checkable source trace validator
+│   ├── validate_ace_statements.py           # ACE → APE webservice validator (strict mode)
 │   ├── build_explorer_data.py               # Build web/data/explorer.json from repo artifacts
 │   ├── serve_explorer.py                    # Serve explorer at http://127.0.0.1:8000
 │   └── validate_explorer_data.py            # Validate explorer.json graph integrity
@@ -140,7 +141,7 @@ federal_save_act/
 │   └── parsed/
 │       ├── federal_save_act.json            # Parsed bill sections
 │       ├── federal_save_act_predicates.json # Normalized predicates
-│       ├── federal_save_act_ace.json        # ACE-normalized clauses
+│       ├── federal_save_act_ace.json        # ACE-normalized clauses (APE-validated)
 │       └── explorer_graph.json              # Curated proof-dependency graph
 ├── web/                                     # Interactive explorer (static HTML/JS/CSS)
 │   ├── index.html                           # Main page
@@ -173,6 +174,7 @@ federal_save_act/
 - **Factored proof chain**: `qualified-federal-voterp` → `registration-transactionp` → `save-act-denial-triggerp`
 - **Generalized theorems**: `challenger-conflict-general` and `government-no-conflict-general`
 - **CI/CD**: GitHub Actions runs all proofs on every push
+- **ACE formal prose**: README and statutory clauses in APE-validated [Attempto Controlled English](https://attempto.ifi.uzh.ch/ape/) (13/13 PASS, strict mode)
 
 ## Scenario
 
