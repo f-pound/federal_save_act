@@ -4,11 +4,11 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-## Architecture (v3 — Hybrid Encapsulate)
+## Architecture (v5.2 — Hybrid Encapsulate)
 
-v3 uses a **hybrid architecture**: `encapsulate` with local witness functions for interpretive predicates (where inconsistency risk is highest), and `defaxiom` for text-derived facts and scenario ground truths (self-evidently consistent constraints on `defstub` functions). This design puts consistency protection exactly where it matters most.
+The project uses a **hybrid architecture**: `encapsulate` with local witness functions for interpretive predicates and doctrinal standards (where inconsistency risk is highest), `defaxiom` for text-derived facts and scenario ground truths (self-evidently consistent constraints on `defstub` functions), and executable `defun` chains for derived burden conclusions. This design puts consistency protection exactly where it matters most while making burden derivation mechanically auditable.
 
-See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the full technical rationale.
+See [RIGOR_NOTES_V3.md](RIGOR_NOTES_V3.md) for the original v3 architectural rationale (still applicable to the hybrid core).
 
 ## Quick Start
 
