@@ -5,7 +5,7 @@
       "id": "ace-001",
       "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)(1)",
       "source_text": "A form of identification issued consistent with the requirements of the REAL ID Act of 2005 that indicates the applicant is a citizen of the United States.",
-      "ace_text": "If a person has a n:real-id-form-of-identification and the n:real-id-form-of-identification indicates that the person is a citizen-of-the-United-States then the person has documentary-proof-of-citizenship.",
+      "ace_text": "If a person has a n:real-id-form-of-identification and the n:real-id-form-of-identification indicates that the person is a n:citizen-of-the-United-States then the person has a n:documentary-proof-of-citizenship.",
       "classification": "DEFINED_TERM",
       "ape_status": "PASS",
       "ape_error": null,
@@ -17,19 +17,19 @@
       "id": "ace-002",
       "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)(2)",
       "source_text": "A valid United States passport.",
-      "ace_text": "If a person has a valid-United-States-passport then the person has documentary-proof-of-citizenship.",
+      "ace_text": "If a person has a n:valid-United-States-passport then the person has a n:documentary-proof-of-citizenship.",
       "classification": "DEFINED_TERM",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(has-valid-us-passportp p)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: Every person that has a n:valid-United-States-passport has p:documentary-proof-of-citizenship ."
+      "notes": "APE validated. Paraphrase: Every person that has a n:valid-United-States-passport has a n:documentary-proof-of-citizenship ."
     },
     {
       "id": "ace-003",
       "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)(3)",
       "source_text": "The applicant's official United States military identification card, together with a United States military record of service showing that the applicant's place of birth was in the United States.",
-      "ace_text": "If a person has a n:us-military-identification-card and the person has a military-record-of-service and the military-record-of-service shows that the place-of-birth of the person is in the n:United-States then the person has documentary-proof-of-citizenship.",
+      "ace_text": "If a person has a n:us-military-identification-card and the person has a n:military-record-of-service and the n:military-record-of-service shows that the n:place-of-birth of the person is in a n:United-States then the person has a n:documentary-proof-of-citizenship.",
       "classification": "DEFINED_TERM",
       "ape_status": "PASS",
       "ape_error": null,
@@ -41,7 +41,7 @@
       "id": "ace-004",
       "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)(4)",
       "source_text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government showing that the applicant's place of birth was in the United States.",
-      "ace_text": "If a person has a government-issued-photo-identification-card and the government-issued-photo-identification-card shows that the place-of-birth of the person is in the United-States then the person has documentary-proof-of-citizenship.",
+      "ace_text": "If a person has a n:government-issued-photo-identification-card and the n:government-issued-photo-identification-card shows that the n:place-of-birth of the person is in a n:United-States then the person has a n:documentary-proof-of-citizenship.",
       "classification": "DEFINED_TERM",
       "ape_status": "PASS",
       "ape_error": null,
@@ -53,55 +53,55 @@
       "id": "ace-005",
       "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)(5)",
       "source_text": "A valid government-issued photo identification card... but only if presented together with one or more of the following: (A) A certified birth certificate... (E) A Naturalization Certificate... (F) An American Indian Card...",
-      "ace_text": "If a person has a government-issued-photo-identification-card and the person has a certified-birth-certificate then the person has documentary-proof-of-citizenship. If a person has a government-issued-photo-identification-card and the person has a naturalization-certificate then the person has documentary-proof-of-citizenship. If a person has a government-issued-photo-identification-card and the person has a n:american-indian-card then the person has documentary-proof-of-citizenship.",
+      "ace_text": "If a person has a n:government-issued-photo-identification-card and the person has a n:certified-birth-certificate then the person has a n:documentary-proof-of-citizenship. If a person has a n:government-issued-photo-identification-card and the person has a n:naturalization-certificate then the person has a n:documentary-proof-of-citizenship. If a person has a n:government-issued-photo-identification-card and the person has a n:american-indian-card then the person has a n:documentary-proof-of-citizenship.",
       "classification": "DEFINED_TERM",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(has-govt-photo-id-with-supporting-docp p)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: Every person that has a n:government-issued-photo-identification-card and that has a n:certified-birth-certificate has p:documentary-proof-of-citizenship .\n\nEvery person that has a n:government-issued"
+      "notes": "APE validated. Paraphrase: Every person that has a n:government-issued-photo-identification-card and that has a n:certified-birth-certificate has a n:documentary-proof-of-citizenship .\n\nEvery person that has a n:government-issu"
     },
     {
       "id": "ace-006",
       "source_ref": "SAVE Act § 2(b) / NVRA § 4(b)",
       "source_text": "Under any method of voter registration in a State, the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application.",
-      "ace_text": "If a person submits a voter-registration-application for a federal-election and the person does not present documentary-proof-of-citizenship with the voter-registration-application then the State does not accept the voter-registration-application.",
+      "ace_text": "If a person submits a n:voter-registration-application for a n:federal-election and the person does not present a n:documentary-proof-of-citizenship with the n:voter-registration-application then a n:state does not accept the n:voter-registration-application.",
       "classification": "PROHIBITION",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(statute-denies-registrationp 'federal-save-act p x)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: If a person X1 submits a n:voter-registration-application X2 for a n:federal-election and it is false that the person X1 presents p:documentary-proof-of-citizenship with the n:voter-registration-appli"
+      "notes": "APE validated. Paraphrase: If a person X1 submits a n:voter-registration-application X2 for a n:federal-election and it is false that the person X1 presents a n:documentary-proof-of-citizenship with the n:voter-registration-app"
     },
     {
       "id": "ace-007",
       "source_ref": "SAVE Act § 2(f) / NVRA § 8(j)(1)",
       "source_text": "Notwithstanding any other provision of this Act, a State may not register an individual to vote in elections for Federal office held in the State unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship.",
-      "ace_text": "If a person applies to register-to-vote in a federal-election and the person does not provide documentary-proof-of-citizenship at the time-of-application then the State does not register the person.",
+      "ace_text": "If a person applies to v:register-to-vote in a n:federal-election and the person does not provide a n:documentary-proof-of-citizenship at the n:time-of-application then a n:state does not register the person.",
       "classification": "PROHIBITION",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(statute-denies-registrationp 'federal-save-act p x)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: If a person X1 applies in a n:federal-election to p:register-to-vote and it is false that the person X1 provides p:documentary-proof-of-citizenship at a n:time-of-application then it is false that Sta"
+      "notes": "APE validated. Paraphrase: # ..."
     },
     {
       "id": "ace-008",
       "source_ref": "SAVE Act § 2(f) / NVRA § 8(j)(2)(A)(i)",
       "source_text": "each State shall establish a process under which an applicant who cannot provide documentary proof of United States citizenship... may, if the applicant signs an attestation under penalty of perjury... submit such other evidence... and such official shall make a determination as to whether the applicant has sufficiently established United States citizenship",
-      "ace_text": "If a person can not provide documentary-proof-of-citizenship and the person signs an attestation-under-perjury and the attestation-under-perjury states that the person is a citizen-of-the-United-States then the person may submit other-evidence to a state-or-local-official. If a state-or-local-official receives other-evidence from a person then the state-or-local-official determines the citizenship-status of the person.",
+      "ace_text": "If a person can not provide a n:documentary-proof-of-citizenship and the person signs a n:attestation-under-perjury and the n:attestation-under-perjury states that the person is a n:citizen-of-the-United-States then the person may submit a n:other-evidence to a n:state-or-local-official. If a n:state-or-local-official receives a n:other-evidence from a person then the n:state-or-local-official determines the n:citizenship-status of the person.",
       "classification": "EXCEPTION",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(alternative-process-approvedp p x)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: # ...\n\nIf a n:state-or-local-official X1 receives p:other-evidence from a person X2 then the n:state-or-local-official X1 determines a n:citizenship-status of the person X2."
+      "notes": "APE validated. Paraphrase: # ...\n\nIf a n:state-or-local-official X1 receives an n:other-evidence from a person X2 then the n:state-or-local-official X1 determines a n:citizenship-status of the person X2."
     },
     {
       "id": "ace-009",
       "source_ref": "SAVE Act § 2(f) / NVRA § 8(k)",
       "source_text": "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters for elections for Federal office held in the State at any time upon receipt of documentation or verified information that a registrant is not a United States citizen.",
-      "ace_text": "If a n:state receives documentation-or-verified-information and the documentation-or-verified-information shows that a registrant is not a citizen-of-the-United-States then the n:state removes the registrant from the official-list-of-eligible-voters.",
+      "ace_text": "If a n:state receives a n:documentation-or-verified-information and the n:documentation-or-verified-information shows that a n:registrant is not a n:citizen-of-the-United-States then the n:state removes the n:registrant from the n:official-list-of-eligible-voters.",
       "classification": "PROHIBITION",
       "ape_status": "PASS",
       "ape_error": null,
@@ -113,31 +113,31 @@
       "id": "ace-010",
       "source_ref": "SAVE Act § 2(j) / NVRA § 12(2)(B)",
       "source_text": "in the case of an officer or employee of the executive branch, providing material assistance to a noncitizen in attempting to register to vote or vote in an election for Federal office",
-      "ace_text": "If an officer-or-employee of the executive-branch provides material-assistance to a noncitizen and the noncitizen attempts to register-to-vote in a federal-election then the officer-or-employee commits a criminal-offense.",
+      "ace_text": "If a n:officer-or-employee of a n:executive-branch provides a n:material-assistance to a n:noncitizen and the n:noncitizen attempts to v:register-to-vote in a n:federal-election then the n:officer-or-employee commits a n:criminal-offense.",
       "classification": "PENALTY",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(criminal-penalty-for-official-assistancep official)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: If an n:officer-or-employee X1 of an n:executive-branch provides p:material-assistance to a n:noncitizen and at least 2 a:noncitizen attempts in a n:federal-election to p:register-to-vote then the n:o"
+      "notes": "APE validated. Paraphrase: # ..."
     },
     {
       "id": "ace-011",
       "source_ref": "SAVE Act § 2(j) / NVRA § 12(2)(C)",
       "source_text": "registering an applicant to vote in an election for Federal office who fails to present documentary proof of United States citizenship",
-      "ace_text": "If an election-official registers a person for a federal-election and the person does not present documentary-proof-of-citizenship then the election-official commits a criminal-offense.",
+      "ace_text": "If a n:election-official registers a person for a n:federal-election and the person does not present a n:documentary-proof-of-citizenship then the n:election-official commits a n:criminal-offense.",
       "classification": "PENALTY",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(criminal-penalty-for-registering-without-proofp official p)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: If an n:election-official X1 registers a person X2 for a n:federal-election and it is false that the person X2 presents p:documentary-proof-of-citizenship then the n:election-official X1 commits a n:c"
+      "notes": "APE validated. Paraphrase: If an n:election-official X1 registers a person X2 for a n:federal-election and it is false that the person X2 presents a n:documentary-proof-of-citizenship then the n:election-official X1 commits a n"
     },
     {
       "id": "ace-012",
       "source_ref": "SAVE Act § 6",
       "source_text": "Nothing in this Act... may be construed to supercede, restrict, or otherwise affect the ability of an individual to cast a provisional ballot in an election for Federal office or to have the ballot counted in the election if the individual is verified as a citizen",
-      "ace_text": "If a person casts a provisional-ballot in a federal-election and somebody verifies the person and the person is a citizen-of-the-United-States then the provisional-ballot is counted.",
+      "ace_text": "If a person casts a n:provisional-ballot in a n:federal-election and somebody verifies the person and the person is a n:citizen-of-the-United-States then the n:provisional-ballot is counted.",
       "classification": "EXCEPTION",
       "ape_status": "PASS",
       "ape_error": null,
@@ -149,13 +149,13 @@
       "id": "ace-013",
       "source_ref": "SAVE Act § 2(d) / NVRA § 6(e)(1)",
       "source_text": "An applicant who submits the mail voter registration application form... shall not be registered to vote in an election for Federal office unless (A) the applicant presents documentary proof of United States citizenship in person to the office of the appropriate election official not later than the deadline...",
-      "ace_text": "If a person submits a mail-voter-registration-application and the person does not present documentary-proof-of-citizenship personally to the election-official before the registration-deadline then the person is not registered.",
+      "ace_text": "If a person submits a n:mail-voter-registration-application and the person does not present a n:documentary-proof-of-citizenship to the n:election-official before the n:registration-deadline then the person is not registered.",
       "classification": "PROHIBITION",
       "ape_status": "PASS",
       "ape_error": null,
       "predicate_target": "(statute-denies-registrationp 'federal-save-act p x)",
       "requires_human_review": false,
-      "notes": "APE validated. Paraphrase: If a person X1 submits a n:mail-voter-registration-application and it is false that the person X1 presents p:documentary-proof-of-citizenship personally before a n:registration-deadline to an n:electi"
+      "notes": "APE validated. Paraphrase: If a person X1 submits a n:mail-voter-registration-application and it is false that the person X1 presents a n:documentary-proof-of-citizenship before a n:registration-deadline to an n:election-offici"
     }
   ]
 }

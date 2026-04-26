@@ -164,7 +164,7 @@ def validate_all(fix=False):
         # Multi-sentence texts: APE handles them natively
         print(f"[{ace_id}] Checking...")
 
-        result = call_ape(ace_text)
+        result = call_ape(ace_text, guess=False)
 
         if result["success"]:
             passed += 1
