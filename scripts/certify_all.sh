@@ -2,6 +2,7 @@
 # certify_all.sh — Run the full Federal SAVE Act ACL2 proof suite.
 # Usage: ./scripts/certify_all.sh
 # Requires: docker compose OR native acl2 on PATH
+# Logs are saved to logs/ directory.
 set -euo pipefail
 
 BOOKS=(
@@ -24,10 +25,13 @@ BOOKS=(
 TOTAL_QED=0
 TOTAL_FAIL=0
 FAILED_BOOKS=()
+LOG_DIR="logs"
+
+mkdir -p "$LOG_DIR"
 
 # Determine ACL2 runner
 if command -v docker &>/dev/null && docker compose version &>/dev/null; then
-  run_acl2() { docker compose run --rm acl2 acl2 < "$1" 2>&1; }
+  run_acl2() { docker compose run --rm acl2 acl2 < "$1" 2>/dev/null; }
 elif command -v acl2 &>/dev/null; then
   run_acl2() { acl2 < "$1" 2>&1; }
 else
@@ -37,6 +41,7 @@ else
 fi
 
 echo "=== Federal SAVE Act ACL2 Proof Suite ==="
+echo "Logs will be saved to $LOG_DIR/"
 echo ""
 
 # Step 1: Trace validation
@@ -54,16 +59,18 @@ echo ""
 echo "--- ACL2 Books ---"
 for book in "${BOOKS[@]}"; do
   name="${book%.lisp}"
+  logfile="$LOG_DIR/${name}.log"
   output=$(run_acl2 "$book")
+  echo "$output" > "$logfile"
   qed=$(echo "$output" | grep -c "Q\.E\.D\." || true)
   failed=$(echo "$output" | grep -c "FAILED" || true)
   TOTAL_QED=$((TOTAL_QED + qed))
   TOTAL_FAIL=$((TOTAL_FAIL + failed))
   if [ "$failed" -gt 0 ]; then
-    echo "  FAIL  $name  ($qed QED, $failed FAIL)"
+    echo "  FAIL  $name  ($qed QED, $failed FAIL)  -> $logfile"
     FAILED_BOOKS+=("$name")
   else
-    echo "  OK    $name  ($qed QED)"
+    echo "  OK    $name  ($qed QED)  -> $logfile"
   fi
 done
 
@@ -71,6 +78,7 @@ echo ""
 echo "=== Summary ==="
 echo "Total Q.E.D.: $TOTAL_QED"
 echo "Total FAILED: $TOTAL_FAIL"
+echo "Logs saved to: $LOG_DIR/"
 
 if [ "$TOTAL_FAIL" -gt 0 ]; then
   echo ""

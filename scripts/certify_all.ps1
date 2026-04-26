@@ -1,6 +1,7 @@
 # certify_all.ps1 — Run the full Federal SAVE Act ACL2 proof suite.
 # Usage: powershell -ExecutionPolicy Bypass -File .\scripts\certify_all.ps1
 # Requires: docker compose
+# Logs are saved to logs/ directory.
 
 $books = @(
   "federal_save_act_consistency_check",
@@ -21,7 +22,12 @@ $books = @(
 
 $totalQ = 0; $totalF = 0; $failedBooks = @()
 
+# Create logs directory
+$logDir = "logs"
+if (-not (Test-Path $logDir)) { New-Item -ItemType Directory -Path $logDir | Out-Null }
+
 Write-Host "=== Federal SAVE Act ACL2 Proof Suite ==="
+Write-Host "Logs will be saved to $logDir/"
 Write-Host ""
 
 # Step 1: Trace validation
@@ -33,15 +39,17 @@ Write-Host ""
 # Step 2: ACL2 books
 Write-Host "--- ACL2 Books ---"
 foreach ($b in $books) {
+  $logFile = "$logDir/${b}.log"
   $out = cmd /c "docker compose run --rm acl2 acl2 < ${b}.lisp 2>NUL" 2>$null
+  $out | Out-File -FilePath $logFile -Encoding utf8
   $qed = ($out | Select-String "Q\.E\.D\.").Count
   $fail = ($out | Select-String "FAILED").Count
   $totalQ += $qed; $totalF += $fail
   if ($fail -gt 0) {
-    Write-Host "  FAIL  $b  ($qed QED, $fail FAIL)"
+    Write-Host "  FAIL  $b  ($qed QED, $fail FAIL)  -> $logFile"
     $failedBooks += $b
   } else {
-    Write-Host "  OK    $b  ($qed QED)"
+    Write-Host "  OK    $b  ($qed QED)  -> $logFile"
   }
 }
 
@@ -49,6 +57,7 @@ Write-Host ""
 Write-Host "=== Summary ==="
 Write-Host "Total Q.E.D.: $totalQ"
 Write-Host "Total FAILED: $totalF"
+Write-Host "Logs saved to: $logDir/"
 
 if ($totalF -gt 0) {
   Write-Host ""
