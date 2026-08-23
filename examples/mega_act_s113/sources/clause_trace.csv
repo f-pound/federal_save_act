@@ -1,0 +1,24 @@
+axiom_name,file,label,decider,source_id,section,clause_text
+text-mega-act-is-law,scenario,TEXT_FACT,legislature,hr7300-ih,§ 1,This Act may be cited as the ``Make Elections Great Again Act''.
+text-s113-noncitizen-determination-removes,text_rules,PROHIBITION,legislature,hr7300-ih,§ 113(a)(1)(E),to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen
+text-s113-noncitizen-removal-at-any-time,text_rules,TEXT_FACT,legislature,hr7300-ih,§ 113(b)(1),"the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)"
+text-s113-residence-removal-requires-return-card,text_rules,PROCEDURAL_FACT,legislature,hr7300-ih,§ 113(c)(3),"If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters"
+scenario-r-person,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,registrant-r is a person
+scenario-r-citizen,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,registrant-r is a U.S. citizen
+scenario-r-eligible,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,registrant-r is eligible
+scenario-r-registered,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,registrant-r is on the official list
+scenario-r-save-indicates-noncitizen,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,DHS SAVE data (erroneously) indicates registrant-r is a noncitizen
+scenario-r-no-notice,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,no notice before removal
+scenario-r-no-hearing,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,no opportunity to contest
+semantic-a-save-data-is-determination,hinge_data,INTERPRETIVE_ASSUMPTION,court,hr7300-ih,§ 113(a)(1)(E),information ... supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen — interpretation: the SAVE information is itself the determination
+semantic-b-determination-requires-notice,hinge_process,INTERPRETIVE_ASSUMPTION,court,hr7300-ih,§ 113(a)(1),registrants who are determined to be ineligible voters — interpretation: a determination requires notice to the registrant (cf. the return-card procedure of subsection (c))
+challenger-fundamental-right-rule,challenger,DOCTRINAL_RULE,court,harper-v-virginia,383 U.S. at 670,the right of suffrage is a fundamental matter
+challenger-removal-without-process-is-violation,challenger,INTERPRETATION_CHALLENGER,court,mathews-v-eldridge,424 U.S. at 333-335,the right to be heard before being condemned to suffer grievous loss
+challenger-bridge-right-to-vote,challenger,BRIDGE_RULE,court,const-amend5,Amend. V,"nor be deprived of life, liberty, or property, without due process of law"
+challenger-bridge-removal-invalid,challenger,BRIDGE_RULE,court,mathews-v-eldridge,424 U.S. at 335,due process balancing: a deprivation without adequate process is invalid as applied
+government-removal-defense-rule,government,INTERPRETATION_GOVERNMENT,court,husted-v-randolph,584 U.S. at 767-770,NVRA list-maintenance procedure upheld
+government-bridge-removal-validates,government,BRIDGE_RULE,court,husted-v-randolph,584 U.S. at 767,a compliant list-maintenance procedure is valid
+government-important-interest,government,DOCTRINAL_RULE,court,crawford-v-marion,553 U.S. at 194-196,interest in counting only the votes of eligible voters
+government-removal-procedure-evenhanded,government,INTERPRETATION_GOVERNMENT,court,hr7300-ih,§ 113(a)(1),Each State shall take such affirmative steps as are necessary on an ongoing basis — interpretation: the procedure applies to every registrant alike
+government-save-data-reliable,government,EMPIRICAL_ASSUMPTION,fact-finder,hr7300-ih,§ 113(a)(1)(E),information with respect to citizenship status supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen of the United States ... [empirical: SAVE citizenship data is reliable enough to act on]
+government-assume-right-to-vote-arguendo,government,INTERPRETATION_GOVERNMENT,party-stipulation,n/a,n/a,concession arguendo that registrant-r has a protected right to vote

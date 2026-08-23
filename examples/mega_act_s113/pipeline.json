@@ -1,0 +1,19 @@
+{
+  "slug": "mega_act_s113",
+  "title": "H.R. 7300 (119th Congress), MEGA Act \u00a7 113 \u2014 removal of ineligible voters",
+  "irs": [
+    "data/parsed/mega_act_s113_removal_grounds.json",
+    "data/parsed/mega_act_s113_text_rules.json",
+    "data/parsed/mega_act_s113_removal_table.json"
+  ],
+  "bills": [],
+  "notes": "List the clause-IR files to compile, in dependency order.",
+  "texts": {
+    "hr7300-ih": "inputs/119hr7300_ih_text.txt"
+  },
+  "text_checks": {
+    "hr7300-ih": [
+      "hr7300-ih"
+    ]
+  }
+}

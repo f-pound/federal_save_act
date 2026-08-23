@@ -1,0 +1,93 @@
+{
+  "slug": "mega_act_s113",
+  "ace_statements": [
+    {
+      "id": "ace-gen-s113-noncitizen-removal",
+      "generated_from": {
+        "ir": "mega_act_s113_text_rules",
+        "rule": "text-s113-noncitizen-determination-removes"
+      },
+      "source_ref": "H.R. 7300 § 113(a)(1)(E)",
+      "source_text": "to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen",
+      "ace_text": "If a n:registrant is a n:natural-person and the n:registrant is on a n:official-list-of-eligible-voters and a n:state determines that the n:registrant is a n:noncitizen-ineligible-voter then the n:MEGA-Act removes the n:registrant from the n:official-list-of-eligible-voters.",
+      "classification": "PROHIBITION",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(text-s113-noncitizen-determination-removes p)",
+      "requires_human_review": false,
+      "covers": [
+        "personp + registered-voterp + determined-ineligible-noncitizenp"
+      ],
+      "notes": "APE validated. Paraphrase: # ...",
+      "replaces": []
+    },
+    {
+      "id": "ace-gen-s113-any-time",
+      "generated_from": {
+        "ir": "mega_act_s113_text_rules",
+        "rule": "text-s113-noncitizen-removal-at-any-time"
+      },
+      "source_ref": "H.R. 7300 § 113(b)(1)",
+      "source_text": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)",
+      "ace_text": "If a n:registrant is a n:natural-person and a n:state determines that the n:registrant is a n:noncitizen-ineligible-voter then a n:state may v:remove-at-any-time the n:registrant.",
+      "classification": "TEXT_FACT",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(text-s113-noncitizen-removal-at-any-time p)",
+      "requires_human_review": false,
+      "covers": [
+        "personp + determined-ineligible-noncitizenp"
+      ],
+      "notes": "APE validated. Paraphrase: # ...",
+      "replaces": []
+    },
+    {
+      "id": "ace-gen-s113-residence-card",
+      "generated_from": {
+        "ir": "mega_act_s113_text_rules",
+        "rule": "text-s113-residence-removal-requires-return-card"
+      },
+      "source_ref": "H.R. 7300 § 113(c)(3)",
+      "source_text": "If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters",
+      "ace_text": "If a n:registrant is a n:natural-person and the n:registrant is on a n:official-list-of-eligible-voters and a n:state removes the n:registrant for a n:change-in-residence then a n:registrar sends a n:return-card to the n:registrant.",
+      "classification": "PROCEDURAL_FACT",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(text-s113-residence-removal-requires-return-card p)",
+      "requires_human_review": false,
+      "covers": [
+        "personp + registered-voterp + removed-for-residence-changep"
+      ],
+      "notes": "APE validated. Paraphrase: If a n:registrant X1 is on an n:official-list-of-eligible-voters and the n:registrant X1 is a n:natural-person and a state removes the n:registrant X1 for a n:change-in-residence then a registrar send",
+      "replaces": []
+    },
+    {
+      "id": "ace-gen-s113-process",
+      "generated_from": {
+        "ir": "mega_act_s113_removal_table",
+        "process": "mrem"
+      },
+      "source_ref": "H.R. 7300 § 113(a)-(c)",
+      "source_text": "A registrant's record under § 113. The noncitizen ground (a)(1)(E) is fed by DHS SAVE data and is exempt from the pre-election freeze (b)(1); residence removals (a)(1)(D) go through the return-card procedure (c)(2)-(3). Notice for SAVE-based removals is NOT in the text; overlay edges make that statable.",
+      "ace_text": "If a n:registrant-record is in a n:on-rolls-state and a n:save-noncitizen-match-event occurs then the n:registrant-record is in a n:save-flagged-state. If a n:registrant-record is in a n:save-flagged-state and a n:remove-event occurs then the n:registrant-record is in a n:removed-state. If a n:registrant-record is in a n:on-rolls-state and a n:residence-change-indicated-event occurs then the n:registrant-record is in a n:residence-flagged-state. If a n:registrant-record is in a n:residence-flagged-state and a n:send-return-card-event occurs then the n:registrant-record is in a n:card-sent-state. If a n:registrant-record is in a n:card-sent-state and a n:card-returned-event occurs then the n:registrant-record is in a n:on-rolls-state. If a n:registrant-record is in a n:card-sent-state and a n:card-not-returned-event occurs then the n:registrant-record is in a n:removed-state. If a n:registrant-record is in a n:save-flagged-state and a n:notify-registrant-event occurs then the n:registrant-record is in a n:noticed-state. If a n:registrant-record is in a n:noticed-state and a n:provide-proof-event occurs then the n:registrant-record is in a n:on-rolls-state. If a n:registrant-record is in a n:noticed-state and a n:remove-event occurs then the n:registrant-record is in a n:removed-state.",
+      "classification": "PROCESS_RULE",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "*mrem-edges*  (lsm-step / lsm-run)",
+      "requires_human_review": false,
+      "covers": [
+        "on-rolls --save-noncitizen-match--> save-flagged [TEXT_FACT § 113(a)(1)(E)]",
+        "save-flagged --remove--> removed [TEXT_FACT § 113(a)(1)(E), (b)(1)]",
+        "on-rolls --residence-change-indicated--> residence-flagged [TEXT_FACT § 113(a)(2)]",
+        "residence-flagged --send-return-card--> card-sent [TEXT_FACT § 113(c)(2)]",
+        "card-sent --card-returned--> on-rolls [TEXT_FACT § 113(c)(2)(A)]",
+        "card-sent --card-not-returned--> removed [TEXT_FACT § 113(c)(3)(A)]",
+        "save-flagged --notify-registrant--> noticed [DUE_PROCESS_OVERLAY not in statute]",
+        "noticed --provide-proof--> on-rolls [DUE_PROCESS_OVERLAY not in statute]",
+        "noticed --remove--> removed [DUE_PROCESS_OVERLAY not in statute]"
+      ],
+      "notes": "APE validated. Paraphrase: If a n:registrant-record X1 is in an n:on-rolls-state and a n:save-noncitizen-match-event occurs then the n:registrant-record X1 is in a n:save-flagged-state .\n\nIf a n:registrant-record X1 is in a n:s",
+      "replaces": []
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "lib/enum_list": {
+    "theorems": 21,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": [
+      "booleanp-all-in-catsp",
+      "booleanp-none-in-catsp",
+      "some-in-catsp-iff-not-none-in-catsp",
+      "all-in-catsp-append",
+      "none-in-catsp-append",
+      "some-in-catsp-append",
+      "all-in-catsp-and-consp-implies-some-in-catsp",
+      "member-in-cats-implies-some-in-catsp",
+      "some-in-catsp-singleton",
+      "all-in-catsp-member",
+      "none-in-catsp-member",
+      "all-in-catsp-remove-equal",
+      "none-in-catsp-remove-equal",
+      "all-in-catsp-filter-in-cats",
+      "consp-filter-in-cats",
+      "filter-in-cats-of-all-in-catsp",
+      "filter-in-cats-of-none-in-catsp",
+      "member-equal-of-subsetp-equal",
+      "all-in-catsp-widen",
+      "some-in-catsp-widen",
+      "none-in-catsp-narrow"
+    ]
+  },
+  "lib/lsm": {
+    "theorems": 25,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": [
+      "lsm-lookup-from",
+      "lsm-lookup-event",
+      "lsm-lookup-member",
+      "lsm-lookup-when-no-outgoing",
+      "lsm-lookup-closed",
+      "lsm-lookup-entry-guard",
+      "lsm-lookup-event-guard",
+      "lsm-lookup-closed-except",
+      "lsm-lookup-exit-guard",
+      "lsm-wf-tablep-implies-closedp",
+      "lsm-step-absorbing",
+      "lsm-step-closed",
+      "lsm-step-entry-guard",
+      "lsm-step-no-skip",
+      "lsm-step-event-guard",
+      "lsm-step-closed-except",
+      "lsm-step-exit-guard",
+      "lsm-step-noop-when-not-outgoing-event",
+      "lsm-run-absorbing",
+      "lsm-run-append",
+      "lsm-run-closed",
+      "lsm-run-entry-guard",
+      "lsm-run-event-guard",
+      "lsm-run-exit-guard",
+      "lsm-run-closed-except"
+    ]
+  },
+  "mega_act_s113_challenger_model": {
+    "theorems": 4,
+    "trusted_base": [
+      "challenger-bridge-removal-invalid",
+      "challenger-bridge-right-to-vote",
+      "scenario-r-citizen",
+      "scenario-r-eligible",
+      "scenario-r-no-hearing",
+      "scenario-r-no-notice",
+      "scenario-r-person",
+      "scenario-r-registered",
+      "scenario-r-save-indicates-noncitizen",
+      "semantic-a-save-data-is-determination",
+      "text-mega-act-is-law",
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 14,
+    "by_decider": {
+      "court": 3,
+      "party-stipulation": 7,
+      "legislature": 4
+    },
+    "theorem_names": [
+      "challenger-fundamental-right-rule",
+      "challenger-removal-without-process-is-violation",
+      "challenger-removal-conflict-general",
+      "challenger-model-finds-removal-conflict"
+    ]
+  },
+  "mega_act_s113_consistency_audit": {
+    "theorems": 35,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": [
+      "aud-c-challenger-fundamental-right-rule",
+      "aud-c-challenger-removal-without-process-is-violation",
+      "aud-c-text-s113-noncitizen-determination-removes",
+      "aud-c-text-s113-noncitizen-removal-at-any-time",
+      "aud-c-text-s113-residence-removal-requires-return-card",
+      "aud-c-scenario-r-person",
+      "aud-c-scenario-r-citizen",
+      "aud-c-scenario-r-eligible",
+      "aud-c-scenario-r-registered",
+      "aud-c-scenario-r-save-indicates-noncitizen",
+      "aud-c-scenario-r-no-notice",
+      "aud-c-scenario-r-no-hearing",
+      "aud-c-text-mega-act-is-law",
+      "aud-c-semantic-a-save-data-is-determination",
+      "aud-c-challenger-bridge-right-to-vote",
+      "aud-c-challenger-bridge-removal-invalid",
+      "aud-g-government-removal-defense-rule",
+      "aud-g-text-s113-noncitizen-determination-removes",
+      "aud-g-text-s113-noncitizen-removal-at-any-time",
+      "aud-g-text-s113-residence-removal-requires-return-card",
+      "aud-g-scenario-r-person",
+      "aud-g-scenario-r-citizen",
+      "aud-g-scenario-r-eligible",
+      "aud-g-scenario-r-registered",
+      "aud-g-scenario-r-save-indicates-noncitizen",
+      "aud-g-scenario-r-no-notice",
+      "aud-g-scenario-r-no-hearing",
+      "aud-g-text-mega-act-is-law",
+      "aud-g-semantic-b-determination-requires-notice",
+      "aud-g-government-bridge-removal-validates",
+      "aud-g-government-important-interest",
+      "aud-g-government-removal-procedure-evenhanded",
+      "aud-g-government-save-data-reliable",
+      "aud-g-government-assume-right-to-vote-arguendo",
+      "parties-registration-bridges-jointly-unsatisfiable"
+    ]
+  },
+  "mega_act_s113_core": {
+    "theorems": 2,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": [
+      "core-valid-regulation-defeats-removal-conflict",
+      "core-removal-conflict-pivots-on-valid-regulation"
+    ]
+  },
+  "mega_act_s113_government_model": {
+    "theorems": 4,
+    "trusted_base": [
+      "government-assume-right-to-vote-arguendo",
+      "government-bridge-removal-validates",
+      "government-important-interest",
+      "government-removal-procedure-evenhanded",
+      "government-save-data-reliable",
+      "scenario-r-citizen",
+      "scenario-r-eligible",
+      "scenario-r-no-hearing",
+      "scenario-r-no-notice",
+      "scenario-r-person",
+      "scenario-r-registered",
+      "scenario-r-save-indicates-noncitizen",
+      "semantic-b-determination-requires-notice",
+      "text-mega-act-is-law",
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 17,
+    "by_decider": {
+      "party-stipulation": 8,
+      "court": 4,
+      "fact-finder": 1,
+      "legislature": 4
+    },
+    "theorem_names": [
+      "government-removal-defense-rule",
+      "government-no-removal-conflict-general",
+      "government-model-no-removal-conflict",
+      "government-no-determination-without-notice"
+    ]
+  },
+  "mega_act_s113_hinge_common": {
+    "theorems": 1,
+    "trusted_base": [
+      "scenario-r-citizen",
+      "scenario-r-eligible",
+      "scenario-r-no-hearing",
+      "scenario-r-no-notice",
+      "scenario-r-person",
+      "scenario-r-registered",
+      "scenario-r-save-indicates-noncitizen",
+      "text-mega-act-is-law",
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 11,
+    "by_decider": {
+      "party-stipulation": 7,
+      "legislature": 4
+    },
+    "theorem_names": [
+      "hinge-common-placeholder"
+    ]
+  },
+  "mega_act_s113_hinge_data": {
+    "theorems": 1,
+    "trusted_base": [
+      "scenario-r-citizen",
+      "scenario-r-eligible",
+      "scenario-r-no-hearing",
+      "scenario-r-no-notice",
+      "scenario-r-person",
+      "scenario-r-registered",
+      "scenario-r-save-indicates-noncitizen",
+      "semantic-a-save-data-is-determination",
+      "text-mega-act-is-law",
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 12,
+    "by_decider": {
+      "party-stipulation": 7,
+      "court": 1,
+      "legislature": 4
+    },
+    "theorem_names": [
+      "hinge-data-statute-removes-on-save-data"
+    ]
+  },
+  "mega_act_s113_hinge_process": {
+    "theorems": 1,
+    "trusted_base": [
+      "scenario-r-citizen",
+      "scenario-r-eligible",
+      "scenario-r-no-hearing",
+      "scenario-r-no-notice",
+      "scenario-r-person",
+      "scenario-r-registered",
+      "scenario-r-save-indicates-noncitizen",
+      "semantic-b-determination-requires-notice",
+      "text-mega-act-is-law",
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 12,
+    "by_decider": {
+      "party-stipulation": 7,
+      "court": 1,
+      "legislature": 4
+    },
+    "theorem_names": [
+      "hinge-process-no-determination-for-registrant-r"
+    ]
+  },
+  "mega_act_s113_removal_grounds": {
+    "theorems": 0,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": []
+  },
+  "mega_act_s113_removal_invariants": {
+    "theorems": 3,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": [
+      "save-path-removes-without-notice",
+      "residence-removal-requires-return-card",
+      "removed-is-absorbing"
+    ]
+  },
+  "mega_act_s113_removal_table": {
+    "theorems": 0,
+    "trusted_base": [],
+    "count": 0,
+    "by_decider": {},
+    "theorem_names": []
+  },
+  "mega_act_s113_scenario": {
+    "theorems": 2,
+    "trusted_base": [
+      "scenario-r-citizen",
+      "scenario-r-eligible",
+      "scenario-r-no-hearing",
+      "scenario-r-no-notice",
+      "scenario-r-person",
+      "scenario-r-registered",
+      "scenario-r-save-indicates-noncitizen",
+      "text-mega-act-is-law",
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 11,
+    "by_decider": {
+      "party-stipulation": 7,
+      "legislature": 4
+    },
+    "theorem_names": [
+      "scenario-r-qualified-voter",
+      "scenario-r-removal-transaction"
+    ]
+  },
+  "mega_act_s113_text_rules": {
+    "theorems": 0,
+    "trusted_base": [
+      "text-s113-noncitizen-determination-removes",
+      "text-s113-noncitizen-removal-at-any-time",
+      "text-s113-residence-removal-requires-return-card"
+    ],
+    "count": 3,
+    "by_decider": {
+      "legislature": 3
+    },
+    "theorem_names": []
+  }
+}

@@ -1,0 +1,423 @@
+{
+  "system": "(authored run — see docs/AGENT.md)",
+  "user": "",
+  "output": {
+    "books": [
+      {
+        "name": "mega_act_s113_scenario.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_text_rules\")\n\n;; Shared scenario: registrant-r, a registered U.S. citizen whose record DHS\n;; SAVE data (erroneously) shows as noncitizen; no notice, no hearing.\n(defaxiom scenario-r-person (personp 'registrant-r))\n(defaxiom scenario-r-citizen (citizen-of-usp 'registrant-r))\n(defaxiom scenario-r-eligible (eligible-voterp 'registrant-r))\n(defaxiom scenario-r-registered (registered-voterp 'registrant-r))\n(defaxiom scenario-r-save-indicates-noncitizen (save-indicates-noncitizenp 'registrant-r))\n(defaxiom scenario-r-no-notice (not (adequate-notice-before-removalp 'registrant-r)))\n(defaxiom scenario-r-no-hearing (not (opportunity-to-be-heardp 'registrant-r)))\n(defaxiom text-mega-act-is-law (lawp 'mega-act))\n\n(defthm scenario-r-qualified-voter (qualified-federal-voterp 'registrant-r))\n(defthm scenario-r-removal-transaction (removal-transactionp 'registrant-r))\n"
+      },
+      {
+        "name": "mega_act_s113_hinge_common.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_scenario\")\n;; Hinge: § 113(a)(1) removes registrants \"who are determined to be ineligible\n;; voters by reason of ... status as a noncitizen ... supplied by ... SAVE\".\n;; Reading A (data): the SAVE information itself is the determination.\n;; Reading B (process): a determination requires notice to the registrant.\n;; The two hinge books cannot be loaded together.\n(defthm hinge-common-placeholder (equal 'mega-act 'mega-act) :rule-classes nil)\n"
+      },
+      {
+        "name": "mega_act_s113_hinge_data.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_hinge_common\")\n;; INTERPRETIVE_ASSUMPTION (Reading A): SAVE data demonstrating noncitizen\n;; status IS the determination of ineligibility.\n(defaxiom semantic-a-save-data-is-determination\n  (implies (save-indicates-noncitizenp p)\n           (determined-ineligible-noncitizenp p)))\n\n(defthm hinge-data-statute-removes-on-save-data\n  (implies (and (personp p) (registered-voterp p) (save-indicates-noncitizenp p))\n           (statute-removes-registrantp 'mega-act p))\n  :rule-classes nil)\n"
+      },
+      {
+        "name": "mega_act_s113_hinge_process.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_hinge_common\")\n;; INTERPRETIVE_ASSUMPTION (Reading B): no determination without notice.\n(defaxiom semantic-b-determination-requires-notice\n  (implies (not (adequate-notice-before-removalp p))\n           (not (determined-ineligible-noncitizenp p))))\n\n(defthm hinge-process-no-determination-for-registrant-r\n  (not (determined-ineligible-noncitizenp 'registrant-r))\n  :rule-classes nil)\n"
+      },
+      {
+        "name": "mega_act_s113_challenger_model.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_hinge_data\")\n\n;; Challenger: under Reading A registrant-r is removed on erroneous SAVE data\n;; with no notice or hearing — a due-process deprivation of the vote.\n(encapsulate\n  ((challenger-right-to-vote-establishedp (p) t)\n   (challenger-removal-due-process-violationp (law p) t))\n  (local (defun challenger-right-to-vote-establishedp (p) (declare (ignore p)) t))\n  (local (defun challenger-removal-due-process-violationp (law p) (declare (ignore law p)) t))\n  ;; DOCTRINAL_RULE: the right to vote is fundamental (Harper; Reynolds)\n  (defthm challenger-fundamental-right-rule\n    (implies (qualified-federal-voterp p) (challenger-right-to-vote-establishedp p)))\n  ;; INTERPRETATION_CHALLENGER (Mathews): removal of a qualified registrant\n  ;; without notice or hearing violates due process\n  (defthm challenger-removal-without-process-is-violation\n    (implies (and (qualified-federal-voterp p) (registered-voterp p)\n                  (statute-removes-registrantp 'mega-act p)\n                  (not (adequate-notice-before-removalp p))\n                  (not (opportunity-to-be-heardp p)))\n             (challenger-removal-due-process-violationp 'mega-act p))))\n\n(defaxiom challenger-bridge-right-to-vote\n  (implies (challenger-right-to-vote-establishedp p)\n           (protected-right-to-votep 'amend-v-due-process p)))\n\n(defaxiom challenger-bridge-removal-invalid\n  (implies (challenger-removal-due-process-violationp 'mega-act p)\n           (not (valid-regulationp 'mega-act p))))\n\n(defthm challenger-removal-conflict-general\n  (implies (and (personp p) (citizen-of-usp p) (eligible-voterp p) (registered-voterp p)\n                (save-indicates-noncitizenp p)\n                (not (adequate-notice-before-removalp p))\n                (not (opportunity-to-be-heardp p)))\n           (constitutional-removal-conflict-conditionp 'mega-act 'amend-v-due-process p))\n  :hints ((\"Goal\" :in-theory (enable constitutional-removal-conflict-conditionp\n                               removal-transactionp qualified-federal-voterp)))\n  :rule-classes nil)\n\n(defthm challenger-model-finds-removal-conflict\n  (constitutional-removal-conflict-conditionp 'mega-act 'amend-v-due-process 'registrant-r)\n  :hints ((\"Goal\" :use ((:instance challenger-removal-conflict-general (p 'registrant-r)))))\n  :rule-classes nil)\n"
+      },
+      {
+        "name": "mega_act_s113_government_model.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_hinge_process\")\n\n;; Government: (1) under Reading B the statute does not remove registrant-r\n;; without notice at all; (2) in any event SAVE-based list maintenance is a\n;; valid, evenhanded regulation (Husted).\n(encapsulate\n  ((government-removal-defense-establishedp (law p) t))\n  (local (defun government-removal-defense-establishedp (law p) (declare (ignore law p)) t))\n  ;; INTERPRETATION_GOVERNMENT (Husted): reliable SAVE data + important\n  ;; interest + evenhanded procedure establish the defense\n  (defthm government-removal-defense-rule\n    (implies (and (save-indicates-noncitizenp p)\n                  (important-government-interestp law)\n                  (removal-procedure-evenhandedp law)\n                  (save-data-reliablep law))\n             (government-removal-defense-establishedp law p))))\n\n(defaxiom government-bridge-removal-validates\n  (implies (government-removal-defense-establishedp law p)\n           (valid-regulationp law p)))\n(defaxiom government-important-interest (important-government-interestp 'mega-act))\n(defaxiom government-removal-procedure-evenhanded (removal-procedure-evenhandedp 'mega-act))\n(defaxiom government-save-data-reliable (save-data-reliablep 'mega-act))\n(defaxiom government-assume-right-to-vote-arguendo\n  (protected-right-to-votep 'amend-v-due-process 'registrant-r))\n\n(defthm government-no-removal-conflict-general\n  (implies (and (save-indicates-noncitizenp p) (important-government-interestp law)\n                (removal-procedure-evenhandedp law) (save-data-reliablep law))\n           (not (constitutional-removal-conflict-conditionp law cs p)))\n  :hints ((\"Goal\" :in-theory (enable constitutional-removal-conflict-conditionp)))\n  :rule-classes nil)\n\n(defthm government-model-no-removal-conflict\n  (not (constitutional-removal-conflict-conditionp 'mega-act 'amend-v-due-process 'registrant-r))\n  :rule-classes nil)\n\n;; And independently of validity: under Reading B there is no determination.\n(defthm government-no-determination-without-notice\n  (not (determined-ineligible-noncitizenp 'registrant-r))\n  :rule-classes nil)\n"
+      },
+      {
+        "name": "mega_act_s113_removal_invariants.lisp",
+        "lisp": "(in-package \"ACL2\")\n(include-book \"mega_act_s113_removal_table\")\n(include-book \"lib/lsm\")\n;; Neutral process invariants for § 113 (third statute-side client of lib/lsm).\n(defun mrem-run-trace (s events) (lsm-run s events *mrem-edges*))\n(defconst *mrem-save-path* (list *mrem-evt-save* *mrem-evt-remove*))\n(defconst *mrem-text-edges*\n  (list (list *mrem-on-rolls* *mrem-evt-save* *mrem-save-flagged*)\n        (list *mrem-save-flagged* *mrem-evt-remove* *mrem-removed*)\n        (list *mrem-on-rolls* *mrem-evt-residence* *mrem-residence-flagged*)\n        (list *mrem-residence-flagged* *mrem-evt-card* *mrem-card-sent*)\n        (list *mrem-card-sent* *mrem-evt-returned* *mrem-on-rolls*)\n        (list *mrem-card-sent* *mrem-evt-not-returned* *mrem-removed*)))\n;; SAVE-based removal: text path reaches removed with no notice event.\n(defthm save-path-removes-without-notice\n  (and (equal (lsm-run *mrem-on-rolls* *mrem-save-path* *mrem-text-edges*) *mrem-removed*)\n       (none-in-catsp *mrem-save-path* (list *mrem-evt-notify* *mrem-evt-card*))))\n;; Residence-based removal: removal from residence-flagged requires the card event\n;; ({residence-flagged} is closed except via send-return-card).\n(defthm residence-removal-requires-return-card\n  (implies (equal (mrem-run-trace *mrem-residence-flagged* events) *mrem-removed*)\n           (some-in-catsp events (list *mrem-evt-card*)))\n  :hints ((\"Goal\" :use ((:instance lsm-run-closed-except\n                                   (set (list *mrem-residence-flagged*))\n                                   (evs (list *mrem-evt-card*))\n                                   (s *mrem-residence-flagged*) (edges *mrem-edges*))))))\n(defthm removed-is-absorbing\n  (equal (mrem-run-trace *mrem-removed* events) *mrem-removed*))\n"
+      }
+    ],
+    "trace_rows": [
+      {
+        "axiom_name": "text-mega-act-is-law",
+        "file": "scenario",
+        "label": "TEXT_FACT",
+        "decider": "legislature",
+        "source_id": "hr7300-ih",
+        "section": "§ 1",
+        "clause_text": "This Act may be cited as the ``Make Elections Great Again Act'' or the ``MEGA Act''."
+      },
+      {
+        "axiom_name": "text-s113-noncitizen-determination-removes",
+        "file": "text_rules",
+        "label": "PROHIBITION",
+        "decider": "legislature",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(a)(1)(E)",
+        "clause_text": "to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen"
+      },
+      {
+        "axiom_name": "text-s113-noncitizen-removal-at-any-time",
+        "file": "text_rules",
+        "label": "TEXT_FACT",
+        "decider": "legislature",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(b)(1)",
+        "clause_text": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)"
+      },
+      {
+        "axiom_name": "text-s113-residence-removal-requires-return-card",
+        "file": "text_rules",
+        "label": "PROCEDURAL_FACT",
+        "decider": "legislature",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(c)(3)",
+        "clause_text": "If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters"
+      },
+      {
+        "axiom_name": "scenario-r-person",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "registrant-r is a person"
+      },
+      {
+        "axiom_name": "scenario-r-citizen",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "registrant-r is a U.S. citizen"
+      },
+      {
+        "axiom_name": "scenario-r-eligible",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "registrant-r is eligible"
+      },
+      {
+        "axiom_name": "scenario-r-registered",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "registrant-r is on the official list"
+      },
+      {
+        "axiom_name": "scenario-r-save-indicates-noncitizen",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "DHS SAVE data (erroneously) indicates registrant-r is a noncitizen"
+      },
+      {
+        "axiom_name": "scenario-r-no-notice",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "no notice before removal"
+      },
+      {
+        "axiom_name": "scenario-r-no-hearing",
+        "file": "scenario",
+        "label": "SCENARIO_FACT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "no opportunity to contest"
+      },
+      {
+        "axiom_name": "semantic-a-save-data-is-determination",
+        "file": "hinge_data",
+        "label": "INTERPRETIVE_ASSUMPTION",
+        "decider": "court",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(a)(1)(E)",
+        "clause_text": "information ... supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen — interpretation: the SAVE information is itself the determination"
+      },
+      {
+        "axiom_name": "semantic-b-determination-requires-notice",
+        "file": "hinge_process",
+        "label": "INTERPRETIVE_ASSUMPTION",
+        "decider": "court",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(a)(1)",
+        "clause_text": "registrants who are determined to be ineligible voters — interpretation: a determination requires notice to the registrant (cf. the return-card procedure of subsection (c))"
+      },
+      {
+        "axiom_name": "challenger-fundamental-right-rule",
+        "file": "challenger",
+        "label": "DOCTRINAL_RULE",
+        "decider": "court",
+        "source_id": "harper-v-virginia",
+        "section": "383 U.S. at 670",
+        "clause_text": "the right of suffrage is a fundamental matter"
+      },
+      {
+        "axiom_name": "challenger-removal-without-process-is-violation",
+        "file": "challenger",
+        "label": "INTERPRETATION_CHALLENGER",
+        "decider": "court",
+        "source_id": "mathews-v-eldridge",
+        "section": "424 U.S. at 333-335",
+        "clause_text": "the right to be heard before being condemned to suffer grievous loss"
+      },
+      {
+        "axiom_name": "challenger-bridge-right-to-vote",
+        "file": "challenger",
+        "label": "BRIDGE_RULE",
+        "decider": "court",
+        "source_id": "const-amend5",
+        "section": "Amend. V",
+        "clause_text": "nor be deprived of life, liberty, or property, without due process of law"
+      },
+      {
+        "axiom_name": "challenger-bridge-removal-invalid",
+        "file": "challenger",
+        "label": "BRIDGE_RULE",
+        "decider": "court",
+        "source_id": "mathews-v-eldridge",
+        "section": "424 U.S. at 335",
+        "clause_text": "due process balancing: a deprivation without adequate process is invalid as applied"
+      },
+      {
+        "axiom_name": "government-removal-defense-rule",
+        "file": "government",
+        "label": "INTERPRETATION_GOVERNMENT",
+        "decider": "court",
+        "source_id": "husted-v-randolph",
+        "section": "584 U.S. at 767-770",
+        "clause_text": "NVRA list-maintenance procedure upheld"
+      },
+      {
+        "axiom_name": "government-bridge-removal-validates",
+        "file": "government",
+        "label": "BRIDGE_RULE",
+        "decider": "court",
+        "source_id": "husted-v-randolph",
+        "section": "584 U.S. at 767",
+        "clause_text": "a compliant list-maintenance procedure is valid"
+      },
+      {
+        "axiom_name": "government-important-interest",
+        "file": "government",
+        "label": "DOCTRINAL_RULE",
+        "decider": "court",
+        "source_id": "crawford-v-marion",
+        "section": "553 U.S. at 194-196",
+        "clause_text": "interest in counting only the votes of eligible voters"
+      },
+      {
+        "axiom_name": "government-removal-procedure-evenhanded",
+        "file": "government",
+        "label": "INTERPRETATION_GOVERNMENT",
+        "decider": "court",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(a)(1)",
+        "clause_text": "Each State shall take such affirmative steps as are necessary on an ongoing basis — interpretation: the procedure applies to every registrant alike"
+      },
+      {
+        "axiom_name": "government-save-data-reliable",
+        "file": "government",
+        "label": "EMPIRICAL_ASSUMPTION",
+        "decider": "fact-finder",
+        "source_id": "hr7300-ih",
+        "section": "§ 113(a)(1)(E)",
+        "clause_text": "information ... that demonstrates a registrant is not a citizen — empirical: SAVE citizenship data is reliable enough to act on"
+      },
+      {
+        "axiom_name": "government-assume-right-to-vote-arguendo",
+        "file": "government",
+        "label": "INTERPRETATION_GOVERNMENT",
+        "decider": "party-stipulation",
+        "source_id": "n/a",
+        "section": "n/a",
+        "clause_text": "concession arguendo that registrant-r has a protected right to vote"
+      }
+    ],
+    "audit_worlds": {
+      "persons": "'(registrant-r)",
+      "registered": "'(registrant-r)",
+      "common": {
+        "personp": [
+          "(p)",
+          "(member-equal p '(registrant-r))"
+        ],
+        "citizen-of-usp": [
+          "(p)",
+          "(member-equal p '(registrant-r))"
+        ],
+        "eligible-voterp": [
+          "(p)",
+          "(member-equal p '(registrant-r))"
+        ],
+        "lawp": [
+          "(law)",
+          "(equal law 'mega-act)"
+        ],
+        "registered-voterp": [
+          "(p)",
+          "(member-equal p '(registrant-r))"
+        ],
+        "save-indicates-noncitizenp": [
+          "(p)",
+          "(equal p 'registrant-r)"
+        ],
+        "protected-right-to-votep": [
+          "(cs p)",
+          "(and (equal cs 'amend-v-due-process) (member-equal p '(registrant-r)))"
+        ],
+        "removed-for-residence-changep": [
+          "(p)",
+          "nil"
+        ],
+        "notice-card-sentp": [
+          "(p)",
+          "nil"
+        ],
+        "adequate-notice-before-removalp": [
+          "(p)",
+          "nil"
+        ],
+        "opportunity-to-be-heardp": [
+          "(p)",
+          "nil"
+        ]
+      },
+      "theories": {
+        "c": {
+          "party": "challenger",
+          "books": [
+            "mega_act_s113_core",
+            "mega_act_s113_text_rules",
+            "mega_act_s113_scenario",
+            "mega_act_s113_hinge_common",
+            "mega_act_s113_hinge_data",
+            "mega_act_s113_challenger_model"
+          ],
+          "world": {
+            "determined-ineligible-noncitizenp": [
+              "(p)",
+              "(equal p 'registrant-r)"
+            ],
+            "statute-removes-registrantp": [
+              "(law p)",
+              "(and (equal law 'mega-act) (equal p 'registrant-r))"
+            ],
+            "removable-at-any-timep": [
+              "(p)",
+              "(equal p 'registrant-r)"
+            ],
+            "valid-regulationp": [
+              "(law x)",
+              "nil"
+            ],
+            "challenger-right-to-vote-establishedp": [
+              "(p)",
+              "(member-equal p '(registrant-r))"
+            ],
+            "challenger-removal-due-process-violationp": [
+              "(law p)",
+              "(and (equal law 'mega-act) (equal p 'registrant-r))"
+            ]
+          }
+        },
+        "g": {
+          "party": "government",
+          "books": [
+            "mega_act_s113_core",
+            "mega_act_s113_text_rules",
+            "mega_act_s113_scenario",
+            "mega_act_s113_hinge_common",
+            "mega_act_s113_hinge_process",
+            "mega_act_s113_government_model"
+          ],
+          "world": {
+            "determined-ineligible-noncitizenp": [
+              "(p)",
+              "nil"
+            ],
+            "statute-removes-registrantp": [
+              "(law p)",
+              "nil"
+            ],
+            "removable-at-any-timep": [
+              "(p)",
+              "nil"
+            ],
+            "valid-regulationp": [
+              "(law x)",
+              "t"
+            ],
+            "important-government-interestp": [
+              "(law)",
+              "t"
+            ],
+            "removal-procedure-evenhandedp": [
+              "(law)",
+              "t"
+            ],
+            "save-data-reliablep": [
+              "(law)",
+              "t"
+            ],
+            "government-removal-defense-establishedp": [
+              "(law p)",
+              "(equal p 'registrant-r)"
+            ]
+          }
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "hr7300-ih",
+        "title": "Make Elections Great Again Act (MEGA Act), introduced",
+        "citation": "H.R. 7300, 119th Cong. (Jan. 30, 2026)",
+        "url": "https://www.govinfo.gov/content/pkg/BILLS-119hr7300ih/html/BILLS-119hr7300ih.htm",
+        "type": "statute"
+      },
+      {
+        "id": "mathews-v-eldridge",
+        "title": "Mathews v. Eldridge",
+        "citation": "424 U.S. 319 (1976)",
+        "url": "https://supreme.justia.com/cases/federal/us/424/319/",
+        "type": "case"
+      },
+      {
+        "id": "husted-v-randolph",
+        "title": "Husted v. A. Philip Randolph Institute",
+        "citation": "584 U.S. 756 (2018)",
+        "url": "https://supreme.justia.com/cases/federal/us/584/16-980/",
+        "type": "case"
+      },
+      {
+        "id": "harper-v-virginia",
+        "title": "Harper v. Virginia Board of Elections",
+        "citation": "383 U.S. 663 (1966)",
+        "url": "https://supreme.justia.com/cases/federal/us/383/663/",
+        "type": "case"
+      },
+      {
+        "id": "crawford-v-marion",
+        "title": "Crawford v. Marion County Election Board",
+        "citation": "553 U.S. 181 (2008)",
+        "url": "https://supreme.justia.com/cases/federal/us/553/181/",
+        "type": "case"
+      },
+      {
+        "id": "const-amend5",
+        "title": "U.S. Constitution, Amendment V",
+        "citation": "U.S. Const. amend. V",
+        "url": "https://constitution.congress.gov/constitution/amendment-5/",
+        "type": "constitution"
+      }
+    ]
+  }
+}

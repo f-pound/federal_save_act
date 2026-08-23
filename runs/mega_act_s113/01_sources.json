@@ -1,0 +1,29 @@
+{
+  "system": "(authored run — see docs/AGENT.md)",
+  "user": "",
+  "output": {
+    "summary": "H.R. 7300 (MEGA Act) § 113 replaces NVRA § 8's list-maintenance rules: six removal grounds, a 15-day pre-election freeze that exempts the noncitizen ground, and a notice-card procedure for residence removals only.",
+    "bills": [
+      {
+        "congress": 119,
+        "type": "hr",
+        "number": 7300,
+        "version": "ih",
+        "why": "Introduced text (Jan 30 2026); no later version."
+      }
+    ],
+    "cases": [
+      {
+        "name": "Mathews v. Eldridge",
+        "citation": "424 U.S. 319 (1976)",
+        "proposition": "pre-deprivation process balancing"
+      },
+      {
+        "name": "Husted v. A. Philip Randolph Institute",
+        "citation": "584 U.S. 756 (2018)",
+        "proposition": "NVRA list-maintenance procedure upheld"
+      }
+    ],
+    "executive_orders": []
+  }
+}

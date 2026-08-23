@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [7.0.0] — 2026-08-23
+
+### Added — the agent harness and a second statute
+- `tools/amicus_agent.py`: point it at a legal issue. Stages sources → IR → core → parties → graph, each draft/verify/repair against the repository's own oracles (compiler, verbatim-quote check, APE strict, ACL2 certification, trace validator, consistency and adversarial audits). `--record` / `--dry-run` replay. Model `claude-opus-5`, adaptive thinking, structured outputs.
+- **Second statute, end to end**: `examples/mega_act_s113` — H.R. 7300 (MEGA Act) § 113 removal of ineligible voters. 14 books, 99 theorems, 20 decider-tagged axioms, both party theories proved satisfiable, adversarial audit finds the government theory's hinge joint. Recorded run in `runs/mega_act_s113/` (authored outputs, live oracles — see `docs/AGENT.md`). Finding: § 113 removes on SAVE data at any time with no notice, while residence removals get the return-card procedure.
+- Template generalizations needed to get there: `tools/certify.py` (project-independent certification: include-order, defaxioms-okp from closure, pre-checks); `check_text_stability.py`, `validate_trace.py`, `validate_ace_statements.py`, `gen_consistency_audit.py` read `pipeline.json` / globs instead of SAVE Act names; `init` no longer copies build artifacts.
+- `docs/AGENT.md`.
+
 ## [6.9.0] — 2026-08-23
 
 ### Added — the pipeline as a tool (template for other matters)

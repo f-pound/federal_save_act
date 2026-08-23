@@ -1,0 +1,228 @@
+{
+  "challenger": [
+    {
+      "axiom": "text-s113-noncitizen-determination-removes",
+      "book": "mega_act_s113_text_rules",
+      "verdict": "independent",
+      "flip": "statute-removes-registrantp['mega-act', 'registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "text-s113-noncitizen-removal-at-any-time",
+      "book": "mega_act_s113_text_rules",
+      "verdict": "independent",
+      "flip": "removable-at-any-timep['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "text-s113-residence-removal-requires-return-card",
+      "book": "mega_act_s113_text_rules",
+      "verdict": "independent",
+      "flip": "removed-for-residence-changep['registrant-r'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-person",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "personp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-citizen",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-eligible",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-registered",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-save-indicates-noncitizen",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "save-indicates-noncitizenp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-no-notice",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "adequate-notice-before-removalp['registrant-r'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-no-hearing",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "opportunity-to-be-heardp['registrant-r'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "text-mega-act-is-law",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "lawp['mega-act'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "semantic-a-save-data-is-determination",
+      "book": "mega_act_s113_hinge_data",
+      "verdict": "independent",
+      "flip": "determined-ineligible-noncitizenp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "challenger-bridge-right-to-vote",
+      "book": "mega_act_s113_challenger_model",
+      "verdict": "independent",
+      "flip": "challenger-right-to-vote-establishedp['amend-v-due-process'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "challenger-bridge-removal-invalid",
+      "book": "mega_act_s113_challenger_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['mega-act', 'registrant-r'] := t",
+      "breaks": []
+    }
+  ],
+  "government": [
+    {
+      "axiom": "text-s113-noncitizen-determination-removes",
+      "book": "mega_act_s113_text_rules",
+      "verdict": "coupled",
+      "flip": "determined-ineligible-noncitizenp['registrant-r'] := t",
+      "breaks": [
+        "text-s113-noncitizen-removal-at-any-time",
+        "semantic-b-determination-requires-notice"
+      ]
+    },
+    {
+      "axiom": "text-s113-noncitizen-removal-at-any-time",
+      "book": "mega_act_s113_text_rules",
+      "verdict": "coupled",
+      "flip": "determined-ineligible-noncitizenp['amend-v-due-process'] := t & personp['amend-v-due-process'] := t",
+      "breaks": [
+        "semantic-b-determination-requires-notice"
+      ]
+    },
+    {
+      "axiom": "text-s113-residence-removal-requires-return-card",
+      "book": "mega_act_s113_text_rules",
+      "verdict": "independent",
+      "flip": "removed-for-residence-changep['registrant-r'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-person",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "personp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-citizen",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-eligible",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-registered",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-save-indicates-noncitizen",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "save-indicates-noncitizenp['registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-no-notice",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "adequate-notice-before-removalp['registrant-r'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "scenario-r-no-hearing",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "opportunity-to-be-heardp['registrant-r'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "text-mega-act-is-law",
+      "book": "mega_act_s113_scenario",
+      "verdict": "independent",
+      "flip": "lawp['mega-act'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "semantic-b-determination-requires-notice",
+      "book": "mega_act_s113_hinge_process",
+      "verdict": "independent",
+      "flip": "determined-ineligible-noncitizenp['amend-v-due-process'] := t",
+      "breaks": []
+    },
+    {
+      "axiom": "government-bridge-removal-validates",
+      "book": "mega_act_s113_government_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['amend-v-due-process', 'registrant-r'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "government-important-interest",
+      "book": "mega_act_s113_government_model",
+      "verdict": "independent",
+      "flip": "important-government-interestp['mega-act'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "government-removal-procedure-evenhanded",
+      "book": "mega_act_s113_government_model",
+      "verdict": "independent",
+      "flip": "removal-procedure-evenhandedp['mega-act'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "government-save-data-reliable",
+      "book": "mega_act_s113_government_model",
+      "verdict": "independent",
+      "flip": "save-data-reliablep['mega-act'] := nil",
+      "breaks": []
+    },
+    {
+      "axiom": "government-assume-right-to-vote-arguendo",
+      "book": "mega_act_s113_government_model",
+      "verdict": "independent",
+      "flip": "protected-right-to-votep['amend-v-due-process', 'registrant-r'] := nil",
+      "breaks": []
+    }
+  ]
+}

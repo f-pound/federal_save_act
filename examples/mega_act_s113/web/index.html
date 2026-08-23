@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive visual explorer for the Federal SAVE Act ACL2 constitutional stress-test. Toggle assumptions to see which proof paths remain supported.">
+  <title>Federal SAVE Act — Computational Amicus Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=6.6.0">
+</head>
+<body>
+  <header id="app-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>Federal SAVE Act</h1>
+        <span class="subtitle">Computational Amicus Explorer</span>
+      </div>
+      <div id="audit-bar" class="audit-bar">
+        <button class="audit-stat audit-stat-btn" data-audit="books"><span class="audit-num" id="stat-books">—</span><span class="audit-label">Books Certified</span></button>
+        <button class="audit-stat audit-stat-btn" data-audit="theorems"><span class="audit-num" id="stat-theorems">—</span><span class="audit-label">Q.E.D. Theorems</span></button>
+        <button class="audit-stat audit-stat-btn" data-audit="axioms"><span class="audit-num" id="stat-axioms">—</span><span class="audit-label">Traced Axioms</span></button>
+        <button class="audit-stat audit-stat-btn" data-audit="existentials"><span class="audit-num" id="stat-existentials">—</span><span class="audit-label">Existentials</span></button>
+      </div>
+      <label class="reviewer-toggle" title="Show ACL2 technical details">
+        <span class="reviewer-icon">🔬</span>
+        <input type="checkbox" id="reviewer-mode">
+        <span class="reviewer-label">Reviewer</span>
+      </label>
+      <button id="about-btn" class="about-btn" title="About this tool">?</button>
+    </div>
+  </header>
+
+  <div id="audit-drawer" class="audit-drawer">
+    <div class="audit-drawer-header">
+      <h3 id="audit-drawer-title"></h3>
+      <button id="audit-drawer-close" class="audit-drawer-close">&times;</button>
+    </div>
+    <div id="audit-drawer-content" class="audit-drawer-content"></div>
+  </div>
+
+  <div class="mobile-panel-toggles" id="mobile-toggles">
+    <button class="mobile-toggle-btn" id="toggle-hypotheticals" data-panel="left">☰ Choose premises</button>
+    <button class="mobile-toggle-btn" id="toggle-details" data-panel="right">ℹ Details</button>
+  </div>
+
+  <div id="status-bar" class="status-bar hidden">
+    <span class="status-chip">LEGISLATIVE STATUS</span>
+    <span id="status-text"></span>
+    <a id="status-link" href="#" target="_blank" rel="noopener">details</a>
+  </div>
+  <div id="warning-banner" class="warning-banner hidden">
+    <span class="warning-icon">⚠</span>
+    <span id="warning-text"></span>
+    <button id="warning-close" class="warning-close">&times;</button>
+  </div>
+
+  <main id="app-main">
+    <aside id="panel-left" class="panel panel-left">
+      <h2 class="panel-title">Choose what to assume</h2>
+      <p class="panel-hint">Every proof here is conditional: <em>if</em> these premises hold, <em>then</em> a conclusion follows. ACL2 checked the "then"; you decide the "if".</p>
+      <div class="step-label"><span class="step-chip">1</span> Start from a point of view</div>
+      <div id="preset-bar" class="preset-bar">
+        <button class="preset-btn" data-preset="compare" title="Turn on every premise from both sides and compare the two outcomes side by side">⚖ Both sides</button>
+        <button class="preset-btn preset-challenger" data-preset="challenger" title="Only the premises the challenger needs: documents are hard to get, the alternative process can deny">Challenger's case</button>
+        <button class="preset-btn preset-government" data-preset="government" title="Only the premises the government needs: important interest, evenhanded, adequate alternative">Government's defense</button>
+        <button class="preset-btn" data-preset="neutral" title="No legal or empirical premises at all — just the statute's text and structure. Neither outcome is supported.">Statute text only</button>
+        <button class="preset-btn" data-preset="citizendocs" title="Grant the challenger every legal premise but deny the empirical ones: citizens hold documents and a waivable fee is not a burden">Citizenship implies documents</button>
+        <button class="preset-btn" data-preset="highrisk" title="Keep only the three empirically contestable premises and drop everything doctrinal">Contested premises only</button>
+      </div>
+      <p id="preset-description" class="preset-description"></p>
+      <div class="step-label"><span class="step-chip">2</span> Outcome under these premises</div>
+      <div id="scenario-status" class="scenario-status">
+        <div class="scenario-row">
+          <span class="scenario-path-label path-challenger">Challenger: constitutional conflict</span>
+          <span class="scenario-badge" id="scenario-challenger">—</span>
+        </div>
+        <div class="scenario-row">
+          <span class="scenario-path-label path-government">Government: no conflict</span>
+          <span class="scenario-badge" id="scenario-government">—</span>
+        </div>
+        <div class="scenario-legend">
+          <span><b class="lg lg-supported">Supported</b> every premise this side's proof needs is on</span>
+          <span><b class="lg lg-contested">Contested</b> a premise is off but another path still holds</span>
+          <span><b class="lg lg-unsupported">Unsupported</b> a premise this side's proof needs is off</span>
+        </div>
+      </div>
+      <div class="step-label"><span class="step-chip">3</span> Doubt a premise? Untick it and watch the outcome change</div>
+      <div id="controls-container"></div>
+      <div class="filter-section">
+        <h3 class="filter-title">Display options</h3>
+        <label class="filter-toggle"><input type="checkbox" id="filter-axiom-free"> Highlight axiom-free theorems</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-high-risk"> Highlight high-risk assumptions</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-challenger" checked> Show challenger path</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-government" checked> Show government path</label>
+        <label class="filter-toggle"><input type="checkbox" id="filter-neutral" checked> Show neutral nodes</label>
+      </div>
+    </aside>
+
+    <section id="panel-center" class="panel panel-center">
+      <nav class="jump-bar" aria-label="Jump to">
+        <span class="jump-label">Jump to</span>
+        <a href="#voter-panel">Registration counter</a>
+        <a href="#poll-panel">Polling place</a>
+        <a href="#graph-container">Proof graph</a>
+        <a href="#" id="jump-conclusions">Conclusions</a>
+        <button id="export-memo-btn" class="export-btn" title="Write your current premises and outcomes as a Markdown brief">⬇ Export memo</button>
+      </nav>
+      <details id="voter-panel" class="voter-panel" open>
+        <summary class="voter-summary">
+          <span class="voter-title">Try it — a citizen at the registration counter</span>
+          <span class="voter-sub">Pick what they bring. The clerk answers from the statute's own list of acceptable documents; then the court's reading of the attestation process and your premises decide what that outcome means.</span>
+        </summary>
+        <div class="voter-body">
+          <div class="voter-docs">
+            <div class="voter-docs-title">What the applicant presents</div>
+            <details class="voter-whatsthis">
+              <summary>Where does this list come from?</summary>
+              <p>It is the statute's own list. The SAVE Act (new NVRA § 3(b)) defines "documentary proof of United States citizenship" as exactly these documents, in three groups: four that count <em>on their own</em>; an ordinary government photo ID that counts <em>only when paired</em>; and six supporting documents that count <em>only with that photo ID</em>.</p>
+              <p>We typed that definition once, as structured data (<code>data/parsed/federal_save_act_document_rules.json</code> — each entry carries the section number and the exact statutory wording). A small compiler turns that one file into three things that therefore cannot disagree: the ACL2 definitions the 219 theorems are proved against, a plain-English paraphrase, and the checkboxes you see here. A CI check also confirms every quoted clause appears verbatim in both the H.R. 22 text and the current S. 1383 vehicle.</p>
+              <p>So when the clerk says "accepted" or "denied", that is the statute's list applied mechanically — not an opinion.</p>
+            </details>
+            <div id="voter-doc-groups"></div>
+            <label class="voter-toggle"><input type="checkbox" id="voter-attest"> Signs attestation under penalty of perjury + submits other evidence (§ 8(j)(2)(A))</label>
+            <label class="voter-toggle"><input type="checkbox" id="voter-citizen" checked> The applicant is in fact a U.S. citizen</label>
+          </div>
+          <div class="voter-scene">
+            <svg id="voter-svg" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" aria-label="Cartoon of an applicant at a registration counter">
+              <defs>
+                <linearGradient id="vg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232737"/><stop offset="1" stop-color="#171a26"/></linearGradient>
+                <filter id="vg-shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".35"/></filter>
+                <!-- hand-drawn look: slight wobble of every edge -->
+                <filter id="vg-sketch" x="-5%" y="-5%" width="110%" height="110%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="noise"/>
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+              </defs>
+              <!-- wall + floor -->
+              <rect x="0" y="0" width="560" height="300" fill="#1f2333"/>
+              <rect x="0" y="236" width="560" height="64" fill="url(#vg-floor)"/>
+              <!-- sign on wall -->
+              <rect x="330" y="86" width="150" height="22" rx="4" fill="#2b3144" stroke="#3a4257"/>
+              <text x="405" y="101" font-size="10" font-weight="700" text-anchor="middle" fill="#8fc1ff" font-family="Inter, sans-serif" letter-spacing="1">VOTER REGISTRATION</text>
+              <!-- counter -->
+              <rect x="292" y="168" width="268" height="16" rx="3" fill="#4a5268"/>
+              <rect x="300" y="184" width="252" height="52" fill="#30364a"/>
+              <rect x="300" y="184" width="252" height="6" fill="#262b3b"/>
+              <!-- ===== clerk (behind counter) ===== -->
+              <g id="clerk" class="sketch">
+                <rect x="392" y="128" width="52" height="46" rx="12" fill="#4a90d9"/>
+                <rect x="412" y="118" width="12" height="14" rx="4" fill="#e8c39e"/>
+                <circle cx="418" cy="100" r="22" fill="#e8c39e"/>
+                <path d="M396 96 q22 -32 44 0 v-4 q-22 -20 -44 0 z" fill="#5a3e2b"/>
+                <circle cx="410" cy="100" r="2.2" fill="#2b2b2b"/><circle cx="426" cy="100" r="2.2" fill="#2b2b2b"/>
+                <path id="clerk-mouth" d="M410 110 q8 6 16 0" stroke="#8a4b3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <!-- clerk hand resting on counter -->
+                <ellipse cx="380" cy="168" rx="9" ry="5" fill="#e8c39e"/>
+              </g>
+              <!-- ===== applicant ===== -->
+              <g id="applicant" class="sketch">
+                <!-- body -->
+                <path d="M104 236 v-70 a30 30 0 0 1 30 -30 h16 a30 30 0 0 1 30 30 v70 z" fill="#8e44ad"/>
+                <!-- far arm (down) -->
+                <path d="M108 150 q-18 30 -10 70" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
+                <!-- neck + head -->
+                <rect x="136" y="108" width="14" height="16" rx="5" fill="#f1d2b6"/>
+                <circle cx="143" cy="90" r="26" fill="#f1d2b6"/>
+                <path d="M117 86 q26 -36 52 0 v-6 q-26 -24 -52 0 z" fill="#3d3d3d"/>
+                <circle cx="134" cy="90" r="2.4" fill="#2b2b2b"/><circle cx="152" cy="90" r="2.4" fill="#2b2b2b"/>
+                <path id="voter-mouth" d="M135 102 h16" stroke="#a05a4a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <text id="voter-mark" x="176" y="66" font-size="22" font-weight="800" fill="#F39C12" font-family="Inter, sans-serif" opacity="0">?</text>
+                <!-- near arm reaching to counter -->
+                <path d="M178 152 q50 -4 96 14" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
+                <ellipse cx="276" cy="166" rx="10" ry="7" fill="#f1d2b6"/>
+                <!-- cards held over the counter -->
+                <g id="voter-cards" transform="translate(262,150)" filter="url(#vg-shadow)"></g>
+              </g>
+              <!-- ===== speech bubble (clerk) ===== -->
+              <g id="voter-bubble">
+                <path id="voter-bubble-path" d="M246 10 h300 a8 8 0 0 1 8 8 v54 a8 8 0 0 1 -8 8 h-118 l-10 14 l-4 -14 h-168 a8 8 0 0 1 -8 -8 v-54 a8 8 0 0 1 8 -8 z" fill="#f5f7fa" filter="url(#vg-shadow)"/>
+                <foreignObject x="252" y="14" width="296" height="62">
+                  <div xmlns="http://www.w3.org/1999/xhtml" id="voter-bubble-text" class="voter-bubble-text">—</div>
+                </foreignObject>
+              </g>
+            </svg>
+            <div id="voter-outcome" class="voter-outcome"></div>
+          </div>
+        </div>
+      </details>
+      <details id="poll-panel" class="voter-panel" open>
+        <summary class="voter-summary">
+          <span class="voter-title">Try it — election day at the polling place (SAVE America Act § 3)</span>
+          <span class="voter-sub">Same citizen, now registered. Pick what they carry to the polls; the poll worker answers from the statute's list of valid photo identification, the 3-day cure rule decides whether the ballot counts, and your premises decide what an uncounted ballot means.</span>
+        </summary>
+        <div class="voter-body">
+          <div class="voter-docs">
+            <div class="voter-docs-title">What the voter carries</div>
+            <details class="voter-whatsthis">
+              <summary>Where does this list come from?</summary>
+              <p>New HAVA § 303A(c), added by § 3 of the SAVE America Act, defines "valid photo identification" as exactly five documents. Three of them must show a photo <em>and an expiration date</em>. It is a different list from the registration list above: a passport is on both; an ordinary photo ID paired with a birth certificate registers you but is not valid photo ID at the polls unless it carries an expiration date; a driver's licence gets you a ballot but does not prove citizenship at registration.</p>
+              <p>Without valid ID the voter may cast a provisional ballot, counted only if ID — or a religious-objection affidavit — is presented within 3 days (§ 303A(a)(1)(B)). These checkboxes, the ACL2 definitions and the English paraphrase are compiled from one file, and CI checks every quoted clause is verbatim in S. 1383.</p>
+            </details>
+            <div id="poll-doc-groups"></div>
+            <label class="voter-toggle"><input type="checkbox" id="poll-cure"> Returns within 3 days with valid ID or a religious-objection affidavit (§ 303A(a)(1)(B)(i))</label>
+            <label class="voter-toggle"><input type="checkbox" id="poll-citizen" checked> The voter is a registered U.S. citizen</label>
+          </div>
+          <div class="voter-scene">
+            <svg id="poll-svg" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" aria-label="Cartoon of a voter at a polling place">
+              <rect x="0" y="0" width="560" height="300" fill="#1f2333"/>
+              <rect x="0" y="236" width="560" height="64" fill="url(#vg-floor)"/>
+              <!-- voting booth -->
+              <rect x="470" y="96" width="70" height="140" fill="#2b3144" stroke="#3a4257"/>
+              <rect x="474" y="100" width="62" height="70" fill="#4a5268"/>
+              <rect x="470" y="170" width="70" height="4" fill="#8fc1ff" opacity=".5"/>
+              <text x="505" y="90" font-size="9" font-weight="700" text-anchor="middle" fill="#8fc1ff" font-family="Inter, sans-serif" letter-spacing="1">VOTE</text>
+              <!-- sign -->
+              <rect x="300" y="86" width="150" height="22" rx="4" fill="#2b3144" stroke="#3a4257"/>
+              <text x="375" y="101" font-size="10" font-weight="700" text-anchor="middle" fill="#8fc1ff" font-family="Inter, sans-serif" letter-spacing="1">POLLING PLACE</text>
+              <!-- check-in table -->
+              <rect x="292" y="168" width="170" height="16" rx="3" fill="#4a5268"/>
+              <rect x="300" y="184" width="154" height="52" fill="#30364a"/>
+              <!-- poll worker -->
+              <g id="poll-worker" class="sketch">
+                <rect x="362" y="128" width="52" height="46" rx="12" fill="#2ecc71"/>
+                <rect x="382" y="118" width="12" height="14" rx="4" fill="#d9b08c"/>
+                <circle cx="388" cy="100" r="22" fill="#d9b08c"/>
+                <path d="M366 98 q22 -30 44 0 v-6 q-22 -20 -44 0 z" fill="#2b2b2b"/>
+                <circle cx="380" cy="100" r="2.2" fill="#2b2b2b"/><circle cx="396" cy="100" r="2.2" fill="#2b2b2b"/>
+                <path id="poll-worker-mouth" d="M380 111 h16" stroke="#8a4b3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <ellipse cx="350" cy="168" rx="9" ry="5" fill="#d9b08c"/>
+              </g>
+              <!-- voter (same purple citizen) -->
+              <g id="poll-voter" class="sketch">
+                <path d="M104 236 v-70 a30 30 0 0 1 30 -30 h16 a30 30 0 0 1 30 30 v70 z" fill="#8e44ad"/>
+                <path d="M108 150 q-18 30 -10 70" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
+                <rect x="136" y="108" width="14" height="16" rx="5" fill="#f1d2b6"/>
+                <circle cx="143" cy="90" r="26" fill="#f1d2b6"/>
+                <path d="M117 86 q26 -36 52 0 v-6 q-26 -24 -52 0 z" fill="#3d3d3d"/>
+                <circle cx="134" cy="90" r="2.4" fill="#2b2b2b"/><circle cx="152" cy="90" r="2.4" fill="#2b2b2b"/>
+                <path id="poll-mouth" d="M135 103 h16" stroke="#a05a4a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <text id="poll-mark" x="176" y="66" font-size="22" font-weight="800" fill="#F39C12" font-family="Inter, sans-serif" opacity="0">?</text>
+                <path d="M178 152 q50 -4 96 14" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
+                <ellipse cx="276" cy="166" rx="10" ry="7" fill="#f1d2b6"/>
+                <g id="poll-cards" transform="translate(262,150)" filter="url(#vg-shadow)"></g>
+              </g>
+              <!-- ballot icon -->
+              <g id="poll-ballot" opacity="0" transform="translate(470,40)">
+                <rect width="56" height="38" rx="3" fill="#fdfdfd" stroke="#8a93a3"/>
+                <text id="poll-ballot-text" x="28" y="16" font-size="8" font-weight="800" text-anchor="middle" fill="#333" font-family="Inter, sans-serif">BALLOT</text>
+                <text id="poll-ballot-sub" x="28" y="30" font-size="8" font-weight="700" text-anchor="middle" fill="#2ecc71" font-family="Inter, sans-serif">COUNTED</text>
+              </g>
+              <!-- bubble -->
+              <g>
+                <path d="M218 8 h240 a8 8 0 0 1 8 8 v56 a8 8 0 0 1 -8 8 h-70 l-14 16 l-4 -16 h-152 a8 8 0 0 1 -8 -8 v-56 a8 8 0 0 1 8 -8 z" fill="#f5f7fa" filter="url(#vg-shadow)"/>
+                <foreignObject x="224" y="12" width="230" height="64">
+                  <div xmlns="http://www.w3.org/1999/xhtml" id="poll-bubble-text" class="voter-bubble-text">—</div>
+                </foreignObject>
+              </g>
+            </svg>
+            <div id="poll-outcome" class="voter-outcome"></div>
+          </div>
+        </div>
+      </details>
+      <div id="graph-container"></div>
+    </section>
+
+    <aside id="panel-right" class="panel panel-right">
+      <h2 class="panel-title">Details</h2>
+      <div id="detail-content">
+        <p class="detail-placeholder">Click any box in the graph to see where it comes from — the legal source, the ACL2 theorem or axiom name, the book it lives in, and what it depends on.<br><br>Boxes that go dim have lost the premises they rely on. The final conclusions are at the bottom of the graph.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="app-footer">
+    <p>This explorer visualizes certified ACL2 proof dependencies. It does not perform live ACL2 proof search and does not decide legal outcomes. Final conclusions are conditional on selected assumptions.</p>
+    <p class="footer-meta">
+      <span id="footer-version"></span> ·
+      <a href="https://github.com/f-pound/federal_save_act" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </footer>
+
+  <!-- Export memo modal -->
+  <div id="memo-modal" class="modal-overlay hidden">
+    <div class="modal-content memo-content">
+      <button id="memo-close" class="modal-close">&times;</button>
+      <h2 class="modal-title">Memo — current premises and conditional conclusions</h2>
+      <p class="modal-lead">Markdown. Every line is traceable to a certified ACL2 event or a traced axiom. Copy it into your document.</p>
+      <div class="memo-actions"><button id="memo-copy" class="preset-btn">Copy to clipboard</button> <span id="memo-copied" class="who"></span></div>
+      <textarea id="memo-text" class="memo-text" readonly></textarea>
+    </div>
+  </div>
+  <!-- About Modal -->
+  <div id="about-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close">&times;</button>
+      <h2 class="modal-title">What Is This?</h2>
+      <p class="modal-lead">This is a <strong>Computational Amicus Explorer</strong> — an interactive tool that visualizes
+      how a formal mathematical proof system (ACL2) analyzes the constitutional implications of the
+      <strong>Federal SAVE Act</strong> (H.R. 22).</p>
+
+      <div class="modal-section">
+        <h3>What does ACL2 do here?</h3>
+        <p>ACL2 is a theorem prover used in hardware and software verification. In this project, it models
+        the SAVE Act's voter registration process as a state machine and derives conditional conclusions
+        about constitutional conflicts — <em>given a set of disclosed assumptions</em>.</p>
+        <p><strong>ACL2 does not decide the case.</strong> It proves conditional consequences from disclosed
+        assumptions. Humans still decide empirical truth, doctrinal soundness, and which interpretation a
+        court should adopt.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>How to use it — three minutes</h3>
+        <div class="modal-steps">
+          <div class="modal-step"><span class="step-num">1</span><div><strong>Try the two scenes at the top.</strong> Hand the clerk documents at the registration counter, then carry ID to the polling place. The clerk answers from the statute's own lists (compiled from one source file so they cannot drift from the proofs), the court's reading of the attestation process decides the hinge, and your premises decide what a denied citizen means.</div></div>
+          <div class="modal-step"><span class="step-num">2</span><div><strong>Pick a point of view</strong> in the left panel — <em>Both sides</em>, <em>Challenger's case</em>, <em>Government's defense</em>, <em>Statute text only</em>, <em>Citizenship implies documents</em>, <em>Contested premises only</em>. Each is a complete, valid argument; the description tells you which factual claim it rests on.</div></div>
+          <div class="modal-step"><span class="step-num">3</span><div><strong>Untick any premise you doubt.</strong> Boxes that depended on it dim; conclusion badges flip between <span class="inline-badge badge-supported">Supported</span> and <span class="inline-badge badge-unsupported">Unsupported</span>. Nothing here is a grey area of logic — every grey area is a <em>choice</em>, and each box says whose: <strong>legislature</strong> (statutory text), <strong>court</strong> (doctrine / interpretation), <strong>fact-finder</strong> (empirical), or <strong>party stipulation</strong> (conceded by both sides).</div></div>
+          <div class="modal-step"><span class="step-num">4</span><div><strong>Click any box</strong> for its legal source, the ACL2 theorem or axiom name, the book it lives in, who decides it, and what it depends on. Theorems say "Nobody — proved by ACL2 from definitions."</div></div>
+          <div class="modal-step"><span class="step-num">5</span><div><strong>Export a memo.</strong> The <em>Export memo</em> button writes your current premises, their deciders and sources, and the resulting conditional conclusions as a Markdown brief you can paste into a document.</div></div>
+          <div class="modal-step"><span class="step-num">6</span><div><strong>For reviewers:</strong> the header numbers open drawers listing every certified book, theorem and traced axiom. Everything is machine-checked in CI on every commit — all books certified, every quoted clause verbatim in both bill texts, generated books identical to their source files.</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>What Do the Colors Mean?</h3>
+        <div class="modal-legend">
+          <div class="legend-item"><span class="legend-swatch" style="background:#4A90D9"></span> Legal sources &amp; definitions</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#708090"></span> Traceability artifacts</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#E8A838"></span> Empirical assumptions (contestable)</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#9B59B6"></span> Interpretive / doctrinal assumptions</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#3498DB"></span> Executable model components</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#2ECC71"></span> Axiom-free structural theorems</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#E74C3C"></span> Challenger path / conflict</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Key Badges</h3>
+        <p><span class="inline-badge badge-axiom-free">0 Axioms</span> — Pure structural theorem, proved without any assumptions.<br>
+        <span class="inline-badge badge-high-risk">High Risk</span> — Contestable empirical premise that influences the outcome.<br>
+        <span class="inline-badge badge-trusted">Trusted Base</span> — Accepted as true but not proved by ACL2.</p>
+      </div>
+
+      <div class="modal-footer-note">
+        <p>Final conclusions are conditional, not judicial determinations.
+        This tool visualizes certified proof dependencies — it does not perform live theorem proving
+        or decide legal outcomes.</p>
+      </div>
+
+      <button id="modal-got-it" class="modal-got-it">Got It</button>
+    </div>
+  </div>
+
+  <script src="app.js?v=6.6.0"></script>
+</body>
+</html>

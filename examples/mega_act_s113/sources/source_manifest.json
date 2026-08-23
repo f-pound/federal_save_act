@@ -1,0 +1,47 @@
+{
+  "version": "1",
+  "sources": [
+    {
+      "id": "hr7300-ih",
+      "title": "Make Elections Great Again Act (MEGA Act), introduced",
+      "citation": "H.R. 7300, 119th Cong. (Jan. 30, 2026)",
+      "url": "https://www.govinfo.gov/content/pkg/BILLS-119hr7300ih/html/BILLS-119hr7300ih.htm",
+      "type": "statute"
+    },
+    {
+      "id": "mathews-v-eldridge",
+      "title": "Mathews v. Eldridge",
+      "citation": "424 U.S. 319 (1976)",
+      "url": "https://supreme.justia.com/cases/federal/us/424/319/",
+      "type": "case"
+    },
+    {
+      "id": "husted-v-randolph",
+      "title": "Husted v. A. Philip Randolph Institute",
+      "citation": "584 U.S. 756 (2018)",
+      "url": "https://supreme.justia.com/cases/federal/us/584/16-980/",
+      "type": "case"
+    },
+    {
+      "id": "harper-v-virginia",
+      "title": "Harper v. Virginia Board of Elections",
+      "citation": "383 U.S. 663 (1966)",
+      "url": "https://supreme.justia.com/cases/federal/us/383/663/",
+      "type": "case"
+    },
+    {
+      "id": "crawford-v-marion",
+      "title": "Crawford v. Marion County Election Board",
+      "citation": "553 U.S. 181 (2008)",
+      "url": "https://supreme.justia.com/cases/federal/us/553/181/",
+      "type": "case"
+    },
+    {
+      "id": "const-amend5",
+      "title": "U.S. Constitution, Amendment V",
+      "citation": "U.S. Const. amend. V",
+      "url": "https://constitution.congress.gov/constitution/amendment-5/",
+      "type": "constitution"
+    }
+  ]
+}

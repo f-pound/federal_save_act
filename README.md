@@ -30,7 +30,7 @@ See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectura
 
 ## Reuse this for another statute
 
-The method is a pipeline, and the tools are statute-independent: `python tools/amicus_pipeline.py init ../my_statute --title …`, then `fetch → extract → compile → certify → audit → hinges`. See [docs/PIPELINE.md](docs/PIPELINE.md) and [docs/AUDITS.md](docs/AUDITS.md).
+The method is a pipeline, the tools are statute-independent, and an agent harness can drive it from a one-line issue description (`python tools/amicus_agent.py run --issue … --project …`, see [docs/AGENT.md](docs/AGENT.md)); a second statute, H.R. 7300 § 113, is worked end to end in `examples/mega_act_s113`. By hand: `python tools/amicus_pipeline.py init ../my_statute --title …`, then `fetch → extract → compile → certify → audit → hinges`. See [docs/PIPELINE.md](docs/PIPELINE.md) and [docs/AUDITS.md](docs/AUDITS.md).
 
 ## Quick Start
 

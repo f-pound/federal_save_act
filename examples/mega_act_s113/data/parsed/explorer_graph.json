@@ -1,0 +1,507 @@
+{
+  "layers": [
+    {
+      "id": "sources",
+      "label": "Sources & Traceability",
+      "order": 1
+    },
+    {
+      "id": "formalization",
+      "label": "Formalization & Assumptions",
+      "order": 2
+    },
+    {
+      "id": "executable",
+      "label": "Executable ACL2 Model",
+      "order": 3
+    },
+    {
+      "id": "derivations",
+      "label": "Derivations & Intermediate Results",
+      "order": 4
+    },
+    {
+      "id": "theorems",
+      "label": "Representative Theorems & Lemmas",
+      "order": 5
+    },
+    {
+      "id": "conclusions",
+      "label": "Final Conditional Conclusions",
+      "order": 6
+    }
+  ],
+  "nodes": [
+    {
+      "id": "ax-text-mega-act-is-law",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "text mega act is law",
+      "description": "This Act may be cited as the ``Make Elections Great Again Act''.",
+      "acl2_event": "text-mega-act-is-law",
+      "book": "scenario.lisp",
+      "source_ref": "hr7300-ih \u00a7 1",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-text-s113-noncitizen-determination-removes",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "text s113 noncitizen determination removes",
+      "description": "to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen",
+      "acl2_event": "text-s113-noncitizen-determination-removes",
+      "book": "text_rules.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(a)(1)(E)",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-text-s113-noncitizen-removal-at-any-time",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "text s113 noncitizen removal at any time",
+      "description": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)",
+      "acl2_event": "text-s113-noncitizen-removal-at-any-time",
+      "book": "text_rules.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(b)(1)",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-text-s113-residence-removal-requires-return-card",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "text s113 residence removal requires return card",
+      "description": "If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters",
+      "acl2_event": "text-s113-residence-removal-requires-return-card",
+      "book": "text_rules.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(c)(3)",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-person",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r person",
+      "description": "registrant-r is a person",
+      "acl2_event": "scenario-r-person",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-citizen",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r citizen",
+      "description": "registrant-r is a U.S. citizen",
+      "acl2_event": "scenario-r-citizen",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-eligible",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r eligible",
+      "description": "registrant-r is eligible",
+      "acl2_event": "scenario-r-eligible",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-registered",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r registered",
+      "description": "registrant-r is on the official list",
+      "acl2_event": "scenario-r-registered",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-save-indicates-noncitizen",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r save indicates noncitizen",
+      "description": "DHS SAVE data (erroneously) indicates registrant-r is a noncitizen",
+      "acl2_event": "scenario-r-save-indicates-noncitizen",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-no-notice",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r no notice",
+      "description": "no notice before removal",
+      "acl2_event": "scenario-r-no-notice",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-scenario-r-no-hearing",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "scenario r no hearing",
+      "description": "no opportunity to contest",
+      "acl2_event": "scenario-r-no-hearing",
+      "book": "scenario.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-semantic-a-save-data-is-determination",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "semantic a save data is determination",
+      "description": "information ... supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen \u2014 interpretation: the SAVE information is itself the determination",
+      "acl2_event": "semantic-a-save-data-is-determination",
+      "book": "hinge_data.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(a)(1)(E)",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-semantic-b-determination-requires-notice",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "semantic b determination requires notice",
+      "description": "registrants who are determined to be ineligible voters \u2014 interpretation: a determination requires notice to the registrant (cf. the return-card procedure of subsection (c))",
+      "acl2_event": "semantic-b-determination-requires-notice",
+      "book": "hinge_process.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(a)(1)",
+      "trusted_base": true,
+      "path": "neutral",
+      "high_risk": false
+    },
+    {
+      "id": "ax-challenger-fundamental-right-rule",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "challenger fundamental right rule",
+      "description": "the right of suffrage is a fundamental matter",
+      "acl2_event": "challenger-fundamental-right-rule",
+      "book": "challenger.lisp",
+      "source_ref": "harper-v-virginia 383 U.S. at 670",
+      "trusted_base": true,
+      "path": "challenger",
+      "high_risk": false
+    },
+    {
+      "id": "ax-challenger-removal-without-process-is-violation",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "challenger removal without process is violation",
+      "description": "the right to be heard before being condemned to suffer grievous loss",
+      "acl2_event": "challenger-removal-without-process-is-violation",
+      "book": "challenger.lisp",
+      "source_ref": "mathews-v-eldridge 424 U.S. at 333-335",
+      "trusted_base": true,
+      "path": "challenger",
+      "high_risk": false
+    },
+    {
+      "id": "ax-challenger-bridge-right-to-vote",
+      "type": "BRIDGE_RULE",
+      "layer": "formalization",
+      "label": "challenger bridge right to vote",
+      "description": "nor be deprived of life, liberty, or property, without due process of law",
+      "acl2_event": "challenger-bridge-right-to-vote",
+      "book": "challenger.lisp",
+      "source_ref": "const-amend5 Amend. V",
+      "trusted_base": true,
+      "path": "challenger",
+      "high_risk": false
+    },
+    {
+      "id": "ax-challenger-bridge-removal-invalid",
+      "type": "BRIDGE_RULE",
+      "layer": "formalization",
+      "label": "challenger bridge removal invalid",
+      "description": "due process balancing: a deprivation without adequate process is invalid as applied",
+      "acl2_event": "challenger-bridge-removal-invalid",
+      "book": "challenger.lisp",
+      "source_ref": "mathews-v-eldridge 424 U.S. at 335",
+      "trusted_base": true,
+      "path": "challenger",
+      "high_risk": false
+    },
+    {
+      "id": "ax-government-removal-defense-rule",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "government removal defense rule",
+      "description": "NVRA list-maintenance procedure upheld",
+      "acl2_event": "government-removal-defense-rule",
+      "book": "government.lisp",
+      "source_ref": "husted-v-randolph 584 U.S. at 767-770",
+      "trusted_base": true,
+      "path": "government",
+      "high_risk": false
+    },
+    {
+      "id": "ax-government-bridge-removal-validates",
+      "type": "BRIDGE_RULE",
+      "layer": "formalization",
+      "label": "government bridge removal validates",
+      "description": "a compliant list-maintenance procedure is valid",
+      "acl2_event": "government-bridge-removal-validates",
+      "book": "government.lisp",
+      "source_ref": "husted-v-randolph 584 U.S. at 767",
+      "trusted_base": true,
+      "path": "government",
+      "high_risk": false
+    },
+    {
+      "id": "ax-government-important-interest",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "government important interest",
+      "description": "interest in counting only the votes of eligible voters",
+      "acl2_event": "government-important-interest",
+      "book": "government.lisp",
+      "source_ref": "crawford-v-marion 553 U.S. at 194-196",
+      "trusted_base": true,
+      "path": "government",
+      "high_risk": false
+    },
+    {
+      "id": "ax-government-removal-procedure-evenhanded",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "government removal procedure evenhanded",
+      "description": "Each State shall take such affirmative steps as are necessary on an ongoing basis \u2014 interpretation: the procedure applies to every registrant alike",
+      "acl2_event": "government-removal-procedure-evenhanded",
+      "book": "government.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(a)(1)",
+      "trusted_base": true,
+      "path": "government",
+      "high_risk": false
+    },
+    {
+      "id": "ax-government-save-data-reliable",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "government save data reliable",
+      "description": "information with respect to citizenship status supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen of the United States ... [empirical: SAVE citizenship data is reliable enough to",
+      "acl2_event": "government-save-data-reliable",
+      "book": "government.lisp",
+      "source_ref": "hr7300-ih \u00a7 113(a)(1)(E)",
+      "trusted_base": true,
+      "path": "government",
+      "high_risk": true
+    },
+    {
+      "id": "ax-government-assume-right-to-vote-arguendo",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "government assume right to vote arguendo",
+      "description": "concession arguendo that registrant-r has a protected right to vote",
+      "acl2_event": "government-assume-right-to-vote-arguendo",
+      "book": "government.lisp",
+      "source_ref": "n/a n/a",
+      "trusted_base": true,
+      "path": "government",
+      "high_risk": false
+    },
+    {
+      "id": "concl-challenger",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Challenger conclusion",
+      "description": "Conditional conclusion under this party's premises.",
+      "book": "mega_act_s113_challenger_model.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "concl-government",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Government conclusion",
+      "description": "Conditional conclusion under this party's premises.",
+      "book": "mega_act_s113_government_model.lisp",
+      "path": "government"
+    }
+  ],
+  "edges": [
+    {
+      "from": "ax-challenger-fundamental-right-rule",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-challenger-removal-without-process-is-violation",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-challenger-bridge-right-to-vote",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-challenger-bridge-removal-invalid",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-government-removal-defense-rule",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-government-bridge-removal-validates",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-government-important-interest",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-government-removal-procedure-evenhanded",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-government-save-data-reliable",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-government-assume-right-to-vote-arguendo",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    }
+  ],
+  "hypotheticals": [
+    {
+      "id": "hyp-challenger-fundamental-right-rule",
+      "category": "Challenger premises (court)",
+      "label": "challenger fundamental right rule",
+      "default": true,
+      "controls": [
+        "ax-challenger-fundamental-right-rule"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-challenger-removal-without-process-is-violation",
+      "category": "Challenger premises (court)",
+      "label": "challenger removal without process is violation",
+      "default": true,
+      "controls": [
+        "ax-challenger-removal-without-process-is-violation"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-challenger-bridge-right-to-vote",
+      "category": "Challenger premises (court)",
+      "label": "challenger bridge right to vote",
+      "default": true,
+      "controls": [
+        "ax-challenger-bridge-right-to-vote"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-challenger-bridge-removal-invalid",
+      "category": "Challenger premises (court)",
+      "label": "challenger bridge removal invalid",
+      "default": true,
+      "controls": [
+        "ax-challenger-bridge-removal-invalid"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-government-removal-defense-rule",
+      "category": "Government premises (court)",
+      "label": "government removal defense rule",
+      "default": true,
+      "controls": [
+        "ax-government-removal-defense-rule"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-government-bridge-removal-validates",
+      "category": "Government premises (court)",
+      "label": "government bridge removal validates",
+      "default": true,
+      "controls": [
+        "ax-government-bridge-removal-validates"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-government-important-interest",
+      "category": "Government premises (court)",
+      "label": "government important interest",
+      "default": true,
+      "controls": [
+        "ax-government-important-interest"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-government-removal-procedure-evenhanded",
+      "category": "Government premises (court)",
+      "label": "government removal procedure evenhanded",
+      "default": true,
+      "controls": [
+        "ax-government-removal-procedure-evenhanded"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-government-save-data-reliable",
+      "category": "Government premises (fact-finder)",
+      "label": "government save data reliable",
+      "default": true,
+      "controls": [
+        "ax-government-save-data-reliable"
+      ],
+      "path": "government"
+    }
+  ]
+}

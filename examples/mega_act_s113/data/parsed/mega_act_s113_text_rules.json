@@ -1,0 +1,194 @@
+{
+  "book": "mega_act_s113_text_rules",
+  "title": "H.R. 7300 § 113 — text-derived constraints (defaxiom)",
+  "source_id": "hr7300-ih",
+  "includes": [
+    "mega_act_s113_core"
+  ],
+  "atoms": {
+    "personp": {
+      "args": [
+        "p"
+      ],
+      "ace": "{p} is a n:natural-person"
+    },
+    "registered-voterp": {
+      "args": [
+        "p"
+      ],
+      "ace": "{p} is on a n:official-list-of-eligible-voters"
+    },
+    "determined-ineligible-noncitizenp": {
+      "args": [
+        "p"
+      ],
+      "ace": "a n:state determines that {p} is a n:noncitizen-ineligible-voter"
+    },
+    "statute-removes-registrantp": {
+      "args": [
+        "law",
+        "p"
+      ],
+      "ace": "{law} removes {p} from the n:official-list-of-eligible-voters",
+      "constants": {
+        "mega-act": "the n:MEGA-Act"
+      }
+    },
+    "removable-at-any-timep": {
+      "args": [
+        "p"
+      ],
+      "ace": "a n:state may v:remove-at-any-time {p}"
+    },
+    "removed-for-residence-changep": {
+      "args": [
+        "p"
+      ],
+      "ace": "a n:state removes {p} for a n:change-in-residence"
+    },
+    "notice-card-sentp": {
+      "args": [
+        "p"
+      ],
+      "ace": "a n:registrar sends a n:return-card to {p}"
+    }
+  },
+  "rules": [
+    {
+      "name": "text-s113-noncitizen-determination-removes",
+      "kind": "axiom",
+      "args": [
+        "p"
+      ],
+      "label": "PROHIBITION",
+      "source": "§ 113(a)(1), (a)(1)(E)",
+      "text": "to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "registered-voterp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "determined-ineligible-noncitizenp",
+              "p"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "statute-removes-registrantp",
+          "'mega-act",
+          "p"
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-s113-noncitizen-removal",
+        "subject": "p",
+        "entities": {
+          "p": "n:registrant"
+        },
+        "classification": "PROHIBITION",
+        "source_ref": "H.R. 7300 § 113(a)(1)(E)"
+      }
+    },
+    {
+      "name": "text-s113-noncitizen-removal-at-any-time",
+      "kind": "axiom",
+      "args": [
+        "p"
+      ],
+      "label": "TEXT_FACT",
+      "source": "§ 113(b)(1)",
+      "text": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "determined-ineligible-noncitizenp",
+              "p"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "removable-at-any-timep",
+          "p"
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-s113-any-time",
+        "subject": "p",
+        "entities": {
+          "p": "n:registrant"
+        },
+        "classification": "TEXT_FACT",
+        "source_ref": "H.R. 7300 § 113(b)(1)"
+      }
+    },
+    {
+      "name": "text-s113-residence-removal-requires-return-card",
+      "kind": "axiom",
+      "args": [
+        "p"
+      ],
+      "label": "PROCEDURAL_FACT",
+      "source": "§ 113(c)(2)-(3)",
+      "text": "If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "registered-voterp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "removed-for-residence-changep",
+              "p"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "notice-card-sentp",
+          "p"
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-s113-residence-card",
+        "subject": "p",
+        "entities": {
+          "p": "n:registrant"
+        },
+        "classification": "PROCEDURAL_FACT",
+        "source_ref": "H.R. 7300 § 113(c)(3)"
+      }
+    }
+  ]
+}

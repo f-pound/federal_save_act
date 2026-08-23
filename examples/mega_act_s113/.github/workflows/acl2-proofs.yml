@@ -1,0 +1,141 @@
+name: ACL2 Proof Certification
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - 'model/**.lisp'
+      - '**.md'
+      - 'sources/**'
+      - 'tools/**'
+      - 'scripts/**'
+      - 'data/**'
+      - 'web/**'
+      - '.github/workflows/acl2-proofs.yml'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'model/**.lisp'
+      - '**.md'
+      - 'sources/**'
+      - 'tools/**'
+      - 'data/**'
+      - 'web/**'
+
+jobs:
+  validate-traces:
+    name: Validate Source Traces
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run trace validator
+        env:
+          PROJECT_ROOT: .
+        run: python tools/validate_trace.py
+
+      - name: Check modeled clauses are verbatim in both tracked bill texts
+        run: python tools/check_text_stability.py
+
+      - name: Check consistency-audit book and trusted-base report match generators
+        run: |
+          python tools/gen_consistency_audit.py --check
+          python tools/print_axioms.py --check
+          python tools/adversarial_audit.py --check
+
+      - name: Check generated ACL2 book matches clause IR
+        run: python tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json data/parsed/federal_save_act_voting_id_rules.json data/parsed/federal_save_act_voting_table.json data/parsed/federal_save_act_voting_text_rules.json --check --english --ace
+
+  validate-explorer:
+    name: Validate Explorer Data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build explorer data
+        run: python tools/build_explorer_data.py
+
+      - name: Validate explorer data
+        run: python tools/validate_explorer_data.py
+
+  repo-check:
+    name: Verify Review Documents
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required review documents
+        run: |
+          missing=0
+          for f in docs/CERTIFICATION.md docs/PROOF_TOUR.md docs/TOP_5_THEOREMS.md \
+                   reports/axiom_pressure_report.md \
+                   reports/proof_dependency_report.md \
+                   reports/v5_3_review_hardening_assessment.md \
+                   reports/v6_lemma_library_assessment.md \
+                   reports/certification_status.md; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING: $f"
+              missing=$((missing + 1))
+            else
+              echo "OK: $f"
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "ERROR: $missing required review document(s) missing."
+            exit 1
+          fi
+
+      - name: Check defaxiom trace coverage
+        run: |
+          # Count defaxioms in .lisp files
+          axiom_count=$(grep -rh '^(defaxiom ' model/*.lisp | wc -l)
+          # Count trace rows (minus header)
+          trace_count=$(($(wc -l < sources/clause_trace.csv) - 1))
+          echo "defaxioms in model/*.lisp: $axiom_count"
+          echo "trace rows in CSV: $trace_count"
+          if [ "$trace_count" -lt "$axiom_count" ]; then
+            echo "ERROR: Not all defaxioms have trace entries ($trace_count < $axiom_count)"
+            exit 1
+          fi
+          echo "OK: trace coverage adequate"
+
+  certify:
+    name: Certify ACL2 Books (certify-book)
+    runs-on: ubuntu-latest
+    needs: [validate-traces, validate-explorer, repo-check]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Pull ACL2 Docker image
+        run: docker pull atwalter/acl2:latest
+
+      - name: Certify all books (dependency order, generated book checked against IR)
+        env:
+          ACL2_CMD: docker run --rm -i -v ${{ github.workspace }}:/work -w /work atwalter/acl2:latest acl2
+        run: ./scripts/certify_books.sh
+
+      - name: Upload certification logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acl2-certify-logs
+          path: logs/certify/

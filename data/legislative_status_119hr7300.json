@@ -1,0 +1,15 @@
+{
+  "bill": "HR. 7300 (119th)",
+  "title": "Make Elections Great Again Act",
+  "latest_action": {
+    "date": "2026-02-02",
+    "text": "Referred to the Subcommittee on Border Security and Enforcement."
+  },
+  "recorded_votes": [],
+  "text_versions": [
+    "Introduced in House"
+  ],
+  "laws": [],
+  "draft": true,
+  "note": "Draft from BILLSTATUS XML \u2014 review before copying into data/legislative_status.json"
+}

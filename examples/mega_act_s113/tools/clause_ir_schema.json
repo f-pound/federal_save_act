@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Statutory clause IR (deterministic, compiles to ACL2)",
+  "type": "object",
+  "required": [
+    "book",
+    "categories",
+    "rules"
+  ],
+  "properties": {
+    "book": {
+      "type": "string",
+      "description": "ACL2 book name to emit (without .lisp)"
+    },
+    "title": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string",
+      "description": "id in sources/source_manifest.json"
+    },
+    "includes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "Enumerated definitions ('X means any of the following: ...'). Each becomes a defconst *name*.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "members"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "source": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "symbol"
+              ],
+              "properties": {
+                "symbol": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9-]*$"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "ace_noun": {
+                  "type": "string",
+                  "pattern": "^n:[A-Za-z0-9-]+$",
+                  "description": "ACE compound noun for 'the <subject> has a <ace_noun>'"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "description": "Each becomes a defun whose body is compiled from `body`.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "args",
+          "body"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*p$"
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "label": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "description": "Verbatim statutory quote; fragments separated by '...'; editorial notes in [brackets]. Checked by tools/check_text_stability.py."
+          },
+          "body": {
+            "$ref": "#/$defs/expr"
+          },
+          "ace": {
+            "type": "object",
+            "description": "If present, the rule body is rendered into Attempto Controlled English and upserted into data/parsed/<slug>_ace.json. Body must use only and/or/some-in/member.",
+            "required": [
+              "id",
+              "subject",
+              "possession_of",
+              "consequent_noun"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "possession_of": {
+                "type": "string",
+                "description": "the rule arg that denotes the subject's document bundle"
+              },
+              "consequent_noun": {
+                "type": "string",
+                "pattern": "^n:[A-Za-z0-9-]+$"
+              },
+              "classification": {
+                "type": "string"
+              },
+              "source_ref": {
+                "type": "string"
+              },
+              "replaces": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "ids of hand-written statements this generated one supersedes (removed on upsert)"
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Paraphrase (NOT checked for verbatim presence in the bill text; use `text` only for verbatim quotes)"
+          }
+        }
+      }
+    },
+    "process": {
+      "type": "object",
+      "description": "Labeled state machine table. Each edge may carry a verbatim `text` quote and an overriding `source_id` (checked by check_text_stability.py against that source's bill text).",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "states": {
+          "type": "array"
+        },
+        "events": {
+          "type": "array"
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "from",
+              "event",
+              "to"
+            ],
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "event": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "source_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "ace": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "expr": {
+      "description": "Boolean expression tree. Exactly one key per object.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "required": [
+            "and"
+          ],
+          "properties": {
+            "and": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expr"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "or"
+          ],
+          "properties": {
+            "or": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expr"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "not"
+          ],
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/expr"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "some-in"
+          ],
+          "properties": {
+            "some-in": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false,
+          "description": "(some-in-catsp <var> *<category>*)"
+        },
+        {
+          "type": "object",
+          "required": [
+            "all-in"
+          ],
+          "properties": {
+            "all-in": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "none-in"
+          ],
+          "properties": {
+            "none-in": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "member"
+          ],
+          "properties": {
+            "member": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false,
+          "description": "(member-equal <var> *<category>*)"
+        },
+        {
+          "type": "object",
+          "required": [
+            "pred"
+          ],
+          "properties": {
+            "pred": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "(<pred-name> <args>...) \u2014 an existing ACL2 predicate"
+        }
+      ]
+    }
+  }
+}

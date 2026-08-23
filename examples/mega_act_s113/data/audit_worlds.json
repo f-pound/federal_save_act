@@ -1,0 +1,134 @@
+{
+  "persons": "'(registrant-r)",
+  "registered": "'(registrant-r)",
+  "common": {
+    "personp": [
+      "(p)",
+      "(member-equal p '(registrant-r))"
+    ],
+    "citizen-of-usp": [
+      "(p)",
+      "(member-equal p '(registrant-r))"
+    ],
+    "eligible-voterp": [
+      "(p)",
+      "(member-equal p '(registrant-r))"
+    ],
+    "lawp": [
+      "(law)",
+      "(equal law 'mega-act)"
+    ],
+    "registered-voterp": [
+      "(p)",
+      "(member-equal p '(registrant-r))"
+    ],
+    "save-indicates-noncitizenp": [
+      "(p)",
+      "(equal p 'registrant-r)"
+    ],
+    "protected-right-to-votep": [
+      "(cs p)",
+      "(and (equal cs 'amend-v-due-process) (member-equal p '(registrant-r)))"
+    ],
+    "removed-for-residence-changep": [
+      "(p)",
+      "nil"
+    ],
+    "notice-card-sentp": [
+      "(p)",
+      "nil"
+    ],
+    "adequate-notice-before-removalp": [
+      "(p)",
+      "nil"
+    ],
+    "opportunity-to-be-heardp": [
+      "(p)",
+      "nil"
+    ]
+  },
+  "theories": {
+    "c": {
+      "party": "challenger",
+      "books": [
+        "mega_act_s113_core",
+        "mega_act_s113_text_rules",
+        "mega_act_s113_scenario",
+        "mega_act_s113_hinge_common",
+        "mega_act_s113_hinge_data",
+        "mega_act_s113_challenger_model"
+      ],
+      "world": {
+        "determined-ineligible-noncitizenp": [
+          "(p)",
+          "(equal p 'registrant-r)"
+        ],
+        "statute-removes-registrantp": [
+          "(law p)",
+          "(and (equal law 'mega-act) (equal p 'registrant-r))"
+        ],
+        "removable-at-any-timep": [
+          "(p)",
+          "(equal p 'registrant-r)"
+        ],
+        "valid-regulationp": [
+          "(law x)",
+          "nil"
+        ],
+        "challenger-right-to-vote-establishedp": [
+          "(p)",
+          "(member-equal p '(registrant-r))"
+        ],
+        "challenger-removal-due-process-violationp": [
+          "(law p)",
+          "(and (equal law 'mega-act) (equal p 'registrant-r))"
+        ]
+      }
+    },
+    "g": {
+      "party": "government",
+      "books": [
+        "mega_act_s113_core",
+        "mega_act_s113_text_rules",
+        "mega_act_s113_scenario",
+        "mega_act_s113_hinge_common",
+        "mega_act_s113_hinge_process",
+        "mega_act_s113_government_model"
+      ],
+      "world": {
+        "determined-ineligible-noncitizenp": [
+          "(p)",
+          "nil"
+        ],
+        "statute-removes-registrantp": [
+          "(law p)",
+          "nil"
+        ],
+        "removable-at-any-timep": [
+          "(p)",
+          "nil"
+        ],
+        "valid-regulationp": [
+          "(law x)",
+          "t"
+        ],
+        "important-government-interestp": [
+          "(law)",
+          "t"
+        ],
+        "removal-procedure-evenhandedp": [
+          "(law)",
+          "t"
+        ],
+        "save-data-reliablep": [
+          "(law)",
+          "t"
+        ],
+        "government-removal-defense-establishedp": [
+          "(law p)",
+          "(equal p 'registrant-r)"
+        ]
+      }
+    }
+  }
+}

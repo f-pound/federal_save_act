@@ -1,0 +1,161 @@
+{
+  "book": "mega_act_s113_removal_table",
+  "title": "H.R. 7300 § 113 — registrant record lifecycle",
+  "source_id": "hr7300-ih",
+  "includes": [],
+  "process": {
+    "name": "mrem",
+    "source": "H.R. 7300 § 113(a)-(c)",
+    "description": "A registrant's record under § 113. The noncitizen ground (a)(1)(E) is fed by DHS SAVE data and is exempt from the pre-election freeze (b)(1); residence removals (a)(1)(D) go through the return-card procedure (c)(2)-(3). Notice for SAVE-based removals is NOT in the text; overlay edges make that statable.",
+    "states": [
+      {
+        "symbol": "on-rolls",
+        "const": "mrem-on-rolls",
+        "text": "registrant on the official list"
+      },
+      {
+        "symbol": "save-flagged",
+        "const": "mrem-save-flagged",
+        "text": "SAVE data indicates noncitizen status (a)(1)(E)"
+      },
+      {
+        "symbol": "residence-flagged",
+        "const": "mrem-residence-flagged",
+        "text": "change-of-address information indicates a move (a)(2)"
+      },
+      {
+        "symbol": "card-sent",
+        "const": "mrem-card-sent",
+        "text": "return card sent by nonforwardable mail (c)(2)"
+      },
+      {
+        "symbol": "noticed",
+        "const": "mrem-noticed",
+        "text": "registrant notified of pending noncitizen removal (overlay — not in text)"
+      },
+      {
+        "symbol": "removed",
+        "const": "mrem-removed",
+        "text": "terminal: removed from the official list"
+      }
+    ],
+    "events": [
+      {
+        "symbol": "save-noncitizen-match",
+        "const": "mrem-evt-save",
+        "text": "DHS SAVE information demonstrates noncitizen status"
+      },
+      {
+        "symbol": "remove",
+        "const": "mrem-evt-remove",
+        "text": "State removes the registrant"
+      },
+      {
+        "symbol": "residence-change-indicated",
+        "const": "mrem-evt-residence",
+        "text": "postal change-of-address information"
+      },
+      {
+        "symbol": "send-return-card",
+        "const": "mrem-evt-card",
+        "text": "registrar sends the return card"
+      },
+      {
+        "symbol": "card-returned",
+        "const": "mrem-evt-returned",
+        "text": "registrant returns the card confirming residence"
+      },
+      {
+        "symbol": "card-not-returned",
+        "const": "mrem-evt-not-returned",
+        "text": "card not returned or notice undeliverable"
+      },
+      {
+        "symbol": "notify-registrant",
+        "const": "mrem-evt-notify",
+        "text": "notice of pending removal (overlay)"
+      },
+      {
+        "symbol": "provide-proof",
+        "const": "mrem-evt-proof",
+        "text": "registrant provides proof of citizenship (overlay)"
+      }
+    ],
+    "edges": [
+      {
+        "from": "on-rolls",
+        "event": "save-noncitizen-match",
+        "to": "save-flagged",
+        "label": "TEXT_FACT",
+        "source": "§ 113(a)(1)(E)",
+        "text": "information with respect to citizenship status supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen of the United States"
+      },
+      {
+        "from": "save-flagged",
+        "event": "remove",
+        "to": "removed",
+        "label": "TEXT_FACT",
+        "source": "§ 113(a)(1)(E), (b)(1)",
+        "text": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E)"
+      },
+      {
+        "from": "on-rolls",
+        "event": "residence-change-indicated",
+        "to": "residence-flagged",
+        "label": "TEXT_FACT",
+        "source": "§ 113(a)(2)",
+        "text": "change-of-address information supplied by the Postal Service through its licensees is used to identify registrants whose addresses may have changed"
+      },
+      {
+        "from": "residence-flagged",
+        "event": "send-return-card",
+        "to": "card-sent",
+        "label": "TEXT_FACT",
+        "source": "§ 113(c)(2)",
+        "text": "a postage prepaid and pre-addressed return card, sent by nonforwardable mail, on which the registrant may state his or her current address"
+      },
+      {
+        "from": "card-sent",
+        "event": "card-returned",
+        "to": "on-rolls",
+        "label": "TEXT_FACT",
+        "source": "§ 113(c)(2)(A)",
+        "text": "the registrant should return the card not later than the time provided for mail registration"
+      },
+      {
+        "from": "card-sent",
+        "event": "card-not-returned",
+        "to": "removed",
+        "label": "TEXT_FACT",
+        "source": "§ 113(c)(3)(A)",
+        "text": "the registrant shall be removed from the official list of eligible voters as described in paragraph (1)"
+      },
+      {
+        "from": "save-flagged",
+        "event": "notify-registrant",
+        "to": "noticed",
+        "label": "DUE_PROCESS_OVERLAY",
+        "source": "not in statute"
+      },
+      {
+        "from": "noticed",
+        "event": "provide-proof",
+        "to": "on-rolls",
+        "label": "DUE_PROCESS_OVERLAY",
+        "source": "not in statute"
+      },
+      {
+        "from": "noticed",
+        "event": "remove",
+        "to": "removed",
+        "label": "DUE_PROCESS_OVERLAY",
+        "source": "not in statute"
+      }
+    ],
+    "ace": {
+      "id": "ace-gen-s113-process",
+      "subject": "n:registrant-record",
+      "classification": "PROCESS_RULE"
+    }
+  }
+}
