@@ -123,6 +123,9 @@ def scan_lisp_events(model_dir):
 
     # Classify books by whether they use :defaxioms-okp
     clean_books = {
+        "lib/enum_list", "lib/lsm",
+        "federal_save_act_document_rules", "federal_save_act_process_table",
+        "federal_save_act_removal_table", "federal_save_act_removal_invariants",
         "federal_save_act_core", "federal_save_act_process",
         "federal_save_act_process_invariants",
         "federal_save_act_deep_process_invariants",
@@ -132,9 +135,17 @@ def scan_lisp_events(model_dir):
 
     # Layer assignments for human-readable grouping
     book_layers = {
+        "lib/enum_list": -1,
+        "lib/lsm": -1,
         "federal_save_act_core": 0,
+        "federal_save_act_document_rules": 0,
+        "federal_save_act_process_table": 0,
+        "federal_save_act_removal_table": 0,
+        "federal_save_act_text_rules": 1,
+        "federal_save_act_removal_invariants": 5,
         "federal_save_act_process": 0,
         "federal_save_act_facts": 1,
+        "federal_save_act_scenario": 1,
         "federal_save_act_hinge_common": 2,
         "federal_save_act_hinge_mandatory": 3,
         "federal_save_act_hinge_discretionary": 3,
@@ -151,8 +162,9 @@ def scan_lisp_events(model_dir):
         "federal_save_act_consistency_check": 6,
     }
 
-    for lisp_file in sorted(model_dir.glob("*.lisp")):
-        book_name = lisp_file.stem
+    lisp_files = sorted(model_dir.glob("lib/*.lisp")) + sorted(model_dir.glob("*.lisp"))
+    for lisp_file in lisp_files:
+        book_name = lisp_file.relative_to(model_dir).with_suffix("").as_posix()
         thms = []
         axms = []
         sks = []
@@ -181,7 +193,7 @@ def scan_lisp_events(model_dir):
 
         books.append({
             "name": book_name,
-            "file": lisp_file.name,
+            "file": lisp_file.relative_to(model_dir).as_posix(),
             "layer": layer,
             "clean": is_clean,
             "theorems": len(thms),

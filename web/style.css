@@ -1586,3 +1586,13 @@ body.reviewer-active .reviewer-detail {
 }
 
 
+
+/* v6.0 node types */
+.type-LIBRARY .node-type-bar { background: var(--color-theorem-clean); }
+.type-CLAUSE_IR .node-type-bar { background: var(--color-trace); }
+.type-DUE_PROCESS_OVERLAY .node-type-bar { background: var(--color-contested); }
+.type-FINAL_CONCLUSION.path-neutral-node,
+.type-FINAL_CONCLUSION:not(.path-challenger-node):not(.path-government-node) {
+  border-color: rgba(46, 204, 113, 0.4);
+  background: rgba(46, 204, 113, 0.06);
+}

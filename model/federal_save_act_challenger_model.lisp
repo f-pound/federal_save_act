@@ -1,9 +1,9 @@
 (in-package "ACL2")
 
-(include-book "federal_save_act_facts")
+(include-book "federal_save_act_scenario")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_challenger_model.lisp  —  v5.2 (hybrid architecture)
+;; federal_save_act_challenger_model.lisp  —  v6.0 (hybrid architecture)
 ;; Interpretive model favoring constitutional challenge.
 ;;
 ;; v3 architecture (retained in v5.2):
@@ -116,39 +116,9 @@
    (not (valid-regulationp 'federal-save-act x))))
 
 ;;; =========================================================================
-;;; Scenario constants — small stress-test scenario
-;;;
-;;; citizen-a: An elderly U.S. citizen born at home in a rural area.
-;;; registration-attempt-a: A mail voter registration application.
-;;;
-;;; These use defaxiom because they constrain existing defstub functions
-;;; (personp, citizen-of-usp, etc.). They are self-evidently consistent
-;;; stipulations about a specific scenario.
-;;; =========================================================================
-
-;; SCENARIO_FACT: citizen-a is a person
-(defaxiom challenger-scenario-person
-  (personp 'citizen-a))
-
-;; SCENARIO_FACT: citizen-a is a U.S. citizen
-(defaxiom challenger-scenario-citizen
-  (citizen-of-usp 'citizen-a))
-
-;; SCENARIO_FACT: citizen-a is eligible to vote
-(defaxiom challenger-scenario-eligible
-  (eligible-voterp 'citizen-a))
-
-;; SCENARIO_FACT: registration-attempt-a is an application
-(defaxiom challenger-scenario-application
-  (voter-registration-applicationp 'registration-attempt-a))
-
-;; SCENARIO_FACT: citizen-a attempts to register
-(defaxiom challenger-scenario-attempts-to-register
-  (attempts-to-registerp 'citizen-a 'registration-attempt-a))
-
-;; SCENARIO_FACT: citizen-a does NOT possess documentary proof
-(defaxiom challenger-scenario-no-documentary-proof
-  (not (has-documentary-proofp 'citizen-a)))
+;;; Scenario — the six conceded ground facts about citizen-a and
+;;; registration-attempt-a live in federal_save_act_scenario.lisp (v6.0).
+;;; Only challenger-specific stipulations remain here.
 
 ;; SCENARIO_FACT: citizen-a does NOT present documentary proof
 (defaxiom challenger-scenario-no-presentation
@@ -177,37 +147,33 @@
 ;;;
 ;;; These help ACL2's rewriter chain through the encapsulate constraints
 ;;; and bridge rules to reach the final conflict conclusion.
+;;; (scenario-qualified-voter and scenario-registration-transaction come
+;;; from the shared scenario book.)
 ;;; =========================================================================
 
-;; Step 1: citizen-a is a qualified federal voter
-(defthm challenger-lemma-qualified-voter
-  (qualified-federal-voterp 'citizen-a))
-
-;; Step 2: challenger establishes right to vote for citizen-a
+;; Step 1: challenger establishes right to vote for citizen-a
+;; (scenario-qualified-voter supplies the hypothesis)
 (defthm challenger-lemma-right-established
   (challenger-right-to-vote-establishedp 'citizen-a))
 
-;; Step 3: right to vote bridges to core predicate
+;; Step 2: right to vote bridges to core predicate
 (defthm challenger-lemma-protected-right
   (protected-right-to-votep 'amend-v-equal-protection 'citizen-a))
 
-;; Step 4: citizen-a's registration transaction
-(defthm challenger-lemma-registration-transaction
-  (registration-transactionp 'citizen-a 'registration-attempt-a))
-
-;; Step 5: challenger establishes undue burden
+;; Step 3: challenger establishes undue burden
 (defthm challenger-lemma-undue-burden
   (challenger-undue-burden-establishedp 'federal-save-act 'citizen-a))
 
-;; Step 6: challenger regulation invalid
+;; Step 4: challenger regulation invalid
 (defthm challenger-lemma-regulation-invalid
   (challenger-regulation-invalidp 'federal-save-act x))
 
-;; Step 7: bridges to core valid-regulationp
+;; Step 5: bridges to core valid-regulationp
 (defthm challenger-lemma-not-valid-regulation
   (not (valid-regulationp 'federal-save-act x)))
 
-;; Step 8: statute denies registration
+;; Step 6: statute denies registration
+;; (scenario-registration-transaction supplies the transaction facts)
 (defthm challenger-lemma-denial
   (statute-denies-registrationp 'federal-save-act
                                 'citizen-a

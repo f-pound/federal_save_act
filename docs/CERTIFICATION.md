@@ -16,17 +16,17 @@ Both levels provide the same logical guarantees — every `defthm` must be prove
 ACL2 refuses to `certify-book` any book that contains `defaxiom` unless the `:defaxioms-okp t` flag is passed. This is ACL2's built-in warning that `defaxiom` introduces unverified assumptions.
 
 In this project:
-- **6 books** are certified **clean** (no defaxiom in the book or its dependency chain)
-- **5 books** contain `defaxiom` directly — certified with `:defaxioms-okp t`
+- **12 books** are certified **clean** (no defaxiom in the book or its dependency chain) — including the two generic libraries in `model/lib/`, the three generated table books, and the § 8(k) removal book
+- **7 books** contain `defaxiom` directly (one of them, `text_rules`, generated from the clause IR) — certified with `:defaxioms-okp t`
 - **6 books** inherit defaxiom through `include-book` of `federal_save_act_facts.lisp` — certified with `:defaxioms-okp t`
 
-All 33 defaxioms are source-traced and classified — see `reports/axiom_pressure_report.md`.
+All 27 defaxioms are source-traced and classified — see `reports/axiom_pressure_report.md`.
 
 ## Requirements
 
 | Requirement | Tested Version |
 |---|---|
-| ACL2 | 8.5 (via `atwalter/acl2:latest` Docker image) |
+| ACL2 | 8.7 native (`brew install acl2`) or 8.5 via `atwalter/acl2:latest` Docker image |
 | Docker | 24.x+ (for Docker-based certification) |
 | Python | 3.10+ (for trace validation) |
 | Git | 2.x+ |
@@ -65,7 +65,7 @@ This is the **recommended** verification method. It produces `.cert` files.
 powershell -ExecutionPolicy Bypass -File .\scripts\certify_books.ps1
 ```
 
-**Expected output**: All 17 books report `CERT`, with logs saved to `logs/certify/`.
+**Expected output**: `OK: model/federal_save_act_document_rules.lisp matches IR`, then all 25 books report `CERT` (204 Q.E.D. total), with logs saved to `logs/certify/`. The runner is chosen from `$ACL2_CMD`, then a native `acl2`, then Docker.
 
 ### 4. Run batch admission (alternative)
 
@@ -139,8 +139,8 @@ Every `defaxiom` in the project is:
 3. **Inventoried** in `reports/axiom_pressure_report.md`
 4. **Machine-validated** by `tools/validate_trace.py`
 
-The 33 defaxioms break down as:
-- 14 scenario facts (low risk — stipulated ground facts about citizen-a)
+The 27 defaxioms break down as:
+- 6 scenario facts (low risk — stipulated ground facts about citizen-a, stated once in `federal_save_act_scenario.lisp` and shared by both party models)
 - 5 bridge rules (low risk — structural connectors)
 - 6 government interpretive assumptions (medium risk)
 - 3 empirical assumptions (high risk — contestable)

@@ -1,9 +1,10 @@
 (in-package "ACL2")
 
 (include-book "federal_save_act_core")
+(include-book "federal_save_act_text_rules")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_facts.lisp  —  v5.2 (hybrid architecture)
+;; federal_save_act_facts.lisp  —  v6.0 (hybrid architecture)
 ;; Text-derived statutory facts only.
 ;;
 ;; EVERY axiom in this file must be directly traceable to source text.
@@ -57,14 +58,10 @@
 ;;; with the application."
 ;;; =========================================================================
 
-(defaxiom text-save-act-documentary-proof-requirement
-  (implies
-   (and (personp p)
-        (voter-registration-applicationp x)
-        (attempts-to-registerp p x)
-        (not (presents-documentary-proofp p x))
-        (not (alternative-process-approvedp p x)))
-   (statute-denies-registrationp 'federal-save-act p x)))
+;; v6.0: this defaxiom is GENERATED into federal_save_act_text_rules.lisp
+;; from data/parsed/federal_save_act_text_rules.json, which also generates
+;; its Attempto Controlled English (ace-gen-documentary-proof-requirement).
+;; (see :pe text-save-act-documentary-proof-requirement)
 
 ;;; =========================================================================
 ;;; 3. EXCEPTION: Alternative attestation process

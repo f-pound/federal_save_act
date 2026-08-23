@@ -95,13 +95,15 @@
       return;
     }
 
+    // Initialize hypotheticals from their defaults BEFORE the first render,
+    // otherwise conclusion statuses are computed with every assumption off.
+    // (v6.0 fix: previously all cards showed "Unsupported" on load.)
+    data.hypotheticals.forEach(h => { if (h.default !== false) activeAssumptions.add(h.id); });
+
     renderAuditBar();
     renderControls();
     renderGraph();
     renderFooter();
-
-    // Initialize all hypotheticals as active
-    data.hypotheticals.forEach(h => activeAssumptions.add(h.id));
 
     // Bind filter checkboxes
     document.getElementById('filter-axiom-free').addEventListener('change', renderGraph);
@@ -153,7 +155,9 @@
     // Mobile panel toggles
     setupMobileToggles();
 
-    // Initial scenario status
+    // Initial dimming, node/conclusion statuses and scenario status
+    recalculateDimming();
+    updateNodeStates();
     updateScenarioStatus();
   }
 
@@ -451,7 +455,7 @@
 
         const cb = document.createElement('input');
         cb.type = 'checkbox';
-        cb.checked = true;
+        cb.checked = h.default !== false;
         cb.id = `hyp-${h.id}`;
         cb.addEventListener('change', () => onToggleHypothetical(h, cb.checked));
 
@@ -603,7 +607,9 @@
       // Check path-specific support: are any of the path-matching
       // hypotheticals for this conclusion turned off?
       const conclPath = concl.path; // 'challenger' or 'government'
-      const pathHyps = data.hypotheticals.filter(h => h.path === conclPath);
+      // Neutral (structural) conclusions are governed purely by dependency
+      // dimming; the path-hypothetical heuristic applies to party conclusions.
+      const pathHyps = (conclPath === 'neutral' || !conclPath) ? [] : data.hypotheticals.filter(h => h.path === conclPath);
       const anyHypOff = pathHyps.some(h => !activeAssumptions.has(h.id));
 
       // Also check if any direct supporter is dimmed
@@ -643,7 +649,9 @@
       }
 
       const conclPath = concl.path;
-      const pathHyps = data.hypotheticals.filter(h => h.path === conclPath);
+      // Neutral (structural) conclusions are governed purely by dependency
+      // dimming; the path-hypothetical heuristic applies to party conclusions.
+      const pathHyps = (conclPath === 'neutral' || !conclPath) ? [] : data.hypotheticals.filter(h => h.path === conclPath);
       const anyHypOff = pathHyps.some(h => !activeAssumptions.has(h.id));
       const directSupporters = data.edges.filter(e =>
         e.to === concl.id && e.relation !== 'contests' && e.relation !== 'negates'

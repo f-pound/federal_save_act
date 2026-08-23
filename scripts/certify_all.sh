@@ -6,6 +6,15 @@
 set -euo pipefail
 
 BOOKS=(
+  model/lib/enum_list.lisp
+  model/lib/lsm.lisp
+  model/federal_save_act_document_rules.lisp
+  model/federal_save_act_process_table.lisp
+  model/federal_save_act_removal_table.lisp
+  model/federal_save_act_removal_invariants.lisp
+  model/federal_save_act_text_rules.lisp
+  model/federal_save_act_process.lisp
+  model/federal_save_act_scenario.lisp
   model/federal_save_act_consistency_check.lisp
   model/federal_save_act_process_invariants.lisp
   model/federal_save_act_deep_process_invariants.lisp
@@ -31,9 +40,9 @@ mkdir -p "$LOG_DIR"
 
 # Determine ACL2 runner
 if command -v docker &>/dev/null && docker compose version &>/dev/null; then
-  run_acl2() { docker compose run --rm -w /work/model acl2 acl2 < "$1" 2>/dev/null; }
+  run_acl2() { docker compose run --rm -T -w "/work/$(dirname "$1")" acl2 acl2 < "$1" 2>/dev/null; }
 elif command -v acl2 &>/dev/null; then
-  run_acl2() { acl2 < "$1" 2>&1; }
+  run_acl2() { (cd "$(dirname "$1")" && acl2 < "$(basename "$1")") 2>&1; }
 else
   echo "ERROR: Neither docker nor acl2 found on PATH."
   echo "Install Docker Desktop or ACL2 to run the proof suite."
@@ -59,7 +68,7 @@ echo ""
 echo "--- ACL2 Books ---"
 for book in "${BOOKS[@]}"; do
   name="${book%.lisp}"
-  logfile="$LOG_DIR/${name}.log"
+  logfile="$LOG_DIR/$(basename "$name").log"
   output=$(run_acl2 "$book")
   echo "$output" > "$logfile"
   qed=$(echo "$output" | grep -c "Q\.E\.D\." || true)

@@ -4,6 +4,15 @@
 # Logs are saved to logs/ directory.
 
 $books = @(
+  "lib/enum_list",
+  "lib/lsm",
+  "federal_save_act_document_rules",
+  "federal_save_act_process_table",
+  "federal_save_act_removal_table",
+  "federal_save_act_removal_invariants",
+  "federal_save_act_text_rules",
+  "federal_save_act_process",
+  "federal_save_act_scenario",
   "federal_save_act_consistency_check",
   "federal_save_act_process_invariants",
   "federal_save_act_deep_process_invariants",

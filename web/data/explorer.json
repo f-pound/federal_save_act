@@ -2,19 +2,37 @@
   "meta": {
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "5.3.1",
-    "books_certified": 17,
-    "theorems": 126,
-    "axioms": 33,
+    "version": "6.0.0",
+    "books_certified": 25,
+    "theorems": 204,
+    "axioms": 27,
     "defun_sk_existentials": 4,
     "authoritative_sources": 21,
-    "trace_rows": 38,
-    "ace_statements": 13,
+    "trace_rows": 32,
+    "ace_statements": 8,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-04-26T19:27:03.682855+00:00"
+    "generated_at": "2026-08-23T02:51:05.997579+00:00"
   },
   "audit_details": {
     "books": [
+      {
+        "name": "lib/enum_list",
+        "file": "lib/enum_list.lisp",
+        "layer": -1,
+        "clean": true,
+        "theorems": 21,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "lib/lsm",
+        "file": "lib/lsm.lisp",
+        "layer": -1,
+        "clean": true,
+        "theorems": 22,
+        "axioms": 0,
+        "existentials": 0
+      },
       {
         "name": "federal_save_act_burden_proofs",
         "file": "federal_save_act_burden_proofs.lisp",
@@ -29,8 +47,8 @@
         "file": "federal_save_act_challenger_model.lisp",
         "layer": 4,
         "clean": false,
-        "theorems": 13,
-        "axioms": 12,
+        "theorems": 11,
+        "axioms": 6,
         "existentials": 0
       },
       {
@@ -38,7 +56,7 @@
         "file": "federal_save_act_consistency_check.lisp",
         "layer": 6,
         "clean": true,
-        "theorems": 16,
+        "theorems": 17,
         "axioms": 0,
         "existentials": 0
       },
@@ -47,7 +65,7 @@
         "file": "federal_save_act_core.lisp",
         "layer": 0,
         "clean": true,
-        "theorems": 0,
+        "theorems": 2,
         "axioms": 0,
         "existentials": 0
       },
@@ -56,7 +74,7 @@
         "file": "federal_save_act_deep_process_invariants.lisp",
         "layer": 5,
         "clean": true,
-        "theorems": 9,
+        "theorems": 11,
         "axioms": 0,
         "existentials": 0
       },
@@ -74,7 +92,16 @@
         "file": "federal_save_act_document_proofs.lisp",
         "layer": 5,
         "clean": true,
-        "theorems": 9,
+        "theorems": 17,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_document_rules",
+        "file": "federal_save_act_document_rules.lisp",
+        "layer": 0,
+        "clean": true,
+        "theorems": 0,
         "axioms": 0,
         "existentials": 0
       },
@@ -93,7 +120,7 @@
         "layer": 1,
         "clean": false,
         "theorems": 0,
-        "axioms": 3,
+        "axioms": 2,
         "existentials": 0
       },
       {
@@ -102,7 +129,7 @@
         "layer": 4,
         "clean": false,
         "theorems": 5,
-        "axioms": 16,
+        "axioms": 10,
         "existentials": 0
       },
       {
@@ -155,7 +182,7 @@
         "file": "federal_save_act_process.lisp",
         "layer": 0,
         "clean": true,
-        "theorems": 19,
+        "theorems": 28,
         "axioms": 0,
         "existentials": 0
       },
@@ -164,12 +191,104 @@
         "file": "federal_save_act_process_invariants.lisp",
         "layer": 5,
         "clean": true,
-        "theorems": 15,
+        "theorems": 16,
         "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_process_table",
+        "file": "federal_save_act_process_table.lisp",
+        "layer": 0,
+        "clean": true,
+        "theorems": 0,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_removal_invariants",
+        "file": "federal_save_act_removal_invariants.lisp",
+        "layer": 5,
+        "clean": true,
+        "theorems": 11,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_removal_table",
+        "file": "federal_save_act_removal_table.lisp",
+        "layer": 0,
+        "clean": true,
+        "theorems": 0,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_scenario",
+        "file": "federal_save_act_scenario.lisp",
+        "layer": 1,
+        "clean": false,
+        "theorems": 3,
+        "axioms": 6,
+        "existentials": 0
+      },
+      {
+        "name": "federal_save_act_text_rules",
+        "file": "federal_save_act_text_rules.lisp",
+        "layer": 1,
+        "clean": false,
+        "theorems": 0,
+        "axioms": 1,
         "existentials": 0
       }
     ],
     "theorems_by_book": {
+      "lib/enum_list": [
+        "booleanp-all-in-catsp",
+        "booleanp-none-in-catsp",
+        "some-in-catsp-iff-not-none-in-catsp",
+        "all-in-catsp-append",
+        "none-in-catsp-append",
+        "some-in-catsp-append",
+        "all-in-catsp-and-consp-implies-some-in-catsp",
+        "member-in-cats-implies-some-in-catsp",
+        "some-in-catsp-singleton",
+        "all-in-catsp-member",
+        "none-in-catsp-member",
+        "all-in-catsp-remove-equal",
+        "none-in-catsp-remove-equal",
+        "all-in-catsp-filter-in-cats",
+        "consp-filter-in-cats",
+        "filter-in-cats-of-all-in-catsp",
+        "filter-in-cats-of-none-in-catsp",
+        "member-equal-of-subsetp-equal",
+        "all-in-catsp-widen",
+        "some-in-catsp-widen",
+        "none-in-catsp-narrow"
+      ],
+      "lib/lsm": [
+        "lsm-lookup-from",
+        "lsm-lookup-event",
+        "lsm-lookup-member",
+        "lsm-lookup-when-no-outgoing",
+        "lsm-lookup-closed",
+        "lsm-lookup-entry-guard",
+        "lsm-lookup-event-guard",
+        "lsm-lookup-exit-guard",
+        "lsm-wf-tablep-implies-closedp",
+        "lsm-step-absorbing",
+        "lsm-step-closed",
+        "lsm-step-entry-guard",
+        "lsm-step-no-skip",
+        "lsm-step-event-guard",
+        "lsm-step-exit-guard",
+        "lsm-step-noop-when-not-outgoing-event",
+        "lsm-run-absorbing",
+        "lsm-run-append",
+        "lsm-run-closed",
+        "lsm-run-entry-guard",
+        "lsm-run-event-guard",
+        "lsm-run-exit-guard"
+      ],
       "federal_save_act_burden_proofs": [
         "lacks-documents-and-cannot-obtain-implies-material-burden",
         "material-burden-plus-no-alternative-implies-denial-risk",
@@ -184,10 +303,8 @@
         "challenger-fundamental-right-rule",
         "challenger-documentary-proof-is-undue-burden",
         "challenger-undue-burden-defeats-regulation",
-        "challenger-lemma-qualified-voter",
         "challenger-lemma-right-established",
         "challenger-lemma-protected-right",
-        "challenger-lemma-registration-transaction",
         "challenger-lemma-undue-burden",
         "challenger-lemma-regulation-invalid",
         "challenger-lemma-not-valid-regulation",
@@ -199,6 +316,7 @@
         "consistency-check-qualifying-document-passport",
         "consistency-check-qualifying-document-birth-cert",
         "consistency-check-qualifying-document-nat-cert",
+        "consistency-check-supporting-doc-alone-is-not-qualifying",
         "consistency-check-qualified-voter-decomposition",
         "consistency-check-registration-transaction-decomposition",
         "consistency-check-denial-trigger-decomposition",
@@ -213,14 +331,20 @@
         "neutrality-valid-regulation-prevents-conflict",
         "neutrality-conflict-reduces-to-regulation-validity"
       ],
+      "federal_save_act_core": [
+        "core-valid-regulation-defeats-conflict",
+        "core-conflict-pivots-on-valid-regulation"
+      ],
       "federal_save_act_deep_process_invariants": [
         "terminal-state-remains-terminal-under-run-trace",
         "no-single-step-submission-to-registration",
         "no-single-step-unsubmitted-to-registration",
+        "only-acceptance-states-register",
         "denied-requires-denial-state",
         "denied-implies-prior-denial-path",
         "unsubmitted-requires-submit-to-leave",
         "no-registration-without-submission",
+        "leaving-unsubmitted-requires-submission",
         "alt-denied-path-always-denies",
         "doc-rejected-direct-denial-path"
       ],
@@ -235,14 +359,22 @@
       ],
       "federal_save_act_document_proofs": [
         "empty-document-list-has-no-qualifying-document",
-        "singleton-qualifying-list-has-proof",
+        "singleton-standalone-list-has-proof",
+        "singleton-supporting-list-has-no-proof",
+        "singleton-anchor-list-has-no-proof",
+        "anchor-and-supporting-pair-has-proof",
+        "all-nonqualifying-implies-no-standalone",
+        "all-nonqualifying-implies-no-anchor",
+        "all-nonqualifying-implies-no-supporting",
         "all-nonqualifying-implies-not-qualifying-list",
         "all-nonqualifying-implies-no-documentary-proof",
         "filter-qualifying-is-qualifying-list",
-        "member-qualifying-implies-filter-nonempty",
-        "filter-qualifying-has-proof-when-member-qualifies",
+        "filter-in-cats-preserves-some-in-catsp-of-subset",
+        "filter-preserves-documentary-proof",
         "all-nonqualifying-append",
-        "qualifying-list-implies-not-all-nonqualifying"
+        "pairing-two-insufficient-bundles-can-create-proof",
+        "qualifying-list-implies-not-all-nonqualifying",
+        "widening-standalone-list-preserves-proof"
       ],
       "federal_save_act_existentials": [
         "exists-burdened-citizen-implies-lacking-proof",
@@ -289,16 +421,25 @@
         "conflict-condition-is-compositional"
       ],
       "federal_save_act_process": [
+        "doc-constants-are-recognized",
         "no-docs-implies-no-proof",
         "passport-is-qualifying",
-        "birth-cert-is-qualifying",
-        "nat-cert-is-qualifying",
-        "member-qualifying-document-implies-has-qualifying-document",
+        "birth-cert-alone-is-not-qualifying",
+        "nat-cert-alone-is-not-qualifying",
+        "photo-id-alone-is-not-qualifying",
+        "birth-cert-with-photo-id-is-qualifying",
+        "nat-cert-with-photo-id-is-qualifying",
         "append-preserves-qualifying-document-left",
         "append-preserves-qualifying-document-right",
         "qualifying-document-listp-append",
         "qualifying-document-listp-remove",
-        "nonempty-qualifying-list-has-docs",
+        "member-standalone-document-implies-proof",
+        "anchor-plus-supporting-implies-proof",
+        "recognized-without-standalone-or-anchor-is-not-proof",
+        "reg-acceptance-states-are-doc-accepted-and-alt-approved",
+        "reg-denial-states-are-rejected-alt-denied-submitted",
+        "reg-edges-well-formed",
+        "reg-terminal-states-have-no-exit",
         "process-inv-doc-path-registers",
         "process-inv-alt-path-registers",
         "process-inv-rejection-no-alt-denies",
@@ -324,7 +465,26 @@
         "approval-path-always-registers",
         "doc-acceptance-path-always-registers",
         "register-requires-acceptance-state",
-        "registered-implies-prior-acceptance-path"
+        "registered-implies-prior-acceptance-path",
+        "reg-run-trace-stays-in-state-space"
+      ],
+      "federal_save_act_removal_invariants": [
+        "rem-edges-well-formed",
+        "rem-removal-sources-are-info-noticed-contested",
+        "removal-implies-prior-information-receipt",
+        "statutory-path-removes",
+        "statutory-path-has-no-notice-or-hearing",
+        "text-edges-alone-reach-removal",
+        "rem-events-into-removed-is-remove-only",
+        "removal-requires-remove-event",
+        "removed-is-absorbing",
+        "reinstatement-requires-contest-path",
+        "rem-run-trace-stays-in-state-space"
+      ],
+      "federal_save_act_scenario": [
+        "scenario-qualified-voter",
+        "scenario-registration-transaction",
+        "scenario-lacks-all-qualifying-documents"
       ]
     },
     "axioms_by_book": {
@@ -340,42 +500,6 @@
           "label": "BRIDGE_RULE",
           "source_id": "anderson-v-celebrezze",
           "clause_text": "Anderson-Burdick balancing: severe burden + no sufficient justification = invalid regulation"
-        },
-        {
-          "name": "challenger-scenario-person",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a is a person"
-        },
-        {
-          "name": "challenger-scenario-citizen",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a is a U.S. citizen"
-        },
-        {
-          "name": "challenger-scenario-eligible",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a is eligible to vote"
-        },
-        {
-          "name": "challenger-scenario-application",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: registration-attempt-a is a voter registration application"
-        },
-        {
-          "name": "challenger-scenario-attempts-to-register",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a attempts to register via registration-attempt-a"
-        },
-        {
-          "name": "challenger-scenario-no-documentary-proof",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a does not possess documentary proof"
         },
         {
           "name": "challenger-scenario-no-presentation",
@@ -410,16 +534,10 @@
           "clause_text": "This Act may be cited as the \"Safeguard American Voter Eligibility Act\" or the \"SAVE Act\"."
         },
         {
-          "name": "text-save-act-documentary-proof-requirement",
-          "label": "PROHIBITION",
-          "source_id": "hr22-eh",
-          "clause_text": "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application"
-        },
-        {
           "name": "text-documentary-proof-from-qualifying-documents",
           "label": "BRIDGE_RULE",
           "source_id": "hr22-eh",
-          "clause_text": "the term 'documentary proof of United States citizenship' means any of the following: (1) REAL ID... (2) valid United States passport... (3) military ID... (4) govt photo ID showing US birth... (5) govt photo ID with supporting doc... (6) certified birth certificate... (7) naturalization certificate"
+          "clause_text": "the term 'documentary proof of United States citizenship' means any of the following: (1) REAL ID... (2) valid United States passport... (3) military ID... (4) govt photo ID showing US birth... (5) govt photo ID but only if presented together with one or more of: (A) certified birth certificate... (B) hospital birth record (C) adoption decree (D) consular report of birth abroad (E) naturalization certificate (F) American Indian Card (KIC)"
         }
       ],
       "federal_save_act_government_model": [
@@ -472,46 +590,10 @@
           "clause_text": "the inconvenience... does not qualify as a substantial burden on the right to vote"
         },
         {
-          "name": "government-scenario-person",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a is a person"
-        },
-        {
-          "name": "government-scenario-citizen",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a is a U.S. citizen"
-        },
-        {
-          "name": "government-scenario-eligible",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a is eligible to vote"
-        },
-        {
-          "name": "government-scenario-application",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: registration-attempt-a is a voter registration application"
-        },
-        {
-          "name": "government-scenario-attempts-to-register",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a attempts to register via registration-attempt-a"
-        },
-        {
           "name": "government-assume-right-to-vote-arguendo",
           "label": "INTERPRETATION_GOVERNMENT",
           "source_id": "n/a",
           "clause_text": "Government concedes arguendo that citizen-a has a protected right to vote"
-        },
-        {
-          "name": "government-scenario-no-documentary-proof",
-          "label": "SCENARIO_FACT",
-          "source_id": "n/a",
-          "clause_text": "Stipulated test scenario: citizen-a lacks documentary proof (conceded)"
         },
         {
           "name": "government-scenario-alternative-process-approved",
@@ -534,6 +616,52 @@
           "label": "INTERPRETIVE_ASSUMPTION",
           "source_id": "hr22-eh",
           "clause_text": "\"shall make a determination\" — interpretation: mandatory duty to approve when attestation + evidence satisfies EAC standards"
+        }
+      ],
+      "federal_save_act_scenario": [
+        {
+          "name": "scenario-person",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario (shared by both party models): citizen-a is a person"
+        },
+        {
+          "name": "scenario-citizen",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario (shared by both party models): citizen-a is a U.S. citizen"
+        },
+        {
+          "name": "scenario-eligible",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario (shared by both party models): citizen-a is eligible to vote"
+        },
+        {
+          "name": "scenario-application",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario (shared by both party models): registration-attempt-a is a voter registration application"
+        },
+        {
+          "name": "scenario-attempts-to-register",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario (shared by both party models): citizen-a attempts to register via registration-attempt-a"
+        },
+        {
+          "name": "scenario-no-documentary-proof",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated test scenario (shared by both party models): citizen-a does not possess documentary proof"
+        }
+      ],
+      "federal_save_act_text_rules": [
+        {
+          "name": "text-save-act-documentary-proof-requirement",
+          "label": "PROHIBITION",
+          "source_id": "hr22-eh",
+          "clause_text": "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application"
         }
       ]
     },
@@ -1136,6 +1264,130 @@
       "book": "federal_save_act_government_model.lisp",
       "path": "government",
       "why_it_matters": "Under government assumptions (burden not severe, adequate alternative, mandatory reading, valid regulation), ACL2 derives that no formal constitutional conflict exists."
+    },
+    {
+      "id": "ir-clause-ir",
+      "type": "CLAUSE_IR",
+      "layer": "formalization",
+      "label": "Clause IR → ACL2 + ACE + Markdown (4 generated books)",
+      "description": "Deterministic JSON IR for enumerated definitions (§ 3(b)), the documentary-proof prohibition, the registration process table, and the § 8(k) removal table. tools/clauses_to_acl2.py compiles each to an ACL2 book, an APE-validated ACE statement, and a Markdown paraphrase; CI fails if any of the three drifts.",
+      "acl2_event": "federal_save_act_document_rules / process_table / removal_table / text_rules",
+      "book": "tools/clauses_to_acl2.py",
+      "source_ref": "data/parsed/*.json",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-removal-upon-info",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "§ 8(k): remove \"at any time\" upon verified noncitizen information",
+      "description": "Text-derived process edges: on-rolls → info-received (receipt of documentation or verified information) → removed. These are the only two steps § 8(k) names.",
+      "acl2_event": "*rem-edges* (TEXT_FACT rows)",
+      "book": "federal_save_act_removal_table.lisp",
+      "source_ref": "SAVE Act § 2(f) / NVRA § 8(k)",
+      "trusted_base": true,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-notice-overlay",
+      "type": "DUE_PROCESS_OVERLAY",
+      "layer": "formalization",
+      "label": "Notice + opportunity to contest before removal (NOT in statute)",
+      "description": "Overlay edges (notify, contest, confirm-citizenship) added to the removal table so theorems can state what the statutory text does and does not require. Toggle off to see the statute alone.",
+      "acl2_event": "*rem-edges* (DUE_PROCESS_OVERLAY rows)",
+      "book": "federal_save_act_removal_table.lisp",
+      "source_ref": "not in statute — due-process overlay",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "model-lib-lsm",
+      "type": "LIBRARY",
+      "layer": "executable",
+      "label": "lib/lsm — generic labeled state machine (22 theorems, hint-free)",
+      "description": "Table-driven lsm-step / lsm-run with once-and-for-all invariants: entry guards, event guards, exit guards, no-skip, closed-set induction, absorbing states, trace composition. Every process invariant in the project is an instance of one of these.",
+      "acl2_event": "lsm-run-entry-guard, lsm-run-exit-guard, lsm-run-absorbing, ...",
+      "book": "lib/lsm.lisp",
+      "source_ref": "statute-independent",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "model-lib-enum",
+      "type": "LIBRARY",
+      "layer": "executable",
+      "label": "lib/enum_list — enumerated-category algebra (21 theorems, hint-free)",
+      "description": "all-in / some-in / none-in / filter over an arbitrary category list, with append, removal, duality and category-widening (statutory amendment) lemmas.",
+      "acl2_event": "some-in-catsp-append, none-in-catsp-narrow, some-in-catsp-widen, ...",
+      "book": "lib/enum_list.lisp",
+      "source_ref": "statute-independent",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "model-removal",
+      "type": "PROCESS_MODEL",
+      "layer": "executable",
+      "label": "§ 8(k) removal process (5 states, 7 edges: 2 statutory + 5 overlay)",
+      "description": "Second lsm client. The table is generated from the clause IR; every theorem in removal_invariants.lisp is a library instance discharged by evaluating the table.",
+      "acl2_event": "rem-run-trace, *rem-edges*",
+      "book": "federal_save_act_removal_invariants.lisp",
+      "source_ref": "SAVE Act § 2(f) / NVRA § 8(k)",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "deriv-reinstatement",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Reinstatement path exists only through the overlay (contested → on-rolls)",
+      "description": "lsm-sources-into (on-rolls) = (contested): the statutory text provides no route back onto the rolls after removal.",
+      "acl2_event": "reinstatement-requires-contest-path",
+      "book": "federal_save_act_removal_invariants.lisp",
+      "path": "neutral"
+    },
+    {
+      "id": "thm-lsm-entry-guard",
+      "type": "LEMMA",
+      "layer": "theorems",
+      "label": "lsm-run-entry-guard (library): reaching a target set from outside visits one of its source states",
+      "description": "Proved once by induction in lib/lsm. Instantiated for registration (acceptance states), denial (denial states) and removal.",
+      "acl2_event": "lsm-run-entry-guard",
+      "book": "lib/lsm.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-removal-no-notice",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Statutory path to removal contains no notice or hearing event",
+      "description": "(receive-noncitizen-information, remove) runs on-rolls → removed using the TEXT_FACT edges alone, and contains none of notify / contest / confirm-citizenship. Removed is absorbing.",
+      "acl2_event": "statutory-path-has-no-notice-or-hearing, text-edges-alone-reach-removal, removed-is-absorbing",
+      "book": "federal_save_act_removal_invariants.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-birth-cert-pair",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "§ 3(b)(5): a birth certificate alone is not proof; with a government photo ID it is",
+      "description": "v3–v5 modeled a birth certificate or naturalization certificate as standalone proof. The generated documentary-proof-bundlep follows the statute: supporting documents count only together with an anchor photo ID.",
+      "acl2_event": "birth-cert-alone-is-not-qualifying, birth-cert-with-photo-id-is-qualifying, anchor-and-supporting-pair-has-proof",
+      "book": "federal_save_act_process.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "concl-removal-without-notice",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "§ 8(k): removal is reachable without notice (structural, no legal assumptions)",
+      "description": "Neutral structural result: the statutory process admits removal from the rolls with no notice or hearing event. The model does NOT assert this is unconstitutional; it gives a due-process argument a precise mechanical target.",
+      "book": "federal_save_act_removal_invariants.lisp",
+      "path": "neutral"
     }
   ],
   "edges": [
@@ -1453,6 +1705,140 @@
       "relation": "supports",
       "path": "government",
       "description": "If valid-regulationp"
+    },
+    {
+      "from": "src-hr22",
+      "to": "ir-clause-ir",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "trace-ace",
+      "to": "ir-clause-ir",
+      "relation": "supports",
+      "path": "neutral",
+      "description": "ACE statements are now generated from the IR for 4 of 8 entries"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "model-documents",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "model-state-machine",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "model-removal",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "ax-statute-denies",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "ax-removal-upon-info",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-lib-lsm",
+      "to": "model-state-machine",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-lib-lsm",
+      "to": "model-removal",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-lib-enum",
+      "to": "model-documents",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-lib-lsm",
+      "to": "thm-lsm-entry-guard",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-lsm-entry-guard",
+      "to": "thm-registered-implies-acceptance",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-lsm-entry-guard",
+      "to": "thm-denied-implies-denial",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-lsm-entry-guard",
+      "to": "thm-removal-no-notice",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "src-nvra",
+      "to": "ax-removal-upon-info",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-removal-upon-info",
+      "to": "model-removal",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-notice-overlay",
+      "to": "deriv-reinstatement",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-removal",
+      "to": "thm-removal-no-notice",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-removal-no-notice",
+      "to": "concl-removal-without-notice",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-documents",
+      "to": "thm-birth-cert-pair",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-birth-cert-pair",
+      "to": "deriv-lacks-docs",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "deriv-reinstatement",
+      "to": "concl-removal-without-notice",
+      "relation": "contests",
+      "path": "neutral",
+      "description": "Only with the overlay: a contested removal can return to the rolls"
     }
   ],
   "hypotheticals": [
@@ -1547,6 +1933,16 @@
         "ax-severe-defeats"
       ],
       "path": "challenger"
+    },
+    {
+      "id": "hyp-notice-overlay",
+      "category": "Due-Process Overlay (not in statute)",
+      "label": "Assume notice and a chance to contest precede removal",
+      "default": false,
+      "controls": [
+        "ax-notice-overlay"
+      ],
+      "path": "neutral"
     }
   ]
 }

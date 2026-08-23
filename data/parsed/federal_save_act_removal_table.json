@@ -1,0 +1,36 @@
+{
+  "$schema": "../../tools/clause_ir_schema.json",
+  "book": "federal_save_act_removal_table",
+  "title": "NVRA § 8(k) (as added by SAVE Act § 2(f)) — removal of noncitizens from the rolls",
+  "source_id": "hr22-eh",
+  "includes": [],
+  "process": {
+    "name": "rem",
+    "source": "SAVE Act § 2(f) / NVRA § 8(k); NVRA § 8(a)(3)(D)",
+    "description": "Lifecycle of one registrant's record under § 8(k). The statute names exactly two steps: receipt of documentation or verified information that the registrant is not a citizen, and removal 'at any time' upon that receipt. Notice and an opportunity to contest are NOT in the text; they are included as DUE_PROCESS_OVERLAY edges so that theorems can state, mechanically, that the statutory path to removal does not pass through them.",
+    "states": [
+      {"symbol": "on-rolls",      "const": "rem-on-rolls",      "text": "registrant on the official list of eligible voters"},
+      {"symbol": "info-received", "const": "rem-info-received", "text": "State has received documentation or verified information that the registrant is not a citizen (§ 8(k))"},
+      {"symbol": "noticed",       "const": "rem-noticed",       "text": "registrant notified of pending removal (overlay — not in text)"},
+      {"symbol": "contested",     "const": "rem-contested",     "text": "registrant has contested the information (overlay — not in text)"},
+      {"symbol": "removed",       "const": "rem-removed",       "text": "terminal: removed from the official list (§ 8(k), § 8(a)(3)(D))"}
+    ],
+    "events": [
+      {"symbol": "receive-noncitizen-information", "const": "rem-evt-receive", "text": "State receives documentation or verified information of noncitizenship"},
+      {"symbol": "notify-registrant",              "const": "rem-evt-notify",  "text": "State notifies the registrant (overlay)"},
+      {"symbol": "contest",                        "const": "rem-evt-contest", "text": "registrant contests (overlay)"},
+      {"symbol": "confirm-citizenship",            "const": "rem-evt-confirm", "text": "registrant's citizenship confirmed (overlay)"},
+      {"symbol": "remove",                         "const": "rem-evt-remove",  "text": "State removes the registrant"}
+    ],
+    "edges": [
+      {"from": "on-rolls",      "event": "receive-noncitizen-information", "to": "info-received", "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(k) ('upon receipt of documentation or verified information')"},
+      {"from": "info-received", "event": "remove",                         "to": "removed",       "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(k) ('shall remove ... at any time')"},
+      {"from": "info-received", "event": "notify-registrant",              "to": "noticed",       "label": "DUE_PROCESS_OVERLAY", "source": "not in statute"},
+      {"from": "noticed",       "event": "remove",                         "to": "removed",       "label": "DUE_PROCESS_OVERLAY", "source": "not in statute"},
+      {"from": "noticed",       "event": "contest",                        "to": "contested",     "label": "DUE_PROCESS_OVERLAY", "source": "not in statute"},
+      {"from": "contested",     "event": "confirm-citizenship",            "to": "on-rolls",      "label": "DUE_PROCESS_OVERLAY", "source": "not in statute"},
+      {"from": "contested",     "event": "remove",                         "to": "removed",       "label": "DUE_PROCESS_OVERLAY", "source": "not in statute"}
+    ],
+    "ace": {"id": "ace-gen-removal-process", "subject": "n:registrant-record", "classification": "PROCESS_RULE", "replaces": ["ace-009"]}
+  }
+}

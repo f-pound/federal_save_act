@@ -4,7 +4,7 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 5.3.2** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 6.0.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## What This Project Proves
 
@@ -16,22 +16,25 @@ The government model formalizes a Crawford/Anderson-Burdick-style defense. ACL2 
 
 The certified ACL2 books do not prove that the SAVE Act is constitutional or unconstitutional. They prove that, under explicitly stated and source-traced assumptions, the government model entails no constitutional conflict, while the challenger model entails conflict. The clean books independently prove process and document-list invariants with no trusted legal assumptions. The defaxiom-chain books introduce statutory, empirical, doctrinal, and interpretive assumptions. The principal value of the project is that it makes the legal pivot — especially `valid-regulationp` and the mandatory/discretionary alternative-process hinge — explicit and mechanically checkable.
 
-## Architecture (v5.2 — Hybrid Encapsulate)
+## Architecture (v6.0 — Hybrid Encapsulate + Lemma Libraries)
 
 The project uses a **hybrid architecture**: `encapsulate` with local witness functions for interpretive predicates and doctrinal standards (where inconsistency risk is highest), `defaxiom` for text-derived facts and scenario ground truths (self-evidently consistent constraints on `defstub` functions), and executable `defun` chains for derived burden conclusions. This design puts consistency protection exactly where it matters most while making burden derivation mechanically auditable.
+
+v6.0 adds a **lemma-library layer** beneath the statute books. `model/lib/lsm.lisp` proves the invariants of an arbitrary table-driven legal process (entry/exit/event guards, absorbing states, closed-set induction) once; `model/lib/enum_list.lisp` proves the algebra of "any of the following" enumerated definitions once. The SAVE Act books supply a data table (`*reg-edges*`) and generated category tables (`*standalone-proof-types*` …) and obtain every invariant by instantiation — ACL2's only statute-specific work is evaluating the tables. The category tables themselves are **compiled** from a deterministic clause IR (`data/parsed/federal_save_act_document_rules.json`) by `tools/clauses_to_acl2.py`, which also emits the matching controlled-English paraphrase, so prose and math cannot drift. See [reports/v6_lemma_library_assessment.md](reports/v6_lemma_library_assessment.md).
 
 See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectural rationale (still applicable to the hybrid core).
 
 ## Quick Start
 
+```bash
+# Native ACL2 (e.g. `brew install acl2`) or Docker — certify all 25 books in order
+./scripts/certify_books.sh
+```
+
 ```powershell
-# Run consistency check (verifies core vocabulary)
+# Windows / Docker: individual books
 cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_act_consistency_check.lisp"
-
-# Run challenger proof (expects constitutional conflict)
 cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_act_challenger_model.lisp"
-
-# Run government proof (expects no conflict)
 cmd /c "docker compose run --rm -w /work/model acl2 acl2 < model/federal_save_act_government_model.lisp"
 ```
 
@@ -61,22 +64,31 @@ The explorer lets users toggle empirical, interpretive, and doctrinal assumption
 
 | Book | Theorems | Technique | Result |
 |---|---|---|---|
-| Consistency check | 16 | defun decomposition, neutrality | ✅ All Q.E.D. |
-| Process model | 19 | recursive list induction | ✅ All Q.E.D. |
-| Process invariants | 15 | trace induction, acceptance-path invariant | ✅ All Q.E.D. |
-| **Deep process invariants** | **9** | **trace induction, terminal stability, no-skip** | ✅ All Q.E.D. |
+| **lib/enum_list** | **21** | **generic enumerated-category algebra, hint-free** | ✅ All Q.E.D. |
+| **lib/lsm** | **22** | **generic labeled state machine invariants, hint-free** | ✅ All Q.E.D. |
+| Core | 2 | shared conflict pivot | ✅ All Q.E.D. |
+| Document rules (generated) | 0 | compiled from clause IR | ✅ certified |
+| Process table (generated) | 0 | compiled from clause IR (13 cited edges) | ✅ certified |
+| Removal table (generated) | 0 | compiled from clause IR (§ 8(k)) | ✅ certified |
+| Text rules (generated) | 0 | defaxiom compiled from clause IR | ✅ certified |
+| Process model | 28 | generated edge table + library instances, evaluation | ✅ All Q.E.D. |
+| **Removal invariants (§ 8(k))** | **11** | **lsm instances: statutory path has no notice/hearing** | ✅ All Q.E.D. |
+| Scenario (shared) | 3 | conceded ground facts | ✅ All Q.E.D. |
+| Consistency check | 17 | defun decomposition, neutrality | ✅ All Q.E.D. |
+| Process invariants | 16 | `:use` instances of lsm lemmas (0 inductions) | ✅ All Q.E.D. |
+| Deep process invariants | 11 | `:use` instances of lsm lemmas (0 inductions) | ✅ All Q.E.D. |
 | Hinge common | 4 | encapsulate | ✅ All Q.E.D. |
 | Hinge mandatory | 2 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
 | Hinge discretionary | 3 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
 | Existentials | 6 | defun-sk Skolemization | ✅ All Q.E.D. |
 | Independence | 3 | structural decomposition, pivot theorem | ✅ All Q.E.D. |
-| Challenger model | 13 | encapsulate + bridge rules | ✅ All Q.E.D. |
-| Government model | 5 | encapsulate + bridge rules | ✅ All Q.E.D. |
-| **Document proofs** | **9** | **list induction, structural denial** | ✅ All Q.E.D. |
-| **Burden proofs** | **8** | **derivation chain, contrapositives** | ✅ All Q.E.D. |
-| **Doctrine proofs** | **7** | **conditional doctrine, encapsulate** | ✅ All Q.E.D. |
-| **Model consistency** | **7** | **compositional decomposition** | ✅ All Q.E.D. |
-| **Total** | **126** | | **✅ All Q.E.D.** |
+| Challenger model | 11 | encapsulate + bridge rules + shared scenario | ✅ All Q.E.D. |
+| Government model | 5 | encapsulate + bridge rules + shared scenario | ✅ All Q.E.D. |
+| Document proofs | 17 | enum_list instances over generated § 3(b) tables | ✅ All Q.E.D. |
+| Burden proofs | 8 | derivation chain, contrapositives | ✅ All Q.E.D. |
+| Doctrine proofs | 7 | conditional doctrine, encapsulate | ✅ All Q.E.D. |
+| Model consistency | 7 | compositional decomposition | ✅ All Q.E.D. |
+| **Total** | **204** | | **✅ All Q.E.D.** |
 
 **Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`model/federal_save_act_hinge_mandatory.lisp` / `model/federal_save_act_hinge_discretionary.lisp`) for the formal analysis.
 
@@ -95,9 +107,18 @@ federal_save_act/
 ├── .github/workflows/acl2-proofs.yml        # CI: automated proof certification
 │
 ├── model/                                   # ACL2 formal model (.lisp files)
+│   ├── lib/
+│   │   ├── enum_list.lisp                   # GENERIC: enumerated-category list algebra
+│   │   └── lsm.lisp                         # GENERIC: labeled state machine invariants
 │   ├── federal_save_act_core.lisp           # Neutral vocabulary (defstub + defun)
-│   ├── federal_save_act_process.lisp        # Registration state machine + doc recognizers
+│   ├── federal_save_act_document_rules.lisp # GENERATED from clause IR (§ 3(b) tables)
+│   ├── federal_save_act_process_table.lisp  # GENERATED: registration states/events/edges
+│   ├── federal_save_act_removal_table.lisp  # GENERATED: § 8(k) removal states/events/edges
+│   ├── federal_save_act_text_rules.lisp     # GENERATED: text-derived defaxiom(s)
+│   ├── federal_save_act_process.lisp        # Registration machine over the generated table
+│   ├── federal_save_act_removal_invariants.lisp # § 8(k): statutory path lacks notice/hearing
 │   ├── federal_save_act_facts.lisp          # Text-derived facts (defaxiom)
+│   ├── federal_save_act_scenario.lisp       # Shared citizen-a scenario (defaxiom)
 │   ├── federal_save_act_hinge_common.lisp   # Shared hinge vocabulary (encapsulate)
 │   ├── federal_save_act_hinge_mandatory.lisp    # Semantic A: mandatory approval
 │   ├── federal_save_act_hinge_discretionary.lisp # Semantic B: discretionary denial
@@ -118,6 +139,7 @@ federal_save_act/
 │   └── constitutional_language.txt          # U.S. Constitution provisions
 │
 ├── docs/                                    # Detailed documentation
+│   ├── generated/                           # English paraphrases compiled from clause IR
 │   ├── Overview.md                          # Full analysis report
 │   ├── PROOF_TOUR.md                        # Proof architecture walkthrough
 │   ├── CERTIFICATION.md                     # Local certification guide
@@ -130,6 +152,8 @@ federal_save_act/
 │   └── clause_trace.csv                     # Axiom → source clause traceability
 ├── tools/
 │   ├── validate_trace.py                    # Machine-checkable source trace validator
+│   ├── clause_ir_schema.json                # JSON Schema for the statutory clause IR
+│   ├── clauses_to_acl2.py                   # IR → ACL2 book + controlled-English (deterministic)
 │   ├── validate_ace_statements.py           # ACE → APE webservice validator (strict mode)
 │   ├── build_explorer_data.py               # Build web/data/explorer.json from repo artifacts
 │   ├── serve_explorer.py                    # Serve explorer at http://127.0.0.1:8000
@@ -143,7 +167,11 @@ federal_save_act/
 │   └── parsed/
 │       ├── federal_save_act.json            # Parsed bill sections
 │       ├── federal_save_act_predicates.json # Normalized predicates
-│       ├── federal_save_act_ace.json        # ACE-normalized clauses (APE-validated)
+│       ├── federal_save_act_ace.json        # ACE clauses (APE-validated; § 3(b) entry generated from IR)
+│       ├── federal_save_act_document_rules.json # Clause IR: § 3(b) enumeration
+│       ├── federal_save_act_process_table.json  # Clause IR: registration process table
+│       ├── federal_save_act_removal_table.json  # Clause IR: § 8(k) removal process table
+│       ├── federal_save_act_text_rules.json     # Clause IR: text-derived axioms + ACE atoms
 │       └── explorer_graph.json              # Curated proof-dependency graph
 ├── web/                                     # Interactive explorer (static HTML/JS/CSS)
 │   ├── index.html                           # Main page
@@ -160,6 +188,7 @@ federal_save_act/
 │   ├── v5_formal_methods_assessment.md      # v5 metrics and assessment
 │   ├── v5_2_acl2_proof_assessment.md        # v5.2 metrics and assessment
 │   ├── v5_3_review_hardening_assessment.md  # v5.3 review hardening assessment
+│   ├── v6_lemma_library_assessment.md       # v6.0 lemma libraries, IR compiler, § 3(b)(5) fix
 │   └── federal_save_act_proof_obligations.md # Proof results
 ├── papers/
 │   └── federal_save_act_computational_amicus_brief.md  # SSRN/arXiv abstract
@@ -168,17 +197,19 @@ federal_save_act/
 
 ## Key Features
 
+- **Reusable lemma libraries**: `lib/lsm` and `lib/enum_list` prove process and enumeration invariants once; statute books instantiate them over data tables
+- **Prose → IR → math**: § 3(b) categories, the documentary-proof prohibition, and the registration / § 8(k) removal process tables are compiled from a deterministic JSON clause IR into ACL2, controlled English, and Markdown (CI checks all three match)
 - **Hybrid architecture**: `encapsulate` for interpretive predicates, `defaxiom` for text facts and scenarios
 - **Source provenance**: Every axiom traced to authoritative source text via `clause_trace.csv`
-- **Registration state machine**: 10-state, 9-event model of the full registration lifecycle
-- **Document recognizers**: Structured document types replacing bare booleans
+- **Registration state machine**: 10-state, 9-event, 13-edge data table; acceptance/denial sets derived from the table
+- **Document recognizers**: Faithful § 3(b) structure — standalone proof vs. photo-ID-anchored supporting documents
 - **Hinge theorems**: Two competing semantics for § 8(j)(2)(A) with formal proofs of which drives conflict
 - **Neutrality proofs**: Core vocabulary alone does not force either constitutional outcome
 - **Possession ≠ presentation**: `has-documentary-proofp` vs. `presents-documentary-proofp`
 - **Factored proof chain**: `qualified-federal-voterp` → `registration-transactionp` → `save-act-denial-triggerp`
 - **Generalized theorems**: `challenger-conflict-general` and `government-no-conflict-general`
 - **CI/CD**: GitHub Actions runs all proofs on every push
-- **ACE formal prose**: README and statutory clauses in APE-validated [Attempto Controlled English](https://attempto.ifi.uzh.ch/ape/) (13/13 PASS, strict mode)
+- **ACE formal prose**: README and statutory clauses in APE-validated [Attempto Controlled English](https://attempto.ifi.uzh.ch/ape/) (8/8 PASS, strict mode); the § 3(b) definition, the documentary-proof prohibition, and both process tables have their ACE **generated from the clause IR** alongside the ACL2 books
 
 ## Scenario
 
@@ -213,15 +244,17 @@ federal_save_act/
 
 ## What Remains Assumed
 
-- **33 defaxioms** across 5 books — see `reports/axiom_inventory.md` for the full classification
-- **14 scenario facts** stipulating citizen-a's properties (self-evidently consistent)
+The § 8(k) removal process is now modeled (`federal_save_act_removal_invariants.lisp`): the statutory path to removal provably contains no notice or hearing event. The model does **not** assert that this is unconstitutional.
+
+- **27 defaxioms** across 6 books — see `reports/axiom_inventory.md` for the full classification
+- **6 scenario facts** stipulating citizen-a's properties, shared by both party models (self-evidently consistent)
 - **3 empirical assumptions** about burden severity (contestable, source-linked)
 - **2 interpretive assumptions** encoding the hinge semantics (mutually exclusive)
 - **5 bridge rules** connecting encapsulate predicates to core defstubs
 
 ## What Is Source-Traced
 
-- 38 axiom-to-source mappings in `sources/clause_trace.csv`
+- 32 axiom-to-source mappings in `sources/clause_trace.csv`
 - 21 authoritative sources in `sources/source_manifest.json`
 - Every defaxiom has a classification, source_id, section reference, and quoted clause text
 - Machine-checkable via `tools/validate_trace.py` (runs in CI)
@@ -259,14 +292,15 @@ See `reports/v5_2_acl2_proof_assessment.md` for full metrics.
 ## For ACL2 Reviewers
 
 1. **Run the proof suite**: `./scripts/certify_all.sh` (Linux/macOS) or `.\scripts\certify_all.ps1` (Windows). See [CERTIFICATION.md](docs/CERTIFICATION.md).
-2. **Executable model**: `federal_save_act_process.lisp` — 7-state, 9-event registration state machine with recursive trace executor.
-3. **Induction proofs**: `federal_save_act_process_invariants.lisp` and `federal_save_act_deep_process_invariants.lisp` — 24 theorems, 5+ by induction over event traces.
-4. **Document-list induction**: `federal_save_act_document_proofs.lisp` — 9 theorems over recursive document lists.
-5. **Encapsulate usage**: Challenger model, government model, hinge common, and doctrine proofs (4 blocks total, each with local witnesses).
-6. **defun-sk usage**: `federal_save_act_existentials.lisp` — 4 Skolemized existential propositions.
-7. **Remaining defaxioms**: 33 total, classified in `reports/axiom_pressure_report.md`.
-8. **Top 5 theorems**: See [TOP_5_THEOREMS.md](docs/TOP_5_THEOREMS.md) — all five depend on zero axioms.
-9. **Proof tour**: See [PROOF_TOUR.md](docs/PROOF_TOUR.md) for the full architecture walkthrough.
+2. **Generic libraries**: `model/lib/lsm.lisp` (22 theorems) and `model/lib/enum_list.lisp` (21 theorems) — all inductions live here, all hint-free. Two clients: registration (`process*`) and § 8(k) removal (`removal_invariants`).
+3. **Executable model**: `federal_save_act_process.lisp` — 10-state, 9-event registration machine as a 13-row edge table (generated, one § citation per edge) interpreted by `lsm-run`.
+4. **Instantiated invariants**: `process_invariants.lisp`, `deep_process_invariants.lisp`, `document_proofs.lisp` — 44 theorems, each a `:use` instance of a library lemma plus table evaluation; zero statute-specific inductions.
+5. **Generated books**: `document_rules`, `process_table`, `removal_table`, `text_rules` are compiled from `data/parsed/*.json`; `python tools/clauses_to_acl2.py <irs...> --check --english --ace` verifies book, Markdown and ACE together.
+6. **Encapsulate usage**: Challenger model, government model, hinge common, and doctrine proofs (4 blocks total, each with local witnesses).
+7. **defun-sk usage**: `federal_save_act_existentials.lisp` — 4 Skolemized existential propositions.
+8. **Remaining defaxioms**: 27 total, classified in `reports/axiom_inventory.md`.
+9. **Top 5 theorems**: See [TOP_5_THEOREMS.md](docs/TOP_5_THEOREMS.md) — all five depend on zero axioms.
+10. **Proof tour**: See [PROOF_TOUR.md](docs/PROOF_TOUR.md) for the full architecture walkthrough.
 
 ## For Legal Reviewers
 
@@ -346,7 +380,7 @@ A n:certified-ACL2-book does not prove that a n:statute is constitutional. The n
 </details>
 
 <details>
-<summary>§ Architecture (line 21)</summary>
+<summary>§ Architecture — Hybrid (line 21)</summary>
 
 ```ace
 A n:project uses a n:hybrid-architecture. The n:hybrid-architecture uses a n:encapsulate-technique with a n:local-witness-function for a n:interpretive-predicate and a n:doctrinal-standard. The n:hybrid-architecture uses a n:defaxiom-technique for a n:text-derived-fact and a n:scenario-ground-truth. The n:hybrid-architecture uses a n:executable-defun-chain for a n:derived-burden-conclusion.
@@ -354,7 +388,15 @@ A n:project uses a n:hybrid-architecture. The n:hybrid-architecture uses a n:enc
 </details>
 
 <details>
-<summary>§ Interactive Explorer (line 53)</summary>
+<summary>§ Architecture — Lemma Libraries (line 23)</summary>
+
+```ace
+A n:lemma-library proves a n:process-invariant and a n:enumeration-invariant. A n:statute-book supplies a n:data-table to the n:lemma-library. The n:statute-book obtains every n:process-invariant by a n:instantiation. A n:compiler compiles a n:clause-IR into a n:ACL2-book. The n:compiler compiles the n:clause-IR into a n:English-paraphrase. The n:ACL2-book and the n:English-paraphrase can not diverge.
+```
+</details>
+
+<details>
+<summary>§ Interactive Explorer (line 56)</summary>
 
 ```ace
 A n:user uses a n:explorer and selects a n:empirical-assumption and a n:interpretive-assumption and a n:doctrinal-assumption. The n:explorer shows a n:supported-proof-path and a n:supported-conditional-conclusion to the n:user. The n:explorer visualizes a n:certified-ACL2-proof-dependency across 6 n:layers.
@@ -362,7 +404,7 @@ A n:user uses a n:explorer and selects a n:empirical-assumption and a n:interpre
 </details>
 
 <details>
-<summary>§ Results — Primary Interpretive Hinge (line 81)</summary>
+<summary>§ Results — Primary Interpretive Hinge (line 89)</summary>
 
 ```ace
 A n:primary-interpretive-hinge exists. If a n:alternative-attestation-process provides a n:constitutionally-adequate-safety-valve then a n:constitutional-outcome changes.
@@ -370,7 +412,7 @@ A n:primary-interpretive-hinge exists. If a n:alternative-attestation-process pr
 </details>
 
 <details>
-<summary>§ Proof Complexity (lines 233–235)</summary>
+<summary>§ Proof Complexity (lines 259–261)</summary>
 
 ```ace
 A n:project uses a n:recursive-function and a n:event-trace and a n:induction-over-lists and a n:encapsulate-technique and a n:defun-sk-Skolemization and a n:CI-certified-theorem and a n:machine-checkable-source-traceability. The n:project is not as complex as a n:major-ACL2-industrial-proof. A n:primary-value is in a n:legal-modeling-architecture.
@@ -378,7 +420,7 @@ A n:project uses a n:recursive-function and a n:event-trace and a n:induction-ov
 </details>
 
 <details>
-<summary>§ v5.2 — Future Project (line 249)</summary>
+<summary>§ v5.2 — Future Project (line 275)</summary>
 
 ```ace
 A n:project has a n:method. A n:future-project may generalize the n:method into a n:computational-amicus-brief. The n:project concerns a n:Federal-SAVE-Act.
@@ -386,7 +428,7 @@ A n:project has a n:method. A n:future-project may generalize the n:method into 
 </details>
 
 <details>
-<summary>§ For Legal Reviewers — Challenger vs Government (line 272)</summary>
+<summary>§ For Legal Reviewers — Challenger vs Government (line 299)</summary>
 
 ```ace
 A n:challenger argues that a n:documentary-proof-requirement is a n:undue-burden on a n:citizen that lacks a n:qualifying-document. A n:government argues that the n:documentary-proof-requirement is a n:valid-regulation with a n:adequate-alternative-process. A n:respective-assumption-set entails a n:conclusion.
@@ -394,7 +436,7 @@ A n:challenger argues that a n:documentary-proof-requirement is a n:undue-burden
 </details>
 
 <details>
-<summary>§ License — Disclaimer (line 280)</summary>
+<summary>§ License — Disclaimer (line 315)</summary>
 
 ```ace
 A n:project is a n:legal-analysis-tool. The n:project is not a n:legal-advice. A n:ACL2-model does not decide a n:constitutionality. The n:ACL2-model identifies a n:proof-obligation and a n:assumption.

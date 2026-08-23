@@ -14,15 +14,15 @@ These five theorems best demonstrate genuine ACL2 theorem-proving work in this p
 
 **Why it matters legally**: Registration is not an arbitrary terminal state in the model. It must be preceded by a legally meaningful acceptance path. This is a procedural due-process property: the model guarantees that registration decisions are substantively grounded.
 
-**Why it matters to ACL2 reviewers**: This is a genuine invariant over arbitrary traces, not a hardcoded example. The proof uses structural induction on the event list, with a helper theorem (`register-requires-acceptance-state`) establishing the base case via case analysis on `reg-next-state`.
+**Why it matters to ACL2 reviewers**: This is a genuine invariant over arbitrary traces, not a hardcoded example. Since v6 it is a one-line instance of the generic `lsm-run-entry-guard` (proved once by induction in `model/lib/lsm.lisp`): the target set is `(registered)`, and `*reg-acceptance-states*` is *by definition* `(lsm-sources-into '(registered) *reg-edges*)`, so ACL2 only has to evaluate the edge table.
 
-**Dependencies**: `reg-run-trace` (defun), `reg-next-state` (defun), `trace-passed-through-acceptance-statep` (defun), `register-requires-acceptance-state` (defthm — case analysis).
+**Dependencies**: `*reg-edges*` (defconst), `lsm-run` / `lsm-trace-visits` (lib defuns), `lsm-run-entry-guard` (lib defthm — induction, hint-free).
 
 **Trusted assumptions**: None. This theorem depends only on executable definitions.
 
 **Reviewer command**:
 ```bash
-docker compose run --rm acl2 acl2 < federal_save_act_process_invariants.lisp
+./scripts/certify_books.sh   # or: cd model && echo '(certify-book "federal_save_act_process_invariants" ?)' | acl2
 ```
 
 ---
@@ -37,7 +37,7 @@ docker compose run --rm acl2 acl2 < federal_save_act_process_invariants.lisp
 
 **Why it matters legally**: Denial cannot occur arbitrarily. The model requires that the applicant's documentary proof failed, the alternative process was denied, or the applicant was denied directly from submission. This is the denial-side dual of theorem #1.
 
-**Why it matters to ACL2 reviewers**: The proof uses induction on the event list with a helper function `trace-passed-through-denial-statep` that tracks denial-triggering states through the trace. The measure declaration `(acl2-count events)` ensures termination.
+**Why it matters to ACL2 reviewers**: The denial-side dual of #1, obtained from the same library lemma with target set `(denied)`; `*reg-denial-states*` is computed from the table as `(doc-rejected alt-denied submitted)` — the model did not have to be told which states can deny.
 
 **Dependencies**: `reg-run-trace` (defun), `reg-next-state` (defun), `trace-passed-through-denial-statep` (defun), `denied-requires-denial-state` (defthm — case analysis).
 

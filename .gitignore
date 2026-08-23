@@ -8,4 +8,4 @@
 *.log
 *.out
 data/raw/
-logs/
+logs/__pycache__/

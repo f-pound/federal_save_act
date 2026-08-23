@@ -5,9 +5,14 @@
 # Books with defaxiom (or inheriting it) use :defaxioms-okp t.
 #
 # Usage: ./scripts/certify_books.sh
+# Runner selection (first match wins):
+#   $ACL2_CMD            — explicit command that reads ACL2 forms on stdin
+#   docker compose       — uses docker-compose.yml (atwalter/acl2)
+#   acl2 on PATH         — native install (e.g. `brew install acl2`)
 # Logs are saved to logs/certify/
 set -euo pipefail
 
+cd "$(dirname "$0")/.."
 LOG_DIR="logs/certify"
 mkdir -p "$LOG_DIR"
 
@@ -15,44 +20,33 @@ TOTAL_CERT=0
 TOTAL_FAIL=0
 FAILED_BOOKS=()
 
-# Determine ACL2 runner
-if command -v docker &>/dev/null && docker compose version &>/dev/null; then
-  run_certify_clean() {
-    echo "(certify-book \"$1\" ?)" | \
-      docker compose run --rm acl2 acl2 2>/dev/null
-  }
-  run_certify_defaxiom() {
-    echo "(certify-book \"$1\" ? nil :defaxioms-okp t)" | \
-      docker compose run --rm acl2 acl2 2>/dev/null
-  }
+if [ -n "${ACL2_CMD:-}" ]; then
+  run_acl2() { $ACL2_CMD 2>&1; }
 elif command -v acl2 &>/dev/null; then
-  run_certify_clean() {
-    echo "(certify-book \"$1\" ?)" | acl2 2>&1
-  }
-  run_certify_defaxiom() {
-    echo "(certify-book \"$1\" ? nil :defaxioms-okp t)" | acl2 2>&1
-  }
+  run_acl2() { acl2 2>&1; }
+elif command -v docker &>/dev/null && docker compose version &>/dev/null; then
+  run_acl2() { docker compose run --rm -T acl2 acl2 2>/dev/null; }
 else
-  echo "ERROR: Neither docker nor acl2 found on PATH."
+  echo "ERROR: set ACL2_CMD, or install acl2, or install docker."
   exit 1
 fi
 
 certify_book() {
   local book="$1"
   local mode="$2"  # "clean" or "defaxiom"
-  local logfile="$LOG_DIR/${book}.log"
-
+  local logfile="$LOG_DIR/$(basename "$book").log"
+  rm -f "${book}.cert"
   if [ "$mode" = "clean" ]; then
-    output=$(run_certify_clean "$book")
+    echo "(certify-book \"$book\" ?)" | run_acl2 > "$logfile" || true
   else
-    output=$(run_certify_defaxiom "$book")
+    echo "(certify-book \"$book\" ? nil :defaxioms-okp t)" | run_acl2 > "$logfile" || true
   fi
-  echo "$output" > "$logfile"
-
+  local qed
+  qed=$(grep -c '^Q\.E\.D\.' "$logfile" || true)
   if [ -f "${book}.cert" ]; then
     local label=""
     [ "$mode" = "defaxiom" ] && label="  (defaxioms-okp)"
-    echo "  CERT  $book$label  -> $logfile"
+    echo "  CERT  $book  ($qed Q.E.D.)$label"
     TOTAL_CERT=$((TOTAL_CERT + 1))
   else
     echo "  FAIL  $book  -> $logfile"
@@ -65,21 +59,34 @@ echo "=== ACL2 certify-book: Federal SAVE Act ==="
 echo "Logs: $LOG_DIR/"
 echo ""
 
-# Layer 0: base clean
+# Generated book must match its IR before anything is certified.
+python3 tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json --check --english --ace
+
+# Layer L: generic lemma libraries (no statute content, no defaxiom)
+certify_book model/lib/enum_list clean
+certify_book model/lib/lsm clean
+
+# Layer 0: base clean books
 certify_book model/federal_save_act_core clean
+certify_book model/federal_save_act_document_rules clean
+certify_book model/federal_save_act_process_table clean
+certify_book model/federal_save_act_removal_table clean
 certify_book model/federal_save_act_process clean
+certify_book model/federal_save_act_removal_invariants clean
 
-# Layer 1: source-traced axiom book
+# Layer 1g: generated text-derived axioms
+certify_book model/federal_save_act_text_rules defaxiom
+
+# Layer 1: source-traced axiom book + shared scenario
 certify_book model/federal_save_act_facts defaxiom
+certify_book model/federal_save_act_scenario defaxiom
 
-# Layer 2: hinge dependency (includes facts)
+# Layer 2/3: hinge books
 certify_book model/federal_save_act_hinge_common defaxiom
-
-# Layer 3: hinge interpretation (includes hinge_common)
 certify_book model/federal_save_act_hinge_mandatory defaxiom
 certify_book model/federal_save_act_hinge_discretionary defaxiom
 
-# Layer 4: downstream (includes facts)
+# Layer 4: downstream (includes facts / scenario)
 certify_book model/federal_save_act_existentials defaxiom
 certify_book model/federal_save_act_burden_proofs defaxiom
 certify_book model/federal_save_act_doctrine_proofs defaxiom
@@ -88,7 +95,7 @@ certify_book model/federal_save_act_independence defaxiom
 certify_book model/federal_save_act_challenger_model defaxiom
 certify_book model/federal_save_act_government_model defaxiom
 
-# Layer 5: clean process chain (no defaxiom dependency)
+# Layer 5: clean process chain (library instances, no defaxiom)
 certify_book model/federal_save_act_process_invariants clean
 certify_book model/federal_save_act_deep_process_invariants clean
 certify_book model/federal_save_act_document_proofs clean
@@ -100,15 +107,8 @@ echo ""
 echo "=== Summary ==="
 echo "Certified: $TOTAL_CERT"
 echo "Failed:    $TOTAL_FAIL"
-
 if [ "$TOTAL_FAIL" -gt 0 ]; then
-  echo ""
-  echo "FAILED BOOKS:"
-  for b in "${FAILED_BOOKS[@]}"; do
-    echo "  - $b"
-  done
+  echo ""; echo "FAILED BOOKS:"; for b in "${FAILED_BOOKS[@]}"; do echo "  - $b"; done
   exit 1
-else
-  echo "All 17 books certified."
-  exit 0
 fi
+echo "All $TOTAL_CERT books certified."

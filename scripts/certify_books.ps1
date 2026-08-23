@@ -11,11 +11,19 @@
 
 $books = @(
   # Layer 0: base clean
+  @("model/lib/enum_list", "clean"),
+  @("model/lib/lsm", "clean"),
   @("model/federal_save_act_core", "clean"),
+  @("model/federal_save_act_document_rules", "clean"),
+  @("model/federal_save_act_process_table", "clean"),
+  @("model/federal_save_act_removal_table", "clean"),
+  @("model/federal_save_act_removal_invariants", "clean"),
+  @("model/federal_save_act_text_rules", "defaxiom"),
   @("model/federal_save_act_process", "clean"),
 
   # Layer 1: source-traced axiom book
   @("model/federal_save_act_facts", "defaxiom"),
+  @("model/federal_save_act_scenario", "defaxiom"),
 
   # Layer 2: hinge dependency (includes facts)
   @("model/federal_save_act_hinge_common", "defaxiom"),

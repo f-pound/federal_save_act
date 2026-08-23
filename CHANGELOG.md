@@ -6,6 +6,35 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.0.0] — 2026-08-22
+
+### Added
+- `model/lib/enum_list.lisp` — generic **enumerated-category list library** (21 theorems, no hints): `all-in-catsp` / `some-in-catsp` / `none-in-catsp` / `filter-in-cats` with append, removal, filtering, duality and category-widening (statutory-amendment) lemmas.
+- `model/lib/lsm.lisp` — generic **labeled state machine library** (22 theorems, no hints): table-driven `lsm-step` / `lsm-run`, derived sets (`lsm-sources-into`, `lsm-events-into`, `lsm-events-from`), and once-and-for-all invariants: entry guards, event guards, exit guards, no-skip, closed-set induction, absorbing states, trace composition.
+- `data/parsed/federal_save_act_document_rules.json` + `tools/clause_ir_schema.json` — a deterministic **statutory clause IR** for enumerated definitions and boolean rules.
+- `tools/clauses_to_acl2.py` — compiles the IR to `model/federal_save_act_document_rules.lisp` (generated, byte-reproducible, `--check` in CI) and to `docs/generated/*.md` controlled-English paraphrases from the same source.
+- `model/federal_save_act_scenario.lisp` — the six conceded citizen-a ground facts, stated once and shared by both party models.
+- `core-valid-regulation-defeats-conflict` / `core-conflict-pivots-on-valid-regulation` in core — the structural pivot, proved once where every model inherits it.
+- `reports/v6_lemma_library_assessment.md` — what changed and why.
+- **Generated ACE**: `tools/clauses_to_acl2.py --ace` renders a rule's boolean tree into Attempto Controlled English (DNF → one `If … then …` sentence per statutory member or member-pair) and upserts it into `data/parsed/federal_save_act_ace.json`; `--check` fails CI on drift. IR members carry `ace_noun`. The hand-written `ace-001`…`ace-005` are replaced by the generated `ace-gen-documentary-proof` (10 sentences, covering § 3(b)(1)-(4) and all six § 3(b)(5)(A)-(F) pairings; APE strict PASS). Note: `ace-005` had encoded the § 3(b)(5) pairing correctly since v5.3 while the ACL2 model did not — the two layers were never cross-checked before.
+
+### Changed
+- `federal_save_act_process.lisp` — the registration machine is now a **data table** `*reg-edges*` interpreted by `lib/lsm`; acceptance/denial state sets are *computed* from the table (`*reg-acceptance-states*`, `*reg-denial-states*`) rather than hand-listed.
+- `process_invariants` / `deep_process_invariants` — every theorem is an instance of a library lemma discharged by evaluating the table. **0** `:induct` / `:cases` / cond-enable hints remain (13 before). Theorem names and statements preserved; several strengthened (`only-acceptance-states-register`, `leaving-unsubmitted-requires-submission`, `reg-run-trace-stays-in-state-space`).
+- `document_proofs` — rewritten over the generated § 3(b) category tables as `enum_list` instances; adds `filter-preserves-documentary-proof`, `pairing-two-insufficient-bundles-can-create-proof`, and the amendment lemma `widening-standalone-list-preserves-proof`.
+- Challenger / government models include `federal_save_act_scenario` and drop their duplicated scenario axioms (14 → 6 SCENARIO_FACT events).
+- `scripts/certify_books.sh` now honours `$ACL2_CMD`, prefers a native `acl2`, checks the generated book against its IR first, and certifies the 21-book chain; CI calls the script instead of 17 inline steps.
+- `tools/build_explorer_data.py` scans `model/lib/` too.
+
+### Fixed
+- **Statutory faithfulness bug (§ 3(b)(5))**: v3–v5 treated a certified birth certificate or a naturalization certificate *alone* as documentary proof. The statute counts them only when *presented together with* a government-issued photo ID. Fixed in `has-any-qualifying-documentp` (core), in the generated `documentary-proof-bundlep`, and in the consistency-check theorems; the false v5 theorems `birth-cert-is-qualifying` / `nat-cert-is-qualifying` / `nonempty-qualifying-list-has-docs` are replaced by their correct counterparts (`birth-cert-alone-is-not-qualifying`, `birth-cert-with-photo-id-is-qualifying`, `recognized-without-standalone-or-anchor-is-not-proof`).
+
+### Census
+- Theorems: 126 → **193** (43 in reusable libraries)
+- Axioms: 33 → **27**
+- Books: 17 → **21** (9 clean, 12 defaxioms-okp)
+- ACE statements: 13 → **9** (1 generated from IR, 8 hand-written)
+
 ## [5.3.2] — 2026-04-26
 
 ### Added

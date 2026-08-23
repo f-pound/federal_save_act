@@ -1,0 +1,181 @@
+{
+  "$schema": "../../tools/clause_ir_schema.json",
+  "book": "federal_save_act_document_rules",
+  "title": "SAVE Act § 2(a) / NVRA § 3(b) — documentary proof of United States citizenship",
+  "source_id": "hr22-eh",
+  "includes": [
+    "lib/enum_list"
+  ],
+  "categories": [
+    {
+      "name": "standalone-proof-types",
+      "source": "§ 2(a) / NVRA § 3(b)(1)-(4)",
+      "description": "Documents that are documentary proof of citizenship on their own.",
+      "members": [
+        {
+          "symbol": "real-id-indicating-citizenship",
+          "source": "§ 3(b)(1)",
+          "text": "A form of identification issued consistent with the requirements of the REAL ID Act of 2005 that indicates the applicant is a citizen of the United States.",
+          "ace_noun": "n:real-id-form-of-identification-indicating-citizenship"
+        },
+        {
+          "symbol": "valid-us-passport",
+          "source": "§ 3(b)(2)",
+          "text": "A valid United States passport.",
+          "ace_noun": "n:valid-United-States-passport"
+        },
+        {
+          "symbol": "military-id-with-us-birth",
+          "source": "§ 3(b)(3)",
+          "text": "The applicant's official United States military identification card, together with a United States military record of service showing that the applicant's place of birth was in the United States.",
+          "ace_noun": "n:us-military-identification-card-with-record-of-us-birth"
+        },
+        {
+          "symbol": "govt-photo-id-showing-us-birth",
+          "source": "§ 3(b)(4)",
+          "text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government showing that the applicant's place of birth was in the United States.",
+          "ace_noun": "n:government-issued-photo-identification-card-showing-us-birth"
+        }
+      ]
+    },
+    {
+      "name": "anchor-photo-id-types",
+      "source": "§ 2(a) / NVRA § 3(b)(5)",
+      "description": "A government-issued photo ID that is NOT itself proof, but anchors a supporting document.",
+      "members": [
+        {
+          "symbol": "govt-photo-id",
+          "source": "§ 3(b)(5)",
+          "text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government other than an identification described in paragraphs (1) through (4).",
+          "ace_noun": "n:government-issued-photo-identification-card"
+        }
+      ]
+    },
+    {
+      "name": "supporting-document-types",
+      "source": "§ 2(a) / NVRA § 3(b)(5)(A)-(F)",
+      "description": "Documents that count only when presented together with an anchor photo ID.",
+      "members": [
+        {
+          "symbol": "certified-birth-certificate",
+          "source": "§ 3(b)(5)(A)",
+          "text": "A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government (meeting clauses (i)-(vii)).",
+          "ace_noun": "n:certified-birth-certificate"
+        },
+        {
+          "symbol": "hospital-birth-record",
+          "source": "§ 3(b)(5)(B)",
+          "text": "An extract from a United States hospital Record of Birth created at the time of the applicant's birth which indicates that the applicant's place of birth was in the United States.",
+          "ace_noun": "n:hospital-birth-record"
+        },
+        {
+          "symbol": "final-adoption-decree",
+          "source": "§ 3(b)(5)(C)",
+          "text": "A final adoption decree showing the applicant's name and that the applicant's place of birth was in the United States.",
+          "ace_noun": "n:final-adoption-decree"
+        },
+        {
+          "symbol": "consular-report-of-birth-abroad",
+          "source": "§ 3(b)(5)(D)",
+          "text": "A Consular Report of Birth Abroad of a citizen of the United States or a certification of the applicant's Report of Birth of a United States citizen issued by the Secretary of State.",
+          "ace_noun": "n:consular-report-of-birth-abroad"
+        },
+        {
+          "symbol": "naturalization-certificate",
+          "source": "§ 3(b)(5)(E)",
+          "text": "A Naturalization Certificate or Certificate of Citizenship issued by the Secretary of Homeland Security or any other document or method of proof of United States citizenship issued by the Federal government pursuant to the Immigration and Nationality Act.",
+          "ace_noun": "n:naturalization-certificate"
+        },
+        {
+          "symbol": "american-indian-card-kic",
+          "source": "§ 3(b)(5)(F)",
+          "text": "An American Indian Card issued by the Department of Homeland Security with the classification 'KIC'.",
+          "ace_noun": "n:american-indian-card"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "name": "documentary-proof-bundlep",
+      "args": [
+        "docs"
+      ],
+      "label": "DEFINED_TERM",
+      "source": "§ 2(a) / NVRA § 3(b)",
+      "text": "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following: (1)-(4) [standalone]; (5) a valid government-issued photo identification card ... but only if presented together with one or more of the following: (A)-(F) [supporting]",
+      "body": {
+        "or": [
+          {
+            "some-in": [
+              "docs",
+              "standalone-proof-types"
+            ]
+          },
+          {
+            "and": [
+              {
+                "some-in": [
+                  "docs",
+                  "anchor-photo-id-types"
+                ]
+              },
+              {
+                "some-in": [
+                  "docs",
+                  "supporting-document-types"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-documentary-proof",
+        "subject": "person",
+        "possession_of": "docs",
+        "consequent_noun": "n:documentary-proof-of-citizenship",
+        "classification": "DEFINED_TERM",
+        "source_ref": "SAVE Act § 2(a) / NVRA § 3(b)(1)-(5)",
+        "replaces": [
+          "ace-001",
+          "ace-002",
+          "ace-003",
+          "ace-004",
+          "ace-005"
+        ]
+      }
+    },
+    {
+      "name": "recognized-document-typep",
+      "args": [
+        "d"
+      ],
+      "label": "DEFINED_TERM",
+      "source": "§ 2(a) / NVRA § 3(b)",
+      "text": "d is a document type the statute names anywhere in § 3(b).",
+      "body": {
+        "or": [
+          {
+            "member": [
+              "d",
+              "standalone-proof-types"
+            ]
+          },
+          {
+            "member": [
+              "d",
+              "anchor-photo-id-types"
+            ]
+          },
+          {
+            "member": [
+              "d",
+              "supporting-document-types"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

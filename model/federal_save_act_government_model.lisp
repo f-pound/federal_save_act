@@ -1,9 +1,9 @@
 (in-package "ACL2")
 
-(include-book "federal_save_act_facts")
+(include-book "federal_save_act_scenario")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_government_model.lisp  —  v5.2 (hybrid architecture)
+;; federal_save_act_government_model.lisp  —  v6.0 (hybrid architecture)
 ;; Interpretive model favoring government defense of the SAVE Act.
 ;;
 ;; v3 architecture (retained in v5.2):
@@ -119,41 +119,17 @@
   (burden-not-severep 'federal-save-act p))
 
 ;;; =========================================================================
-;;; Scenario constants — same scenario as challenger model
-;;;
+;;; Scenario — the six conceded ground facts about citizen-a and
+;;; registration-attempt-a live in federal_save_act_scenario.lisp (v6.0).
 ;;; The government concedes the factual scenario but reaches a different
-;;; conclusion because the regulation is valid.
-;;; =========================================================================
-
-;; SCENARIO_FACT: citizen-a is a person
-(defaxiom government-scenario-person
-  (personp 'citizen-a))
-
-;; SCENARIO_FACT: citizen-a is a U.S. citizen
-(defaxiom government-scenario-citizen
-  (citizen-of-usp 'citizen-a))
-
-;; SCENARIO_FACT: citizen-a is eligible to vote
-(defaxiom government-scenario-eligible
-  (eligible-voterp 'citizen-a))
-
-;; SCENARIO_FACT: registration-attempt-a is an application
-(defaxiom government-scenario-application
-  (voter-registration-applicationp 'registration-attempt-a))
-
-;; SCENARIO_FACT: citizen-a attempts to register
-(defaxiom government-scenario-attempts-to-register
-  (attempts-to-registerp 'citizen-a 'registration-attempt-a))
+;;; conclusion because the regulation is valid.  Only government-specific
+;;; stipulations remain here.
 
 ;; INTERPRETATION_GOVERNMENT: Concede arguendo that citizen-a has a
 ;; protected right to vote. This strengthens the proof — no-conflict
 ;; results from valid-regulationp, not from failure to establish the right.
 (defaxiom government-assume-right-to-vote-arguendo
   (protected-right-to-votep 'amend-v-equal-protection 'citizen-a))
-
-;; SCENARIO_FACT: citizen-a lacks documentary proof (conceded)
-(defaxiom government-scenario-no-documentary-proof
-  (not (has-documentary-proofp 'citizen-a)))
 
 ;; INTERPRETATION_GOVERNMENT: the alternative process IS available and
 ;; adequate for citizen-a. Under the government's theory, citizen-a

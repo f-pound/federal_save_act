@@ -43,15 +43,30 @@
   (implies (has-valid-us-passportp p)
            (has-any-qualifying-documentp p)))
 
-;; A person with a certified birth certificate has a qualifying document
+;; § 3(b)(5)(A): a certified birth certificate TOGETHER WITH a government
+;; photo ID is a qualifying document (v6.0: the v5 theorem dropped the
+;; photo-ID conjunct, which the statute requires)
 (defthm consistency-check-qualifying-document-birth-cert
-  (implies (has-certified-birth-certificatep p)
+  (implies (and (has-govt-photo-idp p)
+                (has-certified-birth-certificatep p))
            (has-any-qualifying-documentp p)))
 
-;; A person with a naturalization certificate has a qualifying document
+;; § 3(b)(5)(E): likewise for a naturalization certificate
 (defthm consistency-check-qualifying-document-nat-cert
-  (implies (has-naturalization-certificatep p)
+  (implies (and (has-govt-photo-idp p)
+                (has-naturalization-certificatep p))
            (has-any-qualifying-documentp p)))
+
+;; A supporting document WITHOUT a photo ID and without any standalone
+;; document is not proof.  This is the structural fact citizen-a's
+;; scenario turns on.
+(defthm consistency-check-supporting-doc-alone-is-not-qualifying
+  (implies (and (not (has-govt-photo-idp p))
+                (not (has-real-id-indicating-citizenshipp p))
+                (not (has-valid-us-passportp p))
+                (not (has-military-id-with-us-birthp p))
+                (not (has-govt-photo-id-showing-us-birthp p)))
+           (not (has-any-qualifying-documentp p))))
 
 ;; qualified-federal-voterp decomposes correctly
 (defthm consistency-check-qualified-voter-decomposition

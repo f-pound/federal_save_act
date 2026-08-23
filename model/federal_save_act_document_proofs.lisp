@@ -3,133 +3,115 @@
 (include-book "federal_save_act_process")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_document_proofs.lisp  —  v5.2
+;; federal_save_act_document_proofs.lisp  —  v6.0
 ;;
-;; Document-list reasoning for the SAVE Act documentary proof requirement.
+;; Document-bundle reasoning for the SAVE Act documentary proof requirement,
+;; as instances of lib/enum_list over the generated § 3(b) category tables.
 ;;
-;; The SAVE Act requires "documentary proof of United States citizenship"
-;; from a statutory list of qualifying document types.  This book proves
-;; properties of document COLLECTIONS, not just individual documents.
-;;
-;; These theorems demonstrate ACL2 reasoning over recursive list structures:
-;;   - Empty collections cannot satisfy the requirement
-;;   - A single qualifying document suffices
-;;   - Collections of nonqualifying documents cannot satisfy the requirement
-;;   - Filtering operations preserve or destroy qualifying status predictably
-;;
-;; Legal relevance: These properties model how a registration official
-;; evaluates a bundle of submitted documents.  The all-nonqualifying
-;; theorem is particularly important because it proves that a citizen
-;; who possesses only nonqualifying documents CANNOT satisfy the statutory
+;; Legal relevance: these model how an official evaluates a bundle of
+;; submitted documents.  The structural-denial theorem proves that a citizen
+;; whose bundle contains nothing from the statutory lists CANNOT satisfy the
 ;; requirement — the denial is structurally mandated, not discretionary.
+;; v6 adds the § 3(b)(5) structure: supporting documents are useless
+;; without an anchor photo ID, and vice versa.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; =========================================================================
-;;; 1. HELPER FUNCTIONS
+;;; 1. HELPER FUNCTIONS  (wrappers over library predicates)
 ;;; =========================================================================
 
-;; Are ALL documents in the list nonqualifying?
+(defconst *all-recognized-document-types*
+  (append *standalone-proof-types*
+          *anchor-photo-id-types*
+          *supporting-document-types*))
+
+;; Are ALL documents in the bundle unrecognized by the statute?
 (defun all-nonqualifying-documentsp (docs)
-  (if (endp docs)
-      t
-    (and (not (qualifying-document-typep (car docs)))
-         (all-nonqualifying-documentsp (cdr docs)))))
+  (none-in-catsp docs *all-recognized-document-types*))
 
-;; Filter: keep only qualifying documents from a list
+;; Keep only statute-recognized documents.
 (defun filter-qualifying-documents (docs)
-  (if (endp docs)
-      nil
-    (if (qualifying-document-typep (car docs))
-        (cons (car docs) (filter-qualifying-documents (cdr docs)))
-      (filter-qualifying-documents (cdr docs)))))
+  (filter-in-cats docs *all-recognized-document-types*))
 
 ;;; =========================================================================
-;;; 2. EMPTY COLLECTION THEOREM
-;;;
-;;; An empty document collection cannot satisfy the documentary proof
-;;; requirement.  This is the base case for document-list reasoning.
+;;; 2. EMPTY COLLECTION / 3. SINGLETON SUFFICIENCY
 ;;; =========================================================================
 
 (defthm empty-document-list-has-no-qualifying-document
   (not (has-qualifying-docs-from-listp nil)))
 
-;;; =========================================================================
-;;; 3. SINGLETON SUFFICIENCY
-;;;
-;;; A single qualifying document is sufficient to satisfy the
-;;; documentary proof requirement.
-;;; =========================================================================
-
-(defthm singleton-qualifying-list-has-proof
-  (implies (qualifying-document-typep d)
+;; A single STANDALONE document suffices ...
+(defthm singleton-standalone-list-has-proof
+  (implies (member-equal d *standalone-proof-types*)
            (has-qualifying-docs-from-listp (list d))))
 
+;; ... but a single SUPPORTING document never does, nor a lone anchor.
+(defthm singleton-supporting-list-has-no-proof
+  (implies (member-equal d *supporting-document-types*)
+           (not (has-qualifying-docs-from-listp (list d)))))
+
+(defthm singleton-anchor-list-has-no-proof
+  (implies (member-equal d *anchor-photo-id-types*)
+           (not (has-qualifying-docs-from-listp (list d)))))
+
+;; The § 3(b)(5) pair always suffices.
+(defthm anchor-and-supporting-pair-has-proof
+  (implies (and (member-equal a *anchor-photo-id-types*)
+                (member-equal d *supporting-document-types*))
+           (has-qualifying-docs-from-listp (list a d))))
+
 ;;; =========================================================================
-;;; 4. ALL-NONQUALIFYING IMPLIES NO PROOF
-;;;
-;;; If every document in a collection fails the qualifying-document-typep
-;;; test, then the collection cannot satisfy the documentary proof
-;;; requirement.
-;;;
-;;; This is the key "structural denial" theorem: a citizen who possesses
-;;; only nonqualifying documents is STRUCTURALLY unable to satisfy
-;;; the SAVE Act requirement through the documentary proof path.
-;;;
-;;; Proof by induction on the document list.
+;;; 4. ALL-NONQUALIFYING IMPLIES NO PROOF  (structural denial)
 ;;; =========================================================================
 
-;; Helper: all-nonqualifying docs are not qualifying-document-listp
-;; (since qualifying-document-listp requires every element to be qualifying)
+;; A bundle with nothing recognized has nothing standalone, no anchor and
+;; nothing supporting.  (Narrowing lemma from enum_list, by evaluation of
+;; the subsetp-equal side conditions.)
+(defthm all-nonqualifying-implies-no-standalone
+  (implies (all-nonqualifying-documentsp docs)
+           (none-in-catsp docs *standalone-proof-types*)))
+
+(defthm all-nonqualifying-implies-no-anchor
+  (implies (all-nonqualifying-documentsp docs)
+           (none-in-catsp docs *anchor-photo-id-types*)))
+
+(defthm all-nonqualifying-implies-no-supporting
+  (implies (all-nonqualifying-documentsp docs)
+           (none-in-catsp docs *supporting-document-types*)))
+
 (defthm all-nonqualifying-implies-not-qualifying-list
   (implies (and (consp docs)
                 (all-nonqualifying-documentsp docs))
            (not (qualifying-document-listp docs))))
 
-;; Main: all-nonqualifying → no documentary proof from list
+;; Main structural-denial theorem.
 (defthm all-nonqualifying-implies-no-documentary-proof
   (implies (all-nonqualifying-documentsp docs)
            (not (has-qualifying-docs-from-listp docs))))
 
 ;;; =========================================================================
-;;; 5. FILTER PRESERVES QUALIFYING STATUS
-;;;
-;;; Filtering a document list to keep only qualifying documents
-;;; preserves the qualifying-document-listp property.
-;;;
-;;; Proof by induction on the document list.
+;;; 5. FILTERING
 ;;; =========================================================================
 
 (defthm filter-qualifying-is-qualifying-list
   (qualifying-document-listp (filter-qualifying-documents docs)))
 
-;;; =========================================================================
-;;; 6. FILTER PRODUCES PROOF WHEN SOURCE HAS QUALIFYING MEMBER
-;;;
-;;; If the original list contains at least one qualifying document,
-;;; filtering produces a nonempty qualifying list — which has proof.
-;;; =========================================================================
+;; Filtering out unrecognized documents does not change whether the
+;; bundle is proof — only recognized documents matter.
+(defthm filter-in-cats-preserves-some-in-catsp-of-subset
+  (implies (subsetp-equal sub cats)
+           (iff (some-in-catsp (filter-in-cats xs cats) sub)
+                (some-in-catsp xs sub))))
 
-;; Helper: if a qualifying doc is a member, filter is nonempty
-(defthm member-qualifying-implies-filter-nonempty
-  (implies (and (member-equal d docs)
-                (qualifying-document-typep d))
-           (consp (filter-qualifying-documents docs))))
-
-;; Main: filter of a list with a qualifying member has proof
-(defthm filter-qualifying-has-proof-when-member-qualifies
-  (implies (and (member-equal d docs)
-                (qualifying-document-typep d))
-           (has-qualifying-docs-from-listp
-            (filter-qualifying-documents docs))))
+(defthm filter-preserves-documentary-proof
+  (iff (has-qualifying-docs-from-listp (filter-qualifying-documents docs))
+       (has-qualifying-docs-from-listp docs)))
 
 ;;; =========================================================================
-;;; 7. ALL-NONQUALIFYING IS CLOSED UNDER APPEND
-;;;
-;;; Combining two collections of nonqualifying documents still
-;;; produces a collection of nonqualifying documents.
-;;;
-;;; Legal relevance: Combining two inadequate document bundles
-;;; cannot create a qualifying bundle.
+;;; 6. APPEND ALGEBRA
+;;; Legal relevance: combining two inadequate bundles of UNRECOGNIZED
+;;; documents cannot create proof; but combining a lone photo ID with a
+;;; lone birth certificate CAN (the § 3(b)(5) pairing).
 ;;; =========================================================================
 
 (defthm all-nonqualifying-append
@@ -137,14 +119,35 @@
          (and (all-nonqualifying-documentsp a)
               (all-nonqualifying-documentsp b))))
 
+(defthm pairing-two-insufficient-bundles-can-create-proof
+  (and (not (has-qualifying-docs-from-listp (list *doc-govt-photo*)))
+       (not (has-qualifying-docs-from-listp (list *doc-birth-cert*)))
+       (has-qualifying-docs-from-listp
+        (append (list *doc-govt-photo*) (list *doc-birth-cert*))))
+  :rule-classes nil)
+
 ;;; =========================================================================
-;;; 8. CONTRAPOSITIVE: QUALIFYING LIST IMPLIES NOT ALL-NONQUALIFYING
-;;;
-;;; If a nonempty list satisfies qualifying-document-listp, then
-;;; not all documents are nonqualifying (at least one must qualify).
+;;; 7. CONTRAPOSITIVE: QUALIFYING LIST IMPLIES NOT ALL-NONQUALIFYING
 ;;; =========================================================================
 
 (defthm qualifying-list-implies-not-all-nonqualifying
   (implies (and (consp docs)
                 (qualifying-document-listp docs))
            (not (all-nonqualifying-documentsp docs))))
+
+;;; =========================================================================
+;;; 8. STATUTORY AMENDMENT LEMMA
+;;; If Congress ADDS a standalone document type, every bundle that was
+;;; proof remains proof.  (Instance of some-in-catsp-widen.)
+;;; =========================================================================
+
+(defun documentary-proof-bundlep-under (docs standalone anchors supporting)
+  (or (some-in-catsp docs standalone)
+      (and (some-in-catsp docs anchors)
+           (some-in-catsp docs supporting))))
+
+(defthm widening-standalone-list-preserves-proof
+  (implies (and (has-qualifying-docs-from-listp docs)
+                (subsetp-equal *standalone-proof-types* wider))
+           (documentary-proof-bundlep-under
+            docs wider *anchor-photo-id-types* *supporting-document-types*)))

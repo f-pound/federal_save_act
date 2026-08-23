@@ -1,0 +1,51 @@
+{
+  "$schema": "../../tools/clause_ir_schema.json",
+  "book": "federal_save_act_process_table",
+  "title": "SAVE Act registration lifecycle — labeled state machine table",
+  "source_id": "hr22-eh",
+  "includes": [],
+  "process": {
+    "name": "reg",
+    "source": "SAVE Act § 2(b)-(f); NVRA §§ 4, 6(e), 8(j)",
+    "description": "Lifecycle of one voter registration application under the SAVE Act. TEXT_FACT edges are named in the statute; MODEL_STRUCTURE edges are neutral bookkeeping (submission, registration/denial as terminal acts) needed to make the statutory steps a process.",
+    "states": [
+      {"symbol": "unsubmitted",   "const": "state-unsubmitted",   "text": "no application yet"},
+      {"symbol": "submitted",     "const": "state-submitted",     "text": "application received (NVRA § 6(e)(2): notice of proof requirement transmitted)"},
+      {"symbol": "doc-presented", "const": "state-doc-presented", "text": "documentary proof presented with / after the application (§ 4(b), § 6(e)(1))"},
+      {"symbol": "doc-accepted",  "const": "state-doc-accepted",  "text": "official accepts documentary proof"},
+      {"symbol": "doc-rejected",  "const": "state-doc-rejected",  "text": "official rejects documentary proof (discrepancy, § 8(j)(2)(B))"},
+      {"symbol": "alt-initiated", "const": "state-alt-initiated", "text": "attestation under penalty of perjury + other evidence submitted (§ 8(j)(2)(A)(i))"},
+      {"symbol": "alt-approved",  "const": "state-alt-approved",  "text": "official determines citizenship sufficiently established; affidavit (§ 8(j)(2)(A)(ii))"},
+      {"symbol": "alt-denied",    "const": "state-alt-denied",    "text": "official determines citizenship not sufficiently established"},
+      {"symbol": "registered",    "const": "state-registered",    "text": "terminal: registered for federal elections"},
+      {"symbol": "denied",        "const": "state-denied",        "text": "terminal: application not accepted / not registered (§ 4(b), § 8(j)(1))"}
+    ],
+    "events": [
+      {"symbol": "submit-application",           "const": "evt-submit",        "text": "applicant submits the application"},
+      {"symbol": "present-documents",            "const": "evt-present-docs",  "text": "applicant presents documentary proof"},
+      {"symbol": "accept-documents",             "const": "evt-accept-docs",   "text": "official accepts the documents"},
+      {"symbol": "reject-documents",             "const": "evt-reject-docs",   "text": "official rejects the documents"},
+      {"symbol": "initiate-alternative-process", "const": "evt-initiate-alt",  "text": "applicant signs attestation and submits other evidence"},
+      {"symbol": "approve-alternative",          "const": "evt-approve-alt",   "text": "official determines citizenship sufficiently established"},
+      {"symbol": "deny-alternative",             "const": "evt-deny-alt",      "text": "official determines citizenship not established"},
+      {"symbol": "register",                     "const": "evt-register",      "text": "State registers the applicant"},
+      {"symbol": "deny-registration",            "const": "evt-deny",          "text": "State declines to accept / register"}
+    ],
+    "edges": [
+      {"from": "unsubmitted",   "event": "submit-application",           "to": "submitted",     "label": "MODEL_STRUCTURE", "source": "NVRA § 6(a)"},
+      {"from": "submitted",     "event": "present-documents",            "to": "doc-presented", "label": "TEXT_FACT", "source": "§ 2(b) / NVRA § 4(b); § 2(d) / NVRA § 6(e)(1)"},
+      {"from": "doc-presented", "event": "accept-documents",             "to": "doc-accepted",  "label": "TEXT_FACT", "source": "§ 2(b) / NVRA § 4(b)"},
+      {"from": "doc-presented", "event": "reject-documents",             "to": "doc-rejected",  "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(2)(B) (discrepancy)"},
+      {"from": "doc-rejected",  "event": "initiate-alternative-process", "to": "alt-initiated", "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(2)(A)(i)"},
+      {"from": "submitted",     "event": "initiate-alternative-process", "to": "alt-initiated", "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(2)(A)(i) ('cannot provide documentary proof')"},
+      {"from": "alt-initiated", "event": "approve-alternative",          "to": "alt-approved",  "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(2)(A)(i)-(ii)"},
+      {"from": "alt-initiated", "event": "deny-alternative",             "to": "alt-denied",    "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(2)(A)(i) ('shall make a determination as to whether')"},
+      {"from": "doc-accepted",  "event": "register",                     "to": "registered",    "label": "MODEL_STRUCTURE", "source": "NVRA § 8(a)(1)"},
+      {"from": "alt-approved",  "event": "register",                     "to": "registered",    "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(2)(A)(iii)(I) ('register an applicant who cannot provide documentary proof')"},
+      {"from": "doc-rejected",  "event": "deny-registration",            "to": "denied",        "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(1)"},
+      {"from": "alt-denied",    "event": "deny-registration",            "to": "denied",        "label": "TEXT_FACT", "source": "§ 2(f) / NVRA § 8(j)(1)"},
+      {"from": "submitted",     "event": "deny-registration",            "to": "denied",        "label": "TEXT_FACT", "source": "§ 2(b) / NVRA § 4(b) ('shall not accept and process ... unless')"}
+    ],
+    "ace": {"id": "ace-gen-registration-process", "subject": "n:voter-registration-application", "classification": "PROCESS_RULE"}
+  }
+}
