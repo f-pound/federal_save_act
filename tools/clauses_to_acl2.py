@@ -213,6 +213,8 @@ def emit_process(pr):
             raise IRError(f"duplicate edge for ({f}, {ev}) — table would be nondeterministic")
         seen.add((f, ev))
         tag = f"  ; {e.get('label', '')} {e.get('source', '')}".rstrip()
+        if e.get("text"):
+            out.append(f"   ;; [{e.get('source_id', '')}] \"{e['text']}\"")
         out.append(f"   (list *{states[f]}* *{events[ev]}* *{states[t]}*){tag}")
     out.append("   ))")
     out.append("")
@@ -465,7 +467,7 @@ def emit_english(ir):
         out.append("| From | Event | To | Basis |")
         out.append("|---|---|---|---|")
         for e in pr["edges"]:
-            out.append(f"| {e['from']} | {e['event']} | {e['to']} | {e.get('label', '')} {e.get('source', '')} |")
+            out.append(f"| {e['from']} | {e['event']} | {e['to']} | {e.get('label', '')} {e.get('source', '')}{(' — “' + e['text'] + '”') if e.get('text') else ''} |")
         out.append("")
         out.append("Any (state, event) pair not listed leaves the state unchanged.")
         out.append("")

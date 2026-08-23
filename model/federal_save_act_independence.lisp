@@ -3,7 +3,13 @@
 (include-book "federal_save_act_facts")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; federal_save_act_independence.lisp  —  v5.1
+;; federal_save_act_independence.lisp  —  v6.6
+;;
+;; v6.6: the three theorems below are now stated as explicit COROLLARIES of
+;; core-valid-regulation-defeats-conflict and
+;; core-conflict-pivots-on-valid-regulation (federal_save_act_core.lisp),
+;; via :use hints, rather than re-proved from the definitions.  The
+;; statements are unchanged; the dependency is now visible.
 ;; Non-entailment / independence checks.
 ;;
 ;; Goal: Show that the neutral statutory facts (core + facts) do not
@@ -56,6 +62,7 @@
   (implies (valid-regulationp law x)
            (not (constitutional-conflict-conditionp
                  law cs p x)))
+  :hints (("Goal" :use ((:instance core-valid-regulation-defeats-conflict))))
   :rule-classes nil)
 
 ;;; =========================================================================
@@ -85,9 +92,8 @@
                 (statute-denies-registrationp law p x)
                 (not (valid-regulationp law x)))
            (constitutional-conflict-conditionp law cs p x))
-  :hints (("Goal" :in-theory (enable constitutional-conflict-conditionp
-                               qualified-federal-voterp
-                               registration-transactionp)))
+  :hints (("Goal" :use ((:instance core-conflict-pivots-on-valid-regulation))
+                  :in-theory (enable qualified-federal-voterp registration-transactionp)))
   :rule-classes nil)
 
 ;;; =========================================================================
@@ -114,7 +120,6 @@
                 (statute-denies-registrationp law p x))
            (iff (constitutional-conflict-conditionp law cs p x)
                 (not (valid-regulationp law x))))
-  :hints (("Goal" :in-theory (enable constitutional-conflict-conditionp
-                               qualified-federal-voterp
-                               registration-transactionp)))
+  :hints (("Goal" :use ((:instance core-conflict-pivots-on-valid-regulation))
+                  :in-theory (enable qualified-federal-voterp registration-transactionp)))
   :rule-classes nil)

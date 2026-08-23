@@ -12,9 +12,9 @@
         "section_2_unchanged": true,
         "section_2_check": "tools/check_text_stability.py",
         "new_material": [
-          "name-discrepancy registration process",
-          "30-day DHS/SAVE voter-list submission",
-          "§ 3 photo ID to vote (HAVA § 303A)"
+          "name-discrepancy registration process (§ 8(j)(2)) — modeled v6.6",
+          "30-day DHS/SAVE voter-list submission with notice-and-opportunity before removal (§ 8(j)(4)(B)) — modeled v6.6",
+          "§ 3 photo ID to vote (HAVA § 303A) — modeled v6.5"
         ]
       },
       "senate_actions": [
@@ -55,7 +55,7 @@
           "status": "Signed Mar. 31, 2026; challenged (D.D.C. 1:26-cv-01132)"
         }
       ],
-      "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled § 2 text unchanged."
+      "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled § 2 text unchanged; S. 1383 additions (§ 3 photo ID, name-discrepancy process, SAVE-match removal with notice) modeled."
     },
     "document_categories": {
       "standalone-proof-types": [
@@ -158,16 +158,16 @@
     },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "6.5.1",
+    "version": "6.6.0",
     "books_certified": 30,
-    "theorems": 258,
-    "axioms": 52,
+    "theorems": 267,
+    "axioms": 60,
     "defun_sk_existentials": 4,
     "authoritative_sources": 34,
-    "trace_rows": 61,
+    "trace_rows": 69,
     "ace_statements": 13,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T04:39:23.502731+00:00"
+    "generated_at": "2026-08-23T04:47:04.240294+00:00"
   },
   "audit_details": {
     "books": [
@@ -347,7 +347,7 @@
         "file": "federal_save_act_process.lisp",
         "layer": 0,
         "clean": true,
-        "theorems": 28,
+        "theorems": 30,
         "axioms": 0,
         "existentials": 0
       },
@@ -374,7 +374,7 @@
         "file": "federal_save_act_removal_invariants.lisp",
         "layer": 5,
         "clean": true,
-        "theorems": 11,
+        "theorems": 16,
         "axioms": 0,
         "existentials": 0
       },
@@ -392,8 +392,8 @@
         "file": "federal_save_act_scenario.lisp",
         "layer": 1,
         "clean": false,
-        "theorems": 10,
-        "axioms": 21,
+        "theorems": 12,
+        "axioms": 29,
         "existentials": 0
       },
       {
@@ -682,7 +682,9 @@
         "process-inv-no-skip-to-registered",
         "process-inv-no-skip-from-submitted",
         "process-inv-denial-trigger-requires-no-presentation",
-        "process-inv-denial-trigger-requires-no-alternative"
+        "process-inv-denial-trigger-requires-no-alternative",
+        "process-inv-name-discrepancy-path-registers",
+        "name-discrepancy-review-is-not-an-acceptance-state"
       ],
       "federal_save_act_process_invariants": [
         "terminal-state-registered-not-denied",
@@ -709,11 +711,16 @@
         "statutory-path-removes",
         "statutory-path-has-no-notice-or-hearing",
         "text-edges-alone-reach-removal",
-        "rem-events-into-removed-is-remove-only",
-        "removal-requires-remove-event",
+        "rem-events-into-removed",
+        "removal-requires-remove-or-lapse-event",
         "removed-is-absorbing",
-        "reinstatement-requires-contest-path",
-        "rem-run-trace-stays-in-state-space"
+        "reinstatement-requires-contest-or-proof-path",
+        "rem-run-trace-stays-in-state-space",
+        "save-identified-closed-except-notice",
+        "save-match-removal-requires-notice",
+        "noticed-registrant-who-provides-proof-stays-on-rolls",
+        "noticed-registrant-who-lapses-is-removed",
+        "section-8k-path-unchanged-by-save-america-act"
       ],
       "federal_save_act_scenario": [
         "scenario-qualified-voter",
@@ -725,7 +732,9 @@
         "scenario-c-qualified-voter",
         "scenario-c-voting-transaction",
         "scenario-c-statute-denies-regular-ballot",
-        "scenario-c-ballot-not-counted"
+        "scenario-c-ballot-not-counted",
+        "scenario-d-statute-denies-regular-ballot",
+        "scenario-d-no-voting-conflict-any-model"
       ],
       "federal_save_act_voting_invariants": [
         "vote-edges-well-formed",
@@ -1100,6 +1109,62 @@
           "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated voting scenario (shared by both party models): citizen-c does not cure the provisional ballot within 3 days"
+        },
+        {
+          "name": "scenario-d-person",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d is a person"
+        },
+        {
+          "name": "scenario-d-citizen",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d is a U.S. citizen"
+        },
+        {
+          "name": "scenario-d-eligible",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d is eligible to vote"
+        },
+        {
+          "name": "scenario-d-registered",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d is on the official list of eligible voters"
+        },
+        {
+          "name": "scenario-d-ballot",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): ballot-d is a ballot in a federal election"
+        },
+        {
+          "name": "scenario-d-votes-in-person",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d seeks to vote in person with ballot-d"
+        },
+        {
+          "name": "scenario-d-no-valid-photo-id",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d presents an expired licence — nothing in the § 303A(c) list"
+        },
+        {
+          "name": "scenario-d-cures",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "Stipulated voting scenario D (cure path): citizen-d returns within 3 days with valid identification"
         }
       ],
       "federal_save_act_text_rules": [
@@ -1812,9 +1877,9 @@
       "id": "deriv-reinstatement",
       "type": "LEMMA",
       "layer": "derivations",
-      "label": "Reinstatement path exists only through the overlay (contested → on-rolls)",
+      "label": "Routes back onto the rolls exist only through the overlay (contest) or, in S. 1383, by providing proof after notice",
       "description": "lsm-sources-into (on-rolls) = (contested): the statutory text provides no route back onto the rolls after removal.",
-      "acl2_event": "reinstatement-requires-contest-path",
+      "acl2_event": "reinstatement-requires-contest-or-proof-path, noticed-registrant-who-provides-proof-stays-on-rolls",
       "book": "federal_save_act_removal_invariants.lisp",
       "path": "neutral"
     },
@@ -1833,9 +1898,9 @@
       "id": "thm-removal-no-notice",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "Statutory path to removal contains no notice or hearing event",
-      "description": "(receive-noncitizen-information, remove) runs on-rolls → removed using the TEXT_FACT edges alone, and contains none of notify / contest / confirm-citizenship. Removed is absorbing.",
-      "acl2_event": "statutory-path-has-no-notice-or-hearing, text-edges-alone-reach-removal, removed-is-absorbing",
+      "label": "§ 8(k) path to removal has no notice or hearing; the S. 1383 SAVE-match path REQUIRES notice",
+      "description": "Two results. § 8(k) (both texts): receive verified information → remove \"at any time\", no notice event. S. 1383 § 8(j)(4)(B) adds a systematic DHS SAVE-match path on which removal is reachable only after the notify event and an opportunity to provide proof.",
+      "acl2_event": "statutory-path-has-no-notice-or-hearing, section-8k-path-unchanged-by-save-america-act, save-match-removal-requires-notice",
       "book": "federal_save_act_removal_invariants.lisp",
       "axiom_free": true,
       "path": "neutral"

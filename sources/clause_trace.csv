@@ -60,3 +60,11 @@ government-voting-defense-rule,government,INTERPRETATION_GOVERNMENT,court,crawfo
 government-bridge-voting-validates,government,BRIDGE_RULE,court,crawford-v-marion,553 U.S. at 189-191,Crawford: regulation satisfying the applicable standard is constitutionally valid
 government-photo-id-evenhanded,government,INTERPRETATION_GOVERNMENT,court,s1383-eah,§ 3 / HAVA § 303A(a)(1),"""may not provide a ballot ... to an individual who desires to vote in person unless"" — interpretation: the requirement applies to every in-person voter alike"
 government-provisional-cure-adequate,government,INTERPRETATION_GOVERNMENT,court,s1383-eah,§ 3 / HAVA § 303A(a)(1)(B),"""shall be permitted to cast a provisional ballot ... not later than 3 days after casting the provisional ballot"" — interpretation: the cure window is an adequate safeguard"
+scenario-d-person,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d is a person
+scenario-d-citizen,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d is a U.S. citizen
+scenario-d-eligible,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d is eligible to vote
+scenario-d-registered,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d is on the official list of eligible voters
+scenario-d-ballot,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): ballot-d is a ballot in a federal election
+scenario-d-votes-in-person,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d seeks to vote in person with ballot-d
+scenario-d-no-valid-photo-id,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d presents an expired licence — nothing in the § 303A(c) list
+scenario-d-cures,scenario,SCENARIO_FACT,party-stipulation,n/a,n/a,Stipulated voting scenario D (cure path): citizen-d returns within 3 days with valid identification

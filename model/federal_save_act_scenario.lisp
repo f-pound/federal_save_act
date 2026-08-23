@@ -165,3 +165,36 @@
 
 (defthm scenario-c-ballot-not-counted
   (ballot-not-countedp 'federal-save-act 'citizen-c 'ballot-c))
+
+;;; =========================================================================
+;;; v6.6 — Fourth scenario: citizen-d cures the provisional ballot
+;;;
+;;;   citizen-d: registered citizen, arrives with an expired licence (not
+;;;   valid photo identification), casts a provisional ballot, returns
+;;;   within 3 days with a valid ID.  The ballot counts.
+;;;
+;;; This scenario needs NO party premise: the conflict condition is false
+;;; under every model, because a cured ballot is counted
+;;; (core-cure-defeats-voting-conflict).
+;;; =========================================================================
+
+(defaxiom scenario-d-person (personp 'citizen-d))
+(defaxiom scenario-d-citizen (citizen-of-usp 'citizen-d))
+(defaxiom scenario-d-eligible (eligible-voterp 'citizen-d))
+(defaxiom scenario-d-registered (registered-voterp 'citizen-d))
+(defaxiom scenario-d-ballot (ballotp 'ballot-d))
+(defaxiom scenario-d-votes-in-person (votes-in-personp 'citizen-d 'ballot-d))
+(defaxiom scenario-d-no-valid-photo-id
+  (not (presents-valid-photo-idp 'citizen-d 'ballot-d)))
+(defaxiom scenario-d-cures
+  (cures-within-deadlinep 'citizen-d 'ballot-d))
+
+;; Regular ballot denied at the polls (text rule) ...
+(defthm scenario-d-statute-denies-regular-ballot
+  (statute-denies-regular-ballotp 'federal-save-act 'citizen-d 'ballot-d))
+
+;; ... but the ballot is counted, so no voting conflict on ANY model.
+(defthm scenario-d-no-voting-conflict-any-model
+  (not (constitutional-voting-conflict-conditionp law cs 'citizen-d 'ballot-d))
+  :hints (("Goal" :use ((:instance core-cure-defeats-voting-conflict
+                                   (p 'citizen-d) (b 'ballot-d))))))

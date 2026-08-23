@@ -153,6 +153,64 @@
           }
         }
       }
+    },
+    "process": {
+      "type": "object",
+      "description": "Labeled state machine table. Each edge may carry a verbatim `text` quote and an overriding `source_id` (checked by check_text_stability.py against that source's bill text).",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "states": {
+          "type": "array"
+        },
+        "events": {
+          "type": "array"
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "from",
+              "event",
+              "to"
+            ],
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "event": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "source_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "ace": {
+          "type": "object"
+        }
+      }
     }
   },
   "$defs": {

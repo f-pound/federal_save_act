@@ -61,9 +61,9 @@
                 (statute-denies-registrationp law p x))
            (iff (constitutional-conflict-conditionp law cs p x)
                 (not (valid-regulationp law x))))
-  :hints (("Goal" :in-theory (enable constitutional-conflict-conditionp
-                               qualified-federal-voterp
-                               registration-transactionp)))
+  ;; v6.6: corollary of core-conflict-pivots-on-valid-regulation.
+  :hints (("Goal" :use ((:instance core-conflict-pivots-on-valid-regulation))
+                  :in-theory (enable qualified-federal-voterp registration-transactionp)))
   :rule-classes nil)
 
 ;;; =========================================================================

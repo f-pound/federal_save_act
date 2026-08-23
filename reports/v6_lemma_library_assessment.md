@@ -148,4 +148,8 @@ The structurally interesting results are the **two-enumerations** theorems. § 3
 
 `federal_save_act_functional_instantiation.lisp` closes the v5.3 open item: for each party an abstract encapsulated predicate, a generic theorem with the bridge stated as a *hypothesis*, a concrete conjunction of that party's factors, and a `:functional-instance` transfer in which ACL2 proves the concrete predicate satisfies the exported constraint. The book is neutral (no `defaxiom`), which is the point: it shows the encapsulates admit non-trivial models without importing either party's axioms.
 
-Remaining unmodeled SAVE America Act material: the name-discrepancy registration process and the 30-day DHS/SAVE list submission.
+## 10. The rest of the SAVE America Act (v6.6)
+
+Edge-level quotes in the IR made the last two additions cheap: the name-discrepancy process is three edges and one new state in the registration table; the DHS/SAVE match is four edges in the removal table. The second produced the round's substantive finding. S. 1383 § 8(j)(4)(B) requires that removals arising from the systematic SAVE comparison occur only "after notice is given … and … the opportunity to provide documentary proof" — so `save-match-removal-requires-notice` holds on that path, while `section-8k-path-unchanged-by-save-america-act` shows the "at any time upon receipt" path still reaches removal with no notice event. The model's earlier headline ("removal reachable without notice") is therefore now correctly scoped to § 8(k), and the due-process argument has two distinct targets with different textual footing.
+
+A useful side effect: when the table changed, three documentation theorems that *enumerated* the derived sets (sources into `removed`, routes back onto the rolls) failed certification until they were updated. That is the library working as designed — the sets are computed from the table, and the prover refuses a stale description of them.

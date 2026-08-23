@@ -29,7 +29,7 @@
 (defun rem-run-trace (s events) (lsm-run s events *rem-edges*))
 (defun rem-statep (s) (member-equal s *rem-states*))
 
-;; The statutory (non-overlay) edges only.
+;; The § 8(k) statutory edges only (both texts).
 (defconst *rem-text-edges*
   (list (list *rem-on-rolls*      *rem-evt-receive* *rem-info-received*)
         (list *rem-info-received* *rem-evt-remove*  *rem-removed*)))
@@ -48,13 +48,17 @@
   (lsm-sources-into (list *rem-removed*) *rem-edges*))
 
 (defthm rem-removal-sources-are-info-noticed-contested
+  ;; v6.6: `noticed` appears twice — once via the overlay `remove` edge and
+  ;; once via the S. 1383 `opportunity-lapses` edge.
   (equal *rem-removal-sources*
-         (list *rem-info-received* *rem-noticed* *rem-contested*))
+         (list *rem-info-received* *rem-noticed* *rem-contested* *rem-noticed*))
   :rule-classes nil)
 
 (defthm removal-implies-prior-information-receipt
+  ;; v6.6: leaving the rolls starts either with § 8(k) receipt of verified
+  ;; information or with the S. 1383 SAVE-system match.
   (implies (equal (rem-run-trace *rem-on-rolls* events) *rem-removed*)
-           (some-in-catsp events (list *rem-evt-receive*)))
+           (some-in-catsp events (list *rem-evt-receive* *rem-evt-save-match*)))
   :hints (("Goal" :use ((:instance lsm-run-exit-guard
                                    (s *rem-on-rolls*) (edges *rem-edges*))))))
 
@@ -85,31 +89,35 @@
 ;;; contesting never moves a record into `removed`.
 ;;; =========================================================================
 
-(defthm rem-events-into-removed-is-remove-only
+(defthm rem-events-into-removed
+  ;; v6.6: the S. 1383 systematic path adds `opportunity-lapses` (after notice).
   (equal (lsm-events-into (list *rem-removed*) *rem-edges*)
-         (list *rem-evt-remove* *rem-evt-remove* *rem-evt-remove*))
+         (list *rem-evt-remove* *rem-evt-remove* *rem-evt-remove* *rem-evt-opportunity-lapses*))
   :rule-classes nil)
 
-(defthm removal-requires-remove-event
+(defthm removal-requires-remove-or-lapse-event
   (implies (and (not (equal s *rem-removed*))
                 (equal (rem-next-state s e) *rem-removed*))
-           (equal e *rem-evt-remove*))
+           (or (equal e *rem-evt-remove*)
+               (equal e *rem-evt-opportunity-lapses*)))
   :hints (("Goal" :use ((:instance lsm-step-event-guard
                                    (targets (list *rem-removed*))
                                    (edges *rem-edges*)))))
   :rule-classes :forward-chaining)
 
 ;;; =========================================================================
-;;; 4. REMOVED IS ABSORBING: THE TEXT PROVIDES NO REINSTATEMENT
+;;; 4. REMOVED IS ABSORBING: § 8(k) PROVIDES NO REINSTATEMENT
 ;;; =========================================================================
 
 (defthm removed-is-absorbing
   (equal (rem-run-trace *rem-removed* events) *rem-removed*))
 
-;; Reinstatement exists ONLY through the overlay (contested → on-rolls).
-(defthm reinstatement-requires-contest-path
+;; Routes back onto the rolls: the overlay (contested → on-rolls) and, in the
+;; S. 1383 vehicle, providing documentary proof after notice (noticed → on-rolls).
+;; The § 8(k) text alone provides neither.
+(defthm reinstatement-requires-contest-or-proof-path
   (equal (lsm-sources-into (list *rem-on-rolls*) *rem-edges*)
-         (list *rem-contested*))
+         (list *rem-contested* *rem-noticed*))
   :rule-classes nil)
 
 ;;; =========================================================================
@@ -121,3 +129,46 @@
            (rem-statep (rem-run-trace s events)))
   :hints (("Goal" :use ((:instance lsm-run-closed
                                    (set *rem-states*) (edges *rem-edges*))))))
+
+;;; =========================================================================
+;;; 6. THE SAVE AMERICA ACT'S SYSTEMATIC PATH REQUIRES NOTICE  (v6.6)
+;;;
+;;; S. 1383 § 8(j)(4)(B): the State submits its list to DHS for SAVE-system
+;;; comparison and removes identified non-citizens "after notice is given
+;;; ... and ... the opportunity to provide documentary proof".  So on THAT
+;;; path removal cannot occur without the notify event — while the § 8(k)
+;;; "at any time upon receipt" path (sections 2-3 above) is unchanged.
+;;; The two results together are the honest statement of the new vehicle.
+;;; =========================================================================
+
+;; {save-identified} is closed under every edge except the notify edge.
+(defthm save-identified-closed-except-notice
+  (lsm-closedp-except (list *rem-save-identified*) (list *rem-evt-notify*) *rem-edges*)
+  :rule-classes nil)
+
+(defthm save-match-removal-requires-notice
+  (implies (equal (rem-run-trace *rem-save-identified* events) *rem-removed*)
+           (some-in-catsp events (list *rem-evt-notify*)))
+  :hints (("Goal" :use ((:instance lsm-run-closed-except
+                                   (set (list *rem-save-identified*))
+                                   (evs (list *rem-evt-notify*))
+                                   (s *rem-save-identified*)
+                                   (edges *rem-edges*))))))
+
+;; After notice, the registrant can return to the rolls by providing proof.
+(defthm noticed-registrant-who-provides-proof-stays-on-rolls
+  (equal (rem-run-trace *rem-on-rolls*
+                        (list *rem-evt-save-match* *rem-evt-notify* *rem-evt-provide-proof*))
+         *rem-on-rolls*))
+
+;; ... and is removed if the opportunity lapses.
+(defthm noticed-registrant-who-lapses-is-removed
+  (equal (rem-run-trace *rem-on-rolls*
+                        (list *rem-evt-save-match* *rem-evt-notify* *rem-evt-opportunity-lapses*))
+         *rem-removed*))
+
+;; The § 8(k) path is still there, and still has no notice (section 2).
+(defthm section-8k-path-unchanged-by-save-america-act
+  (and (equal (rem-run-trace *rem-on-rolls* *rem-statutory-path*) *rem-removed*)
+       (none-in-catsp *rem-statutory-path* (list *rem-evt-notify*)))
+  :rule-classes nil)

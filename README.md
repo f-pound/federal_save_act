@@ -8,7 +8,7 @@ This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-deriv
 
 ## Legislative Status (as of 2026-08-22)
 
-**Not law.** H.R. 22 passed the House 220-208 (Apr. 10, 2025) and never moved in the Senate. The current vehicle is the **SAVE America Act**, passed as a House amendment to **S. 1383** (218-213, Feb. 11, 2026); Senate cloture failed 41-49 (Mar. 21) and 53-47 (Mar. 26, 2026), and reconciliation-amendment attempts failed 48-50 (Apr. 23, Jun. 4). The model was built on H.R. 22 § 2; `tools/check_text_stability.py` verifies in CI that every clause the model quotes appears verbatim in **both** texts (18/18; only the short title differs). The new vehicle's § 3 (photo identification to vote, new HAVA § 303A) is modeled as of v6.5 — process table, valid-ID table, text rule, scenario C, and both parties' Crawford branches; the name-discrepancy process and DHS/SAVE list submission remain unmodeled. Executive Order 14248's proof-of-citizenship provision is permanently enjoined (*LULAC v. EOP*, D.D.C. Oct. 31, 2025, appeal pending; *California v. Trump*, D. Mass. June 24, 2026); EO 14399 (Mar. 31, 2026) is under challenge. Machine-readable: [`data/legislative_status.json`](data/legislative_status.json).
+**Not law.** H.R. 22 passed the House 220-208 (Apr. 10, 2025) and never moved in the Senate. The current vehicle is the **SAVE America Act**, passed as a House amendment to **S. 1383** (218-213, Feb. 11, 2026); Senate cloture failed 41-49 (Mar. 21) and 53-47 (Mar. 26, 2026), and reconciliation-amendment attempts failed 48-50 (Apr. 23, Jun. 4). The model was built on H.R. 22 § 2; `tools/check_text_stability.py` verifies in CI that every clause the model quotes appears verbatim in **both** texts (18/18; only the short title differs). The new vehicle's § 3 (photo identification to vote, new HAVA § 303A) is modeled as of v6.5 — process table, valid-ID table, text rule, scenario C, and both parties' Crawford branches; the name-discrepancy process and the DHS/SAVE list-submission path (with its notice-and-opportunity requirement) are modeled as of v6.6. Executive Order 14248's proof-of-citizenship provision is permanently enjoined (*LULAC v. EOP*, D.D.C. Oct. 31, 2025, appeal pending; *California v. Trump*, D. Mass. June 24, 2026); EO 14399 (Mar. 31, 2026) is under challenge. Machine-readable: [`data/legislative_status.json`](data/legislative_status.json).
 
 ## What This Project Proves
 
@@ -79,9 +79,9 @@ The explorer lets users toggle empirical, interpretive, and doctrinal assumption
 | Voting ID rules / table / text rule (generated, § 303A) | 0 | compiled from clause IR against S. 1383 | ✅ certified |
 | **Voting invariants (§ 303A)** | **16** | **lsm gated-exit instances; two-enumerations theorems** | ✅ All Q.E.D. |
 | **Functional instantiation** | **6** | **:functional-instance of both parties' encapsulates** | ✅ All Q.E.D. |
-| Process model | 28 | generated edge table + library instances, evaluation | ✅ All Q.E.D. |
-| **Removal invariants (§ 8(k))** | **11** | **lsm instances: statutory path has no notice/hearing** | ✅ All Q.E.D. |
-| Scenario (shared) | 10 | conceded ground facts: citizen-a (registration), citizen-b (removal), citizen-c (voting) | ✅ All Q.E.D. |
+| Process model | 30 | generated edge table (incl. S. 1383 name-discrepancy path) + library instances | ✅ All Q.E.D. |
+| **Removal invariants (§ 8(k) + S. 1383 SAVE match)** | **16** | **lsm instances: § 8(k) path has no notice; SAVE-match path requires notice** | ✅ All Q.E.D. |
+| Scenario (shared) | 12 | conceded ground facts: citizen-a, citizen-b, citizen-c, citizen-d (cure path, no-conflict on any model) | ✅ All Q.E.D. |
 | Consistency check | 17 | defun decomposition, neutrality | ✅ All Q.E.D. |
 | Process invariants | 16 | `:use` instances of lsm lemmas (0 inductions) | ✅ All Q.E.D. |
 | Deep process invariants | 11 | `:use` instances of lsm lemmas (0 inductions) | ✅ All Q.E.D. |
@@ -96,7 +96,7 @@ The explorer lets users toggle empirical, interpretive, and doctrinal assumption
 | Burden proofs | 8 | derivation chain, contrapositives | ✅ All Q.E.D. |
 | Doctrine proofs | 7 | conditional doctrine, encapsulate | ✅ All Q.E.D. |
 | Model consistency | 7 | compositional decomposition | ✅ All Q.E.D. |
-| **Total** | **258** | | **✅ All Q.E.D.** |
+| **Total** | **267** | | **✅ All Q.E.D.** |
 
 **Second hinge (v6.1)**: Whether removal under § 8(k) on "verified information" with no notice or hearing is a valid regulation as applied to a registered citizen. The challenger (Mathews v. Eldridge) and government (Husted) removal branches reach opposite conditional conclusions for `citizen-b`.
 
@@ -258,17 +258,17 @@ federal_save_act/
 
 ## What Remains Assumed
 
-The § 8(k) removal process is modeled structurally (`federal_save_act_removal_invariants.lisp`: the statutory path to removal provably contains no notice or hearing event) and doctrinally (v6.1: `constitutional-removal-conflict-conditionp`, with challenger and government removal branches for `citizen-b`). The neutral books do **not** assert that removal without notice is unconstitutional; the party books derive opposite conditional conclusions from traced assumptions.
+The § 8(k) removal process is modeled structurally (`federal_save_act_removal_invariants.lisp`: the § 8(k) path to removal provably contains no notice or hearing event, while the S. 1383 SAVE-match path provably requires notice) and doctrinally (v6.1: `constitutional-removal-conflict-conditionp`, with challenger and government removal branches for `citizen-b`). The neutral books do **not** assert that removal without notice is unconstitutional; the party books derive opposite conditional conclusions from traced assumptions.
 
-- **52 defaxioms** across 7 books — see `reports/axiom_inventory.md` for the full classification. Every one carries a **decider** tag (legislature 5 · court 20 · fact-finder 4 · party-stipulation 23): the logic has no grey areas; each axiom is a choice, and the tag says whose. A CI lint guarantees the 18 neutral books contain no axiom at all.
-- **21 scenario facts** stipulating citizen-a (registration), citizen-b (removal) and citizen-c (voting), shared by both party models (self-evidently consistent)
+- **60 defaxioms** across 7 books — see `reports/axiom_inventory.md` for the full classification. Every one carries a **decider** tag (legislature 5 · court 20 · fact-finder 4 · party-stipulation 31): the logic has no grey areas; each axiom is a choice, and the tag says whose. A CI lint guarantees the 18 neutral books contain no axiom at all.
+- **29 scenario facts** stipulating citizen-a (registration), citizen-b (removal), citizen-c (voting, no cure) and citizen-d (voting, cured), shared by both party models (self-evidently consistent)
 - **3 empirical assumptions** about burden severity (contestable, source-linked)
 - **2 interpretive assumptions** encoding the hinge semantics (mutually exclusive)
 - **5 bridge rules** connecting encapsulate predicates to core defstubs
 
 ## What Is Source-Traced
 
-- 61 axiom-to-source mappings in `sources/clause_trace.csv`
+- 69 axiom-to-source mappings in `sources/clause_trace.csv`
 - 34 authoritative sources (two tracked bill texts, CRS reports, two executive orders, EO litigation) in `sources/source_manifest.json`
 - Every defaxiom has a classification, source_id, section reference, and quoted clause text
 - Machine-checkable via `tools/validate_trace.py` (runs in CI)

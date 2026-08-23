@@ -1686,3 +1686,8 @@ body.reviewer-active .reviewer-detail {
 .memo-content { max-width: 820px; }
 .memo-actions { margin: 8px 0; }
 .memo-text { width:100%; min-height:360px; font: 11.5px/1.45 "JetBrains Mono", monospace; background:#151826; color:#dfe6ee; border:1px solid #3a4257; border-radius:6px; padding:10px; resize:vertical; }
+
+/* v6.6 hand-drawn look */
+.sketch { filter: url(#vg-sketch); }
+.sketch rect, .sketch circle, .sketch path, .sketch ellipse { stroke: #2a1f1a; stroke-width: 1.4; stroke-linejoin: round; paint-order: stroke fill; }
+.sketch path[stroke] { stroke-width: 2.2; }

@@ -64,6 +64,10 @@ def main():
         for r in d.get("rules", []):
             if r.get("text"):
                 checks.append((f"{ir.stem}:{r['name']}", r["text"], where))
+        for e in (d.get("process") or {}).get("edges", []):
+            if e.get("text"):
+                w = WHERE.get(e.get("source_id", d["source_id"]), where)
+                checks.append((f"{ir.stem}:edge:{e['from']}--{e['event']}", e["text"], w))
     errors = 0
     for name, quote, where in checks:
         for frag in fragments(quote):

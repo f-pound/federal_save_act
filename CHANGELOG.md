@@ -6,6 +6,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.6.0] — 2026-08-23
+
+### Added — the last unmodeled SAVE America Act material
+- **Clause IR edges can carry verbatim quotes** (`text`, `source_id`), checked by `check_text_stability.py` against the right bill text and printed into the generated books and Markdown.
+- **Name-discrepancy process** (S. 1383 § 8(j)(2)): new state `name-discrepancy-review` and edges in the registration table; `process-inv-name-discrepancy-path-registers`; the derived acceptance set is unchanged.
+- **SAVE-system match path** (S. 1383 § 8(j)(4)(B)): `on-rolls → save-identified → noticed → (provide proof → on-rolls | opportunity lapses → removed)`. **Finding**: the new vehicle requires *notice and an opportunity to provide documentary proof* on the systematic DHS-match path — `save-match-removal-requires-notice` (gated-exit instance) — while the § 8(k) "at any time upon receipt" path survives with no notice (`section-8k-path-unchanged-by-save-america-act`). Derived-set theorems updated accordingly (the prover rejected the stale enumerations, as it should).
+- **Scenario D** (`citizen-d`, 8 facts): expired licence, provisional ballot, cures within 3 days. `scenario-d-no-voting-conflict-any-model` — proved in the shared scenario book with no party premise.
+- Restated pivot theorems in `independence` and `model_consistency` are now explicit corollaries of the core lemmas (`:use`), statements unchanged.
+- Explorer cartoons: hand-drawn look (edge wobble filter, ink outlines).
+
+### Census
+- Theorems 258 → **267**; axioms 52 → **60** (8 scenario-d); trace rows 69; books 30.
+
 ## [6.5.1] — 2026-08-23
 
 ### Added (explorer)

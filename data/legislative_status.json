@@ -10,9 +10,9 @@
     "section_2_unchanged": true,
     "section_2_check": "tools/check_text_stability.py",
     "new_material": [
-      "name-discrepancy registration process",
-      "30-day DHS/SAVE voter-list submission",
-      "\u00a7 3 photo ID to vote (HAVA \u00a7 303A)"
+      "name-discrepancy registration process (\u00a7 8(j)(2)) \u2014 modeled v6.6",
+      "30-day DHS/SAVE voter-list submission with notice-and-opportunity before removal (\u00a7 8(j)(4)(B)) \u2014 modeled v6.6",
+      "\u00a7 3 photo ID to vote (HAVA \u00a7 303A) \u2014 modeled v6.5"
     ]
   },
   "senate_actions": [
@@ -53,5 +53,5 @@
       "status": "Signed Mar. 31, 2026; challenged (D.D.C. 1:26-cv-01132)"
     }
   ],
-  "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled \u00a7 2 text unchanged."
+  "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled \u00a7 2 text unchanged; S. 1383 additions (\u00a7 3 photo ID, name-discrepancy process, SAVE-match removal with notice) modeled."
 }

@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.5.1">
+  <link rel="stylesheet" href="style.css?v=6.6.0">
 </head>
 <body>
   <header id="app-header">
@@ -129,6 +129,11 @@
               <defs>
                 <linearGradient id="vg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232737"/><stop offset="1" stop-color="#171a26"/></linearGradient>
                 <filter id="vg-shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".35"/></filter>
+                <!-- hand-drawn look: slight wobble of every edge -->
+                <filter id="vg-sketch" x="-5%" y="-5%" width="110%" height="110%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="noise"/>
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
               </defs>
               <!-- wall + floor -->
               <rect x="0" y="0" width="560" height="300" fill="#1f2333"/>
@@ -141,7 +146,7 @@
               <rect x="300" y="184" width="252" height="52" fill="#30364a"/>
               <rect x="300" y="184" width="252" height="6" fill="#262b3b"/>
               <!-- ===== clerk (behind counter) ===== -->
-              <g id="clerk">
+              <g id="clerk" class="sketch">
                 <rect x="392" y="128" width="52" height="46" rx="12" fill="#4a90d9"/>
                 <rect x="412" y="118" width="12" height="14" rx="4" fill="#e8c39e"/>
                 <circle cx="418" cy="100" r="22" fill="#e8c39e"/>
@@ -152,7 +157,7 @@
                 <ellipse cx="380" cy="168" rx="9" ry="5" fill="#e8c39e"/>
               </g>
               <!-- ===== applicant ===== -->
-              <g id="applicant">
+              <g id="applicant" class="sketch">
                 <!-- body -->
                 <path d="M104 236 v-70 a30 30 0 0 1 30 -30 h16 a30 30 0 0 1 30 30 v70 z" fill="#8e44ad"/>
                 <!-- far arm (down) -->
@@ -215,7 +220,7 @@
               <rect x="292" y="168" width="170" height="16" rx="3" fill="#4a5268"/>
               <rect x="300" y="184" width="154" height="52" fill="#30364a"/>
               <!-- poll worker -->
-              <g id="poll-worker">
+              <g id="poll-worker" class="sketch">
                 <rect x="362" y="128" width="52" height="46" rx="12" fill="#2ecc71"/>
                 <rect x="382" y="118" width="12" height="14" rx="4" fill="#d9b08c"/>
                 <circle cx="388" cy="100" r="22" fill="#d9b08c"/>
@@ -225,7 +230,7 @@
                 <ellipse cx="350" cy="168" rx="9" ry="5" fill="#d9b08c"/>
               </g>
               <!-- voter (same purple citizen) -->
-              <g id="poll-voter">
+              <g id="poll-voter" class="sketch">
                 <path d="M104 236 v-70 a30 30 0 0 1 30 -30 h16 a30 30 0 0 1 30 30 v70 z" fill="#8e44ad"/>
                 <path d="M108 150 q-18 30 -10 70" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
                 <rect x="136" y="108" width="14" height="16" rx="5" fill="#f1d2b6"/>
@@ -346,6 +351,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6.5.1"></script>
+  <script src="app.js?v=6.6.0"></script>
 </body>
 </html>

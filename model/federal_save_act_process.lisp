@@ -247,3 +247,20 @@
 (defthm process-inv-denial-trigger-requires-no-alternative
   (implies (alternative-process-approvedp p x)
            (not (save-act-denial-triggerp p x))))
+
+;;; =========================================================================
+;;; 6. NAME-DISCREPANCY PROCESS  (S. 1383 § 8(j)(2); not in H.R. 22) — v6.6
+;;; =========================================================================
+
+;; Documents that would be proof but carry a previous name, cured by
+;; additional documentation or an affidavit, lead to registration.
+(defthm process-inv-name-discrepancy-path-registers
+  (equal (reg-run-trace *state-unsubmitted*
+                        (list *evt-submit* *evt-present-docs* *evt-name-discrepancy*
+                              *evt-establish-prev-name* *evt-register*))
+         *state-registered*))
+
+;; The derived acceptance set is unchanged: the discrepancy review feeds
+;; doc-accepted; it is not itself a route to registration.
+(defthm name-discrepancy-review-is-not-an-acceptance-state
+  (not (member-equal *state-name-discrepancy* *reg-acceptance-states*)))
