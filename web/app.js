@@ -137,6 +137,7 @@
     renderStatusBar();
     renderVoterDocs();
     renderPollDocs();
+    setupMemo();
 
     // Bind filter checkboxes
     document.getElementById('filter-axiom-free').addEventListener('change', renderGraph);
@@ -543,6 +544,84 @@
     document.getElementById('poll-bubble-text').textContent = bubble;
     setPollExpression(face);
     document.getElementById('poll-outcome').innerHTML = steps.join('');
+  }
+
+  // ---- Export memo: the current premise selection as a Markdown brief ----
+  function axiomLookup() {
+    const ad = data.audit_details;
+    const map = {};
+    if (ad && ad.axioms_by_book) Object.entries(ad.axioms_by_book).forEach(([book, arr]) => arr.forEach(a => { map[a.name] = { ...a, book }; }));
+    return map;
+  }
+
+  function buildMemo() {
+    const st = data.meta && data.meta.legislative_status;
+    const ax = axiomLookup();
+    const lines = [];
+    lines.push('# Computational amicus memo — Federal SAVE Act (H.R. 22 / S. 1383)');
+    lines.push('');
+    lines.push(`_Generated from the Computational Amicus Explorer, v${data.meta.version || ''}. ${data.meta.books_certified || ''} ACL2 books certified, ${data.meta.theorems || ''} theorems Q.E.D., ${data.meta.axioms || ''} traced axioms. Preset: **${activePreset && PRESETS[activePreset] ? PRESETS[activePreset].label : 'custom'}**._`);
+    if (st) lines.push(`_Legislative status (${st.as_of}): ${st.headline}_`);
+    lines.push('');
+    lines.push('## 1. What is proved unconditionally (no legal premise)');
+    lines.push('');
+    data.nodes.filter(n => n.axiom_free && (n.type === 'THEOREM' || n.type === 'LEMMA')).forEach(n => {
+      lines.push(`- ${n.label}  \n  _ACL2:_ \`${n.acl2_event || n.id}\` (${n.book || ''})`);
+    });
+    lines.push('');
+    lines.push('## 2. Premises selected (each is a choice; the tag says whose)');
+    lines.push('');
+    const groups = {};
+    data.hypotheticals.forEach(h => { (groups[h.category] = groups[h.category] || []).push(h); });
+    for (const [cat, hs] of Object.entries(groups)) {
+      lines.push(`### ${cat}`);
+      hs.forEach(h => {
+        const on = activeAssumptions.has(h.id);
+        const ctrl = h.controls.map(id => data.nodes.find(n => n.id === id)).filter(Boolean);
+        const events = ctrl.flatMap(n => String(n.acl2_event || '').split(/,\s*/)).filter(e => ax[e]);
+        const deciders = [...new Set(events.map(e => ax[e].decider).filter(Boolean))];
+        const sources = [...new Set(ctrl.map(n => n.source_ref).filter(Boolean))];
+        lines.push(`- [${on ? 'x' : ' '}] **${h.label}** (${h.path})` +
+          (deciders.length ? ` — decided by: ${deciders.map(d => DECIDER_LABELS[d] || d).join('; ')}` : '') +
+          (sources.length ? `  \n  _Source:_ ${sources.join('; ')}` : '') +
+          (events.length ? `  \n  _Axioms:_ ${events.map(e => '\`' + e + '\`').join(', ')}` : ''));
+      });
+      lines.push('');
+    }
+    lines.push('## 3. Conditional conclusions under these premises');
+    lines.push('');
+    data.nodes.filter(n => n.type === 'FINAL_CONCLUSION').forEach(n => {
+      const status = conclusionStatus(n.id);
+      lines.push(`- **${n.label}** — ${status.toUpperCase()}  \n  ${n.description || ''}  \n  _Book:_ ${n.book || ''}`);
+    });
+    lines.push('');
+    lines.push('## 4. Reading this memo');
+    lines.push('');
+    lines.push('ACL2 proved every "then"; the reader decides every "if". A conclusion marked SUPPORTED means: if the ticked premises hold, the conclusion follows as a theorem. UNSUPPORTED means a premise the proof needs is unticked — not that the conclusion is false. The model does not decide constitutionality; it makes the pivot explicit: `constitutional-conflict-conditionp` is equivalent to `(not (valid-regulationp law x))` once the other preconditions hold.');
+    lines.push('');
+    lines.push('Repository: https://github.com/f-pound/federal_save_act — sources/clause_trace.csv traces every axiom to its legal source and decider; tools/check_text_stability.py verifies every quoted clause verbatim in both bill texts.');
+    return lines.join('\n');
+  }
+
+  function setupMemo() {
+    const btn = document.getElementById('export-memo-btn');
+    const modal = document.getElementById('memo-modal');
+    if (!btn || !modal) return;
+    const close = () => modal.classList.add('hidden');
+    btn.addEventListener('click', () => {
+      document.getElementById('memo-text').value = buildMemo();
+      document.getElementById('memo-copied').textContent = '';
+      modal.classList.remove('hidden');
+    });
+    document.getElementById('memo-close').addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.getElementById('memo-copy').addEventListener('click', async () => {
+      const t = document.getElementById('memo-text');
+      try { await navigator.clipboard.writeText(t.value); document.getElementById('memo-copied').textContent = 'Copied.'; }
+      catch (e) { t.select(); document.execCommand('copy'); document.getElementById('memo-copied').textContent = 'Copied.'; }
+    });
+    const jc = document.getElementById('jump-conclusions');
+    if (jc) jc.addEventListener('click', e => { e.preventDefault(); const p = document.querySelector('.panel-center'); p.scrollTop = p.scrollHeight; });
   }
 
   function renderStatusBar() {

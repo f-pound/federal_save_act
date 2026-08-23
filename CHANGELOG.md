@@ -6,6 +6,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.5.1] — 2026-08-23
+
+### Added (explorer)
+- **Export memo**: writes the current preset, every premise with its on/off state, decider and source, the axiom-free theorems, and the conditional conclusions as a Markdown brief (copy to clipboard).
+- Jump bar (Registration counter · Polling place · Proof graph · Conclusions); first-visit guide rewritten for the current tool; readable labels for the original eight theorem nodes.
+
 ## [6.5.0] — 2026-08-23
 
 ### Added — SAVE America Act § 3: photo identification to vote (new HAVA § 303A)

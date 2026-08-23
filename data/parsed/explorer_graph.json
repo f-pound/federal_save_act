@@ -428,89 +428,97 @@
       "id": "thm-registered-implies-acceptance",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "registered-implies-prior-acceptance-path",
+      "label": "Registration requires a prior acceptance state (documents accepted or alternative process approved)",
       "description": "Registration requires a prior acceptance path through the state machine. 0 axioms.",
       "book": "federal_save_act_process_invariants.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "acl2_event": "registered-implies-prior-acceptance-path"
     },
     {
       "id": "thm-denied-implies-denial",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "denied-implies-prior-denial-path",
+      "label": "Denial requires a denial-triggering state (documents rejected, alternative denied, or direct denial)",
       "description": "Denial requires a prior denial path through the state machine. 0 axioms.",
       "book": "federal_save_act_deep_process_invariants.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "acl2_event": "denied-implies-prior-denial-path"
     },
     {
       "id": "thm-terminal-remains",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "terminal-state-remains-terminal",
+      "label": "Registered and denied are final — no later event changes the outcome",
       "description": "Once registered or denied, later events do not change the terminal outcome. 0 axioms.",
       "book": "federal_save_act_deep_process_invariants.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "acl2_event": "terminal-state-remains-terminal"
     },
     {
       "id": "thm-nonqualifying-no-proof",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "all-nonqualifying-implies-no-documentary-proof",
+      "label": "A bundle with no statute-recognized document cannot be documentary proof",
       "description": "A bundle of only nonqualifying documents cannot satisfy documentary proof. 0 axioms.",
       "book": "federal_save_act_document_proofs.lisp",
       "axiom_count": 0,
       "axiom_free": true,
-      "path": "neutral"
+      "path": "neutral",
+      "acl2_event": "all-nonqualifying-implies-no-documentary-proof"
     },
     {
       "id": "thm-pivot",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "conflict-condition-pivots-on-valid-regulation",
+      "label": "With every other precondition fixed, conflict ⇔ the regulation is not valid (the pivot)",
       "description": "The constitutional conflict condition is logically equivalent to (not (valid-regulationp law x)). The entire dispute reduces to this single predicate.",
       "book": "federal_save_act_model_consistency.lisp",
       "axiom_count": 0,
       "axiom_free": false,
-      "path": "neutral"
+      "path": "neutral",
+      "acl2_event": "conflict-condition-pivots-on-valid-regulation"
     },
     {
       "id": "thm-full-burden",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "full-burden-chain",
+      "label": "Lacks documents + cannot obtain them + no alternative ⇒ severe burden (derived, not assumed)",
       "description": "Derives: citizen-a faces severe burden → regulation is invalid, using the executable defun chain.",
       "book": "federal_save_act_burden_proofs.lisp",
       "axiom_count": 6,
       "axiom_free": false,
-      "path": "challenger"
+      "path": "challenger",
+      "acl2_event": "full-burden-chain"
     },
     {
       "id": "thm-invalid-enables",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "invalid-regulation-enables-conflict-condition",
+      "label": "Invalid regulation + qualified voter denied ⇒ constitutional conflict (challenger direction)",
       "description": "If the regulation is not valid, the formal conflict condition is established.",
       "book": "federal_save_act_model_consistency.lisp",
       "axiom_count": 0,
       "axiom_free": false,
-      "path": "challenger"
+      "path": "challenger",
+      "acl2_event": "invalid-regulation-enables-conflict-condition"
     },
     {
       "id": "thm-valid-negates",
       "type": "THEOREM",
       "layer": "theorems",
-      "label": "valid-regulation-negates-conflict-condition",
+      "label": "Valid regulation ⇒ no constitutional conflict, whatever else holds (government direction)",
       "description": "If the regulation is valid, no formal conflict condition exists.",
       "book": "federal_save_act_model_consistency.lisp",
       "axiom_count": 0,
       "axiom_free": false,
-      "path": "government"
+      "path": "government",
+      "acl2_event": "valid-regulation-negates-conflict-condition"
     },
     {
       "id": "pivot-valid-regulation",

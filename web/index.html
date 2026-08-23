@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.5.0">
+  <link rel="stylesheet" href="style.css?v=6.5.1">
 </head>
 <body>
   <header id="app-header">
@@ -98,6 +98,14 @@
     </aside>
 
     <section id="panel-center" class="panel panel-center">
+      <nav class="jump-bar" aria-label="Jump to">
+        <span class="jump-label">Jump to</span>
+        <a href="#voter-panel">Registration counter</a>
+        <a href="#poll-panel">Polling place</a>
+        <a href="#graph-container">Proof graph</a>
+        <a href="#" id="jump-conclusions">Conclusions</a>
+        <button id="export-memo-btn" class="export-btn" title="Write your current premises and outcomes as a Markdown brief">⬇ Export memo</button>
+      </nav>
       <details id="voter-panel" class="voter-panel" open>
         <summary class="voter-summary">
           <span class="voter-title">Try it — a citizen at the registration counter</span>
@@ -267,6 +275,16 @@
     </p>
   </footer>
 
+  <!-- Export memo modal -->
+  <div id="memo-modal" class="modal-overlay hidden">
+    <div class="modal-content memo-content">
+      <button id="memo-close" class="modal-close">&times;</button>
+      <h2 class="modal-title">Memo — current premises and conditional conclusions</h2>
+      <p class="modal-lead">Markdown. Every line is traceable to a certified ACL2 event or a traced axiom. Copy it into your document.</p>
+      <div class="memo-actions"><button id="memo-copy" class="preset-btn">Copy to clipboard</button> <span id="memo-copied" class="who"></span></div>
+      <textarea id="memo-text" class="memo-text" readonly></textarea>
+    </div>
+  </div>
   <!-- About Modal -->
   <div id="about-modal" class="modal-overlay hidden">
     <div class="modal-content">
@@ -287,48 +305,14 @@
       </div>
 
       <div class="modal-section">
-        <h3>How to Navigate</h3>
+        <h3>How to use it — three minutes</h3>
         <div class="modal-steps">
-          <div class="modal-step">
-            <span class="step-num">1</span>
-            <div>
-              <strong>Read the graph top-to-bottom.</strong> The six layers flow from source materials
-              down through formalization, the executable model, derivations, theorems, and final conclusions.
-            </div>
-          </div>
-          <div class="modal-step">
-            <span class="step-num">2</span>
-            <div>
-              <strong>Click any node</strong> to see its details in the right panel — source references,
-              the ACL2 event name, which book it lives in, and what it depends on.
-            </div>
-          </div>
-          <div class="modal-step">
-            <span class="step-num">3</span>
-            <div>
-              <strong>Pick a point of view</strong> with the preset buttons, then <strong>untick any premise you doubt</strong> in the left panel and watch
-              dependent nodes dim and conclusion status badges change from
-              <span class="inline-badge badge-supported">Supported</span> to
-              <span class="inline-badge badge-unsupported">Unsupported</span>.
-            </div>
-          </div>
-          <div class="modal-step">
-            <span class="step-num">4</span>
-            <div>
-              <strong>Click the audit stats</strong> in the header bar (Books, Theorems, Axioms, Existentials).
-              A detail drawer slides open showing the full supporting data — every book with its theorem/axiom count, every
-              theorem grouped by book, every axiom with its source trace, or every existential proposition.
-            </div>
-          </div>
-          <div class="modal-step">
-            <span class="step-num">5</span>
-            <div>
-              <strong>Try it:</strong> press <em>Government's defense</em> in the left panel.
-              The Government "NO CONFLICT" conclusion will show
-              <span class="inline-badge badge-supported">Supported</span> while the Challenger conclusion
-              shows <span class="inline-badge badge-unsupported">Unsupported</span>.
-            </div>
-          </div>
+          <div class="modal-step"><span class="step-num">1</span><div><strong>Try the two scenes at the top.</strong> Hand the clerk documents at the registration counter, then carry ID to the polling place. The clerk answers from the statute's own lists (compiled from one source file so they cannot drift from the proofs), the court's reading of the attestation process decides the hinge, and your premises decide what a denied citizen means.</div></div>
+          <div class="modal-step"><span class="step-num">2</span><div><strong>Pick a point of view</strong> in the left panel — <em>Both sides</em>, <em>Challenger's case</em>, <em>Government's defense</em>, <em>Statute text only</em>, <em>Citizenship implies documents</em>, <em>Contested premises only</em>. Each is a complete, valid argument; the description tells you which factual claim it rests on.</div></div>
+          <div class="modal-step"><span class="step-num">3</span><div><strong>Untick any premise you doubt.</strong> Boxes that depended on it dim; conclusion badges flip between <span class="inline-badge badge-supported">Supported</span> and <span class="inline-badge badge-unsupported">Unsupported</span>. Nothing here is a grey area of logic — every grey area is a <em>choice</em>, and each box says whose: <strong>legislature</strong> (statutory text), <strong>court</strong> (doctrine / interpretation), <strong>fact-finder</strong> (empirical), or <strong>party stipulation</strong> (conceded by both sides).</div></div>
+          <div class="modal-step"><span class="step-num">4</span><div><strong>Click any box</strong> for its legal source, the ACL2 theorem or axiom name, the book it lives in, who decides it, and what it depends on. Theorems say "Nobody — proved by ACL2 from definitions."</div></div>
+          <div class="modal-step"><span class="step-num">5</span><div><strong>Export a memo.</strong> The <em>Export memo</em> button writes your current premises, their deciders and sources, and the resulting conditional conclusions as a Markdown brief you can paste into a document.</div></div>
+          <div class="modal-step"><span class="step-num">6</span><div><strong>For reviewers:</strong> the header numbers open drawers listing every certified book, theorem and traced axiom. Everything is machine-checked in CI on every commit — all books certified, every quoted clause verbatim in both bill texts, generated books identical to their source files.</div></div>
         </div>
       </div>
 
@@ -362,6 +346,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6.5.0"></script>
+  <script src="app.js?v=6.5.1"></script>
 </body>
 </html>
