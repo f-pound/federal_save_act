@@ -71,10 +71,11 @@ jobs:
       - name: Check required review documents
         run: |
           missing=0
-          for f in CERTIFICATION.md PROOF_TOUR.md TOP_5_THEOREMS.md \
+          for f in docs/CERTIFICATION.md docs/PROOF_TOUR.md docs/TOP_5_THEOREMS.md \
                    reports/axiom_pressure_report.md \
                    reports/proof_dependency_report.md \
                    reports/v5_3_review_hardening_assessment.md \
+                   reports/v6_lemma_library_assessment.md \
                    reports/certification_status.md; do
             if [ ! -f "$f" ]; then
               echo "MISSING: $f"
