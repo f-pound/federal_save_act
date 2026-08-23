@@ -30,7 +30,7 @@ See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectura
 
 ## White paper
 
-[papers/computational_amicus_brief_method_and_results.md](papers/computational_amicus_brief_method_and_results.md) — method and results for legal scholars and formal-methods readers: architecture, the clause IR, the lemma libraries, decider tagging, the three audits, findings (§ 3(b)(5), over-quantified bridges, § 8(k) vs S. 1383 notice, two enumerations, hinge rediscovery), limitations, and the second-statute test.
+[papers/computational_amicus_brief_method_and_results.md](papers/computational_amicus_brief_method_and_results.md) (rendered: https://f-pound.github.io/federal_save_act/paper/) — method and results for legal scholars and formal-methods readers: architecture, the clause IR, the lemma libraries, decider tagging, the three audits, findings (§ 3(b)(5), over-quantified bridges, § 8(k) vs S. 1383 notice, two enumerations, hinge rediscovery), limitations, and the second-statute test.
 
 ## Reuse this for another statute
 
