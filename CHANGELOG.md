@@ -6,6 +6,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.9.0] — 2026-08-23
+
+### Added — the pipeline as a tool (template for other matters)
+- `tools/amicus_pipeline.py`: `init` (scaffold a new project from the statute-independent parts), `fetch bill|status|eo|case` (govinfo, BILLSTATUS, Federal Register, CourtListener), `extract` (draft clause IR from statutory text: enumerated definitions, prohibitions, duties — verbatim quotes, `requires_human_review`), `compile`, `certify`, `audit [--acl2]`, `hinges`, `all`. `pipeline.json` lists the project's IR files.
+- `data/audit_worlds.json`: the audit toy worlds are data, not code.
+- `reports/hinges.md`: coupled clusters + premise → conclusion dependencies.
+- `docs/PIPELINE.md`: the end-to-end method with explicit human-review points.
+- Example extractor output on the SAVE America Act text: `data/parsed/save_america_act_draft_rules.json` (both statutory enumerations, the three operative prohibitions, two duties).
+
 ## [6.8.0] — 2026-08-23
 
 ### Added — adversarial audit (the `disprove` route)

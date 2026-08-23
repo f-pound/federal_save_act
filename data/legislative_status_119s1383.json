@@ -1,0 +1,35 @@
+{
+  "bill": "S. 1383 (119th)",
+  "title": "Veterans Accessibility Advisory Committee Act of 2025",
+  "latest_action": {
+    "date": "2026-03-26",
+    "text": "Considered by Senate (Message from the House considered). (consideration: CR S1647)"
+  },
+  "recorded_votes": [
+    {
+      "date": "2026-02-11",
+      "action": "On motion to commit Failed by the Yeas and Nays: 214 - 217 (Roll no. 68)."
+    },
+    {
+      "date": "2026-02-11",
+      "action": "On passage Passed by the Yeas and Nays: 218 - 213 (Roll no. 69). (text of amendment in the nature of a substitute: CR H2138-2141)"
+    },
+    {
+      "date": "2026-02-11",
+      "action": "Passed/agreed to in House: On passage Passed by the Yeas and Nays: 218 - 213 (Roll no. 69)."
+    },
+    {
+      "date": "2026-03-17",
+      "action": "Motion to proceed to consideration of the House message to accompany S. 1383 agreed to in Senate by Yea-Nay Vote. 51 - 48. Record Vote Number: 57."
+    }
+  ],
+  "text_versions": [
+    "Engrossed Amendment House",
+    "Engrossed in Senate",
+    "Reported to Senate",
+    "Introduced in Senate"
+  ],
+  "laws": [],
+  "draft": true,
+  "note": "Draft from BILLSTATUS XML \u2014 review before copying into data/legislative_status.json"
+}

@@ -1,7 +1,7 @@
 {
-  "version": "6.8.0",
+  "version": "6.9.0",
   "model_version": "6.7",
-  "documentation_version": "6.8.0",
+  "documentation_version": "6.9.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",

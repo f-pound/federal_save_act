@@ -28,6 +28,10 @@ v6.0 adds a **lemma-library layer** beneath the statute books. `model/lib/lsm.li
 
 See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectural rationale (still applicable to the hybrid core).
 
+## Reuse this for another statute
+
+The method is a pipeline, and the tools are statute-independent: `python tools/amicus_pipeline.py init ../my_statute --title …`, then `fetch → extract → compile → certify → audit → hinges`. See [docs/PIPELINE.md](docs/PIPELINE.md) and [docs/AUDITS.md](docs/AUDITS.md).
+
 ## Quick Start
 
 ```bash

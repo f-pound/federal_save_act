@@ -1,0 +1,344 @@
+{
+  "book": "save_america_act_draft_rules",
+  "title": "DRAFT clause IR extracted from save_america_act_s1383_eah_text.txt — REVIEW REQUIRED",
+  "source_id": "s1383-eah",
+  "includes": [
+    "lib/enum_list"
+  ],
+  "categories": [
+    {
+      "name": "documentary-proof-of-united-states-citizenship-types",
+      "source": "s1383-eah: definition of 'documentary proof of United States citizenship'",
+      "description": "DRAFT: items enumerated in the definition of 'documentary proof of United States citizenship' — decide standalone vs paired structure by hand",
+      "members": [
+        {
+          "symbol": "a-form-of-identification-issued-consiste",
+          "source": "(1)",
+          "text": "A form of identification issued consistent with the requirements of the REAL ID Act of 2005 that indicates the applicant is a citizen of the United States.",
+          "ace_noun": "n:a-form-of-identification-issued-consiste"
+        },
+        {
+          "symbol": "a-valid-united-states-passport",
+          "source": "(2)",
+          "text": "A valid United States passport.",
+          "ace_noun": "n:a-valid-united-states-passport"
+        },
+        {
+          "symbol": "the-applicant-s-official-united-states-m",
+          "source": "(3)",
+          "text": "The applicant's official United States military identification card, together with a United States military record of service showing that the applicant's place of birth was in the United States.",
+          "ace_noun": "n:the-applicant-s-official-united-states-m"
+        },
+        {
+          "symbol": "a-valid-government-issued-photo-identifi",
+          "source": "(4)",
+          "text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government showing that the applicant's place of birth was in the United States.",
+          "ace_noun": "n:a-valid-government-issued-photo-identifi"
+        },
+        {
+          "symbol": "a-valid-government-issued-photo-identifi-5",
+          "source": "(5)",
+          "text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government other than an identification described in paragraphs.",
+          "ace_noun": "n:a-valid-government-issued-photo-identifi-5"
+        },
+        {
+          "symbol": "through-4",
+          "source": "(1)",
+          "text": "through (4), but only if presented together with one or more of the following:.",
+          "ace_noun": "n:through-4"
+        }
+      ]
+    },
+    {
+      "name": "valid-photo-identification-types",
+      "source": "s1383-eah: definition of 'valid photo identification'",
+      "description": "DRAFT: items enumerated in the definition of 'valid photo identification' — decide standalone vs paired structure by hand",
+      "members": [
+        {
+          "symbol": "a-valid-state-issued-motor-vehicle-drive",
+          "source": "(1)",
+          "text": "A valid State-issued motor vehicle driver's license that includes a photo of the individual and an expiration date.",
+          "ace_noun": "n:a-valid-state-issued-motor-vehicle-drive"
+        },
+        {
+          "symbol": "a-valid-state-issued-identification-card",
+          "source": "(2)",
+          "text": "A valid State-issued identification card that includes a photo of the individual and an expiration date issued by a State motor vehicle authority.",
+          "ace_noun": "n:a-valid-state-issued-identification-card"
+        },
+        {
+          "symbol": "a-valid-united-states-passport-for-the-i",
+          "source": "(3)",
+          "text": "A valid United States passport for the individual.",
+          "ace_noun": "n:a-valid-united-states-passport-for-the-i"
+        },
+        {
+          "symbol": "a-valid-military-identification-for-the-",
+          "source": "(4)",
+          "text": "A valid military identification for the individual.",
+          "ace_noun": "n:a-valid-military-identification-for-the-"
+        },
+        {
+          "symbol": "a-valid-identification-document-issued-b",
+          "source": "(5)",
+          "text": "A valid identification document issued by a Tribal government that includes a photo of the individual and an expiration date.",
+          "ace_noun": "n:a-valid-identification-document-issued-b"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "name": "documentary-proof-of-united-states-citizenship-bundlep",
+      "args": [
+        "docs"
+      ],
+      "label": "DEFINED_TERM",
+      "source": "s1383-eah: definition of 'documentary proof of United States citizenship'",
+      "text": "the term `documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following: ``(1) A form of i",
+      "body": {
+        "some-in": [
+          "docs",
+          "documentary-proof-of-united-states-citizenship-types"
+        ]
+      }
+    },
+    {
+      "name": "valid-photo-identification-bundlep",
+      "args": [
+        "docs"
+      ],
+      "label": "DEFINED_TERM",
+      "source": "s1383-eah: definition of 'valid photo identification'",
+      "text": "a `valid photo identification' means, with respect to an individual who seeks to vote in a State, any of the following: ``(1) A valid State-issued motor vehic",
+      "body": {
+        "some-in": [
+          "docs",
+          "valid-photo-identification-types"
+        ]
+      }
+    },
+    {
+      "name": "draft-prohibition-1",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "x"
+      ],
+      "label": "PROHIBITION",
+      "source": "s1383-eah",
+      "text": "Under any method of voter registration in a State, the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application.",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "TODO-condition",
+              "p",
+              "x"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "TODO-consequence",
+          "p",
+          "x"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "name": "draft-prohibition-2",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "x"
+      ],
+      "label": "PROHIBITION",
+      "source": "s1383-eah",
+      "text": "Notwithstanding any other provision of this Act, a State may not register an individual to vote in elections for Federal office held in the State unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship.",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "TODO-condition",
+              "p",
+              "x"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "TODO-consequence",
+          "p",
+          "x"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "name": "draft-prohibition-3",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "x"
+      ],
+      "label": "PROHIBITION",
+      "source": "s1383-eah",
+      "text": "Notwithstanding any other provision of law and except as provided in subparagraph (B), the appropriate State or local election official may not provide a ballot for an election for Federal office to an individual who desires to vote in person unless the individual presents to the official a valid physical photo identification.",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "TODO-condition",
+              "p",
+              "x"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "TODO-consequence",
+          "p",
+          "x"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "name": "draft-prohibition-4",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "x"
+      ],
+      "label": "PROHIBITION",
+      "source": "s1383-eah",
+      "text": "Notwithstanding any other provision of law and except as provided in subparagraph (B), the appropriate State or local election official may not accept any ballot for an election for Federal office provided by an individual who votes other than in person unless the individual submits with the ballot-- ``(i) a copy of a valid photo identification; or ``(ii) the last four digits of the individual's S",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "TODO-condition",
+              "p",
+              "x"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "TODO-consequence",
+          "p",
+          "x"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "name": "draft-duty-5",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "x"
+      ],
+      "label": "DUTY",
+      "source": "s1383-eah",
+      "text": "Subject to any relevant guidance adopted by the Election Assistance Commission, each State shall establish a process under which an applicant can provide such additional documentation to the appropriate election official of the State as may be necessary to establish that the applicant is a citizen of the United States in the event of a discrepancy with respect to the applicant's documentary proof ",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "TODO-condition",
+              "p",
+              "x"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "TODO-consequence",
+          "p",
+          "x"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "name": "draft-duty-6",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "x"
+      ],
+      "label": "DUTY",
+      "source": "s1383-eah",
+      "text": "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters for elections for Federal office held in the State at any time upon receipt of documentation or verified information that a registrant is not a United States citizen.",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "TODO-condition",
+              "p",
+              "x"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "TODO-consequence",
+          "p",
+          "x"
+        ]
+      },
+      "requires_human_review": true
+    }
+  ],
+  "requires_human_review": true,
+  "review_notes": [
+    "Every `text` below is a verbatim quote (check_text_stability.py will verify it).",
+    "Category structure (standalone vs paired items) must be decided by a human: the extractor lists items flat.",
+    "Prohibitions/duties are listed as candidate axioms with placeholder predicates; name the predicates and add them to core."
+  ]
+}

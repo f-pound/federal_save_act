@@ -1,0 +1,14 @@
+{
+  "slug": "federal_save_act",
+  "title": "Federal SAVE Act — Computational Amicus Brief",
+  "bills": [{"congress": 119, "type": "hr", "number": 22, "version": "eh"}, {"congress": 119, "type": "s", "number": 1383, "version": "eah"}],
+  "irs": [
+    "data/parsed/federal_save_act_document_rules.json",
+    "data/parsed/federal_save_act_process_table.json",
+    "data/parsed/federal_save_act_removal_table.json",
+    "data/parsed/federal_save_act_text_rules.json",
+    "data/parsed/federal_save_act_voting_id_rules.json",
+    "data/parsed/federal_save_act_voting_table.json",
+    "data/parsed/federal_save_act_voting_text_rules.json"
+  ]
+}

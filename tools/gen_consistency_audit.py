@@ -116,83 +116,16 @@ def collect(books):
     return stubs, defuns, sigs, constraints, axioms
 
 # ------------------------------------------------------------------ worlds
-# Each world maps a stub / signature name -> (args, body).  Bodies are plain
-# ACL2 over the scenario constants.  Anything not listed defaults to NIL.
-PERSONS = "'(citizen-a citizen-b citizen-c citizen-d)"
-REGISTERED = "'(citizen-b citizen-c citizen-d)"
-COMMON = {
-  "personp": ("(p)", f"(member-equal p {PERSONS})"),
-  "citizen-of-usp": ("(p)", f"(member-equal p {PERSONS})"),
-  "eligible-voterp": ("(p)", f"(member-equal p {PERSONS})"),
-  "lawp": ("(law)", "(equal law 'federal-save-act)"),
-  "voter-registration-applicationp": ("(x)", "(equal x 'registration-attempt-a)"),
-  "attempts-to-registerp": ("(p x)", "(and (equal p 'citizen-a) (equal x 'registration-attempt-a))"),
-  "protected-right-to-votep": ("(cs p)", f"(and (equal cs 'amend-v-equal-protection) (member-equal p {PERSONS}))"),
-  "statute-denies-registrationp": ("(law p x)", f"(and (equal law 'federal-save-act) (member-equal p {PERSONS}) (equal x 'registration-attempt-a) (equal p 'citizen-a))"),
-  "registered-voterp": ("(p)", f"(member-equal p {REGISTERED})"),
-  "verified-noncitizen-informationp": ("(p)", "(equal p 'citizen-b)"),
-  "statute-removes-registrantp": ("(law p)", f"(and (equal law 'federal-save-act) (member-equal p {REGISTERED}) (equal p 'citizen-b))"),
-  "ballotp": ("(b)", "(member-equal b '(ballot-c ballot-d))"),
-  "votes-in-personp": ("(p b)", "(or (and (equal p 'citizen-c) (equal b 'ballot-c)) (and (equal p 'citizen-d) (equal b 'ballot-d)))"),
-  "cures-within-deadlinep": ("(p b)", "(and (equal p 'citizen-d) (equal b 'ballot-d))"),
-  "statute-denies-regular-ballotp": ("(law p b)", f"(and (equal law 'federal-save-act) (member-equal p {REGISTERED}) (member-equal b '(ballot-c ballot-d)))"),
-  "alternative-process-availablep": ("(p x)", "t"),
-  "undue-burden-on-right-to-votep": ("(law p)", "t"),
-  "document-acquisition-costp": ("(p)", "t"),
-  "cost-functions-as-poll-taxp": ("(law p)", "t"),
-  "attestation-evidence-satisfies-standardsp": ("(p x)", "nil"),
-  "official-discretionary-denialp": ("(p x)", "nil"),
-}
-CHALLENGER = dict(COMMON, **{
-  "valid-regulationp": ("(law x)", "nil"),
-  "alternative-process-approvedp": ("(p x)", "nil"),
-  "lacks-qualifying-documents-through-no-faultp": ("(p)", "t"),
-  "cannot-obtain-qualifying-documents-without-material-burdenp": ("(p)", "t"),
-  "alternative-process-discretionary-forp": ("(p x)", "t"),
-  "substantial-risk-of-erroneous-denialp": ("(law p)", "t"),
-  "severe-burden-on-plaintiffp": ("(law p)", "t"),
-  "cannot-obtain-valid-photo-id-without-material-burdenp": ("(p)", "t"),
-  "official-discretionary-denialp": ("(p x)", "t"),
-  # encapsulate signatures (challenger theory)
-  "challenger-right-to-vote-establishedp": ("(p)", f"(member-equal p {PERSONS})"),
-  "challenger-undue-burden-establishedp": ("(law p)", "(equal law 'federal-save-act)"),
-  "challenger-regulation-invalidp": ("(law x)", "(and (equal law 'federal-save-act) (equal x 'registration-attempt-a))"),
-  "challenger-removal-due-process-violationp": ("(law p)", f"(and (equal law 'federal-save-act) (member-equal p {REGISTERED}))"),
-  "challenger-voting-burden-establishedp": ("(law p)", f"(and (equal law 'federal-save-act) (member-equal p {PERSONS}))"),
-})
-GOVERNMENT = dict(COMMON, **{
-  "valid-regulationp": ("(law x)", "t"),
-  "alternative-process-approvedp": ("(p x)", "t"),
-  "signs-attestation-under-perjuryp": ("(p)", "(equal p 'citizen-a)"),
-  "submits-other-evidencep": ("(p)", "(equal p 'citizen-a)"),
-  "official-determines-citizenshipp": ("(p)", "(equal p 'citizen-a)"),
-  "attestation-evidence-satisfies-standardsp": ("(p x)", "(and (equal p 'citizen-a) (equal x 'registration-attempt-a))"),
-  "important-government-interestp": ("(law)", "t"),
-  "election-integrity-interestp": ("(law)", "t"),
-  "registration-procedure-evenhandedp": ("(law)", "t"),
-  "documentary-proof-requirement-rationally-connectedp": ("(law)", "t"),
-  "reasonable-registration-requirementp": ("(law)", "t"),
-  "adequate-alternative-processp": ("(law)", "t"),
-  "burden-not-severep": ("(law p)", "t"),
-  "removal-procedure-evenhandedp": ("(law)", "t"),
-  "photo-id-requirement-evenhandedp": ("(law)", "t"),
-  "provisional-cure-adequatep": ("(law)", "t"),
-  # encapsulate signatures (government theory)
-  "government-defense-establishedp": ("(law)", "t"),
-  "government-removal-defense-establishedp": ("(law p)", "(equal p 'citizen-b)"),
-  "government-voting-defense-establishedp": ("(law)", "t"),
-})
-
-THEORIES = {
-  "c": ("challenger", CHALLENGER,
-        ["federal_save_act_core", "federal_save_act_text_rules", "federal_save_act_voting_text_rules",
-         "federal_save_act_facts", "federal_save_act_scenario", "federal_save_act_hinge_common",
-         "federal_save_act_hinge_discretionary", "federal_save_act_challenger_model"]),
-  "g": ("government", GOVERNMENT,
-        ["federal_save_act_core", "federal_save_act_text_rules", "federal_save_act_voting_text_rules",
-         "federal_save_act_facts", "federal_save_act_scenario", "federal_save_act_hinge_common",
-         "federal_save_act_hinge_mandatory", "federal_save_act_government_model"]),
-}
+# Worlds and theories are DATA: data/audit_worlds.json.  A new statute project
+# edits that file, not this tool.  Each world maps stub / signature name ->
+# [args, body] in plain ACL2 over the scenario constants; unlisted -> NIL.
+WORLDS_PATH = ROOT / "data" / "audit_worlds.json"
+_W = json.loads(WORLDS_PATH.read_text(encoding="utf-8"))
+COMMON = {k: tuple(v) for k, v in _W["common"].items()}
+THEORIES = {}
+for tag, t in _W["theories"].items():
+    world = dict(COMMON); world.update({k: tuple(v) for k, v in t["world"].items()})
+    THEORIES[tag] = (t["party"], world, t["books"])
 
 def emit():
     out = ['(in-package "ACL2")', '',
