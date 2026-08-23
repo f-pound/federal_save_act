@@ -786,6 +786,166 @@
       "book": "federal_save_act_document_proofs.lisp",
       "axiom_free": true,
       "path": "neutral"
+    },
+    {
+      "id": "src-s1383",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "S. 1383 — SAVE America Act (House amendment, Feb 11 2026)",
+      "description": "Current legislative vehicle. § 2 is the H.R. 22 text (verified verbatim in CI); § 3 adds photo identification to vote (new HAVA § 303A).",
+      "source_ref": "S. 1383 EAH, 119th Cong.",
+      "path": "neutral"
+    },
+    {
+      "id": "ax-citizen-c",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "citizen-c: registered citizen, no expiring photo ID at the polls, no cure within 3 days",
+      "description": "Shared scenario C (8 conceded facts): registered citizen votes in person with ballot-c, presents nothing in the § 303A(c) list, does not cure within 3 days.",
+      "acl2_event": "scenario-c-* (8 axioms)",
+      "book": "federal_save_act_scenario.lisp",
+      "source_ref": "stipulated",
+      "trusted_base": true,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-photo-id-rule",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "§ 303A(a)(1)(A): no regular ballot without valid photo ID",
+      "description": "Generated text rule: registered voter in person without valid physical photo identification ⇒ the official may not provide a regular ballot.",
+      "acl2_event": "text-photo-id-required-for-regular-ballot",
+      "book": "federal_save_act_voting_text_rules.lisp",
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1)(A)",
+      "trusted_base": true,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-voting-severe-burden",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Uncounted ballot + cannot obtain photo ID without burden = severe burden (as-applied)",
+      "description": "Challenger rule (Crawford plurality, as-applied challenges preserved) and bridge: severe as-applied burden defeats validity for that ballot.",
+      "acl2_event": "challenger-uncounted-ballot-is-severe-burden, challenger-bridge-voting-invalid",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Crawford 553 U.S. at 199-203; Anderson-Burdick",
+      "trusted_base": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-voting-material-burden",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "citizen-c cannot obtain an expiring photo ID without material burden",
+      "description": "Challenger-side empirical premise for scenario C.",
+      "acl2_event": "challenger-scenario-c-material-burden",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Crawford plurality",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-photo-id-valid",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Photo ID to vote is a valid evenhanded regulation with an adequate provisional cure (Crawford)",
+      "description": "Government rule and bridge: important interest + evenhanded requirement + adequate 3-day cure ⇒ valid for every ballot.",
+      "acl2_event": "government-voting-defense-rule, government-bridge-voting-validates, government-photo-id-evenhanded, government-provisional-cure-adequate",
+      "book": "federal_save_act_government_model.lisp",
+      "source_ref": "Crawford 553 U.S. at 189-204",
+      "trusted_base": true,
+      "path": "government"
+    },
+    {
+      "id": "model-voting",
+      "type": "PROCESS_MODEL",
+      "layer": "executable",
+      "label": "§ 303A in-person ballot process (7 states, 8 edges) + valid-photo-ID table (5 types)",
+      "description": "Third lsm client; tables generated from the clause IR. A ballot is counted only after valid photo ID or a cure within 3 days; an uncured provisional ballot is rejected.",
+      "acl2_event": "vote-run-trace, *vote-edges*, valid-photo-identification-bundlep",
+      "book": "federal_save_act_voting_invariants.lisp",
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "model-functional-instantiation",
+      "type": "LIBRARY",
+      "layer": "executable",
+      "label": "Functional instantiation: concrete models of both parties' encapsulated theories",
+      "description": "Generic theorems about the abstract \"defense established\" / \"burden established\" predicates are transferred by :functional-instance to concrete conjunctions of the parties' factors; ACL2 discharges the constraint obligations.",
+      "acl2_event": "concrete-defense-defeats-conflict, concrete-burden-enables-conflict",
+      "book": "federal_save_act_functional_instantiation.lisp",
+      "source_ref": "statute-independent",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "deriv-voting-pivot",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Voting conflict pivots on valid-regulationp as applied to the ballot; a cured ballot is never a conflict",
+      "acl2_event": "core-voting-conflict-pivots-on-valid-regulation, core-cure-defeats-voting-conflict",
+      "book": "federal_save_act_core.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-provisional-requires-cure",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "A provisional ballot is counted only if a cure event occurred within 3 days; uncured ⇒ rejected",
+      "acl2_event": "provisional-counted-requires-cure, no-id-and-lapse-rejects, counted-implies-regular-or-cured",
+      "book": "federal_save_act_voting_invariants.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-two-enumerations",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Registration proof and voting ID are different lists: passport satisfies both; photo ID + birth certificate registers but is not valid photo ID at the polls",
+      "acl2_event": "registration-proof-does-not-entail-voting-id, voting-id-does-not-entail-registration-proof, passport-satisfies-both-requirements",
+      "book": "federal_save_act_voting_invariants.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-voting-conflict-general",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Challenger: registered citizen, no valid photo ID, no cure, material burden ⇒ voting conflict",
+      "acl2_event": "challenger-voting-conflict-general",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "thm-no-voting-conflict-general",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Government: important interest + evenhanded + adequate cure ⇒ no voting conflict for any ballot",
+      "acl2_event": "government-no-voting-conflict-general",
+      "book": "federal_save_act_government_model.lisp",
+      "path": "government"
+    },
+    {
+      "id": "concl-challenger-voting",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Challenger: § 303A PHOTO-ID VOTING CONFLICT (citizen-c)",
+      "description": "Under the challenger's voting premises, ACL2 derives a constitutional voting conflict for citizen-c's uncounted ballot.",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "concl-government-voting",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Government: NO § 303A VOTING CONFLICT (citizen-c)",
+      "description": "Under the government's voting premises (Crawford), no voting conflict exists for citizen-c.",
+      "book": "federal_save_act_government_model.lisp",
+      "path": "government"
     }
   ],
   "edges": [
@@ -1354,6 +1514,189 @@
       "to": "thm-plain-real-id-not-proof",
       "relation": "supports",
       "path": "neutral"
+    },
+    {
+      "from": "src-s1383",
+      "to": "ax-photo-id-rule",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-s1383",
+      "to": "ir-clause-ir",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-voting-severe-burden",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-photo-id-valid",
+      "relation": "source_traces",
+      "path": "government"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-voting-material-burden",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "model-voting",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "ax-photo-id-rule",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-lib-lsm",
+      "to": "model-voting",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-lib-enum",
+      "to": "model-voting",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-voting",
+      "to": "thm-provisional-requires-cure",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-voting",
+      "to": "thm-two-enumerations",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-documents",
+      "to": "thm-two-enumerations",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "thm-lsm-entry-guard",
+      "to": "thm-provisional-requires-cure",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-photo-id-rule",
+      "to": "deriv-voting-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-citizen-c",
+      "to": "deriv-voting-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-voting",
+      "to": "ax-citizen-c",
+      "relation": "supports",
+      "path": "neutral",
+      "description": "Scenario C follows the no-ID / lapse path"
+    },
+    {
+      "from": "deriv-voting-pivot",
+      "to": "thm-voting-conflict-general",
+      "relation": "supports",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-voting-severe-burden",
+      "to": "thm-voting-conflict-general",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-voting-material-burden",
+      "to": "thm-voting-conflict-general",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "thm-voting-conflict-general",
+      "to": "concl-challenger-voting",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-citizen-c",
+      "to": "concl-challenger-voting",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "deriv-voting-pivot",
+      "to": "thm-no-voting-conflict-general",
+      "relation": "supports",
+      "path": "government"
+    },
+    {
+      "from": "ax-photo-id-valid",
+      "to": "thm-no-voting-conflict-general",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-election-integrity",
+      "to": "thm-no-voting-conflict-general",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "thm-no-voting-conflict-general",
+      "to": "concl-government-voting",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-citizen-c",
+      "to": "concl-government-voting",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "pivot-valid-regulation",
+      "to": "concl-challenger-voting",
+      "relation": "negates",
+      "path": "challenger",
+      "description": "If NOT valid as applied to the ballot"
+    },
+    {
+      "from": "pivot-valid-regulation",
+      "to": "concl-government-voting",
+      "relation": "supports",
+      "path": "government",
+      "description": "If valid as applied to the ballot"
+    },
+    {
+      "from": "model-functional-instantiation",
+      "to": "thm-valid-negates",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-functional-instantiation",
+      "to": "thm-invalid-enables",
+      "relation": "supports",
+      "path": "neutral"
     }
   ],
   "hypotheticals": [
@@ -1476,6 +1819,36 @@
       "default": true,
       "controls": [
         "ax-removal-valid-maintenance"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-voting-severe-burden",
+      "category": "Voting (§ 303A photo ID) Assumptions",
+      "label": "Uncounted ballot of a citizen who cannot get ID without burden is a severe burden (Crawford as-applied)",
+      "default": true,
+      "controls": [
+        "ax-voting-severe-burden"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-voting-material-burden",
+      "category": "Voting (§ 303A photo ID) Assumptions",
+      "label": "Obtaining an expiring photo ID is a material burden for citizen-c",
+      "default": true,
+      "controls": [
+        "ax-voting-material-burden"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-photo-id-valid",
+      "category": "Voting (§ 303A photo ID) Assumptions",
+      "label": "Photo ID to vote is valid and the 3-day cure is adequate (Crawford)",
+      "default": true,
+      "controls": [
+        "ax-photo-id-valid"
       ],
       "path": "government"
     }

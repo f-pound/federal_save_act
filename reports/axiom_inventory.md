@@ -1,6 +1,6 @@
-# Axiom Inventory — Federal SAVE Act ACL2 Model (v6.1)
+# Axiom Inventory — Federal SAVE Act ACL2 Model (v6.5)
 
-All 38 `defaxiom` events classified by label, source, and replacement path.
+All 52 `defaxiom` events classified by label, source, and replacement path.
 
 > [!NOTE]
 > `defaxiom` is used to constrain existing `defstub` predicates. `encapsulate` introduces NEW function signatures. The hybrid architecture uses `defaxiom` only for text-derived facts, scenario stipulations, bridge rules, and interpretive assumptions — NOT for arbitrary legal conclusions.
@@ -33,7 +33,20 @@ All 38 `defaxiom` events classified by label, source, and replacement path.
 | `scenario-b-verified-noncitizen-information` | SCENARIO_FACT (**high-risk**) | n/a | The State holds "verified information" that is in fact erroneous | Contest by disputing the error rate of § 8(j)(4) database matches |
 | `scenario-b-no-notice` / `-no-hearing` | SCENARIO_FACT | n/a | Consistent with the statutory path (no notice/hearing edge in § 8(k)) | A State may add notice by practice — toggle in the explorer |
 
-## Challenger Model (7 axioms)
+## Voting Text Rule (generated, 1 axiom) — SAVE America Act § 3
+
+| Event Name | Label | Source | Reason Remains Axiom | Future Path |
+|---|---|---|---|---|
+| `text-photo-id-required-for-regular-ballot` | PROHIBITION | s1383-eah § 3 / HAVA § 303A(a)(1)(A) | Constrains defstub `statute-denies-regular-ballotp`; generated with its ACE | None — direct text |
+
+## Scenario C — citizen-c at the polls (8 axioms, shared)
+
+| Event Name | Label | Source | Reason Remains Axiom | Future Path |
+|---|---|---|---|---|
+| `scenario-c-person` / `-citizen` / `-eligible` / `-registered` / `-ballot` / `-votes-in-person` | SCENARIO_FACT | n/a | Stipulated ground facts | None |
+| `scenario-c-no-valid-photo-id` / `-no-cure` | SCENARIO_FACT | n/a | Presents nothing in § 303A(c); does not cure within 3 days | A second voting scenario (expired licence + cure) would exercise the cure path |
+
+## Challenger Model (9 axioms)
 
 | Event Name | Label | Source | Reason Remains Axiom | Future Path |
 |---|---|---|---|---|
@@ -43,9 +56,11 @@ All 38 `defaxiom` events classified by label, source, and replacement path.
 | `challenger-scenario-no-fault` | EMPIRICAL_ASSUMPTION | fish-v-kobach | Empirical claim about burden — not derivable from statute | Make contestable: guard with explicit assumption predicate |
 | `challenger-scenario-material-burden` | EMPIRICAL_ASSUMPTION | crawford-v-marion | Empirical claim about burden severity | Make contestable: guard with explicit assumption predicate |
 | `challenger-bridge-removal-invalid` | BRIDGE_RULE | const-amend5 | Links `challenger-removal-due-process-violationp` to `(not (valid-regulationp law p))` | Inherent to hybrid architecture |
+| `challenger-bridge-voting-invalid` | BRIDGE_RULE | anderson-v-celebrezze | Severe as-applied burden ⇒ not valid for that ballot | Inherent |
+| `challenger-scenario-c-material-burden` | EMPIRICAL_ASSUMPTION (**high-risk**) | crawford-v-marion | citizen-c cannot obtain an expiring photo ID without material burden | Contest with state ID-issuance data |
 | `challenger-scenario-alternative-process-denied` | INTERPRETATION_CHALLENGER | hr22-eh § 2(f) | Party-specific reading of "shall make a determination" | Replace with hinge_discretionary import |
 
-## Government Model (12 axioms)
+## Government Model (15 axioms)
 
 | Event Name | Label | Source | Reason Remains Axiom | Future Path |
 |---|---|---|---|---|
@@ -60,6 +75,8 @@ All 38 `defaxiom` events classified by label, source, and replacement path.
 | `government-assume-right-to-vote-arguendo` | INTERPRETATION_GOVERNMENT | n/a | Government concession for stronger proof | None — strengthens proof |
 | `government-bridge-removal-validates` | BRIDGE_RULE | crawford-v-marion | Links `government-removal-defense-establishedp` to `valid-regulationp law p` | Inherent |
 | `government-removal-procedure-evenhanded` | INTERPRETATION_GOVERNMENT | hr22-eh § 8(k) | Government's claim that the verified-information trigger is evenhanded | Party-specific |
+| `government-bridge-voting-validates` | BRIDGE_RULE | crawford-v-marion | Voting defense ⇒ valid for every ballot | Inherent |
+| `government-photo-id-evenhanded` / `government-provisional-cure-adequate` | INTERPRETATION_GOVERNMENT | s1383-eah § 303A | Government's reading of § 303A | Party-specific |
 | `government-scenario-alternative-process-approved` | INTERPRETATION_GOVERNMENT | hr22-eh § 2(f) | Party-specific reading of alternative process | Replace with hinge_mandatory import |
 
 ## Hinge Books (2 axioms)
@@ -73,16 +90,16 @@ All 38 `defaxiom` events classified by label, source, and replacement path.
 
 | Label | Count | Description |
 |---|---|---|
-| SCENARIO_FACT | 13 | Stipulated test scenario ground facts: citizen-a (6), citizen-b (7) |
-| INTERPRETATION_GOVERNMENT | 7 | Government-favorable readings |
-| BRIDGE_RULE | 7 | Links between encapsulate predicates and core defstubs |
+| SCENARIO_FACT | 21 | Stipulated test scenario ground facts: citizen-a (6), citizen-b (7), citizen-c (8) |
+| INTERPRETATION_GOVERNMENT | 9 | Government-favorable readings |
+| BRIDGE_RULE | 9 | Links between encapsulate predicates and core defstubs |
 | DOCTRINAL_RULE | 2 | Established case law holdings |
-| EMPIRICAL_ASSUMPTION | 3 | Contestable factual claims about burden severity |
+| EMPIRICAL_ASSUMPTION | 4 | Contestable factual claims about burden severity |
 | INTERPRETIVE_ASSUMPTION | 2 | Competing hinge semantics |
 | TEXT_FACT | 1 | Direct statutory text translation |
-| PROHIBITION | 2 | Primary statutory prohibition |
+| PROHIBITION | 3 | Primary statutory prohibition |
 | INTERPRETATION_CHALLENGER | 1 | Challenger-favorable reading |
-| **Total** | **38** | |
+| **Total** | **52** | |
 
 ## Observations
 

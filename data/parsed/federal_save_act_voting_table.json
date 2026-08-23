@@ -1,0 +1,41 @@
+{
+  "$schema": "../../tools/clause_ir_schema.json",
+  "book": "federal_save_act_voting_table",
+  "title": "SAVE America Act § 3 / HAVA § 303A(a)(1) — in-person ballot lifecycle",
+  "source_id": "s1383-eah",
+  "includes": [],
+  "process": {
+    "name": "vote",
+    "source": "SAVE America Act § 3 / HAVA § 303A(a)(1); HAVA § 302(a)",
+    "description": "Lifecycle of one in-person ballot under new HAVA § 303A. TEXT_FACT edges are named in the statute; MODEL_STRUCTURE edges are the ordinary casting/counting bookkeeping of HAVA § 302(a).",
+    "states": [
+      {"symbol": "at-polls",         "const": "vote-at-polls",         "text": "registered voter arrives to vote in person"},
+      {"symbol": "id-presented",     "const": "vote-id-presented",     "text": "valid photo identification presented (§ 303A(a)(1)(A))"},
+      {"symbol": "regular-cast",     "const": "vote-regular-cast",     "text": "regular ballot provided and cast"},
+      {"symbol": "provisional-cast", "const": "vote-provisional-cast", "text": "provisional ballot cast for lack of identification (§ 303A(a)(1)(B)(i))"},
+      {"symbol": "cured",            "const": "vote-cured",            "text": "identification or religious-objection affidavit presented within 3 days"},
+      {"symbol": "counted",          "const": "vote-counted",          "text": "terminal: ballot counted"},
+      {"symbol": "rejected",         "const": "vote-rejected",         "text": "terminal: provisional ballot not counted (no cure within 3 days)"}
+    ],
+    "events": [
+      {"symbol": "present-valid-photo-id", "const": "vote-evt-present-id", "text": "voter presents a valid physical photo identification"},
+      {"symbol": "no-identification",      "const": "vote-evt-no-id",      "text": "voter does not present the required identification"},
+      {"symbol": "cast-regular-ballot",    "const": "vote-evt-cast",       "text": "official provides, voter casts, a regular ballot"},
+      {"symbol": "cure-within-3-days",     "const": "vote-evt-cure",       "text": "voter presents ID or religious-objection affidavit within 3 days"},
+      {"symbol": "cure-deadline-lapses",   "const": "vote-evt-lapse",      "text": "3 days pass without cure"},
+      {"symbol": "count-ballot",           "const": "vote-evt-count",      "text": "official counts the ballot"},
+      {"symbol": "reject-ballot",          "const": "vote-evt-reject",     "text": "official rejects the provisional ballot"}
+    ],
+    "edges": [
+      {"from": "at-polls",         "event": "present-valid-photo-id", "to": "id-presented",     "label": "TEXT_FACT", "source": "§ 303A(a)(1)(A)"},
+      {"from": "id-presented",     "event": "cast-regular-ballot",    "to": "regular-cast",     "label": "TEXT_FACT", "source": "§ 303A(a)(1)(A) ('may not provide a ballot ... unless')"},
+      {"from": "at-polls",         "event": "no-identification",      "to": "provisional-cast", "label": "TEXT_FACT", "source": "§ 303A(a)(1)(B)(i) ('shall be permitted to cast a provisional ballot')"},
+      {"from": "provisional-cast", "event": "cure-within-3-days",     "to": "cured",            "label": "TEXT_FACT", "source": "§ 303A(a)(1)(B)(i)(I)-(II)"},
+      {"from": "provisional-cast", "event": "cure-deadline-lapses",   "to": "rejected",         "label": "TEXT_FACT", "source": "§ 303A(a)(1)(B)(i) ('may not make a determination ... that the individual is eligible ... unless, not later than 3 days')"},
+      {"from": "regular-cast",     "event": "count-ballot",           "to": "counted",          "label": "MODEL_STRUCTURE", "source": "HAVA § 302(a)"},
+      {"from": "cured",            "event": "count-ballot",           "to": "counted",          "label": "TEXT_FACT", "source": "§ 303A(a)(1)(B)(i); HAVA § 302(a)(4)"},
+      {"from": "provisional-cast", "event": "reject-ballot",          "to": "rejected",         "label": "MODEL_STRUCTURE", "source": "HAVA § 302(a)(4) (no eligibility determination)"}
+    ],
+    "ace": {"id": "ace-gen-voting-process", "subject": "n:in-person-ballot", "classification": "PROCESS_RULE"}
+  }
+}

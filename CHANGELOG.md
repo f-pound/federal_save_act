@@ -6,6 +6,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.5.0] — 2026-08-23
+
+### Added — SAVE America Act § 3: photo identification to vote (new HAVA § 303A)
+- **Clause IR** (`source_id: s1383-eah`, verbatim-checked against the S. 1383 text): `federal_save_act_voting_id_rules.json` (five "valid photo identification" types — three requiring photo AND expiration date — plus the religious-objection affidavit; rules `valid-photo-identification-bundlep`, `provisional-cure-bundlep`), `federal_save_act_voting_table.json` (7-state / 8-edge in-person ballot process with the 3-day cure), `federal_save_act_voting_text_rules.json` (the § 303A(a)(1)(A) prohibition as a generated `defaxiom`). Four generated ACE statements, 13/13 APE strict PASS.
+- **Core**: election-day stubs; `voting-transactionp`, `ballot-not-countedp` (regular ballot denied AND no cure), `constitutional-voting-conflict-conditionp (law cs p b)` with the ballot as the object of `valid-regulationp`; pivot lemmas; `core-cure-defeats-voting-conflict`.
+- **`lib/lsm`**: `lsm-closedp-except` and `lsm-run-closed-except` — a *gated exit* lemma ("a set is left only through an event in E"), 3 new theorems, hint-free.
+- **`federal_save_act_voting_invariants.lisp`** (16 theorems, neutral): a ballot is counted only after valid photo ID or a cure within 3 days (`counted-implies-regular-or-cured`, `provisional-counted-requires-cure`); uncured ⇒ rejected; terminal states final; and the **two-enumerations** results: `passport-satisfies-both-requirements`, `registration-proof-does-not-entail-voting-id` (photo ID + birth certificate registers but is not valid photo ID at the polls), `voting-id-does-not-entail-registration-proof`, `affidavit-cures-but-is-not-photo-id`, `photo-id-cures`.
+- **Scenario C** (shared, 8 facts): `citizen-c`, a registered citizen who votes in person with nothing in the § 303A(c) list and does not cure within 3 days.
+- **Challenger voting branch** (Crawford plurality, as-applied) and **government voting branch** (Crawford holding): 2 encapsulates, 5 axioms, `challenger-model-finds-voting-conflict` / `government-model-no-voting-conflict`.
+- **Functional instantiation** (`federal_save_act_functional_instantiation.lisp`, neutral, 6 theorems): generic theorems about the abstract "defense established" / "burden established" predicates transferred by `:functional-instance` to concrete conjunctions of each party's factors, with the bridge stated as a hypothesis — closes the v5.3 open item.
+- **Explorer**: a second cartoon scene, *election day at the polling place* (valid-ID checkboxes from the generated table, cure toggle, ballot COUNTED/REJECTED, premises), 15 new graph nodes, three voting hypotheticals, presets updated.
+
+### Census
+- Theorems 219 → **258** (46 in `lib/`); axioms 38 → **52** (8 scenario-c, 1 text rule, 5 party); books 25 → **30** (16 clean, 7 generated); encapsulates 6 → 10; trace rows 61; decider tags 52/52.
+
 ## [6.4.1] — 2026-08-23
 
 ### Changed

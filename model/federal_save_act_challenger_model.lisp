@@ -291,3 +291,80 @@
   (constitutional-removal-conflict-conditionp
    'federal-save-act 'amend-v-equal-protection 'citizen-b)
   :rule-classes nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; v6.5 — VOTING BRANCH (SAVE America Act § 3 / HAVA § 303A, citizen-c)
+;;;
+;;; Theory of the case: a registered citizen who cannot obtain an
+;;; expiring photo ID without material burden, and whose provisional
+;;; ballot therefore goes uncounted, is denied the vote; Crawford left
+;;; as-applied challenges open for exactly this class.
+;;;
+;;; Doctrinal basis: Crawford, 553 U.S. at 199-203 (plurality: burden on
+;;; voters who lack ID and cannot easily obtain it; as-applied challenges
+;;; preserved); Anderson-Burdick.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(encapsulate
+  ((challenger-voting-burden-establishedp (law p) t))
+
+  (local (defun challenger-voting-burden-establishedp (law p)
+    (declare (ignore law p)) t))
+
+  ;; INTERPRETATION_CHALLENGER: an uncounted ballot of a registered citizen
+  ;; who cannot obtain valid photo ID without material burden is a severe
+  ;; burden on the right to vote.
+  (defthm challenger-uncounted-ballot-is-severe-burden
+    (implies
+     (and (qualified-federal-voterp p)
+          (registered-voterp p)
+          (ballot-not-countedp 'federal-save-act p b)
+          (cannot-obtain-valid-photo-id-without-material-burdenp p))
+     (challenger-voting-burden-establishedp 'federal-save-act p))))
+
+;; BRIDGE_RULE: a severe as-applied burden defeats validity for that ballot.
+(defaxiom challenger-bridge-voting-invalid
+  (implies
+   (and (challenger-voting-burden-establishedp 'federal-save-act p)
+        (ballotp b)
+        (votes-in-personp p b))
+   (not (valid-regulationp 'federal-save-act b))))
+
+;; EMPIRICAL_ASSUMPTION: citizen-c cannot obtain an expiring photo ID
+;; without material burden.
+(defaxiom challenger-scenario-c-material-burden
+  (cannot-obtain-valid-photo-id-without-material-burdenp 'citizen-c))
+
+;; PROOF OBLIGATION 5: general voting theorem
+(defthm challenger-voting-conflict-general
+  (implies
+   (and (personp p)
+        (citizen-of-usp p)
+        (eligible-voterp p)
+        (registered-voterp p)
+        (ballotp b)
+        (votes-in-personp p b)
+        (not (presents-valid-photo-idp p b))
+        (not (cures-within-deadlinep p b))
+        (cannot-obtain-valid-photo-id-without-material-burdenp p))
+   (constitutional-voting-conflict-conditionp
+    'federal-save-act 'amend-v-equal-protection p b))
+  ;; The bridge rule's hypothesis mentions p, which is free relative to its
+  ;; conclusion (not (valid-regulationp law b)); instantiate it explicitly.
+  :hints (("Goal" :in-theory (enable constitutional-voting-conflict-conditionp
+                               voting-transactionp ballot-not-countedp
+                               qualified-federal-voterp)
+                  :use ((:instance challenger-uncounted-ballot-is-severe-burden)
+                        (:instance challenger-bridge-voting-invalid))))
+  :rule-classes nil)
+
+(defthm challenger-lemma-c-protected-right
+  (protected-right-to-votep 'amend-v-equal-protection 'citizen-c))
+
+;; PROOF OBLIGATION 6: concrete citizen-c corollary
+(defthm challenger-model-finds-voting-conflict
+  (constitutional-voting-conflict-conditionp
+   'federal-save-act 'amend-v-equal-protection 'citizen-c 'ballot-c)
+  :hints (("Goal" :use ((:instance challenger-voting-conflict-general
+                                   (p 'citizen-c) (b 'ballot-c)))))
+  :rule-classes nil)

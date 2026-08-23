@@ -19,6 +19,11 @@ $books = @(
   @("model/federal_save_act_removal_table", "clean"),
   @("model/federal_save_act_removal_invariants", "clean"),
   @("model/federal_save_act_text_rules", "defaxiom"),
+  @("model/federal_save_act_voting_id_rules", "clean"),
+  @("model/federal_save_act_voting_table", "clean"),
+  @("model/federal_save_act_voting_invariants", "clean"),
+  @("model/federal_save_act_voting_text_rules", "defaxiom"),
+  @("model/federal_save_act_functional_instantiation", "clean"),
   @("model/federal_save_act_process", "clean"),
 
   # Layer 1: source-traced axiom book

@@ -24,18 +24,20 @@
       description: 'Every premise from both parties is switched on. Both conditional conclusions are supported — the model is showing that each side\'s argument is internally valid, not which one wins.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-adequate-alt',
              'hyp-mandatory', 'hyp-discretionary', 'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats',
-             'hyp-removal-due-process', 'hyp-removal-valid-maintenance'],
+             'hyp-removal-due-process', 'hyp-removal-valid-maintenance',
+             'hyp-voting-severe-burden', 'hyp-voting-material-burden', 'hyp-photo-id-valid'],
     },
     challenger: {
       label: "Challenger's case",
       description: 'Only the challenger\'s premises: citizens lack documents through no fault, obtaining them is a material burden, the alternative process is discretionary, and a severe burden defeats the regulation. The government\'s no-conflict conclusion loses its support.',
-      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats', 'hyp-removal-due-process'],
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats', 'hyp-removal-due-process',
+             'hyp-voting-severe-burden', 'hyp-voting-material-burden'],
     },
     government: {
       label: "Government's defense",
       description: 'Only the government\'s premises: election integrity is an important interest, the requirement is reasonable and evenhanded, the burden is not severe, and the alternative process is adequate and mandatory. The challenger\'s conflict conclusion loses its support.',
       hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory',
-             'hyp-election-integrity', 'hyp-reasonable', 'hyp-removal-valid-maintenance'],
+             'hyp-election-integrity', 'hyp-reasonable', 'hyp-removal-valid-maintenance', 'hyp-photo-id-valid'],
     },
     neutral: {
       label: 'Statute text only',
@@ -47,12 +49,13 @@
       description: 'Grants the challenger every LEGAL premise (fundamental right, discretionary reading, severe burden defeats regulation, removal due process) but denies the two EMPIRICAL ones: citizens can and do hold documents, and a waivable $15-35 fee is not a material burden. The challenger\'s registration conflict then rests on nothing; the government\'s no-conflict holds. Shows exactly which factual claim the registration dispute turns on.',
       hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory', 'hyp-discretionary',
              'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats',
-             'hyp-removal-due-process', 'hyp-removal-valid-maintenance'],
+             'hyp-removal-due-process', 'hyp-removal-valid-maintenance',
+             'hyp-voting-severe-burden', 'hyp-photo-id-valid'],
     },
     highrisk: {
       label: 'Contested premises only',
       description: 'Keeps only the three empirically contestable premises about burden severity and drops every doctrinal and interpretive one. Shows how little is settled by facts alone.',
-      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe'],
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-voting-material-burden'],
     },
   };
 
@@ -133,6 +136,7 @@
     renderFooter();
     renderStatusBar();
     renderVoterDocs();
+    renderPollDocs();
 
     // Bind filter checkboxes
     document.getElementById('filter-axiom-free').addEventListener('change', renderGraph);
@@ -432,6 +436,113 @@
     document.getElementById('voter-bubble-text').textContent = bubble;
     setExpression(face);
     document.getElementById('voter-outcome').innerHTML = steps.join('');
+  }
+
+  // ---- Election-day scene: § 303A valid photo ID, provisional cure, premises ----
+  const POLL_LABELS = {
+    'state-drivers-license-with-expiration': 'State driver\'s licence with photo AND expiration date',
+    'state-id-card-with-expiration': 'State DMV ID card with photo AND expiration date',
+    'valid-us-passport': 'U.S. passport',
+    'valid-military-identification': 'Military identification',
+    'tribal-id-with-expiration': 'Tribal ID with photo AND expiration date',
+    'religious-objection-affidavit': 'Religious-objection affidavit (cure only, not photo ID)',
+  };
+  const POLL_CARDS = {
+    'state-drivers-license-with-expiration': 'DRIVER LIC', 'state-id-card-with-expiration': 'STATE ID',
+    'valid-us-passport': 'PASSPORT', 'valid-military-identification': 'MIL ID',
+    'tribal-id-with-expiration': 'TRIBAL ID', 'religious-objection-affidavit': 'AFFIDAVIT',
+  };
+  const POLL_GROUPS = {
+    'valid-photo-id-types': 'Valid photo identification — § 303A(c)(1)-(5)',
+    'religious-objection-affidavit-types': 'Cure only — § 303A(a)(1)(B)(i)(II)',
+  };
+  const pollDocs = new Set();
+
+  function renderPollDocs() {
+    const cats = data.meta && data.meta.voting_categories;
+    const host = document.getElementById('poll-doc-groups');
+    if (!cats || !host) return;
+    let html = '';
+    for (const [cat, members] of Object.entries(cats)) {
+      html += `<div class="voter-group"><div class="voter-group-name">${POLL_GROUPS[cat] || cat}</div>`;
+      members.forEach(m => {
+        html += `<label class="voter-doc" title="${(m.text || '').replace(/"/g, '')}"><input type="checkbox" data-poll="${m.symbol}"> ${POLL_LABELS[m.symbol] || m.symbol} <span class="who">${m.source}</span></label>`;
+      });
+      html += '</div>';
+    }
+    host.innerHTML = html;
+    host.querySelectorAll('input[data-poll]').forEach(cb => cb.addEventListener('change', () => {
+      if (cb.checked) pollDocs.add(cb.dataset.poll); else pollDocs.delete(cb.dataset.poll);
+      renderPollOutcome();
+    }));
+    document.getElementById('poll-cure').addEventListener('change', renderPollOutcome);
+    document.getElementById('poll-citizen').addEventListener('change', renderPollOutcome);
+    renderPollOutcome();
+  }
+
+  function setPollExpression(kind) {
+    const m = document.getElementById('poll-mouth');
+    const mark = document.getElementById('poll-mark');
+    const w = document.getElementById('poll-worker-mouth');
+    if (m) m.setAttribute('d', MOUTHS[kind] || MOUTHS.flat);
+    if (mark) mark.setAttribute('opacity', kind === 'unsure' ? '1' : '0');
+    if (w) w.setAttribute('d', kind === 'smile' ? 'M380 110 q8 7 16 0' : kind === 'frown' ? 'M380 113 q8 -5 16 0' : 'M380 111 h16');
+  }
+
+  function renderPollOutcome() {
+    const cats = data.meta && data.meta.voting_categories;
+    if (!cats) return;
+    const some = c => (cats[c] || []).some(m => pollDocs.has(m.symbol));
+    const photoId = some('valid-photo-id-types');                       // valid-photo-identification-bundlep
+    const cureDocs = photoId || some('religious-objection-affidavit-types'); // provisional-cure-bundlep
+    const cure = document.getElementById('poll-cure').checked;
+    const citizen = document.getElementById('poll-citizen').checked;
+
+    const cards = document.getElementById('poll-cards');
+    const list = [...pollDocs];
+    let ch = '';
+    list.forEach((d, i) => {
+      const n = list.length, angle = -18 + (n === 1 ? 18 : (36 * i) / (n - 1)), dx = 6 + i * (n > 4 ? 9 : 14);
+      ch += `<g transform="translate(${dx},-34) rotate(${angle} 0 34)"><rect width="46" height="30" rx="3" fill="#fdfdfd" stroke="#8a93a3"/><rect x="4" y="5" width="12" height="12" rx="2" fill="#cfd6e2"/><rect x="19" y="7" width="22" height="2.5" fill="#b7c0cf"/><rect x="19" y="12" width="16" height="2.5" fill="#b7c0cf"/><text class="voter-card" x="23" y="25" text-anchor="middle" fill="#333">${POLL_CARDS[d] || d}</text></g>`;
+    });
+    if (!list.length) ch = '<text x="-4" y="-6" font-size="10" font-style="italic" fill="#9aa7b4" font-family="Inter, sans-serif">empty-handed</text>';
+    cards.innerHTML = ch;
+
+    const ballot = document.getElementById('poll-ballot');
+    const ballotSub = document.getElementById('poll-ballot-sub');
+    const steps = [];
+    let bubble, face;
+    if (photoId) {
+      bubble = 'Valid photo identification — here is your regular ballot (§ 303A(a)(1)(A)).';
+      face = 'smile';
+      ballot.setAttribute('opacity', '1'); ballotSub.textContent = 'COUNTED'; ballotSub.setAttribute('fill', '#2ecc71');
+      steps.push(`<span class="step"><b class="ok">Regular ballot, counted.</b> The bundle satisfies § 303A(c). <span class="who">Who decides: legislature — no premise needed.</span></span>`);
+      steps.push(`<span class="step">No voting conflict condition applies: the ballot was counted.</span>`);
+    } else {
+      bubble = 'No valid photo ID — you may cast a provisional ballot. Come back within 3 days with ID or a religious-objection affidavit, or it will not count (§ 303A(a)(1)(B)).';
+      const cured = cure || (pollDocs.has('religious-objection-affidavit'));
+      if (cured) {
+        face = 'smile';
+        ballot.setAttribute('opacity', '1'); ballotSub.textContent = 'COUNTED'; ballotSub.setAttribute('fill', '#2ecc71');
+        steps.push(`<span class="step"><b class="ok">Provisional ballot cured and counted.</b> ${pollDocs.has('religious-objection-affidavit') ? 'The religious-objection affidavit is the statute\'s one non-ID cure.' : 'ID presented within 3 days.'} <span class="who">Who decides: legislature.</span></span>`);
+        steps.push(`<span class="step">A cured ballot is never a conflict (<span class="mono">core-cure-defeats-voting-conflict</span>).</span>`);
+      } else {
+        face = 'frown';
+        ballot.setAttribute('opacity', '1'); ballotSub.textContent = 'REJECTED'; ballotSub.setAttribute('fill', '#e74c3c');
+        steps.push(`<span class="step"><b class="bad">Provisional ballot rejected.</b> The 3-day window lapsed without cure — <span class="mono">no-id-and-lapse-rejects</span>. <span class="who">Who decides: legislature.</span></span>`);
+        if (!citizen) {
+          steps.push(`<span class="step">Not a registered citizen — no protected right engaged; <b>no conflict on either model</b>.</span>`);
+        } else {
+          const c = conclusionStatus('concl-challenger-voting'), g = conclusionStatus('concl-government-voting');
+          steps.push(`<span class="step">A registered <b>citizen's</b> ballot went uncounted. What that means depends on your premises:</span>`);
+          steps.push(`<span class="step">• Challenger — voting conflict: <b class="${c === 'Supported' ? 'bad' : 'mid'}">${c}</b> <span class="who">(needs: severe as-applied burden [court], cannot obtain ID without material burden [fact-finder])</span></span>`);
+          steps.push(`<span class="step">• Government — valid regulation (Crawford), no conflict: <b class="${g === 'Supported' ? 'ok' : 'mid'}">${g}</b> <span class="who">(needs: important interest, evenhanded, adequate 3-day cure [court])</span></span>`);
+        }
+      }
+    }
+    document.getElementById('poll-bubble-text').textContent = bubble;
+    setPollExpression(face);
+    document.getElementById('poll-outcome').innerHTML = steps.join('');
   }
 
   function renderStatusBar() {
@@ -799,6 +910,7 @@
     // Update conclusion status badges
     updateConclusionStatuses();
     if (typeof renderVoterOutcome === 'function' && data.meta && data.meta.document_categories) renderVoterOutcome();
+    if (typeof renderPollOutcome === 'function' && data.meta && data.meta.voting_categories) renderPollOutcome();
     updateScenarioStatus();
   }
 

@@ -111,6 +111,16 @@
                 (member-equal (lsm-edge-to (car edges)) states)
                 (lsm-wf-tablep states events (cdr edges))))))
 
+;; Is `set` closed under the table EXCEPT via edges whose event is in `evs`?
+;; (every edge leaving `set` either stays in `set` or carries an event in evs)
+(defun lsm-closedp-except (set evs edges)
+  (cond ((endp edges) t)
+        ((and (member-equal (lsm-edge-from (car edges)) set)
+              (not (member-equal (lsm-edge-to (car edges)) set))
+              (not (member-equal (lsm-edge-event (car edges)) evs)))
+         nil)
+        (t (lsm-closedp-except set evs (cdr edges)))))
+
 ;; Is `set` closed under the table?  (every edge leaving `set` stays in it)
 (defun lsm-closedp (set edges)
   (cond ((endp edges) t)
@@ -169,6 +179,13 @@
                 (member-equal (lsm-edge-to (lsm-lookup s e edges)) targets))
            (member-equal e (lsm-events-into targets edges))))
 
+(defthm lsm-lookup-closed-except
+  (implies (and (lsm-closedp-except set evs edges)
+                (member-equal s set)
+                (not (member-equal e evs))
+                (lsm-lookup s e edges))
+           (member-equal (lsm-edge-to (lsm-lookup s e edges)) set)))
+
 (defthm lsm-lookup-exit-guard
   (implies (lsm-lookup s e edges)
            (member-equal e (lsm-events-from s edges))))
@@ -211,6 +228,13 @@
   (implies (and (not (member-equal s targets))
                 (member-equal (lsm-step s e edges) targets))
            (member-equal e (lsm-events-into targets edges))))
+
+;; A closed-except set is left only by an event in evs.
+(defthm lsm-step-closed-except
+  (implies (and (lsm-closedp-except set evs edges)
+                (member-equal s set)
+                (not (member-equal e evs)))
+           (member-equal (lsm-step s e edges) set)))
 
 ;; Leaving a state requires one of its outgoing events.
 (defthm lsm-step-exit-guard
@@ -283,3 +307,14 @@
 (defthm lsm-run-exit-guard
   (implies (not (equal (lsm-run s events edges) s))
            (some-in-catsp events (lsm-events-from s edges))))
+
+;;; =========================================================================
+;;; 12. Gated exit:  leaving a closed-except set requires a gate event
+;;; ("a provisional ballot is counted only if a cure event occurred")
+;;; =========================================================================
+
+(defthm lsm-run-closed-except
+  (implies (and (lsm-closedp-except set evs edges)
+                (member-equal s set)
+                (not (member-equal (lsm-run s events edges) set)))
+           (some-in-catsp events evs)))

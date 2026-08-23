@@ -35,6 +35,8 @@ NEUTRAL_BOOKS = {
     "federal_save_act_core.lisp", "federal_save_act_process.lisp",
     "federal_save_act_document_rules.lisp", "federal_save_act_process_table.lisp",
     "federal_save_act_removal_table.lisp", "federal_save_act_removal_invariants.lisp",
+    "federal_save_act_voting_id_rules.lisp", "federal_save_act_voting_table.lisp",
+    "federal_save_act_voting_invariants.lisp", "federal_save_act_functional_instantiation.lisp",
     "federal_save_act_process_invariants.lisp", "federal_save_act_deep_process_invariants.lisp",
     "federal_save_act_document_proofs.lisp", "federal_save_act_consistency_check.lisp",
     "federal_save_act_burden_proofs.lisp", "federal_save_act_existentials.lisp",

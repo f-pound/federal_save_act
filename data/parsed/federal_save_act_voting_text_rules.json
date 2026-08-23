@@ -1,0 +1,124 @@
+{
+  "$schema": "../../tools/clause_ir_schema.json",
+  "book": "federal_save_act_voting_text_rules",
+  "title": "SAVE America Act § 3 / HAVA § 303A — text-derived constraints (defaxiom)",
+  "source_id": "s1383-eah",
+  "includes": [
+    "federal_save_act_core"
+  ],
+  "atoms": {
+    "personp": {
+      "args": [
+        "p"
+      ],
+      "ace": "{p} is a n:natural-person"
+    },
+    "registered-voterp": {
+      "args": [
+        "p"
+      ],
+      "ace": "{p} is on a n:official-list-of-eligible-voters"
+    },
+    "ballotp": {
+      "args": [
+        "b"
+      ],
+      "ace": "{b} is a n:ballot-for-a-federal-election"
+    },
+    "votes-in-personp": {
+      "args": [
+        "p",
+        "b"
+      ],
+      "ace": "{p} seeks to v:vote-in-person with {b}"
+    },
+    "presents-valid-photo-idp": {
+      "args": [
+        "p",
+        "b"
+      ],
+      "ace": "{p} presents a n:valid-physical-photo-identification for {b}",
+      "ace_neg": "{p} does not present a n:valid-physical-photo-identification for {b}"
+    },
+    "statute-denies-regular-ballotp": {
+      "args": [
+        "law",
+        "p",
+        "b"
+      ],
+      "ace": "{law} forbids a n:provision of {b} to {p}",
+      "constants": {
+        "federal-save-act": "the n:SAVE-America-Act"
+      }
+    }
+  },
+  "rules": [
+    {
+      "name": "text-photo-id-required-for-regular-ballot",
+      "kind": "axiom",
+      "args": [
+        "p",
+        "b"
+      ],
+      "label": "PROHIBITION",
+      "source": "§ 3 / HAVA § 303A(a)(1)(A)",
+      "text": "the appropriate State or local election official may not provide a ballot for an election for Federal office to an individual who desires to vote in person unless the individual presents to the official a valid physical photo identification",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "registered-voterp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "ballotp",
+              "b"
+            ]
+          },
+          {
+            "pred": [
+              "votes-in-personp",
+              "p",
+              "b"
+            ]
+          },
+          {
+            "not": {
+              "pred": [
+                "presents-valid-photo-idp",
+                "p",
+                "b"
+              ]
+            }
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "statute-denies-regular-ballotp",
+          "'federal-save-act",
+          "p",
+          "b"
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-photo-id-requirement",
+        "subject": "p",
+        "entities": {
+          "p": "n:voter",
+          "b": "n:regular-ballot"
+        },
+        "classification": "PROHIBITION",
+        "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1)(A)"
+      }
+    }
+  ]
+}

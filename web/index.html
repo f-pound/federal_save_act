@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.4.4">
+  <link rel="stylesheet" href="style.css?v=6.5.0">
 </head>
 <body>
   <header id="app-header">
@@ -174,6 +174,80 @@
           </div>
         </div>
       </details>
+      <details id="poll-panel" class="voter-panel" open>
+        <summary class="voter-summary">
+          <span class="voter-title">Try it — election day at the polling place (SAVE America Act § 3)</span>
+          <span class="voter-sub">Same citizen, now registered. Pick what they carry to the polls; the poll worker answers from the statute's list of valid photo identification, the 3-day cure rule decides whether the ballot counts, and your premises decide what an uncounted ballot means.</span>
+        </summary>
+        <div class="voter-body">
+          <div class="voter-docs">
+            <div class="voter-docs-title">What the voter carries</div>
+            <details class="voter-whatsthis">
+              <summary>Where does this list come from?</summary>
+              <p>New HAVA § 303A(c), added by § 3 of the SAVE America Act, defines "valid photo identification" as exactly five documents. Three of them must show a photo <em>and an expiration date</em>. It is a different list from the registration list above: a passport is on both; an ordinary photo ID paired with a birth certificate registers you but is not valid photo ID at the polls unless it carries an expiration date; a driver's licence gets you a ballot but does not prove citizenship at registration.</p>
+              <p>Without valid ID the voter may cast a provisional ballot, counted only if ID — or a religious-objection affidavit — is presented within 3 days (§ 303A(a)(1)(B)). These checkboxes, the ACL2 definitions and the English paraphrase are compiled from one file, and CI checks every quoted clause is verbatim in S. 1383.</p>
+            </details>
+            <div id="poll-doc-groups"></div>
+            <label class="voter-toggle"><input type="checkbox" id="poll-cure"> Returns within 3 days with valid ID or a religious-objection affidavit (§ 303A(a)(1)(B)(i))</label>
+            <label class="voter-toggle"><input type="checkbox" id="poll-citizen" checked> The voter is a registered U.S. citizen</label>
+          </div>
+          <div class="voter-scene">
+            <svg id="poll-svg" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" aria-label="Cartoon of a voter at a polling place">
+              <rect x="0" y="0" width="560" height="300" fill="#1f2333"/>
+              <rect x="0" y="236" width="560" height="64" fill="url(#vg-floor)"/>
+              <!-- voting booth -->
+              <rect x="470" y="96" width="70" height="140" fill="#2b3144" stroke="#3a4257"/>
+              <rect x="474" y="100" width="62" height="70" fill="#4a5268"/>
+              <rect x="470" y="170" width="70" height="4" fill="#8fc1ff" opacity=".5"/>
+              <text x="505" y="90" font-size="9" font-weight="700" text-anchor="middle" fill="#8fc1ff" font-family="Inter, sans-serif" letter-spacing="1">VOTE</text>
+              <!-- sign -->
+              <rect x="300" y="86" width="150" height="22" rx="4" fill="#2b3144" stroke="#3a4257"/>
+              <text x="375" y="101" font-size="10" font-weight="700" text-anchor="middle" fill="#8fc1ff" font-family="Inter, sans-serif" letter-spacing="1">POLLING PLACE</text>
+              <!-- check-in table -->
+              <rect x="292" y="168" width="170" height="16" rx="3" fill="#4a5268"/>
+              <rect x="300" y="184" width="154" height="52" fill="#30364a"/>
+              <!-- poll worker -->
+              <g id="poll-worker">
+                <rect x="362" y="128" width="52" height="46" rx="12" fill="#2ecc71"/>
+                <rect x="382" y="118" width="12" height="14" rx="4" fill="#d9b08c"/>
+                <circle cx="388" cy="100" r="22" fill="#d9b08c"/>
+                <path d="M366 98 q22 -30 44 0 v-6 q-22 -20 -44 0 z" fill="#2b2b2b"/>
+                <circle cx="380" cy="100" r="2.2" fill="#2b2b2b"/><circle cx="396" cy="100" r="2.2" fill="#2b2b2b"/>
+                <path id="poll-worker-mouth" d="M380 111 h16" stroke="#8a4b3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <ellipse cx="350" cy="168" rx="9" ry="5" fill="#d9b08c"/>
+              </g>
+              <!-- voter (same purple citizen) -->
+              <g id="poll-voter">
+                <path d="M104 236 v-70 a30 30 0 0 1 30 -30 h16 a30 30 0 0 1 30 30 v70 z" fill="#8e44ad"/>
+                <path d="M108 150 q-18 30 -10 70" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
+                <rect x="136" y="108" width="14" height="16" rx="5" fill="#f1d2b6"/>
+                <circle cx="143" cy="90" r="26" fill="#f1d2b6"/>
+                <path d="M117 86 q26 -36 52 0 v-6 q-26 -24 -52 0 z" fill="#3d3d3d"/>
+                <circle cx="134" cy="90" r="2.4" fill="#2b2b2b"/><circle cx="152" cy="90" r="2.4" fill="#2b2b2b"/>
+                <path id="poll-mouth" d="M135 103 h16" stroke="#a05a4a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <text id="poll-mark" x="176" y="66" font-size="22" font-weight="800" fill="#F39C12" font-family="Inter, sans-serif" opacity="0">?</text>
+                <path d="M178 152 q50 -4 96 14" stroke="#8e44ad" stroke-width="14" fill="none" stroke-linecap="round"/>
+                <ellipse cx="276" cy="166" rx="10" ry="7" fill="#f1d2b6"/>
+                <g id="poll-cards" transform="translate(262,150)" filter="url(#vg-shadow)"></g>
+              </g>
+              <!-- ballot icon -->
+              <g id="poll-ballot" opacity="0" transform="translate(470,40)">
+                <rect width="56" height="38" rx="3" fill="#fdfdfd" stroke="#8a93a3"/>
+                <text id="poll-ballot-text" x="28" y="16" font-size="8" font-weight="800" text-anchor="middle" fill="#333" font-family="Inter, sans-serif">BALLOT</text>
+                <text id="poll-ballot-sub" x="28" y="30" font-size="8" font-weight="700" text-anchor="middle" fill="#2ecc71" font-family="Inter, sans-serif">COUNTED</text>
+              </g>
+              <!-- bubble -->
+              <g>
+                <path d="M218 8 h240 a8 8 0 0 1 8 8 v56 a8 8 0 0 1 -8 8 h-70 l-14 16 l-4 -16 h-152 a8 8 0 0 1 -8 -8 v-56 a8 8 0 0 1 8 -8 z" fill="#f5f7fa" filter="url(#vg-shadow)"/>
+                <foreignObject x="224" y="12" width="230" height="64">
+                  <div xmlns="http://www.w3.org/1999/xhtml" id="poll-bubble-text" class="voter-bubble-text">—</div>
+                </foreignObject>
+              </g>
+            </svg>
+            <div id="poll-outcome" class="voter-outcome"></div>
+          </div>
+        </div>
+      </details>
       <div id="graph-container"></div>
     </section>
 
@@ -288,6 +362,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6.4.4"></script>
+  <script src="app.js?v=6.5.0"></script>
 </body>
 </html>

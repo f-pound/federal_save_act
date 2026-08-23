@@ -373,8 +373,11 @@ def emit_ace_statements(ir):
 
 
 def upsert_ace(ir, ir_path, check):
-    stem = ir_path.stem
-    for suffix in ("_document_rules", "_process_table", "_removal_table", "_text_rules", "_rules", "_table", "_clauses"):
+    # All IRs of one project share one ACE file: <slug>_ace.json, where the
+    # slug is given explicitly or is the IR stem with its section suffix removed.
+    stem = ir.get("slug") or ir_path.stem
+    for suffix in ("_voting_id_rules", "_voting_text_rules", "_voting_table", "_document_rules",
+                   "_process_table", "_removal_table", "_text_rules", "_rules", "_table", "_clauses"):
         if stem.endswith(suffix):
             stem = stem[: -len(suffix)]
             break

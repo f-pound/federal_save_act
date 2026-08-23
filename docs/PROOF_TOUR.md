@@ -34,7 +34,7 @@ computational amicus-style proof report
 
 ## 1. What the Project Proves
 
-- **216 theorems**, all Q.E.D., across 25 ACL2 books (4 generated from the clause IR) — 43 of them in two generic, statute-independent lemma libraries (`model/lib/`).
+- **258 theorems**, all Q.E.D., across 30 ACL2 books (7 generated from the clause IR) — 43 of them in two generic, statute-independent lemma libraries (`model/lib/`).
 - Under the **challenger's** interpretive model, a constitutional conflict exists for eligible citizens who lack documentary proof, face material burden, and are denied through the alternative process.
 - Under the **government's** interpretive model, no constitutional conflict exists because the SAVE Act is a valid regulation with an adequate alternative process.
 - The constitutional outcome **pivots on** `valid-regulationp` — a single unconstrained predicate that neither neutral statutory text nor the process model determines.
@@ -54,7 +54,7 @@ computational amicus-style proof report
 
 ## 3. Trusted Base
 
-The project rests on **38 defaxioms** (see `reports/axiom_pressure_report.md`):
+The project rests on **52 defaxioms** (see `reports/axiom_pressure_report.md`):
 
 | Category | Count | Risk Level |
 |---|---|---|
@@ -114,6 +114,16 @@ These are genuine process-verification results over arbitrary traces. In v6 each
 § 8(k) names two steps — receipt of verified noncitizen information, and removal "at any time" upon receipt. The table holds those two TEXT_FACT edges plus five DUE_PROCESS_OVERLAY edges (notice, contest, confirmation) the statute does **not** contain. The theorems, all `lib/lsm` instances, state mechanically what earlier versions could only say in prose: `statutory-path-has-no-notice-or-hearing`, `text-edges-alone-reach-removal`, `removal-implies-prior-information-receipt`, `removed-is-absorbing` (no statutory reinstatement), `reinstatement-requires-contest-path` (only via the overlay). Neutral: the book does not assert that this is unconstitutional.
 
 **v6.1 bridge to the conflict condition.** `core` adds `constitutional-removal-conflict-conditionp (law cs p)` — same shape as the registration condition, with the registrant as the object of `valid-regulationp`. The generated text rule `text-save-act-removal-upon-verified-information` supplies `statute-removes-registrantp`. Scenario B (`citizen-b`, erroneous removal, no notice) is shared; the challenger's removal branch (Mathews v. Eldridge → due-process violation → not valid as applied) proves `challenger-model-finds-removal-conflict`, the government's (Husted → verified information + evenhanded → valid) proves `government-model-no-removal-conflict`. Both parties' *registration* bridges were narrowed to `voter-registration-applicationp x` so neither decides removal for free.
+
+## 7b. § 303A Photo Identification to Vote (v6.5)
+
+**Files**: `federal_save_act_voting_invariants.lisp` (16 theorems), tables generated from `federal_save_act_voting_id_rules.json` / `federal_save_act_voting_table.json`, text rule from `federal_save_act_voting_text_rules.json` — all quoted from the S. 1383 vehicle and verbatim-checked.
+
+Third `lib/lsm` client. `provisional-counted-requires-cure` is an instance of the new gated-exit lemma `lsm-run-closed-except`; the **two-enumerations** theorems (`registration-proof-does-not-entail-voting-id` and its converse) are `enum_list` evaluations over the two generated tables. Scenario C and the parties' Crawford branches reach opposite conditional conclusions for `citizen-c`; `core-cure-defeats-voting-conflict` shows a cured ballot is never a conflict.
+
+## 7c. Functional Instantiation (v6.5)
+
+`federal_save_act_functional_instantiation.lisp` transfers generic theorems about each party's abstract encapsulated predicate to concrete conjunctions of that party's factors via `:functional-instance`, with ACL2 discharging the constraint obligations. Neutral book — no `defaxiom`.
 
 ## 8. Burden Derivation Chain
 

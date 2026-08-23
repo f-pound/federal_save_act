@@ -254,3 +254,62 @@
   (not (constitutional-removal-conflict-conditionp
         'federal-save-act 'amend-v-equal-protection 'citizen-b))
   :rule-classes nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; v6.5 — VOTING BRANCH (SAVE America Act § 3 / HAVA § 303A, citizen-c)
+;;;
+;;; Theory of the case: Crawford upheld a photo-ID-to-vote requirement as a
+;;; reasonable, evenhanded regulation justified by the State's interest in
+;;; election integrity, where free ID and a provisional-ballot cure exist.
+;;; § 303A is that law at the federal level.
+;;;
+;;; Doctrinal basis: Crawford, 553 U.S. at 189-204 (plurality and Scalia
+;;; concurrence); Burdick.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(encapsulate
+  ((government-voting-defense-establishedp (law) t))
+
+  (local (defun government-voting-defense-establishedp (law)
+    (declare (ignore law)) t))
+
+  ;; INTERPRETATION_GOVERNMENT: important interest + evenhanded photo-ID
+  ;; requirement + adequate provisional cure establish the defense.
+  (defthm government-voting-defense-rule
+    (implies
+     (and (important-government-interestp law)
+          (photo-id-requirement-evenhandedp law)
+          (provisional-cure-adequatep law))
+     (government-voting-defense-establishedp law))))
+
+;; BRIDGE_RULE: the defense validates the rule for every ballot.
+(defaxiom government-bridge-voting-validates
+  (implies
+   (and (government-voting-defense-establishedp law)
+        (ballotp b))
+   (valid-regulationp law b)))
+
+;; INTERPRETATION_GOVERNMENT: the photo-ID requirement is evenhanded
+(defaxiom government-photo-id-evenhanded
+  (photo-id-requirement-evenhandedp 'federal-save-act))
+
+;; INTERPRETATION_GOVERNMENT: the 3-day provisional cure is adequate
+(defaxiom government-provisional-cure-adequate
+  (provisional-cure-adequatep 'federal-save-act))
+
+;; PROOF OBLIGATION 5: no voting conflict for any ballot
+(defthm government-no-voting-conflict-general
+  (implies
+   (and (important-government-interestp law)
+        (photo-id-requirement-evenhandedp law)
+        (provisional-cure-adequatep law)
+        (ballotp b))
+   (not (constitutional-voting-conflict-conditionp law cs p b)))
+  :hints (("Goal" :in-theory (enable constitutional-voting-conflict-conditionp)))
+  :rule-classes nil)
+
+;; PROOF OBLIGATION 6: concrete citizen-c corollary
+(defthm government-model-no-voting-conflict
+  (not (constitutional-voting-conflict-conditionp
+        'federal-save-act 'amend-v-equal-protection 'citizen-c 'ballot-c))
+  :rule-classes nil)

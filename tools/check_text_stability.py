@@ -45,25 +45,30 @@ def fragments(q):
 
 def main():
     corpus = {k: norm(v.read_text(encoding="utf-8", errors="replace")) for k, v in TEXTS.items()}
+    # Which texts a quote must appear in.  H.R. 22 clauses must survive into
+    # the current vehicle; SAVE America Act-only clauses exist only there.
+    WHERE = {"hr22-eh": ("hr22-eh", "s1383-eah"), "s1383-eah": ("s1383-eah",)}
     checks = []
     for row in csv.DictReader(open(ROOT / "sources/clause_trace.csv", encoding="utf-8-sig")):
-        if row["source_id"] == "hr22-eh" and row["label"] not in ("INTERPRETATION_CHALLENGER", "INTERPRETATION_GOVERNMENT", "INTERPRETIVE_ASSUMPTION"):
-            checks.append((f"trace:{row['axiom_name']}", row["clause_text"]))
+        if row["source_id"] in WHERE and row["label"] not in ("INTERPRETATION_CHALLENGER", "INTERPRETATION_GOVERNMENT", "INTERPRETIVE_ASSUMPTION"):
+            checks.append((f"trace:{row['axiom_name']}", row["clause_text"], WHERE[row["source_id"]]))
     for ir in sorted((ROOT / "data/parsed").glob("federal_save_act_*.json")):
         d = json.loads(ir.read_text(encoding="utf-8"))
-        if not isinstance(d, dict) or d.get("source_id") != "hr22-eh":
+        if not isinstance(d, dict) or d.get("source_id") not in WHERE:
             continue
+        where = WHERE[d["source_id"]]
         for c in d.get("categories", []):
             for m in c["members"]:
                 if m.get("text"):
-                    checks.append((f"{ir.stem}:{m['symbol']}", m["text"]))
+                    checks.append((f"{ir.stem}:{m['symbol']}", m["text"], where))
         for r in d.get("rules", []):
             if r.get("text"):
-                checks.append((f"{ir.stem}:{r['name']}", r["text"]))
+                checks.append((f"{ir.stem}:{r['name']}", r["text"], where))
     errors = 0
-    for name, quote in checks:
+    for name, quote, where in checks:
         for frag in fragments(quote):
-            for k, text in corpus.items():
+            for k in where:
+                text = corpus[k]
                 if frag not in text:
                     if name in KNOWN_DIFFS:
                         print(f"KNOWN DIFF in {k}: [{name}] {KNOWN_DIFFS[name]}")

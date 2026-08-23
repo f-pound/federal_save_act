@@ -139,3 +139,13 @@ Three things in the new text are **not modeled**, in rough order of value:
 3. **30-day DHS/SAVE list submission + quarterly matching.** Feeds the § 8(k) removal table: a new TEXT_FACT edge `on-rolls --save-match--> info-received` makes "verified information" *systematic* rather than incidental, which strengthens the challenger's erroneous-removal scenario (scenario B) and is the natural hook for an error-rate empirical assumption.
 
 None of these changes § 2, so the existing 216 theorems would stay valid against the new vehicle; they would be *additions*.
+
+## 9. § 303A photo identification to vote (v6.5) and functional instantiation
+
+The § 3 layer reused the libraries unchanged except for one new generic lemma, `lsm-run-closed-except` ("a set is left only through a gate event"), needed to state that a provisional ballot is counted *only if* a cure event occurred. Everything else was tables and instantiation: three IR files verbatim-checked against the S. 1383 text, a 16-theorem neutral book, scenario C, and one encapsulate per party.
+
+The structurally interesting results are the **two-enumerations** theorems. § 3(b) (registration) and § 303A(c) (voting) are different lists; the model proves a passport satisfies both, that the § 3(b)(5) photo-ID-plus-birth-certificate pairing registers a citizen yet is not valid photo identification at the polls, and that a driver's licence is valid at the polls yet is not proof of citizenship at registration. Whether the gap between the lists burdens anyone is, as always, a premise — `challenger-scenario-c-material-burden`, tagged fact-finder.
+
+`federal_save_act_functional_instantiation.lisp` closes the v5.3 open item: for each party an abstract encapsulated predicate, a generic theorem with the bridge stated as a *hypothesis*, a concrete conjunction of that party's factors, and a `:functional-instance` transfer in which ACL2 proves the concrete predicate satisfies the exported constraint. The book is neutral (no `defaxiom`), which is the point: it shows the encapsulates admit non-trivial models without importing either party's axioms.
+
+Remaining unmodeled SAVE America Act material: the name-discrepancy registration process and the 30-day DHS/SAVE list submission.

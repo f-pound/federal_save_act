@@ -1,0 +1,119 @@
+{
+  "$schema": "../../tools/clause_ir_schema.json",
+  "book": "federal_save_act_voting_id_rules",
+  "title": "SAVE America Act § 3 / HAVA § 303A(c) — valid photo identification to vote",
+  "source_id": "s1383-eah",
+  "includes": [
+    "lib/enum_list"
+  ],
+  "categories": [
+    {
+      "name": "valid-photo-id-types",
+      "source": "§ 3 / HAVA § 303A(c)(1)-(5)",
+      "description": "Documents that are 'valid photo identification' for casting a ballot. Note (1), (2) and (5) require a photo AND an expiration date; (3) and (4) do not mention expiration.",
+      "members": [
+        {
+          "symbol": "state-drivers-license-with-expiration",
+          "source": "§ 303A(c)(1)",
+          "ace_noun": "n:state-issued-drivers-license-with-photo-and-expiration-date",
+          "text": "A valid State-issued motor vehicle driver's license that includes a photo of the individual and an expiration date."
+        },
+        {
+          "symbol": "state-id-card-with-expiration",
+          "source": "§ 303A(c)(2)",
+          "ace_noun": "n:state-issued-identification-card-with-photo-and-expiration-date",
+          "text": "A valid State-issued identification card that includes a photo of the individual and an expiration date issued by a State motor vehicle authority."
+        },
+        {
+          "symbol": "valid-us-passport",
+          "source": "§ 303A(c)(3)",
+          "ace_noun": "n:valid-United-States-passport",
+          "text": "A valid United States passport for the individual."
+        },
+        {
+          "symbol": "valid-military-identification",
+          "source": "§ 303A(c)(4)",
+          "ace_noun": "n:valid-military-identification",
+          "text": "A valid military identification for the individual."
+        },
+        {
+          "symbol": "tribal-id-with-expiration",
+          "source": "§ 303A(c)(5)",
+          "ace_noun": "n:tribal-identification-document-with-photo-and-expiration-date",
+          "text": "A valid identification document issued by a Tribal government that includes a photo of the individual and an expiration date."
+        }
+      ]
+    },
+    {
+      "name": "religious-objection-affidavit-types",
+      "source": "§ 3 / HAVA § 303A(a)(1)(B)(i)(II)",
+      "description": "The only non-identification cure for an in-person provisional ballot.",
+      "members": [
+        {
+          "symbol": "religious-objection-affidavit",
+          "source": "§ 303A(a)(1)(B)(i)(II)",
+          "ace_noun": "n:affidavit-of-religious-objection-to-being-photographed",
+          "text": "an affidavit developed and made available to the individual by the State attesting that the individual does not possess the identification required under subparagraph (A) because the individual has a religious objection to being photographed."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "name": "valid-photo-identification-bundlep",
+      "args": [
+        "docs"
+      ],
+      "label": "DEFINED_TERM",
+      "source": "§ 3 / HAVA § 303A(c)",
+      "text": "a `valid photo identification' means, with respect to an individual who seeks to vote in a State, any of the following",
+      "body": {
+        "some-in": [
+          "docs",
+          "valid-photo-id-types"
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-valid-photo-id",
+        "subject": "person",
+        "possession_of": "docs",
+        "consequent_noun": "n:valid-photo-identification",
+        "classification": "DEFINED_TERM",
+        "source_ref": "SAVE America Act § 3 / HAVA § 303A(c)"
+      }
+    },
+    {
+      "name": "provisional-cure-bundlep",
+      "args": [
+        "docs"
+      ],
+      "label": "EXCEPTION",
+      "source": "§ 3 / HAVA § 303A(a)(1)(B)(i)",
+      "text": "not later than 3 days after casting the provisional ballot, the individual presents to the official ... the identification required under subparagraph (A) ... an affidavit developed and made available to the individual by the State",
+      "body": {
+        "or": [
+          {
+            "some-in": [
+              "docs",
+              "valid-photo-id-types"
+            ]
+          },
+          {
+            "some-in": [
+              "docs",
+              "religious-objection-affidavit-types"
+            ]
+          }
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-provisional-cure",
+        "subject": "person",
+        "possession_of": "docs",
+        "consequent_noun": "n:cure-for-a-provisional-ballot",
+        "classification": "EXCEPTION",
+        "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1)(B)(i)"
+      }
+    }
+  ]
+}

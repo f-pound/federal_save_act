@@ -1,7 +1,7 @@
 {
-  "version": "6.4.1",
-  "model_version": "6.1",
-  "documentation_version": "6.4.1",
+  "version": "6.5.0",
+  "model_version": "6.5",
+  "documentation_version": "6.5.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -15,35 +15,35 @@
     "senate_last_action": "cloture not invoked 53-47, 2026-03-26"
   },
   "census": {
-    "theorems": 219,
-    "axioms": 38,
-    "books": 25,
-    "defun": 51,
-    "defstub": 52,
-    "defconst": 51,
+    "theorems": 258,
+    "axioms": 52,
+    "books": 30,
+    "defun": 63,
+    "defstub": 60,
+    "defconst": 73,
     "defun_sk": 4,
-    "encapsulate": 6,
+    "encapsulate": 10,
     "total_events": 414,
     "authoritative_sources": 34,
-    "traced_propositions": 45,
-    "ace_statements": 9,
+    "traced_propositions": 61,
+    "ace_statements": 13,
     "ace_readme_paragraphs": 13,
-    "generic_library_theorems": 43,
-    "generated_books": 4,
-    "ace_generated_statements": 5,
-    "scenarios": 2,
+    "generic_library_theorems": 46,
+    "generated_books": 7,
+    "ace_generated_statements": 9,
+    "scenarios": 3,
     "tracked_bill_texts": 2,
     "decider_tags": {
-      "legislature": 4,
-      "court": 16,
-      "fact-finder": 3,
-      "party-stipulation": 15
+      "legislature": 5,
+      "court": 20,
+      "fact-finder": 4,
+      "party-stipulation": 23
     }
   },
   "certification": {
     "all_passed": true,
-    "books_certified": 25,
-    "clean_books_no_axioms": 12,
+    "books_certified": 30,
+    "clean_books_no_axioms": 16,
     "ace_ape_strict_pass": 13,
     "ace_ape_strict_fail": 0
   },
@@ -51,7 +51,8 @@
     "challenger-scenario-no-fault",
     "challenger-scenario-material-burden",
     "government-burden-not-severe",
-    "scenario-b-verified-noncitizen-information"
+    "scenario-b-verified-noncitizen-information",
+    "challenger-scenario-c-material-burden"
   ],
   "last_updated": "2026-08-23"
 }

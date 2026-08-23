@@ -127,6 +127,8 @@ def scan_lisp_events(model_dir):
         "lib/enum_list", "lib/lsm",
         "federal_save_act_document_rules", "federal_save_act_process_table",
         "federal_save_act_removal_table", "federal_save_act_removal_invariants",
+        "federal_save_act_voting_id_rules", "federal_save_act_voting_table",
+        "federal_save_act_voting_invariants", "federal_save_act_functional_instantiation",
         "federal_save_act_core", "federal_save_act_process",
         "federal_save_act_process_invariants",
         "federal_save_act_deep_process_invariants",
@@ -144,6 +146,11 @@ def scan_lisp_events(model_dir):
         "federal_save_act_removal_table": 0,
         "federal_save_act_text_rules": 1,
         "federal_save_act_removal_invariants": 5,
+        "federal_save_act_voting_id_rules": 0,
+        "federal_save_act_voting_table": 0,
+        "federal_save_act_voting_text_rules": 1,
+        "federal_save_act_voting_invariants": 5,
+        "federal_save_act_functional_instantiation": 6,
         "federal_save_act_process": 0,
         "federal_save_act_facts": 1,
         "federal_save_act_scenario": 1,
@@ -220,6 +227,12 @@ def build():
     if document_ir:
         document_categories = {c["name"]: [{"symbol": m["symbol"], "source": m.get("source", ""), "text": m.get("text", "")}
                                            for m in c["members"]] for c in document_ir["categories"]}
+    vir_path = Path(__file__).resolve().parents[1] / "data" / "parsed" / "federal_save_act_voting_id_rules.json"
+    voting_categories = None
+    if vir_path.exists():
+        vir = json.loads(vir_path.read_text(encoding="utf-8"))
+        voting_categories = {c["name"]: [{"symbol": m["symbol"], "source": m.get("source", ""), "text": m.get("text", "")}
+                                         for m in c["members"]] for c in vir["categories"]}
     status_path = Path(__file__).resolve().parents[1] / "data" / "legislative_status.json"
     legislative_status = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else None
     # --- Load inputs ---
@@ -233,6 +246,7 @@ def build():
     meta = {
         "legislative_status": legislative_status,
         "document_categories": document_categories,
+        "voting_categories": voting_categories,
         "project": version.get("project", "federal_save_act"),
         "title": "Federal SAVE Act — Computational Amicus Explorer",
         "version": version.get("version", "unknown"),

@@ -63,7 +63,7 @@ echo ""
 python3 tools/check_text_stability.py
 
 # Generated book must match its IR before anything is certified.
-python3 tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json --check --english --ace
+python3 tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json data/parsed/federal_save_act_voting_id_rules.json data/parsed/federal_save_act_voting_table.json data/parsed/federal_save_act_voting_text_rules.json --check --english --ace
 
 # Layer L: generic lemma libraries (no statute content, no defaxiom)
 certify_book model/lib/enum_list clean
@@ -76,9 +76,14 @@ certify_book model/federal_save_act_process_table clean
 certify_book model/federal_save_act_removal_table clean
 certify_book model/federal_save_act_process clean
 certify_book model/federal_save_act_removal_invariants clean
+certify_book model/federal_save_act_voting_id_rules clean
+certify_book model/federal_save_act_voting_table clean
+certify_book model/federal_save_act_voting_invariants clean
+certify_book model/federal_save_act_functional_instantiation clean
 
 # Layer 1g: generated text-derived axioms
 certify_book model/federal_save_act_text_rules defaxiom
+certify_book model/federal_save_act_voting_text_rules defaxiom
 
 # Layer 1: source-traced axiom book + shared scenario
 certify_book model/federal_save_act_facts defaxiom

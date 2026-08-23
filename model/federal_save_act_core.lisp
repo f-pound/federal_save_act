@@ -253,6 +253,19 @@
        (not (valid-regulationp law x))))
 
 ;;; =========================================================================
+;;; Election-day predicates (SAVE America Act § 3 / HAVA § 303A) — v6.5
+;;; =========================================================================
+
+(defstub ballotp (b) t)                          ; b is a ballot in a federal election
+(defstub votes-in-personp (p b) t)               ; p seeks to vote in person with ballot b
+(defstub presents-valid-photo-idp (p b) t)       ; p presents valid physical photo ID for b
+(defstub cures-within-deadlinep (p b) t)         ; p cures a provisional ballot within 3 days
+(defstub statute-denies-regular-ballotp (law p b) t) ; law forbids providing regular ballot b to p
+(defstub cannot-obtain-valid-photo-id-without-material-burdenp (p) t) ; challenger-side empirical
+(defstub photo-id-requirement-evenhandedp (law) t)   ; government-side
+(defstub provisional-cure-adequatep (law) t)         ; government-side
+
+;;; =========================================================================
 ;;; Removal-side conflict condition (v6.1)
 ;;;
 ;;; § 8(k) acts on a REGISTRANT, not on an application, so removal gets its
@@ -275,6 +288,34 @@
        (removal-transactionp p)
        (statute-removes-registrantp law p)
        (not (valid-regulationp law p))))
+
+;;; =========================================================================
+;;; Voting-side conflict condition (v6.5)
+;;;
+;;; § 303A acts on a BALLOT.  The statute never denies the vote outright:
+;;; a voter without ID gets a provisional ballot, counted if cured within
+;;; 3 days.  So the condition requires BOTH the regular-ballot denial AND
+;;; failure to cure — only then has the citizen's ballot gone uncounted.
+;;; The object of valid-regulationp is the ballot b.
+;;; =========================================================================
+
+(defun voting-transactionp (p b)
+  (and (personp p)
+       (registered-voterp p)
+       (ballotp b)
+       (votes-in-personp p b)))
+
+(defun ballot-not-countedp (law p b)
+  (and (statute-denies-regular-ballotp law p b)
+       (not (cures-within-deadlinep p b))))
+
+(defun constitutional-voting-conflict-conditionp (law constitution-section p b)
+  (and (lawp law)
+       (qualified-federal-voterp p)
+       (protected-right-to-votep constitution-section p)
+       (voting-transactionp p b)
+       (ballot-not-countedp law p b)
+       (not (valid-regulationp law b))))
 
 ;;; =========================================================================
 ;;; Shared structural lemmas about the conflict condition (v6.0)
@@ -314,3 +355,22 @@
                 (statute-removes-registrantp law p))
            (iff (constitutional-removal-conflict-conditionp law cs p)
                 (not (valid-regulationp law p)))))
+
+;; Voting-side twins.
+(defthm core-valid-regulation-defeats-voting-conflict
+  (implies (valid-regulationp law b)
+           (not (constitutional-voting-conflict-conditionp law cs p b))))
+
+(defthm core-voting-conflict-pivots-on-valid-regulation
+  (implies (and (lawp law)
+                (qualified-federal-voterp p)
+                (protected-right-to-votep cs p)
+                (voting-transactionp p b)
+                (ballot-not-countedp law p b))
+           (iff (constitutional-voting-conflict-conditionp law cs p b)
+                (not (valid-regulationp law b)))))
+
+;; A cured provisional ballot is never a conflict: the vote was counted.
+(defthm core-cure-defeats-voting-conflict
+  (implies (cures-within-deadlinep p b)
+           (not (constitutional-voting-conflict-conditionp law cs p b))))

@@ -187,6 +187,102 @@
       ],
       "notes": "APE validated. Paraphrase: If a n:voter-registration-application X1 is in an n:unsubmitted-state and a n:submit-application-event occurs then the n:voter-registration-application X1 is in a n:submitted-state .\n\nIf a n:voter-reg",
       "replaces": []
+    },
+    {
+      "id": "ace-gen-valid-photo-id",
+      "generated_from": {
+        "ir": "federal_save_act_voting_id_rules",
+        "rule": "valid-photo-identification-bundlep"
+      },
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A(c)",
+      "source_text": "a `valid photo identification' means, with respect to an individual who seeks to vote in a State, any of the following",
+      "ace_text": "If a person has a n:state-issued-drivers-license-with-photo-and-expiration-date then the person has a n:valid-photo-identification. If a person has a n:state-issued-identification-card-with-photo-and-expiration-date then the person has a n:valid-photo-identification. If a person has a n:valid-United-States-passport then the person has a n:valid-photo-identification. If a person has a n:valid-military-identification then the person has a n:valid-photo-identification. If a person has a n:tribal-identification-document-with-photo-and-expiration-date then the person has a n:valid-photo-identification.",
+      "classification": "DEFINED_TERM",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(valid-photo-identification-bundlep docs)",
+      "requires_human_review": false,
+      "covers": [
+        "state-drivers-license-with-expiration [§ 303A(c)(1)]",
+        "state-id-card-with-expiration [§ 303A(c)(2)]",
+        "valid-us-passport [§ 303A(c)(3)]",
+        "valid-military-identification [§ 303A(c)(4)]",
+        "tribal-id-with-expiration [§ 303A(c)(5)]"
+      ],
+      "notes": "APE validated. Paraphrase: Every person that has a n:state-issued-drivers-license-with-photo-and-expiration-date has a n:valid-photo-identification .\n\nEvery person that has a n:state-issued-identification-card-with-photo-and-ex",
+      "replaces": []
+    },
+    {
+      "id": "ace-gen-provisional-cure",
+      "generated_from": {
+        "ir": "federal_save_act_voting_id_rules",
+        "rule": "provisional-cure-bundlep"
+      },
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1)(B)(i)",
+      "source_text": "not later than 3 days after casting the provisional ballot, the individual presents to the official ... the identification required under subparagraph (A) ... an affidavit developed and made available to the individual by the State",
+      "ace_text": "If a person has a n:state-issued-drivers-license-with-photo-and-expiration-date then the person has a n:cure-for-a-provisional-ballot. If a person has a n:state-issued-identification-card-with-photo-and-expiration-date then the person has a n:cure-for-a-provisional-ballot. If a person has a n:valid-United-States-passport then the person has a n:cure-for-a-provisional-ballot. If a person has a n:valid-military-identification then the person has a n:cure-for-a-provisional-ballot. If a person has a n:tribal-identification-document-with-photo-and-expiration-date then the person has a n:cure-for-a-provisional-ballot. If a person has a n:affidavit-of-religious-objection-to-being-photographed then the person has a n:cure-for-a-provisional-ballot.",
+      "classification": "EXCEPTION",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(provisional-cure-bundlep docs)",
+      "requires_human_review": false,
+      "covers": [
+        "state-drivers-license-with-expiration [§ 303A(c)(1)]",
+        "state-id-card-with-expiration [§ 303A(c)(2)]",
+        "valid-us-passport [§ 303A(c)(3)]",
+        "valid-military-identification [§ 303A(c)(4)]",
+        "tribal-id-with-expiration [§ 303A(c)(5)]",
+        "religious-objection-affidavit [§ 303A(a)(1)(B)(i)(II)]"
+      ],
+      "notes": "APE validated. Paraphrase: Every person that has a n:state-issued-drivers-license-with-photo-and-expiration-date has a n:cure-for-a-provisional-ballot .\n\nEvery person that has a n:state-issued-identification-card-with-photo-and",
+      "replaces": []
+    },
+    {
+      "id": "ace-gen-voting-process",
+      "generated_from": {
+        "ir": "federal_save_act_voting_table",
+        "process": "vote"
+      },
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1); HAVA § 302(a)",
+      "source_text": "Lifecycle of one in-person ballot under new HAVA § 303A. TEXT_FACT edges are named in the statute; MODEL_STRUCTURE edges are the ordinary casting/counting bookkeeping of HAVA § 302(a).",
+      "ace_text": "If a n:in-person-ballot is in a n:at-polls-state and a n:present-valid-photo-id-event occurs then the n:in-person-ballot is in a n:id-presented-state. If a n:in-person-ballot is in a n:id-presented-state and a n:cast-regular-ballot-event occurs then the n:in-person-ballot is in a n:regular-cast-state. If a n:in-person-ballot is in a n:at-polls-state and a n:no-identification-event occurs then the n:in-person-ballot is in a n:provisional-cast-state. If a n:in-person-ballot is in a n:provisional-cast-state and a n:cure-within-3-days-event occurs then the n:in-person-ballot is in a n:cured-state. If a n:in-person-ballot is in a n:provisional-cast-state and a n:cure-deadline-lapses-event occurs then the n:in-person-ballot is in a n:rejected-state. If a n:in-person-ballot is in a n:regular-cast-state and a n:count-ballot-event occurs then the n:in-person-ballot is in a n:counted-state. If a n:in-person-ballot is in a n:cured-state and a n:count-ballot-event occurs then the n:in-person-ballot is in a n:counted-state. If a n:in-person-ballot is in a n:provisional-cast-state and a n:reject-ballot-event occurs then the n:in-person-ballot is in a n:rejected-state.",
+      "classification": "PROCESS_RULE",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "*vote-edges*  (lsm-step / lsm-run)",
+      "requires_human_review": false,
+      "covers": [
+        "at-polls --present-valid-photo-id--> id-presented [TEXT_FACT § 303A(a)(1)(A)]",
+        "id-presented --cast-regular-ballot--> regular-cast [TEXT_FACT § 303A(a)(1)(A) ('may not provide a ballot ... unless')]",
+        "at-polls --no-identification--> provisional-cast [TEXT_FACT § 303A(a)(1)(B)(i) ('shall be permitted to cast a provisional ballot')]",
+        "provisional-cast --cure-within-3-days--> cured [TEXT_FACT § 303A(a)(1)(B)(i)(I)-(II)]",
+        "provisional-cast --cure-deadline-lapses--> rejected [TEXT_FACT § 303A(a)(1)(B)(i) ('may not make a determination ... that the individual is eligible ... unless, not later than 3 days')]",
+        "regular-cast --count-ballot--> counted [MODEL_STRUCTURE HAVA § 302(a)]",
+        "cured --count-ballot--> counted [TEXT_FACT § 303A(a)(1)(B)(i); HAVA § 302(a)(4)]",
+        "provisional-cast --reject-ballot--> rejected [MODEL_STRUCTURE HAVA § 302(a)(4) (no eligibility determination)]"
+      ],
+      "notes": "APE validated. Paraphrase: If an n:in-person-ballot X1 is in an n:at-polls-state and a n:present-valid-photo-id-event occurs then the n:in-person-ballot X1 is in an n:id-presented-state .\n\nIf an n:in-person-ballot X1 is in an n",
+      "replaces": []
+    },
+    {
+      "id": "ace-gen-photo-id-requirement",
+      "generated_from": {
+        "ir": "federal_save_act_voting_text_rules",
+        "rule": "text-photo-id-required-for-regular-ballot"
+      },
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1)(A)",
+      "source_text": "the appropriate State or local election official may not provide a ballot for an election for Federal office to an individual who desires to vote in person unless the individual presents to the official a valid physical photo identification",
+      "ace_text": "If a n:voter is a n:natural-person and the n:voter is on a n:official-list-of-eligible-voters and a n:regular-ballot is a n:ballot-for-a-federal-election and the n:voter seeks to v:vote-in-person with the n:regular-ballot and the n:voter does not present a n:valid-physical-photo-identification for the n:regular-ballot then the n:SAVE-America-Act forbids a n:provision of the n:regular-ballot to the n:voter.",
+      "classification": "PROHIBITION",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(text-photo-id-required-for-regular-ballot p b)",
+      "requires_human_review": false,
+      "covers": [
+        "personp + registered-voterp + ballotp + votes-in-personp + not presents-valid-photo-idp"
+      ],
+      "notes": "APE validated. Paraphrase: # ...",
+      "replaces": []
     }
   ]
 }

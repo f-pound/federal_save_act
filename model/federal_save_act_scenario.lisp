@@ -1,6 +1,7 @@
 (in-package "ACL2")
 
 (include-book "federal_save_act_facts")
+(include-book "federal_save_act_voting_text_rules")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; federal_save_act_scenario.lisp  —  v6.0
@@ -115,3 +116,52 @@
 
 (defthm scenario-b-statute-removes
   (statute-removes-registrantp 'federal-save-act 'citizen-b))
+
+;;; =========================================================================
+;;; v6.5 — Third scenario: citizen-c at the polls (SAVE America Act § 3)
+;;;
+;;;   citizen-c: a registered U.S. citizen (proof of citizenship already on
+;;;   file) who votes in person with ballot-c but holds no document in the
+;;;   § 303A(c) list — e.g. a long-expired licence — and does not cure the
+;;;   provisional ballot within 3 days.
+;;;
+;;; Both parties concede these facts; they diverge on whether § 303A is a
+;;; valid regulation as applied to ballot-c.
+;;; =========================================================================
+
+(defaxiom scenario-c-person
+  (personp 'citizen-c))
+
+(defaxiom scenario-c-citizen
+  (citizen-of-usp 'citizen-c))
+
+(defaxiom scenario-c-eligible
+  (eligible-voterp 'citizen-c))
+
+(defaxiom scenario-c-registered
+  (registered-voterp 'citizen-c))
+
+(defaxiom scenario-c-ballot
+  (ballotp 'ballot-c))
+
+(defaxiom scenario-c-votes-in-person
+  (votes-in-personp 'citizen-c 'ballot-c))
+
+(defaxiom scenario-c-no-valid-photo-id
+  (not (presents-valid-photo-idp 'citizen-c 'ballot-c)))
+
+(defaxiom scenario-c-no-cure
+  (not (cures-within-deadlinep 'citizen-c 'ballot-c)))
+
+(defthm scenario-c-qualified-voter
+  (qualified-federal-voterp 'citizen-c))
+
+(defthm scenario-c-voting-transaction
+  (voting-transactionp 'citizen-c 'ballot-c))
+
+;; Derived from the generated § 303A text rule.
+(defthm scenario-c-statute-denies-regular-ballot
+  (statute-denies-regular-ballotp 'federal-save-act 'citizen-c 'ballot-c))
+
+(defthm scenario-c-ballot-not-counted
+  (ballot-not-countedp 'federal-save-act 'citizen-c 'ballot-c))
