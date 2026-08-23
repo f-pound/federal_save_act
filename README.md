@@ -28,6 +28,10 @@ v6.0 adds a **lemma-library layer** beneath the statute books. `model/lib/lsm.li
 
 See [RIGOR_NOTES_V3.md](docs/RIGOR_NOTES_V3.md) for the original v3 architectural rationale (still applicable to the hybrid core).
 
+## White paper
+
+[papers/computational_amicus_brief_method_and_results.md](papers/computational_amicus_brief_method_and_results.md) — method and results for legal scholars and formal-methods readers: architecture, the clause IR, the lemma libraries, decider tagging, the three audits, findings (§ 3(b)(5), over-quantified bridges, § 8(k) vs S. 1383 notice, two enumerations, hinge rediscovery), limitations, and the second-statute test.
+
 ## Reuse this for another statute
 
 The method is a pipeline, the tools are statute-independent, and an agent harness can drive it from a one-line issue description (`python tools/amicus_agent.py run --issue … --project …`, see [docs/AGENT.md](docs/AGENT.md)); a second statute, H.R. 7300 § 113, is worked end to end in `examples/mega_act_s113`. By hand: `python tools/amicus_pipeline.py init ../my_statute --title …`, then `fetch → extract → compile → certify → audit → hinges`. See [docs/PIPELINE.md](docs/PIPELINE.md) and [docs/AUDITS.md](docs/AUDITS.md).

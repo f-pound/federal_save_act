@@ -6,6 +6,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [7.1.1] — 2026-08-23
+
+### Added
+- `papers/computational_amicus_brief_method_and_results.md` — white paper (method, architecture, audits, findings, limitations, reproducibility, theorem inventory).
+
 ## [7.1.0] — 2026-08-23
 
 ### Added (explorer)
