@@ -116,6 +116,7 @@
     renderControls();
     renderGraph();
     renderFooter();
+    renderStatusBar();
 
     // Bind filter checkboxes
     document.getElementById('filter-axiom-free').addEventListener('change', renderGraph);
@@ -270,6 +271,17 @@
   }
 
   // ---- Footer ----
+  function renderStatusBar() {
+    const st = data.meta && data.meta.legislative_status;
+    const bar = document.getElementById('status-bar');
+    if (!st || !bar) return;
+    document.getElementById('status-text').textContent =
+      `${st.headline} (as of ${st.as_of})`;
+    const link = document.getElementById('status-link');
+    link.href = 'https://github.com/f-pound/federal_save_act/blob/master/data/legislative_status.json';
+    bar.classList.remove('hidden');
+  }
+
   function renderFooter() {
     document.getElementById('footer-version').textContent = `v${data.meta.version}`;
   }

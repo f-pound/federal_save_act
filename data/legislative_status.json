@@ -1,0 +1,57 @@
+{
+  "as_of": "2026-08-22",
+  "modeled_text": {
+    "source_id": "hr22-eh",
+    "label": "H.R. 22 (EH) \u2014 passed House 220-208, Apr. 10, 2025"
+  },
+  "current_vehicle": {
+    "source_id": "s1383-eah",
+    "label": "SAVE America Act \u2014 House amendment to S. 1383, passed 218-213, Feb. 11, 2026",
+    "section_2_unchanged": true,
+    "section_2_check": "tools/check_text_stability.py",
+    "new_material": [
+      "name-discrepancy registration process",
+      "30-day DHS/SAVE voter-list submission",
+      "\u00a7 3 photo ID to vote (HAVA \u00a7 303A)"
+    ]
+  },
+  "senate_actions": [
+    {
+      "date": "2026-03-17",
+      "action": "Motion to proceed to House message agreed",
+      "vote": "51-48"
+    },
+    {
+      "date": "2026-03-21",
+      "action": "Cloture (motion to suspend Rule XXV) not invoked",
+      "vote": "41-49"
+    },
+    {
+      "date": "2026-03-26",
+      "action": "Cloture on Husted amendment SA 4732 not invoked",
+      "vote": "53-47 (60 required)"
+    },
+    {
+      "date": "2026-04-23",
+      "action": "Offered as budget-resolution amendment (Kennedy); rejected",
+      "vote": "48-50"
+    },
+    {
+      "date": "2026-06-04",
+      "action": "Offered as reconciliation amendment (Graham); rejected",
+      "vote": "48-50"
+    }
+  ],
+  "status": "Not enacted. H.R. 22 received in Senate Apr. 10, 2025 with no further action; SAVE America Act (S. 1383 vehicle) stalled in Senate after failed cloture.",
+  "executive_track": [
+    {
+      "id": "eo-14248",
+      "status": "\u00a7 2(a) permanently enjoined (LULAC v. EOP, D.D.C., Oct. 31, 2025; appeal D.C. Cir. 25-5476 pending); California v. Trump (D. Mass.) permanent injunction June 24, 2026"
+    },
+    {
+      "id": "eo-14399",
+      "status": "Signed Mar. 31, 2026; challenged (D.D.C. 1:26-cv-01132)"
+    }
+  ],
+  "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled \u00a7 2 text unchanged."
+}

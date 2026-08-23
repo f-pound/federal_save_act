@@ -1626,3 +1626,13 @@ body.reviewer-active .reviewer-detail {
 .lg-supported { color: #2ECC71; }
 .lg-contested { color: #F39C12; }
 .lg-unsupported { color: #E74C3C; }
+
+/* v6.2 legislative status bar */
+.status-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 6px 16px; font-size: 12px; color: #c9d3dd;
+  background: rgba(74, 144, 217, 0.10); border-bottom: 1px solid rgba(74, 144, 217, 0.25);
+}
+.status-bar.hidden { display: none; }
+.status-chip { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #8fc1ff; }
+.status-bar a { color: #8fc1ff; }

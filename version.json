@@ -1,16 +1,18 @@
 {
-  "version": "6.1.0",
+  "version": "6.2.0",
   "model_version": "6.1",
-  "documentation_version": "6.1.0",
+  "documentation_version": "6.2.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
     "title": "Safeguard American Voter Eligibility Act (SAVE Act)",
     "congress": "119th",
     "session": "1st",
-    "status": "passed_house",
+    "status": "not_enacted",
     "vote": "220-208",
-    "vote_date": "2025-04-10"
+    "vote_date": "2025-04-10",
+    "current_vehicle": "S. 1383 (SAVE America Act, EAH Feb. 11, 2026)",
+    "senate_last_action": "cloture not invoked 53-47, 2026-03-26"
   },
   "census": {
     "theorems": 216,
@@ -22,14 +24,15 @@
     "defun_sk": 4,
     "encapsulate": 6,
     "total_events": 414,
-    "authoritative_sources": 23,
+    "authoritative_sources": 34,
     "traced_propositions": 45,
     "ace_statements": 9,
     "ace_readme_paragraphs": 13,
     "generic_library_theorems": 43,
     "generated_books": 4,
     "ace_generated_statements": 5,
-    "scenarios": 2
+    "scenarios": 2,
+    "tracked_bill_texts": 2
   },
   "certification": {
     "all_passed": true,
@@ -44,5 +47,5 @@
     "government-burden-not-severe",
     "scenario-b-verified-noncitizen-information"
   ],
-  "last_updated": "2026-08-23"
+  "last_updated": "2026-08-22"
 }

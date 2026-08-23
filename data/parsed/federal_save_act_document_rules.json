@@ -59,7 +59,7 @@
         {
           "symbol": "certified-birth-certificate",
           "source": "§ 3(b)(5)(A)",
-          "text": "A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government (meeting clauses (i)-(vii)).",
+          "text": "A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government which-- [clauses (i)-(vii)]",
           "ace_noun": "n:certified-birth-certificate"
         },
         {
@@ -103,7 +103,7 @@
       ],
       "label": "DEFINED_TERM",
       "source": "§ 2(a) / NVRA § 3(b)",
-      "text": "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following: (1)-(4) [standalone]; (5) a valid government-issued photo identification card ... but only if presented together with one or more of the following: (A)-(F) [supporting]",
+      "text": "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following ... but only if presented together with one or more of the following",
       "body": {
         "or": [
           {
@@ -153,7 +153,6 @@
       ],
       "label": "DEFINED_TERM",
       "source": "§ 2(a) / NVRA § 3(b)",
-      "text": "d is a document type the statute names anywhere in § 3(b).",
       "body": {
         "or": [
           {
@@ -175,7 +174,8 @@
             ]
           }
         ]
-      }
+      },
+      "description": "d is a document type the statute names anywhere in § 3(b)."
     }
   ]
 }

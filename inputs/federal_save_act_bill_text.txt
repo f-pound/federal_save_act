@@ -2,7 +2,8 @@ SAFEGUARD AMERICAN VOTER ELIGIBILITY ACT (SAVE ACT)
 H.R. 22, 119th Congress, 1st Session
 Introduced in House January 3, 2025
 Sponsor: Mr. Roy (TX-21)
-Status: Passed House 220-208, April 10, 2025; pending in Senate
+Status: Passed House 220-208, April 10, 2025; received in Senate Apr. 10, 2025 — no further action.
+SUPERSEDED AS VEHICLE: see inputs/save_america_act_s1383_eah_text.txt (SAVE America Act, House amendment to S. 1383, Feb. 11, 2026).
 
 VERSION NOTE: This file tracks the Engrossed in House (EH) version,
 BILLS-119hr22eh, which is the official text as passed by the House.

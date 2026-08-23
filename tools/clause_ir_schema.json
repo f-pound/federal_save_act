@@ -102,7 +102,8 @@
             "type": "string"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "Verbatim statutory quote; fragments separated by '...'; editorial notes in [brackets]. Checked by tools/check_text_stability.py."
           },
           "body": {
             "$ref": "#/$defs/expr"
@@ -145,6 +146,10 @@
                 "description": "ids of hand-written statements this generated one supersedes (removed on upsert)"
               }
             }
+          },
+          "description": {
+            "type": "string",
+            "description": "Paraphrase (NOT checked for verbatim presence in the bill text; use `text` only for verbatim quotes)"
           }
         }
       }

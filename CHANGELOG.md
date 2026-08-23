@@ -6,6 +6,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.2.0] — 2026-08-22
+
+### Added — legislative currency
+- `inputs/save_america_act_s1383_eah_text.txt` — the **current vehicle**: SAVE America Act as the House amendment to S. 1383 (218-213, Feb. 11, 2026). H.R. 22 (EH) remains the modeled text and is annotated as superseded-as-vehicle.
+- `tools/check_text_stability.py` (CI + `certify_books.sh`): every statutory clause the model quotes (trace CSV rows and IR `text` fields) must appear **verbatim in both** texts. Result: **18/18 PASS**, one known non-operative difference (short title). This turns "§ 2 is unchanged in the new vehicle" into a machine-checked statement.
+- `data/legislative_status.json` — Senate actions with tallies (51-48 motion to proceed; cloture 41-49 and 53-47; reconciliation amendments 48-50 ×2), executive-order track (EO 14248 enjoined in LULAC v. EOP and California v. Trump; EO 14399 challenged). Rendered as a status bar in the explorer.
+- Source manifest: `s1383-eah`, `hr7296-ih`, `s3752-is`, `s128-is`, `crs-if12902-v4`, `crs-lsb11368`, `house-rules-comparative-print-s1383`, `eo-14248`, `eo-14399`, `lulac-v-eop`, `california-v-trump` (21 → 34 sources).
+- Clause IR: rules may carry `description` (paraphrase, unchecked) distinct from `text` (verbatim, checked); several quotes made verbatim.
+
+### Not yet modeled (scoped in reports/v6_lemma_library_assessment.md § 8)
+- SAVE America Act § 3 photo-ID-to-vote (HAVA § 303A), the name-discrepancy registration process, and the 30-day DHS/SAVE list-submission mandate.
+
 ## [6.1.0] — 2026-08-23
 
 ### Added — § 8(k) removal → conflict bridge

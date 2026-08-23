@@ -212,6 +212,8 @@ def scan_lisp_events(model_dir):
 
 
 def build():
+    status_path = Path(__file__).resolve().parents[1] / "data" / "legislative_status.json"
+    legislative_status = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else None
     # --- Load inputs ---
     graph = load_json(ROOT / "data" / "parsed" / "explorer_graph.json")
     ace = load_json(ROOT / "data" / "parsed" / "federal_save_act_ace.json")
@@ -221,6 +223,7 @@ def build():
 
     # --- Build meta ---
     meta = {
+        "legislative_status": legislative_status,
         "project": version.get("project", "federal_save_act"),
         "title": "Federal SAVE Act — Computational Amicus Explorer",
         "version": version.get("version", "unknown"),

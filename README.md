@@ -4,7 +4,11 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 6.1.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 6.2.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+## Legislative Status (as of 2026-08-22)
+
+**Not law.** H.R. 22 passed the House 220-208 (Apr. 10, 2025) and never moved in the Senate. The current vehicle is the **SAVE America Act**, passed as a House amendment to **S. 1383** (218-213, Feb. 11, 2026); Senate cloture failed 41-49 (Mar. 21) and 53-47 (Mar. 26, 2026), and reconciliation-amendment attempts failed 48-50 (Apr. 23, Jun. 4). The model was built on H.R. 22 § 2; `tools/check_text_stability.py` verifies in CI that every clause the model quotes appears verbatim in **both** texts (18/18; only the short title differs). The new vehicle adds material the model does not yet cover: § 3 photo ID to vote, a name-discrepancy process, and DHS/SAVE list submission. Executive Order 14248's proof-of-citizenship provision is permanently enjoined (*LULAC v. EOP*, D.D.C. Oct. 31, 2025, appeal pending; *California v. Trump*, D. Mass. June 24, 2026); EO 14399 (Mar. 31, 2026) is under challenge. Machine-readable: [`data/legislative_status.json`](data/legislative_status.json).
 
 ## What This Project Proves
 
@@ -137,7 +141,8 @@ federal_save_act/
 │   └── federal_save_act_consistency_check.lisp  # Core vocabulary sanity + neutrality
 │
 ├── inputs/                                  # Source legislation & constitutional text
-│   ├── federal_save_act_bill_text.txt       # H.R. 22 full text
+│   ├── federal_save_act_bill_text.txt       # H.R. 22 (EH) full text — modeled text
+│   ├── save_america_act_s1383_eah_text.txt  # SAVE America Act (S. 1383 EAH) — current vehicle
 │   └── constitutional_language.txt          # U.S. Constitution provisions
 │
 ├── docs/                                    # Detailed documentation
@@ -154,6 +159,7 @@ federal_save_act/
 │   └── clause_trace.csv                     # Axiom → source clause traceability
 ├── tools/
 │   ├── validate_trace.py                    # Machine-checkable source trace validator
+│   ├── check_text_stability.py              # Modeled clauses verbatim in both bill texts (CI)
 │   ├── clause_ir_schema.json                # JSON Schema for the statutory clause IR
 │   ├── clauses_to_acl2.py                   # IR → ACL2 book + controlled-English (deterministic)
 │   ├── validate_ace_statements.py           # ACE → APE webservice validator (strict mode)
@@ -258,7 +264,7 @@ The § 8(k) removal process is modeled structurally (`federal_save_act_removal_i
 ## What Is Source-Traced
 
 - 45 axiom-to-source mappings in `sources/clause_trace.csv`
-- 23 authoritative sources in `sources/source_manifest.json`
+- 34 authoritative sources (two tracked bill texts, CRS reports, two executive orders, EO litigation) in `sources/source_manifest.json`
 - Every defaxiom has a classification, source_id, section reference, and quoted clause text
 - Machine-checkable via `tools/validate_trace.py` (runs in CI)
 

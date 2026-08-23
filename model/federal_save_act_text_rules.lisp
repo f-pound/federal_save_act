@@ -6,7 +6,7 @@
 ;; federal_save_act_text_rules.lisp  —  GENERATED FILE, DO NOT EDIT
 ;; Source IR : data/parsed/federal_save_act_text_rules.json
 ;; Generator : tools/clauses_to_acl2.py
-;; IR sha256 : e2d3effbe0741a35b0f7bac40ab44a0e6e429d61aa68b380c7f77fed7f196cce
+;; IR sha256 : bd190673fc351ff88c5e215ecc7e9bfef33064638827b0f76a36a8b8f4b0198f
 ;; SAVE Act text-derived constraints on the neutral vocabulary (defaxiom)
 ;;
 ;; Every defconst below is a statutory enumeration; every defun is a
@@ -16,7 +16,7 @@
 
 ;;; =========================================================================
 ;;; AXIOM text-save-act-documentary-proof-requirement   [PROHIBITION]  § 2(b) / NVRA § 4(b); § 2(d) / NVRA § 6(e)(1); § 2(f) / NVRA § 8(j)(1)
-;;; "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application [§ 4(b)]; a State may not register an individual ... unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship [§ 8(j)(1)]"
+;;; "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application ... a State may not register an individual to vote in elections for Federal office held in the State unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship"
 ;;; =========================================================================
 (defaxiom text-save-act-documentary-proof-requirement
   (implies

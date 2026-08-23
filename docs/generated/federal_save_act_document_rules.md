@@ -18,7 +18,7 @@ A government-issued photo ID that is NOT itself proof, but anchors a supporting 
 ## Category `supporting-document-types` — § 2(a) / NVRA § 3(b)(5)(A)-(F)
 Documents that count only when presented together with an anchor photo ID.
 
-- **certified-birth-certificate** (§ 3(b)(5)(A)): A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government (meeting clauses (i)-(vii)).
+- **certified-birth-certificate** (§ 3(b)(5)(A)): A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government which-- [clauses (i)-(vii)]
 - **hospital-birth-record** (§ 3(b)(5)(B)): An extract from a United States hospital Record of Birth created at the time of the applicant's birth which indicates that the applicant's place of birth was in the United States.
 - **final-adoption-decree** (§ 3(b)(5)(C)): A final adoption decree showing the applicant's name and that the applicant's place of birth was in the United States.
 - **consular-report-of-birth-abroad** (§ 3(b)(5)(D)): A Consular Report of Birth Abroad of a citizen of the United States or a certification of the applicant's Report of Birth of a United States citizen issued by the Secretary of State.
@@ -26,11 +26,11 @@ Documents that count only when presented together with an anchor photo ID.
 - **american-indian-card-kic** (§ 3(b)(5)(F)): An American Indian Card issued by the Department of Homeland Security with the classification 'KIC'.
 
 ## Rule `documentary-proof-bundlep(docs)` — § 2(a) / NVRA § 3(b)
-> the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following: (1)-(4) [standalone]; (5) a valid government-issued photo identification card ... but only if presented together with one or more of the following: (A)-(F) [supporting]
+> the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following ... but only if presented together with one or more of the following
 
 `documentary-proof-bundlep` holds exactly when: at least one item of docs is a standalone proof types OR (at least one item of docs is a anchor photo id types AND at least one item of docs is a supporting document types).
 
 ## Rule `recognized-document-typep(d)` — § 2(a) / NVRA § 3(b)
-> d is a document type the statute names anywhere in § 3(b).
+d is a document type the statute names anywhere in § 3(b).
 
 `recognized-document-typep` holds exactly when: d is a standalone proof types OR d is a anchor photo id types OR d is a supporting document types.

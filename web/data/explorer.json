@@ -1,17 +1,74 @@
 {
   "meta": {
+    "legislative_status": {
+      "as_of": "2026-08-22",
+      "modeled_text": {
+        "source_id": "hr22-eh",
+        "label": "H.R. 22 (EH) — passed House 220-208, Apr. 10, 2025"
+      },
+      "current_vehicle": {
+        "source_id": "s1383-eah",
+        "label": "SAVE America Act — House amendment to S. 1383, passed 218-213, Feb. 11, 2026",
+        "section_2_unchanged": true,
+        "section_2_check": "tools/check_text_stability.py",
+        "new_material": [
+          "name-discrepancy registration process",
+          "30-day DHS/SAVE voter-list submission",
+          "§ 3 photo ID to vote (HAVA § 303A)"
+        ]
+      },
+      "senate_actions": [
+        {
+          "date": "2026-03-17",
+          "action": "Motion to proceed to House message agreed",
+          "vote": "51-48"
+        },
+        {
+          "date": "2026-03-21",
+          "action": "Cloture (motion to suspend Rule XXV) not invoked",
+          "vote": "41-49"
+        },
+        {
+          "date": "2026-03-26",
+          "action": "Cloture on Husted amendment SA 4732 not invoked",
+          "vote": "53-47 (60 required)"
+        },
+        {
+          "date": "2026-04-23",
+          "action": "Offered as budget-resolution amendment (Kennedy); rejected",
+          "vote": "48-50"
+        },
+        {
+          "date": "2026-06-04",
+          "action": "Offered as reconciliation amendment (Graham); rejected",
+          "vote": "48-50"
+        }
+      ],
+      "status": "Not enacted. H.R. 22 received in Senate Apr. 10, 2025 with no further action; SAVE America Act (S. 1383 vehicle) stalled in Senate after failed cloture.",
+      "executive_track": [
+        {
+          "id": "eo-14248",
+          "status": "§ 2(a) permanently enjoined (LULAC v. EOP, D.D.C., Oct. 31, 2025; appeal D.C. Cir. 25-5476 pending); California v. Trump (D. Mass.) permanent injunction June 24, 2026"
+        },
+        {
+          "id": "eo-14399",
+          "status": "Signed Mar. 31, 2026; challenged (D.D.C. 1:26-cv-01132)"
+        }
+      ],
+      "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled § 2 text unchanged."
+    },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "6.1.0",
+    "version": "6.2.0",
     "books_certified": 25,
     "theorems": 216,
     "axioms": 38,
     "defun_sk_existentials": 4,
-    "authoritative_sources": 23,
+    "authoritative_sources": 34,
     "trace_rows": 45,
     "ace_statements": 9,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T03:30:07.248399+00:00"
+    "generated_at": "2026-08-23T03:46:24.345524+00:00"
   },
   "audit_details": {
     "books": [
@@ -555,7 +612,7 @@
           "name": "text-documentary-proof-from-qualifying-documents",
           "label": "BRIDGE_RULE",
           "source_id": "hr22-eh",
-          "clause_text": "the term 'documentary proof of United States citizenship' means any of the following: (1) REAL ID... (2) valid United States passport... (3) military ID... (4) govt photo ID showing US birth... (5) govt photo ID but only if presented together with one or more of: (A) certified birth certificate... (B) hospital birth record (C) adoption decree (D) consular report of birth abroad (E) naturalization certificate (F) American Indian Card (KIC)"
+          "clause_text": "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following ... (1) A form of identification issued consistent with the requirements of the REAL ID Act of 2005 that indicates the applicant is a citizen of the United States. ... (2) A valid United States passport. ... (5) A valid government-issued photo identification card issued by a Federal, State or Tribal government other than an identification described in paragraphs (1) through (4), but only if presented together with one or more of the following"
         }
       ],
       "federal_save_act_government_model": [

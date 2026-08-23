@@ -6,7 +6,7 @@
 ;; federal_save_act_document_rules.lisp  —  GENERATED FILE, DO NOT EDIT
 ;; Source IR : data/parsed/federal_save_act_document_rules.json
 ;; Generator : tools/clauses_to_acl2.py
-;; IR sha256 : 7375a4f0d7f51f2e265246d580450bcf61fd2d0b3c0022591be10ea5f32c26ef
+;; IR sha256 : 4b0d13caea3e265f707e76da1ed025895dfb0d66ce5df449691df26f9415d2e4
 ;; SAVE Act § 2(a) / NVRA § 3(b) — documentary proof of United States citizenship
 ;;
 ;; Every defconst below is a statutory enumeration; every defun is a
@@ -46,7 +46,7 @@
 ;;; Documents that count only when presented together with an anchor photo ID.
 ;;; =========================================================================
 ;;   certified-birth-certificate          § 3(b)(5)(A)
-;;       "A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government (meeting clauses (i)-(vii))."
+;;       "A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government which-- [clauses (i)-(vii)]"
 ;;   hospital-birth-record                § 3(b)(5)(B)
 ;;       "An extract from a United States hospital Record of Birth created at the time of the applicant's birth which indicates that the applicant's place of birth was in the United States."
 ;;   final-adoption-decree                § 3(b)(5)(C)
@@ -67,7 +67,7 @@
 
 ;;; =========================================================================
 ;;; RULE documentary-proof-bundlep   [DEFINED_TERM]  § 2(a) / NVRA § 3(b)
-;;; "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following: (1)-(4) [standalone]; (5) a valid government-issued photo identification card ... but only if presented together with one or more of the following: (A)-(F) [supporting]"
+;;; "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following ... but only if presented together with one or more of the following"
 ;;; =========================================================================
 (defun documentary-proof-bundlep (docs)
   (or (some-in-catsp docs *standalone-proof-types*)
@@ -76,7 +76,7 @@
 
 ;;; =========================================================================
 ;;; RULE recognized-document-typep   [DEFINED_TERM]  § 2(a) / NVRA § 3(b)
-;;; "d is a document type the statute names anywhere in § 3(b)."
+;;; d is a document type the statute names anywhere in § 3(b).
 ;;; =========================================================================
 (defun recognized-document-typep (d)
   (or (member-equal d *standalone-proof-types*)

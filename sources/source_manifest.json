@@ -195,6 +195,87 @@
       "url": "https://supreme.justia.com/cases/federal/us/584/16-980/",
       "type": "case",
       "note": "NVRA voter-list maintenance procedure upheld."
+    },
+    {
+      "id": "s1383-eah",
+      "title": "SAVE America Act — House amendment to S. 1383 (Engrossed Amendment House)",
+      "citation": "S. 1383, 119th Cong., EAH (Feb. 11, 2026), 218-213 (Roll no. 69)",
+      "url": "https://www.govinfo.gov/content/pkg/BILLS-119s1383eah/html/BILLS-119s1383eah.htm",
+      "type": "statute",
+      "note": "Current legislative vehicle; § 2 substantively identical to H.R. 22 EH (machine-checked by tools/check_text_stability.py); adds name-discrepancy process, DHS/SAVE list submission, and § 3 photo-ID-to-vote (HAVA § 303A). Senate cloture failed 41-49 (Mar. 21, 2026) and 53-47 (Mar. 26, 2026)."
+    },
+    {
+      "id": "hr7296-ih",
+      "title": "SAVE America Act (introduced)",
+      "citation": "H.R. 7296, 119th Cong. (Jan. 30, 2026)",
+      "url": "https://www.congress.gov/bill/119th-congress/house-bill/7296",
+      "type": "statute"
+    },
+    {
+      "id": "s3752-is",
+      "title": "SAVE America Act (Senate companion, introduced)",
+      "citation": "S. 3752, 119th Cong. (Jan. 29, 2026)",
+      "url": "https://www.congress.gov/bill/119th-congress/senate-bill/3752",
+      "type": "statute"
+    },
+    {
+      "id": "s128-is",
+      "title": "SAVE Act (Senate companion to H.R. 22, introduced)",
+      "citation": "S. 128, 119th Cong. (Jan. 16, 2025)",
+      "url": "https://www.congress.gov/bill/119th-congress/senate-bill/128",
+      "type": "statute"
+    },
+    {
+      "id": "crs-if12902-v4",
+      "title": "CRS In Focus IF12902 — Safeguard American Voter Eligibility Act (SAVE America Act) and Federal Voter Registration Policy and Law (v4)",
+      "citation": "CRS IF12902, updated Feb. 24, 2026",
+      "url": "https://www.congress.gov/crs-product/IF12902",
+      "type": "government_report"
+    },
+    {
+      "id": "crs-lsb11368",
+      "title": "CRS Legal Sidebar LSB11368 — Executive Order on Elections: Legal Background and Court Challenges",
+      "citation": "CRS LSB11368, Sept. 16, 2025",
+      "url": "https://www.congress.gov/crs-product/LSB11368",
+      "type": "government_report"
+    },
+    {
+      "id": "house-rules-comparative-print-s1383",
+      "title": "House Rules Committee comparative print: H.R. 7296 (IH) to Rules Committee Print of S. 1383",
+      "citation": "119th Cong. (Feb. 2026)",
+      "url": "https://rules.house.gov/sites/evo-subsites/republicans-rules.house.gov/files/documents/bill-to-bill_119hr7296ih_to_rcp_s1383_xml_0.pdf",
+      "type": "government_report"
+    },
+    {
+      "id": "eo-14248",
+      "title": "Executive Order 14248 — Preserving and Protecting the Integrity of American Elections",
+      "citation": "90 Fed. Reg. 14005 (Mar. 25, 2025)",
+      "url": "https://www.federalregister.gov/documents/2025/03/28/2025-05523/preserving-and-protecting-the-integrity-of-american-elections",
+      "type": "executive_order",
+      "note": "§ 2(a) (proof of citizenship on the federal form) permanently enjoined, LULAC v. EOP (D.D.C. Oct. 31, 2025); California v. Trump (D. Mass. June 24, 2026)."
+    },
+    {
+      "id": "eo-14399",
+      "title": "Executive Order 14399 — Ensuring Citizenship Verification and Integrity in Federal Elections",
+      "citation": "91 Fed. Reg. 17125 (Mar. 31, 2026)",
+      "url": "https://www.federalregister.gov/documents/2026/04/03/2026-06601/ensuring-citizenship-verification-and-integrity-in-federal-elections",
+      "type": "executive_order",
+      "note": "State Citizenship Lists via DHS/SSA; challenged in LULAC v. EOP, No. 1:26-cv-01132 (D.D.C.)."
+    },
+    {
+      "id": "lulac-v-eop",
+      "title": "League of United Latin American Citizens v. Executive Office of the President",
+      "citation": "No. 1:25-cv-00946 (D.D.C.) (PI Apr. 24, 2025, 780 F. Supp. 3d 135; summary judgment & permanent injunction Oct. 31, 2025; further orders Jan. 30, 2026); appeal No. 25-5476 (D.C. Cir.)",
+      "url": "https://clearinghouse.net/case/46322/",
+      "type": "case",
+      "note": "Holds the President lacks authority to direct the EAC to add a documentary-proof-of-citizenship requirement to the federal form (Elections Clause / separation of powers)."
+    },
+    {
+      "id": "california-v-trump",
+      "title": "State of California v. Trump",
+      "citation": "No. 1:25-cv-10810 (D. Mass.) (PI June 13, 2025; permanent injunction June 24, 2026)",
+      "url": "https://clearinghouse.net/case/46337/",
+      "type": "case"
     }
   ]
 }

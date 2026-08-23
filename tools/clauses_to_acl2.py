@@ -153,6 +153,8 @@ def emit_acl2(ir, ir_path):
         out.append(f";;; {'AXIOM' if kind == 'axiom' else 'RULE'} {name}   [{r.get('label', '')}]  {r.get('source', '')}")
         if r.get("text"):
             out.append(f";;; \"{r['text']}\"")
+        if r.get("description"):
+            out.append(f";;; {r['description']}")
         out.append(";;; " + "=" * 73)
         if kind == "defun":
             out.append(f"(defun {name} ({' '.join(args)})")
@@ -469,6 +471,9 @@ def emit_english(ir):
         out.append(f"## {'Axiom' if r.get('kind') == 'axiom' else 'Rule'} `{r['name']}({', '.join(r['args'])})` — {r.get('source', '')}")
         if r.get("text"):
             out.append(f"> {r['text']}")
+            out.append("")
+        if r.get("description"):
+            out.append(r["description"])
             out.append("")
         if r.get("kind") == "axiom":
             out.append(f"If {english_expr(r['hyps'], cats)}, then {english_expr(r['concl'], cats)}.")

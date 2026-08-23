@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.1.0">
+  <link rel="stylesheet" href="style.css?v=6.2.0">
 </head>
 <body>
   <header id="app-header">
@@ -44,6 +44,11 @@
     <button class="mobile-toggle-btn" id="toggle-details" data-panel="right">ℹ Details</button>
   </div>
 
+  <div id="status-bar" class="status-bar hidden">
+    <span class="status-chip">LEGISLATIVE STATUS</span>
+    <span id="status-text"></span>
+    <a id="status-link" href="#" target="_blank" rel="noopener">details</a>
+  </div>
   <div id="warning-banner" class="warning-banner hidden">
     <span class="warning-icon">⚠</span>
     <span id="warning-text"></span>
@@ -206,6 +211,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6.1.0"></script>
+  <script src="app.js?v=6.2.0"></script>
 </body>
 </html>

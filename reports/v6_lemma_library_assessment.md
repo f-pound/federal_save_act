@@ -127,3 +127,15 @@ The curated graph gained the library layer, the clause-IR node, the § 8(k) mode
 4. **Functional instantiation.** The libraries make it cheap to exhibit concrete witnesses for the encapsulates via `:functional-instance`, the open item from v5.3.
 5. **Retire the restated pivot theorems** in `independence`, `model_consistency`, `consistency_check` in favour of the core versions once the explorer graph is repointed, to keep the inventory honest.
 6. **Second scenario** (naturalized citizen with certificate but no photo ID) — now that § 3(b)(5) is modeled correctly, this scenario is both legally interesting and mechanically cheap.
+
+## 8. Legislative currency (v6.2) and scope for the SAVE America Act
+
+The repo was frozen at H.R. 22 EH (Apr. 2025). The live vehicle is the SAVE America Act as the House amendment to S. 1383 (Feb. 11, 2026), stalled in the Senate. v6.2 tracks that text, checks in CI that every clause the model quotes is verbatim in both texts (it is; only the short title differs), and records the Senate/EO status in `data/legislative_status.json`.
+
+Three things in the new text are **not modeled**, in rough order of value:
+
+1. **§ 3 — photo identification to vote (new HAVA § 303A).** A *voting*-stage burden, distinct from the registration-stage documentary-proof burden. Model: a third `lsm` table (`vote` process: arrives-at-polls → id-presented / no-id → ballot-cast / provisional-cast → counted / rejected), a generated category table for "valid photo identification" (state DL, state non-driver ID, passport, military ID, tribal ID — all requiring photograph + expiration date), and a Crawford chain: the government's burden-not-severe premise now has to cover two requirements. The challenger's interesting theorem is structural: a citizen with documentary proof of citizenship (registered) but no *expiring* photo ID is registered yet cannot cast a counted regular ballot — two enumerations, two gaps. ~3 IR files, ~25 theorems, reuses `lib/lsm` + `lib/enum_list` unchanged.
+2. **Name-discrepancy process** (registration). One new edge pair in the registration table (`doc-presented --name-discrepancy--> discrepancy-review --resolve--> doc-accepted`) and a narrower scenario (married citizen whose birth certificate and ID differ). Cheap; it also narrows `citizen-a`'s structural denial: the v5 "structurally mandated denial" theorem must now carve out the discrepancy path.
+3. **30-day DHS/SAVE list submission + quarterly matching.** Feeds the § 8(k) removal table: a new TEXT_FACT edge `on-rolls --save-match--> info-received` makes "verified information" *systematic* rather than incidental, which strengthens the challenger's erroneous-removal scenario (scenario B) and is the natural hook for an error-rate empirical assumption.
+
+None of these changes § 2, so the existing 216 theorems would stay valid against the new vehicle; they would be *additions*.

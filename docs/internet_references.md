@@ -53,3 +53,15 @@ External resources, tools, and prior work referenced during the development of t
 
 - **[Kestrel Technology (GitHub)](https://github.com/kestreltechnology)**
   Open-source static analysis and program verification tools. Referenced for potential integration with code-level verification workflows.
+
+
+## Added v6.2 — legislative currency (Aug. 2026)
+
+- S. 1383 EAH (SAVE America Act, House amendment): https://www.govinfo.gov/content/pkg/BILLS-119s1383eah/html/BILLS-119s1383eah.htm — current vehicle; bill status XML https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1383.xml
+- H.R. 7296 / S. 3752 (SAVE America Act, introduced Jan. 2026); S. 128 (Senate SAVE Act, 2025)
+- CRS IF12902 v4 (Feb. 24, 2026): https://www.congress.gov/crs-product/IF12902 — differences between H.R. 22 and the House-passed SAVE America Act
+- CRS LSB11368 (Sept. 16, 2025): https://www.congress.gov/crs-product/LSB11368 — EO 14248 litigation
+- House Rules comparative print H.R. 7296 → S. 1383 RCP: https://rules.house.gov/sites/evo-subsites/republicans-rules.house.gov/files/documents/bill-to-bill_119hr7296ih_to_rcp_s1383_xml_0.pdf
+- EO 14248 (Mar. 25, 2025) and EO 14399 (Mar. 31, 2026, 91 FR 17125)
+- LULAC v. EOP, No. 1:25-cv-00946 (D.D.C.); appeal No. 25-5476 (D.C. Cir.): https://clearinghouse.net/case/46322/
+- State of California v. Trump, No. 1:25-cv-10810 (D. Mass.): https://clearinghouse.net/case/46337/

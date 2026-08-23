@@ -59,6 +59,9 @@ echo "=== ACL2 certify-book: Federal SAVE Act ==="
 echo "Logs: $LOG_DIR/"
 echo ""
 
+# Modeled clauses must be present verbatim in both tracked bill texts.
+python3 tools/check_text_stability.py
+
 # Generated book must match its IR before anything is certified.
 python3 tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json --check --english --ace
 
