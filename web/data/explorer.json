@@ -1416,9 +1416,39 @@
         "acl2": "not provable from the others within 8s"
       }
     },
+    "adversarial_summary": {
+      "challenger": {
+        "total": 44,
+        "independent": 43,
+        "coupled": 1,
+        "redundant": 0,
+        "coupled_pairs": [
+          [
+            "challenger-scenario-alternative-process-denied",
+            [
+              "semantic-b-discretionary-denial"
+            ]
+          ]
+        ]
+      },
+      "government": {
+        "total": 50,
+        "independent": 49,
+        "coupled": 1,
+        "redundant": 0,
+        "coupled_pairs": [
+          [
+            "government-scenario-alternative-process-approved",
+            [
+              "semantic-a-mandatory-approval"
+            ]
+          ]
+        ]
+      }
+    },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Brief",
-    "version": "7.0.1",
+    "version": "7.1.0",
     "books_certified": 31,
     "theorems": 374,
     "axioms": 60,
@@ -1427,7 +1457,7 @@
     "trace_rows": 69,
     "ace_statements": 13,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T13:51:21.943014+00:00"
+    "generated_at": "2026-08-23T14:06:29.193205+00:00"
   },
   "audit_details": {
     "books": [

@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7.1.0">
+  <link rel="stylesheet" href="style.css?v=7.2.1">
 </head>
 <body>
   <header id="app-header">
@@ -104,6 +104,7 @@
     <section id="panel-center" class="panel panel-center">
       <nav class="jump-bar" aria-label="Jump to">
         <span class="jump-label">Jump to</span>
+        <a href="#hinge-panel">The hinge</a>
         <a href="#voter-panel">Registration counter</a>
         <a href="#poll-panel">Polling place</a>
         <a href="#graph-container">Proof graph</a>
@@ -112,6 +113,21 @@
         <input id="share-link" class="share-link" readonly title="This link reproduces the current premises" aria-label="Share link">
         <button id="export-memo-btn" class="export-btn" title="Write your current premises and outcomes as a Markdown brief">⬇ Export memo</button>
       </nav>
+      <section id="hinge-panel" class="hinge-panel" aria-label="The hinge">
+        <div class="hinge-eyebrow"><span>The hinge — the one phrase the whole registration dispute turns on</span><button id="spotlight-btn" class="spotlight-btn" title="Dim everything else and light the hinge">🔦 Spotlight</button></div>
+        <div class="hinge-beam" aria-hidden="true"></div>
+        <blockquote class="hinge-quote">“… such official <em>shall make a determination</em> as to whether the applicant has sufficiently established United States citizenship for purposes of registering to vote …”<span class="hinge-cite">SAVE Act § 2(f), new NVRA § 8(j)(2)(A)</span></blockquote>
+        <div class="hinge-readings">
+          <button class="hinge-btn" data-reading="mandatory"><span class="hinge-tag">Reading A</span><strong>Must approve</strong><span>If the attestation and evidence meet the standards, the official has to register the applicant.</span></button>
+          <button class="hinge-btn" data-reading="discretionary"><span class="hinge-tag">Reading B</span><strong>May deny</strong><span>The official decides; “sufficiently established” is undefined, so a qualified citizen can still be turned away.</span></button>
+          <button class="hinge-btn hinge-both" data-reading="both"><span class="hinge-tag">Both</span><strong>Undecided</strong><span>Keep both readings as separate paths — the model’s default.</span></button>
+        </div>
+        <div id="hinge-consequence" class="hinge-consequence"></div>
+        <div class="hinge-evidence">
+          <div class="hinge-ev-title">Why we know it is <em>the</em> hinge</div>
+          <div id="hinge-evidence-text"></div>
+        </div>
+      </section>
       <details id="voter-panel" class="voter-panel" open>
         <summary class="voter-summary">
           <span class="voter-title">Try it — a citizen at the registration counter</span>
@@ -363,6 +379,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=7.1.0"></script>
+  <script src="app.js?v=7.2.1"></script>
 </body>
 </html>

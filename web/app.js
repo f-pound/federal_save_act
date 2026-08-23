@@ -116,7 +116,7 @@
   // ---- Boot ----
   async function init() {
     try {
-      const resp = await fetch('data/explorer.json');
+      const resp = await fetch('data/explorer.json', { cache: 'no-store' });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       data = await resp.json();
     } catch (err) {
@@ -143,6 +143,7 @@
     renderPollDocs();
     setupMemo();
     setupTour();
+    setupHinge();
     if (!readUrlState()) writeUrlState();
     renderDispute();
     if (!localStorage.getItem('explorer-toured') && localStorage.getItem('explorer-seen')) setTimeout(() => tourShow(0), 600);
@@ -263,7 +264,7 @@
     updateNodeStates();
     updatePresetHighlight();
     updateScenarioStatus();
-    writeUrlState(); renderDispute();
+    writeUrlState(); renderDispute(); if (typeof renderHinge === 'function') renderHinge();
   }
 
   function updatePresetHighlight() {
@@ -954,8 +955,70 @@
     host.innerHTML = rows.join('');
   }
 
+  // ---- The hinge spotlight ----
+  function setHinge(reading) {
+    const want = { mandatory: ['hyp-mandatory'], discretionary: ['hyp-discretionary'], both: ['hyp-mandatory', 'hyp-discretionary'] }[reading] || [];
+    ['hyp-mandatory', 'hyp-discretionary'].forEach(id => {
+      const on = want.includes(id);
+      if (on) activeAssumptions.add(id); else activeAssumptions.delete(id);
+      const cb = document.getElementById(`hyp-${id}`); if (cb) cb.checked = on;
+    });
+    activePreset = null; updatePresetHighlight(); checkMutualExclusion(); recalculateDimming(); updateNodeStates(); updateScenarioStatus(); writeUrlState(); renderDispute();
+    renderHinge();
+  }
+  function renderHinge() {
+    const panel = document.getElementById('hinge-panel'); if (!panel) return;
+    const hasHinge = data.hypotheticals.some(h => h.id === 'hyp-mandatory') && data.hypotheticals.some(h => h.id === 'hyp-discretionary');
+    if (!hasHinge) { panel.classList.add('hidden'); return; }
+    const m = activeAssumptions.has('hyp-mandatory'), d = activeAssumptions.has('hyp-discretionary');
+    const reading = m && d ? 'both' : m ? 'mandatory' : d ? 'discretionary' : 'none';
+    document.querySelectorAll('.hinge-btn').forEach(b => b.classList.toggle('active', b.dataset.reading === reading));
+    const c = conclusionStatus('concl-challenger'), g = conclusionStatus('concl-government');
+    let text;
+    if (reading === 'mandatory') text = `<b>Under Reading A</b>, an applicant who attests and submits evidence is approved, so the denial trigger cannot fire through this path (<span class="mono">hinge-mandatory-no-denial-trigger</span>). The government’s no-conflict conclusion reads <b class="${g === 'Supported' ? 'ok' : 'mid'}">${g}</b>; the challenger’s conflict reads <b class="${c === 'Supported' ? 'bad' : 'mid'}">${c}</b> under your other premises.`;
+    else if (reading === 'discretionary') text = `<b>Under Reading B</b>, a qualified citizen who attests and submits evidence can still be denied (<span class="mono">hinge-discretionary-qualified-voter-can-be-denied</span>), so the statute denies registration and the constitutional question is live. Challenger conflict: <b class="${c === 'Supported' ? 'bad' : 'mid'}">${c}</b>; government no-conflict: <b class="${g === 'Supported' ? 'ok' : 'mid'}">${g}</b>.`;
+    else if (reading === 'both') text = `<b>Both readings on</b>: the model keeps them as separate conditional paths and proves each side’s conclusion on its own path. Pick one to see what a court’s choice does.`;
+    else text = `<b>No reading selected</b>: neither the mandatory nor the discretionary consequence can be derived.`;
+    document.getElementById('hinge-consequence').innerHTML = text;
+    const aa = data.meta && data.meta.adversarial_audit;
+    const cA = aa && aa['challenger-scenario-alternative-process-denied'], gA = aa && aa['government-scenario-alternative-process-approved'];
+    const sm = (data.meta && data.meta.adversarial_summary) || {};
+    const nC = (sm.challenger || {}).total || 0, nG = (sm.government || {}).total || 0;
+    const indC = (sm.challenger || {}).independent || 0, indG = (sm.government || {}).independent || 0;
+    document.getElementById('hinge-evidence-text').innerHTML = aa ? `The adversarial audit denied every premise in turn. Of the challenger’s ${nC} premises, ${indC} can be denied without disturbing any other; of the government’s ${nG}, ${indG}. The <b>only</b> coupled premise on each side is the alternative-process fact for citizen-a — locked to this reading: ` +
+      (cA ? `<span class="mono">challenger-scenario-alternative-process-denied ⇄ ${cA.breaks.join(', ')}</span>` : '') + (gA ? ` and <span class="mono">government-scenario-alternative-process-approved ⇄ ${gA.breaks.join(', ')}</span>` : '') +
+      `. No premise is provable from the others. Every other premise — burden, doctrine, bridges, the facts about citizen-a — is independent. <a href="https://github.com/f-pound/federal_save_act/blob/master/docs/AUDITS.md">How the audit works</a>.` : 'Audit data not available in this build.';
+  }
+  let spotlightTimer = null;
+  function spotlight(on, ms) {
+    document.body.classList.toggle('spotlight-on', on);
+    if (spotlightTimer) { clearTimeout(spotlightTimer); spotlightTimer = null; }
+    if (on && ms) spotlightTimer = setTimeout(() => document.body.classList.remove('spotlight-on'), ms);
+  }
+  function setupHinge() {
+    document.querySelectorAll('.hinge-btn').forEach(b => b.addEventListener('click', () => setHinge(b.dataset.reading)));
+    const sb = document.getElementById('spotlight-btn');
+    if (sb) sb.addEventListener('click', () => {
+      const on = !document.body.classList.contains('spotlight-on');
+      if (on) document.getElementById('hinge-panel').scrollIntoView({ block: 'center', behavior: 'smooth' });
+      spotlight(on, 0);
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') spotlight(false, 0); });
+    document.addEventListener('click', e => { if (document.body.classList.contains('spotlight-on') && !e.target.closest('#hinge-panel')) spotlight(false, 0); }, true);
+    renderHinge();
+    // first visit: light the hinge for a few seconds once the intro is dismissed
+    if (!localStorage.getItem('hinge-spotlit')) {
+      const fire = () => { localStorage.setItem('hinge-spotlit', '1'); document.getElementById('hinge-panel').scrollIntoView({ block: 'center' }); spotlight(true, 4500); };
+      const modal = document.getElementById('about-modal');
+      if (modal && !modal.classList.contains('hidden')) {
+        ['modal-close', 'modal-got-it'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('click', () => setTimeout(fire, 300), { once: true }); });
+      } else setTimeout(fire, 600);
+    }
+  }
+
   // ---- Guided tour ----
   const TOUR = [
+    ['#hinge-panel', 'Start with the hinge: one statutory phrase, two readings. The audit proved it is the only premise in either theory that cannot move alone.'],
     ['#preset-bar', 'Start here. Each button is a complete, valid argument. Pick one — the description below it says which factual claim it rests on.'],
     ['#scenario-status', 'The outcome under the chosen premises. Supported means: if these premises hold, the conclusion follows as a theorem. Unsupported means a premise the proof needs is off — not that the conclusion is false.'],
     ['#controls-container', 'Every premise is a choice, and each one says whose: legislature, court, fact-finder, or a stipulation both sides accept. Untick one you doubt and watch what depended on it dim.'],
@@ -1002,7 +1065,7 @@
 
     // Re-render graph with current state
     updateNodeStates();
-    writeUrlState(); renderDispute();
+    writeUrlState(); renderDispute(); if (typeof renderHinge === 'function') renderHinge();
   }
 
   function checkMutualExclusion() {

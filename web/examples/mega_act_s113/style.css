@@ -1714,3 +1714,39 @@ body.reviewer-active .reviewer-detail {
   .panel { position: static !important; height: auto !important; overflow: visible !important; }
   .memo-text { min-height: 0; height: auto; }
 }
+
+/* v7.2 hinge spotlight */
+.hinge-panel { margin: 0 0 16px; padding: 16px 18px 14px; border: 1px solid rgba(243,156,18,.45); border-radius: 10px; background: linear-gradient(180deg, rgba(243,156,18,.09), rgba(243,156,18,.03)); }
+.hinge-eyebrow { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #F39C12; font-weight: 700; margin-bottom: 8px; }
+.hinge-quote { margin: 0 0 12px; padding: 10px 14px; border-left: 3px solid #F39C12; font-size: 15px; line-height: 1.45; color: #e8ecf0; font-style: normal; }
+.hinge-quote em { color: #ffd28a; font-style: normal; font-weight: 700; }
+.hinge-cite { display: block; margin-top: 6px; font-size: 11px; color: #9aa7b4; font-family: "JetBrains Mono", monospace; }
+.hinge-readings { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-bottom: 10px; }
+.hinge-btn { text-align: left; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 10px 12px; color: #dfe6ee; cursor: pointer; display: flex; flex-direction: column; gap: 4px; font: inherit; }
+.hinge-btn span:last-child { font-size: 11.5px; color: #9aa7b4; line-height: 1.35; }
+.hinge-btn strong { font-size: 14px; }
+.hinge-tag { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #F39C12; font-weight: 700; }
+.hinge-btn.active { border-color: #F39C12; box-shadow: inset 0 0 0 2px rgba(243,156,18,.6); background: rgba(243,156,18,.12); }
+.hinge-btn:focus-visible { outline: 2px solid #F39C12; outline-offset: 2px; }
+.hinge-consequence { font-size: 12.5px; line-height: 1.5; color: #c9d3dd; padding: 8px 2px; }
+.hinge-consequence .ok { color: #2ECC71; } .hinge-consequence .bad { color: #E74C3C; } .hinge-consequence .mid { color: #F39C12; }
+.hinge-consequence .mono, .hinge-evidence .mono { font-family: "JetBrains Mono", monospace; font-size: 10.5px; color: #dfe6ee; }
+.hinge-evidence { margin-top: 6px; padding-top: 10px; border-top: 1px dashed rgba(243,156,18,.35); font-size: 12px; line-height: 1.5; color: #c9d3dd; }
+.hinge-ev-title { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #ffd28a; margin-bottom: 4px; }
+.hinge-panel.hidden { display: none; }
+@media (max-width: 900px) { .hinge-readings { grid-template-columns: 1fr; } }
+
+/* v7.2.1 literal spotlight */
+.hinge-eyebrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.spotlight-btn { background: rgba(243,156,18,.14); border: 1px solid rgba(243,156,18,.55); color: #ffd28a; border-radius: 6px; padding: 3px 9px; font-size: 11px; font-weight: 700; letter-spacing: .04em; cursor: pointer; }
+.spotlight-btn:hover { background: rgba(243,156,18,.28); }
+.hinge-panel { position: relative; overflow: visible; }
+.hinge-beam { position: absolute; left: 50%; top: -140px; width: 520px; height: 180px; transform: translateX(-50%); pointer-events: none; opacity: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255,214,138,.55) 0%, rgba(255,214,138,.18) 35%, rgba(255,214,138,0) 70%);
+  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); transition: opacity .6s ease; z-index: 3; }
+body.spotlight-on .panel-left, body.spotlight-on .panel-right, body.spotlight-on #app-header, body.spotlight-on #status-bar, body.spotlight-on .jump-bar,
+body.spotlight-on #panel-center > *:not(#hinge-panel), body.spotlight-on #app-footer { filter: brightness(.28) saturate(.6); transition: filter .6s ease; }
+body.spotlight-on #hinge-panel { box-shadow: 0 0 0 2px rgba(255,214,138,.9), 0 0 60px 18px rgba(255,200,90,.35), 0 0 140px 40px rgba(255,200,90,.15); background: linear-gradient(180deg, rgba(243,156,18,.22), rgba(243,156,18,.06)); z-index: 4; }
+body.spotlight-on .hinge-beam { opacity: 1; }
+body.spotlight-on .hinge-quote em { text-shadow: 0 0 14px rgba(255,214,138,.8); }
+@media (prefers-reduced-motion: reduce) { .hinge-beam, body.spotlight-on * { transition: none !important; } }

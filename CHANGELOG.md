@@ -6,6 +6,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [7.2.0] — 2026-08-23
+
+### Added (explorer)
+- **The hinge spotlight**: a panel at the top quoting § 8(j)(2)(A), two buttons for the two readings (plus 'both'), the live consequence for citizen-a under each, and the adversarial-audit evidence that this is the only coupled premise in either theory (counts from a new per-party `adversarial_summary` in the build). A literal spotlight — page dims, beam and glow on the panel — fires once on first visit and on the 🔦 button; Escape or clicking elsewhere ends it; reduced-motion respected.
+- Data fetch is cache-busted so updates show immediately.
+
 ## [7.1.1] — 2026-08-23
 
 ### Added
