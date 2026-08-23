@@ -74,7 +74,7 @@ def main():
         cert = MODEL / f"{b}.cert"
         if cert.exists(): cert.unlink()
         okp = axiom_in_closure(b, info, memo)
-        form = f'(certify-book "{MODEL / b}" ? {"nil :defaxioms-okp t" if okp else ""})\n'
+        form = f'(certify-book "model/{b}" ? {"nil :defaxioms-okp t" if okp else ""})\n'
         p = subprocess.run(runner(), input=form, cwd=ROOT, capture_output=True, text=True)
         log = logdir / f"{b.replace('/', '_')}.log"; log.write_text(p.stdout + p.stderr)
         qed = len(re.findall(r"^Q\.E\.D\.", p.stdout, re.M)); qed_total += qed
