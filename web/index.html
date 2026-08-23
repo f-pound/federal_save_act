@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7.0.1">
+  <link rel="stylesheet" href="style.css?v=7.1.0">
 </head>
 <body>
   <header id="app-header">
@@ -85,6 +85,10 @@
           <span><b class="lg lg-unsupported">Unsupported</b> a premise this side's proof needs is off</span>
         </div>
       </div>
+      <div id="dispute-panel" class="dispute-panel">
+        <div class="step-label"><span class="step-chip">★</span> The dispute in one list</div>
+        <div id="dispute-list"></div>
+      </div>
       <div class="step-label"><span class="step-chip">3</span> Doubt a premise? Untick it and watch the outcome change</div>
       <div id="controls-container"></div>
       <div class="filter-section">
@@ -104,6 +108,8 @@
         <a href="#poll-panel">Polling place</a>
         <a href="#graph-container">Proof graph</a>
         <a href="#" id="jump-conclusions">Conclusions</a>
+        <button id="tour-btn" class="tour-btn" title="A 60-second walkthrough">▶ Tour</button>
+        <input id="share-link" class="share-link" readonly title="This link reproduces the current premises" aria-label="Share link">
         <button id="export-memo-btn" class="export-btn" title="Write your current premises and outcomes as a Markdown brief">⬇ Export memo</button>
       </nav>
       <details id="voter-panel" class="voter-panel" open>
@@ -281,6 +287,10 @@
     </p>
   </footer>
 
+  <div id="tour-tip" class="tour-tip hidden" role="dialog" aria-live="polite">
+    <div id="tour-text"></div>
+    <div class="tour-actions"><span id="tour-count" class="who"></span><button id="tour-skip" class="preset-btn">Skip</button><button id="tour-next" class="preset-btn">Next</button></div>
+  </div>
   <!-- Export memo modal -->
   <div id="memo-modal" class="modal-overlay hidden">
     <div class="modal-content memo-content">
@@ -352,6 +362,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=7.0.1"></script>
+  <script src="app.js?v=7.1.0"></script>
 </body>
 </html>

@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [7.1.0] — 2026-08-23
+
+### Added (explorer)
+- **Shareable state**: the selected preset or premise set lives in the URL hash (`#p=challenger`, `#on=…`); a share-link field in the jump bar; the exported memo ends with a link that reproduces the exact view.
+- **Guided tour**: five-step highlighted walkthrough (preset → outcome → premises → dispute list → memo), offered once after the About box.
+- **The dispute in one list**: common ground both sides accept, then what each side needs, with off premises struck through.
+- Print stylesheet for the page and the memo.
+
 ## [7.0.1] — 2026-08-23
 
 ### Added

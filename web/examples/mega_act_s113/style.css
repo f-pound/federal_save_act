@@ -1694,3 +1694,23 @@ body.reviewer-active .reviewer-detail {
 
 .voter-panel.hidden { display: none; }
 .jump-bar a.hidden { display: none; }
+
+/* v7.1 dispute panel, tour, share link, print */
+.dispute-panel { margin: 10px 0 4px; padding: 8px 10px; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; background: rgba(255,255,255,.02); }
+.dispute-h { font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: #9aa7b4; margin: 6px 0 2px; }
+.dispute-h.dispute-challenger { color: #ff9d93; } .dispute-h.dispute-government { color: #8fc1ff; }
+.dispute-ul { margin: 0 0 4px 14px; padding: 0; font-size: 11px; line-height: 1.35; color: #c9d3dd; }
+.dispute-ul li.off { opacity: .45; text-decoration: line-through; }
+.tour-btn { background: rgba(155,89,182,.18); border: 1px solid rgba(155,89,182,.5); color: #d7aaff; border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.share-link { flex: 1 1 160px; min-width: 120px; font: 10.5px "JetBrains Mono", monospace; background: #151826; color: #9aa7b4; border: 1px solid #3a4257; border-radius: 6px; padding: 4px 6px; }
+.tour-tip { position: fixed; right: 24px; bottom: 24px; z-index: 1000; max-width: 360px; background: #f5f7fa; color: #1c1f2e; border-radius: 10px; padding: 14px 16px; box-shadow: 0 8px 30px rgba(0,0,0,.5); font-size: 13px; line-height: 1.45; }
+.tour-tip.hidden { display: none; }
+.tour-actions { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin-top: 10px; }
+.tour-actions .who { margin-right: auto; color: #5b6470; }
+.tour-target { outline: 3px solid #F39C12 !important; outline-offset: 3px; border-radius: 6px; transition: outline .2s; }
+@media print {
+  #app-header .audit-bar, .reviewer-toggle, .about-btn, .jump-bar, .tour-tip, #audit-drawer, .warning-banner, .mobile-panel-toggles, .filter-section { display: none !important; }
+  body, .panel, .graph-node, .modal-content { background: #fff !important; color: #111 !important; }
+  .panel { position: static !important; height: auto !important; overflow: visible !important; }
+  .memo-text { min-height: 0; height: auto; }
+}

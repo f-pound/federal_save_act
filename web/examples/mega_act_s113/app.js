@@ -142,6 +142,10 @@
     renderVoterDocs();
     renderPollDocs();
     setupMemo();
+    setupTour();
+    if (!readUrlState()) writeUrlState();
+    renderDispute();
+    if (!localStorage.getItem('explorer-toured') && localStorage.getItem('explorer-seen')) setTimeout(() => tourShow(0), 600);
 
     // Bind filter checkboxes
     document.getElementById('filter-axiom-free').addEventListener('change', renderGraph);
@@ -259,6 +263,7 @@
     updateNodeStates();
     updatePresetHighlight();
     updateScenarioStatus();
+    writeUrlState(); renderDispute();
   }
 
   function updatePresetHighlight() {
@@ -631,6 +636,8 @@
     lines.push('');
     lines.push('ACL2 proved every "then"; the reader decides every "if". A conclusion marked SUPPORTED means: if the ticked premises hold, the conclusion follows as a theorem. UNSUPPORTED means a premise the proof needs is unticked — not that the conclusion is false. The model does not decide constitutionality; it makes the pivot explicit: `constitutional-conflict-conditionp` is equivalent to `(not (valid-regulationp law x))` once the other preconditions hold.');
     lines.push('');
+    lines.push(`Reproduce this exact configuration: ${location.href}`);
+    lines.push('');
     lines.push('Repository: https://github.com/f-pound/federal_save_act — sources/clause_trace.csv traces every axiom to its legal source and decider; tools/check_text_stability.py verifies every quoted clause verbatim in both bill texts.');
     return lines.join('\n');
   }
@@ -910,6 +917,72 @@
   }
 
   // ---- Toggle Hypothetical ----
+  // ---- Shareable state: premises live in the URL hash (#p=<preset>&on=<ids>) ----
+  function writeUrlState() {
+    const on = [...activeAssumptions].map(id => id.replace(/^hyp-/, '')).join(',');
+    const h = activePreset ? `p=${activePreset}` : `on=${on}`;
+    if (history.replaceState) history.replaceState(null, '', '#' + h);
+    const el = document.getElementById('share-link'); if (el) el.value = location.href;
+  }
+  function readUrlState() {
+    const m = location.hash.slice(1);
+    if (!m) return false;
+    const q = Object.fromEntries(m.split('&').map(kv => kv.split('=')));
+    if (q.p && PRESETS[q.p]) { applyPreset(q.p); return true; }
+    if (q.on !== undefined) {
+      activeAssumptions.clear();
+      q.on.split(',').filter(Boolean).forEach(id => activeAssumptions.add('hyp-' + id));
+      data.hypotheticals.forEach(h => { const cb = document.getElementById(`hyp-${h.id}`); if (cb) cb.checked = activeAssumptions.has(h.id); });
+      activePreset = null; checkMutualExclusion(); recalculateDimming(); updateNodeStates(); updatePresetHighlight(); updateScenarioStatus();
+      return true;
+    }
+    return false;
+  }
+
+  // ---- Dispute panel: what the two sides share and what they contest ----
+  function renderDispute() {
+    const host = document.getElementById('dispute-list'); if (!host) return;
+    const byPath = p => data.hypotheticals.filter(h => h.path === p);
+    const shared = data.nodes.filter(n => n.trusted_base && n.path === 'neutral' && n.layer === 'formalization');
+    const rows = [];
+    rows.push(`<div class="dispute-h">Common ground (${shared.length} premises both sides accept)</div>`);
+    rows.push('<ul class="dispute-ul">' + shared.slice(0, 8).map(n => `<li>${n.label}</li>`).join('') + (shared.length > 8 ? `<li>… and ${shared.length - 8} more</li>` : '') + '</ul>');
+    for (const p of ['challenger', 'government']) {
+      rows.push(`<div class="dispute-h dispute-${p}">${p === 'challenger' ? 'Challenger needs' : 'Government needs'} (${byPath(p).length})</div>`);
+      rows.push('<ul class="dispute-ul">' + byPath(p).map(h => `<li class="${activeAssumptions.has(h.id) ? '' : 'off'}">${h.label}<span class="who"> — ${h.category.replace(/.*—\s*/, '').replace(/ Assumptions$/, '')}</span></li>`).join('') + '</ul>');
+    }
+    host.innerHTML = rows.join('');
+  }
+
+  // ---- Guided tour ----
+  const TOUR = [
+    ['#preset-bar', 'Start here. Each button is a complete, valid argument. Pick one — the description below it says which factual claim it rests on.'],
+    ['#scenario-status', 'The outcome under the chosen premises. Supported means: if these premises hold, the conclusion follows as a theorem. Unsupported means a premise the proof needs is off — not that the conclusion is false.'],
+    ['#controls-container', 'Every premise is a choice, and each one says whose: legislature, court, fact-finder, or a stipulation both sides accept. Untick one you doubt and watch what depended on it dim.'],
+    ['#dispute-panel', 'The whole dispute in one list: what both sides accept, and what each side needs that the other does not.'],
+    ['#export-memo-btn', 'When you have the configuration you want, export it: a memo listing the premises, their sources and deciders, and the conditional conclusions — with a link that reproduces this exact view.'],
+  ];
+  let tourStep = -1;
+  function tourShow(i) {
+    document.querySelectorAll('.tour-target').forEach(e => e.classList.remove('tour-target'));
+    const tip = document.getElementById('tour-tip');
+    if (i < 0 || i >= TOUR.length) { tip.classList.add('hidden'); tourStep = -1; localStorage.setItem('explorer-toured', '1'); return; }
+    tourStep = i;
+    const [sel, text] = TOUR[i];
+    const el = document.querySelector(sel);
+    if (el) { el.classList.add('tour-target'); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+    document.getElementById('tour-text').textContent = text;
+    document.getElementById('tour-count').textContent = `${i + 1} / ${TOUR.length}`;
+    document.getElementById('tour-next').textContent = i === TOUR.length - 1 ? 'Done' : 'Next';
+    tip.classList.remove('hidden');
+  }
+  function setupTour() {
+    const btn = document.getElementById('tour-btn'); if (!btn) return;
+    btn.addEventListener('click', () => tourShow(0));
+    document.getElementById('tour-next').addEventListener('click', () => tourShow(tourStep + 1));
+    document.getElementById('tour-skip').addEventListener('click', () => tourShow(-1));
+  }
+
   function onToggleHypothetical(hyp, isChecked) {
     if (isChecked) {
       activeAssumptions.add(hyp.id);
@@ -929,6 +1002,7 @@
 
     // Re-render graph with current state
     updateNodeStates();
+    writeUrlState(); renderDispute();
   }
 
   function checkMutualExclusion() {
