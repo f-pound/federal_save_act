@@ -242,6 +242,7 @@ def main():
     p = fs.add_parser("status"); p.add_argument("congress"); p.add_argument("type"); p.add_argument("number"); p.set_defaults(fn=fetch_status)
     p = fs.add_parser("eo"); p.add_argument("number"); p.set_defaults(fn=fetch_eo)
     p = fs.add_parser("case"); p.add_argument("query"); p.set_defaults(fn=fetch_case)
+    p = fs.add_parser("opinions"); p.set_defaults(fn=lambda a: run([sys.executable, "tools/fetch_opinions.py"]).returncode)
     p = sub.add_parser("extract"); p.add_argument("textfile"); p.add_argument("--source-id", required=True); p.add_argument("--slug", default="draft"); p.set_defaults(fn=extract)
     p = sub.add_parser("compile"); p.add_argument("--ace", action="store_true"); p.add_argument("--validate-ace", action="store_true"); p.set_defaults(fn=compile_)
     p = sub.add_parser("certify"); p.set_defaults(fn=certify)

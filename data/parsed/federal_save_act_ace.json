@@ -245,6 +245,31 @@
       "replaces": []
     },
     {
+      "id": "ace-gen-mail-ballot-id",
+      "generated_from": {
+        "ir": "federal_save_act_voting_id_rules",
+        "rule": "mail-ballot-identification-bundlep"
+      },
+      "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(2)(A)",
+      "source_text": "may not accept any ballot for an election for Federal office provided by an individual who votes other than in person unless the individual submits with the ballot ... a copy of a valid photo identification ... the last four digits of the individual's Social Security number and an affidavit",
+      "ace_text": "If a person has a n:state-issued-drivers-license-with-photo-and-expiration-date then the person has a n:accepted-mail-ballot. If a person has a n:state-issued-identification-card-with-photo-and-expiration-date then the person has a n:accepted-mail-ballot. If a person has a n:valid-United-States-passport then the person has a n:accepted-mail-ballot. If a person has a n:valid-military-identification then the person has a n:accepted-mail-ballot. If a person has a n:tribal-identification-document-with-photo-and-expiration-date then the person has a n:accepted-mail-ballot. If a person has a n:last-four-digits-of-a-Social-Security-number and the person has a n:affidavit-of-inability-to-obtain-a-copy-of-a-valid-photo-identification then the person has a n:accepted-mail-ballot.",
+      "classification": "PROHIBITION",
+      "ape_status": "PASS",
+      "ape_error": null,
+      "predicate_target": "(mail-ballot-identification-bundlep docs)",
+      "requires_human_review": false,
+      "covers": [
+        "state-drivers-license-with-expiration [§ 303A(c)(1)]",
+        "state-id-card-with-expiration [§ 303A(c)(2)]",
+        "valid-us-passport [§ 303A(c)(3)]",
+        "valid-military-identification [§ 303A(c)(4)]",
+        "tribal-id-with-expiration [§ 303A(c)(5)]",
+        "ssn-last-four-digits [§ 303A(a)(2)(A)(ii)] + affidavit-unable-to-obtain-copy [§ 303A(a)(2)(A)(ii)]"
+      ],
+      "notes": "APE validated. Paraphrase: Every person that has a n:state-issued-drivers-license-with-photo-and-expiration-date has an n:accepted-mail-ballot .\n\nEvery person that has a n:state-issued-identification-card-with-photo-and-expirat",
+      "replaces": []
+    },
+    {
       "id": "ace-gen-voting-process",
       "generated_from": {
         "ir": "federal_save_act_voting_table",

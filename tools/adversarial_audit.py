@@ -197,19 +197,28 @@ def audit_theory(tag, party, worlddict, books, use_acl2):
         best = None
         for flips in flips_for(world, f, universe, stubnames):
             w = flipped(world, flips)
-            okA, _ = holds(w, f, universe)
+            okA, cx = holds(w, f, universe)
             if okA:  # flip did not falsify A
                 continue
+            witness = {k: v for k, v in (cx or {}).items()}
             desc = " & ".join(f"{name}{list(argvals)} := {'t' if newval else 'nil'}" for name, argvals, newval in flips)
             br = [m for k2, b2, m, f2 in items if m != n and not holds(w, f2, universe)[0]]
             if not br:
-                verdict, broken, flip_used = "independent", [], desc
+                verdict, broken, flip_used, flip_struct, wit = "independent", [], desc, [[name, list(argvals), bool(newval)] for name, argvals, newval in flips], witness
                 break
             if best is None or len(br) < len(best[1]):
-                best = (desc, br)
+                best = (desc, br, [[name, list(argvals), bool(newval)] for name, argvals, newval in flips], witness)
         if verdict != "independent" and best:
-            verdict, flip_used, broken = "coupled", best[0], best[1]
-        results.append({"axiom": n, "book": b, "verdict": verdict, "flip": flip_used, "breaks": broken})
+            verdict, flip_used, broken, flip_struct, wit = "coupled", best[0], best[1], best[2], best[3]
+        if verdict == "no-flip-found": flip_struct, wit = [], {}
+        # witnesses for the coupled axioms (where they fail in the flipped world)
+        bw = {}
+        if flip_struct:
+            w = flipped(world, [(a, tuple(b_), c) for a, b_, c in flip_struct])
+            for k2, b2, m, f2 in items:
+                if m in broken:
+                    ok2, cx2 = holds(w, f2, universe); bw[m] = cx2 or {}
+        results.append({"axiom": n, "book": b, "verdict": verdict, "flip": flip_used, "flips": flip_struct, "witness": wit, "breaks": broken, "break_witnesses": bw})
     if use_acl2:
         for r in results:
             r["acl2_redundancy"] = acl2_redundancy(tag, r["axiom"], books, items)
@@ -265,7 +274,7 @@ def main():
            "These joints are exactly the premises the explorer's presets toggle together, and the pivot theorems in `core` state the logic of each joint once.", ""]
     if "--check" in sys.argv:
         old = json.loads(OUT_JSON.read_text()) if OUT_JSON.exists() else {}
-        strip = lambda rep: {k: [{x: r[x] for x in ("axiom", "verdict", "breaks")} for r in v] for k, v in rep.items()}
+        strip = lambda rep: {k: [{x: r[x] for x in ("axiom", "verdict", "breaks", "flips")} for r in v] for k, v in rep.items()}
         if strip(old) != strip(report):
             print("STALE: reports/adversarial_audit.json verdicts differ from a fresh run — rerun tools/adversarial_audit.py --acl2"); return 1
         print("OK: adversarial audit verdicts match"); return 0

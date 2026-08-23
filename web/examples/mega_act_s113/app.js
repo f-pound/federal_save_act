@@ -25,19 +25,20 @@
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-adequate-alt',
              'hyp-mandatory', 'hyp-discretionary', 'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats',
              'hyp-removal-due-process', 'hyp-removal-valid-maintenance',
-             'hyp-voting-severe-burden', 'hyp-voting-material-burden', 'hyp-photo-id-valid'],
+             'hyp-voting-severe-burden', 'hyp-voting-material-burden', 'hyp-photo-id-valid',
+             'hyp-poll-tax', 'hyp-document-cost', 'hyp-no-fee-waiver', 'hyp-fee-waiver'],
     },
     challenger: {
       label: "Challenger's case",
       description: 'Only the challenger\'s premises: citizens lack documents through no fault, obtaining them is a material burden, the alternative process is discretionary, and a severe burden defeats the regulation. The government\'s no-conflict conclusion loses its support.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats', 'hyp-removal-due-process',
-             'hyp-voting-severe-burden', 'hyp-voting-material-burden'],
+             'hyp-voting-severe-burden', 'hyp-voting-material-burden', 'hyp-poll-tax', 'hyp-document-cost', 'hyp-no-fee-waiver'],
     },
     government: {
       label: "Government's defense",
       description: 'Only the government\'s premises: election integrity is an important interest, the requirement is reasonable and evenhanded, the burden is not severe, and the alternative process is adequate and mandatory. The challenger\'s conflict conclusion loses its support.',
       hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory',
-             'hyp-election-integrity', 'hyp-reasonable', 'hyp-removal-valid-maintenance', 'hyp-photo-id-valid'],
+             'hyp-election-integrity', 'hyp-reasonable', 'hyp-removal-valid-maintenance', 'hyp-photo-id-valid', 'hyp-fee-waiver'],
     },
     neutral: {
       label: 'Statute text only',
@@ -50,12 +51,12 @@
       hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory', 'hyp-discretionary',
              'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats',
              'hyp-removal-due-process', 'hyp-removal-valid-maintenance',
-             'hyp-voting-severe-burden', 'hyp-photo-id-valid'],
+             'hyp-voting-severe-burden', 'hyp-photo-id-valid', 'hyp-poll-tax', 'hyp-no-fee-waiver', 'hyp-fee-waiver'],
     },
     highrisk: {
       label: 'Contested premises only',
       description: 'Keeps only the three empirically contestable premises about burden severity and drops every doctrinal and interpretive one. Shows how little is settled by facts alone.',
-      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-voting-material-burden'],
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-voting-material-burden', 'hyp-document-cost'],
     },
   };
 

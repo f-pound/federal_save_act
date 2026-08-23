@@ -56,6 +56,32 @@
           "text": "an affidavit developed and made available to the individual by the State attesting that the individual does not possess the identification required under subparagraph (A) because the individual has a religious objection to being photographed."
         }
       ]
+    },
+    {
+      "name": "ssn-last-four-types",
+      "source": "§ 3 / HAVA § 303A(a)(2)(A)(ii)",
+      "description": "For ballots cast other than in person: the last four digits of the Social Security number, usable only with the inability affidavit.",
+      "members": [
+        {
+          "symbol": "ssn-last-four-digits",
+          "source": "§ 303A(a)(2)(A)(ii)",
+          "ace_noun": "n:last-four-digits-of-a-Social-Security-number",
+          "text": "the last four digits of the individual's Social Security number"
+        }
+      ]
+    },
+    {
+      "name": "inability-affidavit-types",
+      "source": "§ 3 / HAVA § 303A(a)(2)(A)(ii)",
+      "description": "Affidavit that the voter cannot obtain a copy of a valid photo identification after reasonable efforts.",
+      "members": [
+        {
+          "symbol": "affidavit-unable-to-obtain-copy",
+          "source": "§ 303A(a)(2)(A)(ii)",
+          "ace_noun": "n:affidavit-of-inability-to-obtain-a-copy-of-a-valid-photo-identification",
+          "text": "an affidavit developed and made available to the individual by the State attesting that the individual is unable to obtain a copy of a valid photo identification after making reasonable efforts to obtain such a copy"
+        }
+      ]
     }
   ],
   "rules": [
@@ -113,6 +139,49 @@
         "consequent_noun": "n:cure-for-a-provisional-ballot",
         "classification": "EXCEPTION",
         "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(1)(B)(i)"
+      }
+    },
+    {
+      "name": "mail-ballot-identification-bundlep",
+      "args": [
+        "docs"
+      ],
+      "label": "PROHIBITION",
+      "source": "§ 3 / HAVA § 303A(a)(2)(A)",
+      "text": "may not accept any ballot for an election for Federal office provided by an individual who votes other than in person unless the individual submits with the ballot ... a copy of a valid photo identification ... the last four digits of the individual's Social Security number and an affidavit",
+      "body": {
+        "or": [
+          {
+            "some-in": [
+              "docs",
+              "valid-photo-id-types"
+            ]
+          },
+          {
+            "and": [
+              {
+                "some-in": [
+                  "docs",
+                  "ssn-last-four-types"
+                ]
+              },
+              {
+                "some-in": [
+                  "docs",
+                  "inability-affidavit-types"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-mail-ballot-id",
+        "subject": "person",
+        "possession_of": "docs",
+        "consequent_noun": "n:accepted-mail-ballot",
+        "classification": "PROHIBITION",
+        "source_ref": "SAVE America Act § 3 / HAVA § 303A(a)(2)(A)"
       }
     }
   ]

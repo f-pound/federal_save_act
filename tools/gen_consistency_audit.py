@@ -87,6 +87,16 @@ def show(x):
         return "(" + " ".join(show(y) for y in x) + ")"
     return x
 
+def subst_flip(x, mapping, flip):
+    """Substitute mapped function names AND insert `flip` as their first argument."""
+    if isinstance(x, list):
+        if len(x) == 2 and x[0] == "quote":
+            return x
+        if x and isinstance(x[0], str) and x[0].lower() in mapping:
+            return [mapping[x[0].lower()], flip] + [subst_flip(y, mapping, flip) for y in x[1:]]
+        return [subst_flip(y, mapping, flip) for y in x]
+    return x
+
 def subst(x, mapping):
     if isinstance(x, list):
         if len(x) == 2 and x[0] == "quote":
@@ -128,6 +138,26 @@ for tag, t in _W["theories"].items():
     world = dict(COMMON); world.update({k: tuple(v) for k, v in t["world"].items()})
     THEORIES[tag] = (t["party"], world, t["books"])
 
+def load_flips(party):
+    """Structured flips from the adversarial audit, if it has run."""
+    aa = ROOT / "reports" / "adversarial_audit.json"
+    if not aa.exists(): return {}
+    raw = json.loads(aa.read_text(encoding="utf-8")).get(party, [])
+    return {r["axiom"]: (r["verdict"], r.get("flips") or [], r.get("breaks", []), r.get("witness") or {}, r.get("break_witnesses") or {}) for r in raw}
+
+def inst(x, env):
+    """Instantiate free variables (non-head symbols) from env with quoted constants."""
+    if isinstance(x, list):
+        if len(x) == 2 and x[0] == "quote": return x
+        return [x[0]] + [inst(y, env) for y in x[1:]] if x else x
+    if isinstance(x, str) and x in env:
+        v = env[x]
+        return ["quote", v] if isinstance(v, str) else ("t" if v is True else "nil")
+    return x
+
+def lit(v):
+    return "t" if v is True else "nil" if v is False else f"'{v}"
+
 def emit():
     out = ['(in-package "ACL2")', '',
            ';' * 78,
@@ -152,7 +182,16 @@ def emit():
         out.append(f';;; books: {", ".join(books)}')
         out.append(';;; ' + '=' * 73)
         out.append('')
-        out.append(f';; --- {len(names)} stub / signature definitions ---')
+        flips = load_flips(party)
+        # flips grouped by stub: stub -> list of (axiom, argvals, newval)
+        by_stub = {}
+        for ax, (verdict, fl, breaks, wit, bws) in flips.items():
+            for name, argvals, newval in fl:
+                by_stub.setdefault(name.lower(), []).append((ax, argvals, newval))
+        out.append(f';; --- {len(names)} stub / signature definitions, parameterised by FLIP ---')
+        out.append(';; (aud-X-f name args...) : the base world, except that when FLIP names an')
+        out.append(';; audited axiom, the one or two stub values the adversarial audit flips to')
+        out.append(';; falsify that axiom are overridden.  FLIP = \'none is the base world.')
         for n, args in stubs + sigs:
             a = show(args)
             spec = world.get(n.lower())
@@ -161,25 +200,52 @@ def emit():
                 wargs, body = spec
                 wnames = wargs.strip("()").split()
                 assert len(wnames) == len(argnames), f"arity mismatch for {n}: world {wargs} vs stub {a}"
-                used = [v for v in wnames if re.search(r"\b%s\b" % re.escape(v), body)]
-                ign = [v for v in wnames if v not in used]
-                decl = f" (declare (ignore {' '.join(ign)}))" if ign else ""
-                out.append(f"(defun {mapping[n.lower()]} {wargs}{decl} (if {body} t nil))")
             else:
-                decl = f" (declare (ignore {' '.join(argnames)}))" if argnames else ""
-                out.append(f"(defun {mapping[n.lower()]} {a}{decl} nil)")
+                wnames, body = argnames, "nil"
+            over = by_stub.get(n.lower(), [])
+            expr = f"(if {body} t nil)"
+            for ax, argvals, newval in reversed(over):
+                cond = " ".join([f"(equal flip '{ax})"] + [f"(equal {v} {lit(av)})" for v, av in zip(wnames, argvals)])
+                expr = f"(if (and {cond}) {lit(newval)} {expr})"
+            used = [v for v in wnames if re.search(r"\b%s\b" % re.escape(v), expr)]
+            ign = [v for v in wnames if v not in used] + ([] if "flip" in expr else ["flip"])
+            decl = f" (declare (ignore {' '.join(ign)}))" if ign else ""
+            out.append(f"(defun {mapping[n.lower()]} (flip {' '.join(wnames)}){decl} {expr})")
         out.append('')
-        out.append(f';; --- {len(defuns)} core definitions over the world ---')
+        out.append(f';; --- {len(defuns)} core definitions over the world (flip threaded through) ---')
         for n, args, body in defuns:
-            out.append(f"(defun {mapping[n.lower()]} {show(args)}\n  " + " ".join(show(subst(b, mapping)) for b in body) + ")")
+            out.append(f"(defun {mapping[n.lower()]} (flip {' '.join(args)})\n  " + " ".join(show(subst_flip(b, mapping, 'flip')) for b in body) + ")")
         out.append('')
         items = [("constraint", b, n, f) for b, n, f in constraints] + [("axiom", b, n, f) for b, n, f in axioms]
-        out.append(f';; --- {len(items)} audited propositions ({len(constraints)} encapsulate constraints, {len(axioms)} defaxioms) ---')
+        out.append(f';; --- {len(items)} audited propositions in the BASE world (flip = none) ---')
+        out.append(f';; ({len(constraints)} encapsulate constraints, {len(axioms)} defaxioms): the theory is satisfiable')
         for kind, b, n, f in items:
             out.append(f";; {kind} {n}  [{b}]")
-            out.append(f"(defthm aud-{tag}-{n}\n  {show(subst(f, mapping))}\n  :rule-classes nil)")
+            out.append(f"(defthm aud-{tag}-{n}\n  {show(subst_flip(f, mapping, "'none"))}\n  :rule-classes nil)")
         out.append('')
-        stats[party] = {"stubs_and_sigs": len(names), "defuns": len(defuns), "constraints": len(constraints), "axioms": len(axioms)}
+        # independence certificates
+        ncert = 0
+        if flips:
+            out.append(';; --- INDEPENDENCE CERTIFICATES (kernel-checked adversarial audit) ---')
+            out.append(';; For each audited axiom A with a recorded flip: (1) A is FALSE in the')
+            out.append(';; flipped world; (2) every OTHER proposition of the theory still holds')
+            out.append(';; there (independent), or the named coupled ones are false (coupled).')
+            for kind, b, n, f in items:
+                if kind != "axiom" or n not in flips: continue
+                verdict, fl, breaks, wit, bws = flips[n]
+                if not fl: continue
+                fconst = f"'{n}"
+                out.append(f";; {verdict}: {n}" + (f"  (coupled with {', '.join(breaks)})" if breaks else "") + (f"  witness {wit}" if wit else ""))
+                out.append(f"(defthm aud-{tag}-flip-{n}-falsifies\n  (not {show(subst_flip(inst(f, wit), mapping, fconst))})\n  :rule-classes nil)")
+                others = [(k2, b2, m, f2) for k2, b2, m, f2 in items if m != n and m not in breaks]
+                conj = "\n   ".join(show(subst_flip(f2, mapping, fconst)) for _, _, m, f2 in others)
+                out.append(f"(defthm aud-{tag}-flip-{n}-preserves-rest\n  (and {conj})\n  :rule-classes nil)")
+                for m in breaks:
+                    f2 = next(ff for _, _, mm, ff in items if mm == m)
+                    out.append(f"(defthm aud-{tag}-flip-{n}-breaks-{m}\n  (not {show(subst_flip(inst(f2, bws.get(m, {})), mapping, fconst))})\n  :rule-classes nil)")
+                ncert += 1
+            out.append('')
+        stats[party] = {"stubs_and_sigs": len(names), "defuns": len(defuns), "constraints": len(constraints), "axioms": len(axioms), "independence_certificates": ncert}
     out.append(';;; ' + '=' * 73)
     out.append(';;; JOINT UNSATISFIABILITY of the two registration bridges (propositional):')
     out.append(';;; the challenger needs (not (valid-regulationp law x)) and the government')

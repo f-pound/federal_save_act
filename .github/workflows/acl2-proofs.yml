@@ -40,8 +40,10 @@ jobs:
           PROJECT_ROOT: .
         run: python tools/validate_trace.py
 
-      - name: Check modeled clauses are verbatim in both tracked bill texts
-        run: python tools/check_text_stability.py
+      - name: Check modeled clauses are verbatim in the bill texts and fetched opinions
+        run: |
+          python tools/fetch_opinions.py
+          python tools/check_text_stability.py
 
       - name: Check consistency-audit book and trusted-base report match generators
         run: |

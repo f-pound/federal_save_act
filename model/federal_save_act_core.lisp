@@ -138,6 +138,7 @@
 
 (defstub document-acquisition-costp (p) t)     ; p must pay to obtain qualifying documents
 (defstub cost-functions-as-poll-taxp (law p) t) ; the cost functions as a de facto poll tax
+(defstub fee-waiver-availablep (law) t)         ; law (or the State under it) provides the documents free
 
 ;;; =========================================================================
 ;;; Mathis / Anderson-Burdick burden-severity predicates

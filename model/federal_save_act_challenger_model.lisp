@@ -368,3 +368,59 @@
   :hints (("Goal" :use ((:instance challenger-voting-conflict-general
                                    (p 'citizen-c) (b 'ballot-c)))))
   :rule-classes nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; v7.3 — POLL-TAX BRANCH (Amend. XXIV; Harper v. Virginia Bd. of Elections)
+;;;
+;;; Theory of the case: if the only documents that satisfy § 3(b) cost money
+;;; to obtain and no free alternative is provided, the requirement makes
+;;; "payment of any fee an electoral standard."
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(encapsulate
+  ((challenger-poll-tax-establishedp (law p) t))
+  (local (defun challenger-poll-tax-establishedp (law p) (declare (ignore law p)) t))
+  ;; INTERPRETATION_CHALLENGER (Harper): a document cost with no waiver is a fee on voting
+  (defthm challenger-document-cost-is-poll-tax
+    (implies (and (qualified-federal-voterp p)
+                  (not (has-documentary-proofp p))
+                  (document-acquisition-costp p)
+                  (not (fee-waiver-availablep 'federal-save-act)))
+             (challenger-poll-tax-establishedp 'federal-save-act p))))
+
+;; BRIDGE_RULE (Amend. XXIV; Harper): a poll tax is invalid as to registration.
+(defaxiom challenger-bridge-poll-tax-invalid
+  (implies (and (challenger-poll-tax-establishedp 'federal-save-act p)
+                (voter-registration-applicationp x))
+           (not (valid-regulationp 'federal-save-act x))))
+
+;; EMPIRICAL_ASSUMPTION: citizen-a must pay to obtain a qualifying document
+(defaxiom challenger-scenario-document-cost
+  (document-acquisition-costp 'citizen-a))
+
+;; INTERPRETATION_CHALLENGER: the Act provides no fee waiver or free document
+(defaxiom challenger-scenario-no-fee-waiver
+  (not (fee-waiver-availablep 'federal-save-act)))
+
+;; PROOF OBLIGATION 7: poll-tax route to the registration conflict
+(defthm challenger-poll-tax-conflict-general
+  (implies
+   (and (personp p) (citizen-of-usp p) (eligible-voterp p)
+        (voter-registration-applicationp x) (attempts-to-registerp p x)
+        (not (presents-documentary-proofp p x)) (not (has-documentary-proofp p))
+        (not (alternative-process-approvedp p x))
+        (document-acquisition-costp p)
+        (not (fee-waiver-availablep 'federal-save-act)))
+   (constitutional-conflict-conditionp 'federal-save-act 'amend-v-equal-protection p x))
+  :hints (("Goal" :in-theory (enable constitutional-conflict-conditionp
+                               qualified-federal-voterp registration-transactionp)
+                  :use ((:instance challenger-document-cost-is-poll-tax)
+                        (:instance challenger-bridge-poll-tax-invalid))))
+  :rule-classes nil)
+
+(defthm challenger-model-finds-poll-tax-conflict
+  (constitutional-conflict-conditionp 'federal-save-act 'amend-v-equal-protection
+                                      'citizen-a 'registration-attempt-a)
+  :hints (("Goal" :use ((:instance challenger-poll-tax-conflict-general
+                                   (p 'citizen-a) (x 'registration-attempt-a)))))
+  :rule-classes nil)

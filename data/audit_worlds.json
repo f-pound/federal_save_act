@@ -72,11 +72,11 @@
     ],
     "document-acquisition-costp": [
       "(p)",
-      "t"
+      "(equal p 'citizen-a)"
     ],
     "cost-functions-as-poll-taxp": [
       "(law p)",
-      "t"
+      "nil"
     ],
     "attestation-evidence-satisfies-standardsp": [
       "(p x)",
@@ -156,6 +156,18 @@
         "challenger-voting-burden-establishedp": [
           "(law p)",
           "(and (equal law 'federal-save-act) (member-equal p '(citizen-a citizen-b citizen-c citizen-d)))"
+        ],
+        "fee-waiver-availablep": [
+          "(law)",
+          "nil"
+        ],
+        "challenger-poll-tax-establishedp": [
+          "(law p)",
+          "(and (equal law 'federal-save-act) (equal p 'citizen-a))"
+        ],
+        "burden-level-of": [
+          "(law p)",
+          "'severe"
         ]
       }
     },
@@ -247,6 +259,14 @@
         "government-voting-defense-establishedp": [
           "(law)",
           "t"
+        ],
+        "fee-waiver-availablep": [
+          "(law)",
+          "t"
+        ],
+        "burden-level-of": [
+          "(law p)",
+          "'minimal"
         ]
       }
     }

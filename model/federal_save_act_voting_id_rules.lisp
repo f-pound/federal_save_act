@@ -6,7 +6,7 @@
 ;; federal_save_act_voting_id_rules.lisp  —  GENERATED FILE, DO NOT EDIT
 ;; Source IR : data/parsed/federal_save_act_voting_id_rules.json
 ;; Generator : tools/clauses_to_acl2.py
-;; IR sha256 : 155e43ce6633d5f4925260ff9e30661d39c68e1f6077a3caa4468ee71e1f5d06
+;; IR sha256 : 817a6c34c27fcab8e221721f3e330dbd1e5827f365b8f38d918084dd1dd9713e
 ;; SAVE America Act § 3 / HAVA § 303A(c) — valid photo identification to vote
 ;;
 ;; Every defconst below is a statutory enumeration; every defun is a
@@ -45,6 +45,24 @@
   '(religious-objection-affidavit))
 
 ;;; =========================================================================
+;;; CATEGORY ssn-last-four-types   [§ 3 / HAVA § 303A(a)(2)(A)(ii)]
+;;; For ballots cast other than in person: the last four digits of the Social Security number, usable only with the inability affidavit.
+;;; =========================================================================
+;;   ssn-last-four-digits                 § 303A(a)(2)(A)(ii)
+;;       "the last four digits of the individual's Social Security number"
+(defconst *ssn-last-four-types*
+  '(ssn-last-four-digits))
+
+;;; =========================================================================
+;;; CATEGORY inability-affidavit-types   [§ 3 / HAVA § 303A(a)(2)(A)(ii)]
+;;; Affidavit that the voter cannot obtain a copy of a valid photo identification after reasonable efforts.
+;;; =========================================================================
+;;   affidavit-unable-to-obtain-copy      § 303A(a)(2)(A)(ii)
+;;       "an affidavit developed and made available to the individual by the State attesting that the individual is unable to obtain a copy of a valid photo identification after making reasonable efforts to obtain such a copy"
+(defconst *inability-affidavit-types*
+  '(affidavit-unable-to-obtain-copy))
+
+;;; =========================================================================
 ;;; RULE valid-photo-identification-bundlep   [DEFINED_TERM]  § 3 / HAVA § 303A(c)
 ;;; "a `valid photo identification' means, with respect to an individual who seeks to vote in a State, any of the following"
 ;;; =========================================================================
@@ -58,3 +76,12 @@
 (defun provisional-cure-bundlep (docs)
   (or (some-in-catsp docs *valid-photo-id-types*)
       (some-in-catsp docs *religious-objection-affidavit-types*)))
+
+;;; =========================================================================
+;;; RULE mail-ballot-identification-bundlep   [PROHIBITION]  § 3 / HAVA § 303A(a)(2)(A)
+;;; "may not accept any ballot for an election for Federal office provided by an individual who votes other than in person unless the individual submits with the ballot ... a copy of a valid photo identification ... the last four digits of the individual's Social Security number and an affidavit"
+;;; =========================================================================
+(defun mail-ballot-identification-bundlep (docs)
+  (or (some-in-catsp docs *valid-photo-id-types*)
+      (and (some-in-catsp docs *ssn-last-four-types*)
+           (some-in-catsp docs *inability-affidavit-types*))))

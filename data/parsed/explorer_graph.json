@@ -954,6 +954,91 @@
       "description": "Under the government's voting premises (Crawford), no voting conflict exists for citizen-c.",
       "book": "federal_save_act_government_model.lisp",
       "path": "government"
+    },
+    {
+      "id": "src-harper",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Harper v. Virginia Bd. of Elections (1966)",
+      "description": "\"whenever it makes the affluence of the voter or payment of any fee an electoral standard\"",
+      "source_ref": "383 U.S. 663",
+      "path": "challenger"
+    },
+    {
+      "id": "ax-poll-tax",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Document cost with no free alternative is a poll tax (Harper; Amend. XXIV)",
+      "description": "Challenger rule: a qualified citizen who lacks proof, must pay to obtain it, and has no fee waiver faces a fee as an electoral standard; bridge: invalid as to registration.",
+      "acl2_event": "challenger-document-cost-is-poll-tax, challenger-bridge-poll-tax-invalid",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Harper 383 U.S. at 666; Amend. XXIV",
+      "trusted_base": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-document-cost",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "citizen-a must pay to obtain a qualifying document",
+      "acl2_event": "challenger-scenario-document-cost",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Crawford plurality",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-no-fee-waiver",
+      "type": "INTERPRETIVE_ASSUMPTION",
+      "layer": "formalization",
+      "label": "The Act provides no free document or fee waiver",
+      "acl2_event": "challenger-scenario-no-fee-waiver",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "SAVE Act § 3(b) (silence)",
+      "trusted_base": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-fee-waiver",
+      "type": "INTERPRETIVE_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Free identification is available (Crawford), so no fee is an electoral standard",
+      "acl2_event": "government-fee-waiver-available",
+      "book": "federal_save_act_government_model.lisp",
+      "source_ref": "Crawford 553 U.S. at 198",
+      "trusted_base": true,
+      "path": "government"
+    },
+    {
+      "id": "model-burden-tiers",
+      "type": "BURDEN_MODEL",
+      "layer": "executable",
+      "label": "Anderson–Burdick tiers as a decision table (none / minimal / moderate / severe → standard of review)",
+      "description": "Burdick: severe ⇒ strict scrutiny; otherwise important-interest review. The tier structure is now logic; the assigned level stays a fact-finder premise.",
+      "acl2_event": "standard-of-review, standard-is-strict-iff-severe",
+      "book": "federal_save_act_burden_tiers.lisp",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-mail-ballot",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Mail ballots: accepted with a copy of valid ID, or SSN last-4 + inability affidavit; neither half alone",
+      "acl2_event": "mail-ballot-accepted-with-ssn-and-affidavit, mail-ballot-rejected-with-ssn-alone, mail-route-not-available-in-person",
+      "book": "federal_save_act_voting_invariants.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-poll-tax-conflict",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Challenger (second route): document cost + no waiver ⇒ registration conflict",
+      "acl2_event": "challenger-poll-tax-conflict-general, challenger-model-finds-poll-tax-conflict",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
     }
   ],
   "edges": [
@@ -1705,6 +1790,78 @@
       "to": "thm-invalid-enables",
       "relation": "supports",
       "path": "neutral"
+    },
+    {
+      "from": "src-harper",
+      "to": "ax-poll-tax",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-const-24th",
+      "to": "ax-poll-tax",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-document-cost",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-fee-waiver",
+      "relation": "source_traces",
+      "path": "government"
+    },
+    {
+      "from": "ax-poll-tax",
+      "to": "thm-poll-tax-conflict",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-document-cost",
+      "to": "thm-poll-tax-conflict",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-no-fee-waiver",
+      "to": "thm-poll-tax-conflict",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "thm-poll-tax-conflict",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-fee-waiver",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "model-lib-enum",
+      "to": "model-burden-tiers",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-burden-tiers",
+      "to": "thm-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-voting",
+      "to": "thm-mail-ballot",
+      "relation": "supports",
+      "path": "neutral"
     }
   ],
   "hypotheticals": [
@@ -1857,6 +2014,46 @@
       "default": true,
       "controls": [
         "ax-photo-id-valid"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-poll-tax",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "Document cost with no free alternative is a poll tax (Harper)",
+      "default": true,
+      "controls": [
+        "ax-poll-tax"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-document-cost",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "citizen-a must pay to obtain a qualifying document",
+      "default": true,
+      "controls": [
+        "ax-document-cost"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-no-fee-waiver",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "The Act provides no fee waiver or free document",
+      "default": true,
+      "controls": [
+        "ax-no-fee-waiver"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-fee-waiver",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "Free identification is available (Crawford)",
+      "default": true,
+      "controls": [
+        "ax-fee-waiver"
       ],
       "path": "government"
     }

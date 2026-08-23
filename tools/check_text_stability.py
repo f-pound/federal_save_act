@@ -49,14 +49,17 @@ def fragments(q):
     return [p.strip(' "\'.;,') for p in parts if len(p.strip()) >= 25]
 
 def main():
+    WHERE = {k: tuple(v) for k, v in TEXT_CHECKS.items()}
     corpus = {k: norm(v.read_text(encoding="utf-8", errors="replace")) for k, v in TEXTS.items()}
+    # Opinion texts fetched by tools/fetch_opinions.py: court-decided quotes are
+    # checked against them exactly as statutory quotes are checked against bills.
+    for op in sorted((ROOT / "inputs" / "opinions").glob("*.txt")) if (ROOT / "inputs" / "opinions").exists() else []:
+        corpus[op.stem] = norm(op.read_text(encoding="utf-8", errors="replace"))
+        WHERE.setdefault(op.stem, (op.stem,))
     # Which texts a quote must appear in.  H.R. 22 clauses must survive into
     # the current vehicle; SAVE America Act-only clauses exist only there.
-    WHERE = {k: tuple(v) for k, v in TEXT_CHECKS.items()}
     checks = []
-    for row in csv.DictReader(open(ROOT / "sources/clause_trace.csv", encoding="utf-8-sig")):
-        if row["source_id"] in WHERE and row["label"] not in ("INTERPRETATION_CHALLENGER", "INTERPRETATION_GOVERNMENT", "INTERPRETIVE_ASSUMPTION"):
-            checks.append((f"trace:{row['axiom_name']}", row["clause_text"], WHERE[row["source_id"]]))
+    rows = list(csv.DictReader(open(ROOT / "sources/clause_trace.csv", encoding="utf-8-sig")))
     for ir in sorted((ROOT / "data/parsed").glob("*.json")):
         try:
             d = json.loads(ir.read_text(encoding="utf-8"))
@@ -76,6 +79,13 @@ def main():
             if e.get("text"):
                 w = WHERE.get(e.get("source_id", d["source_id"]), where)
                 checks.append((f"{ir.stem}:edge:{e['from']}--{e['event']}", e["text"], w))
+    for row in rows:
+        sid = row["source_id"]
+        if sid in WHERE:
+            # statutory quotes: all labels except pure interpretations are verbatim;
+            # interpretation rows quote text then add "— interpretation: …" (stripped by fragments())
+            checks.append((f"trace:{row['axiom_name']}", row["clause_text"], WHERE[sid]))
+    n_case = sum(1 for name, q, w in checks if w and w[0] in [op.stem for op in (ROOT / "inputs" / "opinions").glob("*.txt")])
     errors = 0
     for name, quote, where in checks:
         for frag in fragments(quote):

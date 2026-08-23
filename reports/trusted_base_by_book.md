@@ -4,7 +4,8 @@ Every theorem in a book depends on at most the defaxioms in the book's `include-
 
 | Book | Theorems | Axioms in closure | By decider |
 |---|---|---|---|
-| `federal_save_act_consistency_audit` | 107 | **0** | — |
+| `federal_save_act_burden_tiers` | 6 | **0** | — |
+| `federal_save_act_consistency_audit` | 311 | **0** | — |
 | `federal_save_act_consistency_check` | 17 | **0** | — |
 | `federal_save_act_core` | 7 | **0** | — |
 | `federal_save_act_deep_process_invariants` | 11 | **0** | — |
@@ -17,7 +18,7 @@ Every theorem in a book depends on at most the defaxioms in the book's `include-
 | `federal_save_act_removal_invariants` | 16 | **0** | — |
 | `federal_save_act_removal_table` | 0 | **0** | — |
 | `federal_save_act_voting_id_rules` | 0 | **0** | — |
-| `federal_save_act_voting_invariants` | 16 | **0** | — |
+| `federal_save_act_voting_invariants` | 22 | **0** | — |
 | `federal_save_act_voting_table` | 0 | **0** | — |
 | `lib/enum_list` | 21 | **0** | — |
 | `lib/lsm` | 25 | **0** | — |
@@ -33,10 +34,10 @@ Every theorem in a book depends on at most the defaxioms in the book's `include-
 | `federal_save_act_hinge_discretionary` | 3 | **5** | court 1, legislature 4 |
 | `federal_save_act_hinge_mandatory` | 2 | **5** | court 1, legislature 4 |
 | `federal_save_act_scenario` | 12 | **34** | legislature 5, party-stipulation 29 |
-| `federal_save_act_challenger_model` | 19 | **43** | court 5, fact-finder 3, legislature 5, party-stipulation 30 |
-| `federal_save_act_government_model` | 11 | **49** | court 13, fact-finder 1, legislature 5, party-stipulation 30 |
+| `federal_save_act_challenger_model` | 22 | **46** | court 7, fact-finder 4, legislature 5, party-stipulation 30 |
+| `federal_save_act_government_model` | 12 | **50** | court 14, fact-finder 1, legislature 5, party-stipulation 30 |
 
 ## Axiom-free books
 
-`federal_save_act_consistency_audit`, `federal_save_act_consistency_check`, `federal_save_act_core`, `federal_save_act_deep_process_invariants`, `federal_save_act_document_proofs`, `federal_save_act_functional_instantiation`, `federal_save_act_process`, `federal_save_act_process_invariants`, `federal_save_act_removal_invariants`, `federal_save_act_voting_invariants`, `lib/enum_list`, `lib/lsm`
+`federal_save_act_burden_tiers`, `federal_save_act_consistency_audit`, `federal_save_act_consistency_check`, `federal_save_act_core`, `federal_save_act_deep_process_invariants`, `federal_save_act_document_proofs`, `federal_save_act_functional_instantiation`, `federal_save_act_process`, `federal_save_act_process_invariants`, `federal_save_act_removal_invariants`, `federal_save_act_voting_invariants`, `lib/enum_list`, `lib/lsm`
 

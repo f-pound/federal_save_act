@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [7.3.0] — 2026-08-23
+
+### Limitations removed
+- **Independence verdicts are now kernel-checked.** The consistency-audit book is generated with a *flip-parameterised* world: every stub takes a `flip` argument naming the axiom being denied; for each of the 96 audited axioms two certificates are proved — the axiom is false at its recorded witness in the flipped world, and every other proposition of the theory still holds there (or the named coupled ones fail). 297 → 434 theorems in the audit book, all certified; the evaluator verdicts are now corroborated by ACL2 for every axiom.
+- **Case-law quotes are verbatim-checked.** `tools/fetch_opinions.py` pulls full opinion text from the Caselaw Access Project (7 of the 10 cited cases; *Reynolds*, *Husted* and the 2025 district ruling are not in the archive) into `inputs/opinions/`; `check_text_stability.py` now checks every court-decided quote against it. **19 trace quotes were paraphrases**, including the model's most-cited Crawford line ("the burden of obtaining a birth certificate … will be nontrivial for some voters" — "nontrivial burdens" is the *dissent*). All replaced with the opinions' words; 68/68 quotes verbatim.
+- **Legal completeness**: the mail-ballot branch of § 303A(a)(2) (copy of ID, or SSN last-4 *with* the inability affidavit) as generated rules + 6 theorems; the **poll-tax branch** (Harper / Amend. XXIV): challenger encapsulate, bridge, two premises, two theorems; government's free-ID response. The adversarial audit now reports the challenger's registration case as *overdetermined*: the poll-tax bridge and the undue-burden bridge are coupled at the pivot (two independent routes to the same invalidity).
+- **Burden as ordinal tiers**: `federal_save_act_burden_tiers.lisp` models the Anderson–Burdick standard of review as a decision table over {none, minimal, moderate, severe} (Burdick quoted verbatim): the tier structure is logic; the assigned level stays a fact-finder premise.
+
+### Census
+- Theorems 374 → **594**; axioms 60 → **66**; books 31 → **32**; 7 opinion texts; 68 verbatim-checked quotes.
+
 ## [7.2.0] — 2026-08-23
 
 ### Added (explorer)

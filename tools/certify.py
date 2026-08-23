@@ -49,6 +49,8 @@ def prechecks():
     steps = []
     if cfg.get("irs"):
         steps.append([sys.executable, "tools/clauses_to_acl2.py", *cfg["irs"], "--check", "--english", "--ace"])
+    if (ROOT / "tools/fetch_opinions.py").exists():
+        steps.append([sys.executable, "tools/fetch_opinions.py"])
     steps.append([sys.executable, "tools/check_text_stability.py"])
     if (ROOT / "data/audit_worlds.json").exists() and json.loads((ROOT / "data/audit_worlds.json").read_text()).get("theories"):
         steps.append([sys.executable, "tools/gen_consistency_audit.py", "--check"])

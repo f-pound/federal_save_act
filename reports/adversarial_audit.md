@@ -2,7 +2,7 @@
 
 For each axiom A: flip exactly one stub value so A is false, and check whether every OTHER axiom of the theory still holds (complete finite-model check over the audit worlds). **independent** = the flipped world is a model of the rest ∧ ¬A. **coupled** = the flip also falsifies the listed axioms — these clusters are the theory's load-bearing joints (hinges). **ACL2 redundancy** = one ACL2 session per axiom attempts to prove A from the others; a success is a kernel-checked certificate that A is deletable.
 
-## Challenger theory — 44 axioms: 43 independent, 1 coupled, 0 no single-stub flip
+## Challenger theory — 47 axioms: 45 independent, 2 coupled, 0 no single-stub flip
 
 | Axiom | Verdict | Flip used | Breaks | ACL2 redundancy |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ For each axiom A: flip exactly one stub value so A is false, and check whether e
 | `scenario-d-cures` | **independent** | `cures-within-deadlinep['citizen-d', 'ballot-d'] := nil` | — | not provable from the others within 8s |
 | `semantic-b-discretionary-denial` | **independent** | `alternative-process-approvedp['amend-v-equal-protection', 'amend-v-equal-protection'] := t` | — | not provable from the others within 8s |
 | `challenger-bridge-right-to-vote` | **independent** | `challenger-right-to-vote-establishedp['amend-v-equal-protection'] := t` | — | not provable from the others within 8s |
-| `challenger-bridge-regulation-invalid` | **independent** | `valid-regulationp['federal-save-act', 'registration-attempt-a'] := t` | — | not provable from the others within 8s |
+| `challenger-bridge-regulation-invalid` | **independent** | `challenger-regulation-invalidp['federal-save-act', 'amend-v-equal-protection'] := t & valid-regulationp['federal-save-act', 'amend-v-equal-protection'] := t` | — | not provable from the others within 8s |
 | `challenger-scenario-no-presentation` | **independent** | `presents-documentary-proofp['citizen-a', 'registration-attempt-a'] := t` | — | not provable from the others within 8s |
 | `challenger-scenario-no-fault` | **independent** | `lacks-qualifying-documents-through-no-faultp['citizen-a'] := nil` | — | not provable from the others within 8s |
 | `challenger-scenario-material-burden` | **independent** | `cannot-obtain-qualifying-documents-without-material-burdenp['citizen-a'] := nil` | — | not provable from the others within 8s |
@@ -50,8 +50,11 @@ For each axiom A: flip exactly one stub value so A is false, and check whether e
 | `challenger-bridge-removal-invalid` | **independent** | `valid-regulationp['federal-save-act', 'citizen-b'] := t` | — | not provable from the others within 8s |
 | `challenger-bridge-voting-invalid` | **independent** | `valid-regulationp['federal-save-act', 'ballot-c'] := t` | — | not provable from the others within 8s |
 | `challenger-scenario-c-material-burden` | **independent** | `cannot-obtain-valid-photo-id-without-material-burdenp['citizen-c'] := nil` | — | not provable from the others within 8s |
+| `challenger-bridge-poll-tax-invalid` | **coupled** | `valid-regulationp['federal-save-act', 'registration-attempt-a'] := t` | `challenger-bridge-regulation-invalid` | not provable from the others within 8s |
+| `challenger-scenario-document-cost` | **independent** | `document-acquisition-costp['citizen-a'] := nil` | — | not provable from the others within 8s |
+| `challenger-scenario-no-fee-waiver` | **independent** | `fee-waiver-availablep['federal-save-act'] := t` | — | not provable from the others within 8s |
 
-## Government theory — 50 axioms: 49 independent, 1 coupled, 0 no single-stub flip
+## Government theory — 51 axioms: 50 independent, 1 coupled, 0 no single-stub flip
 
 | Axiom | Verdict | Flip used | Breaks | ACL2 redundancy |
 |---|---|---|---|---|
@@ -105,6 +108,7 @@ For each axiom A: flip exactly one stub value so A is false, and check whether e
 | `government-bridge-voting-validates` | **independent** | `valid-regulationp['amend-v-equal-protection', 'ballot-c'] := nil` | — | not provable from the others within 8s |
 | `government-photo-id-evenhanded` | **independent** | `photo-id-requirement-evenhandedp['federal-save-act'] := nil` | — | not provable from the others within 8s |
 | `government-provisional-cure-adequate` | **independent** | `provisional-cure-adequatep['federal-save-act'] := nil` | — | not provable from the others within 8s |
+| `government-fee-waiver-available` | **independent** | `fee-waiver-availablep['federal-save-act'] := nil` | — | not provable from the others within 8s |
 
 ## Reading the clusters
 

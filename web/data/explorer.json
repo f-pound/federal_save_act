@@ -154,6 +154,20 @@
           "source": "§ 303A(a)(1)(B)(i)(II)",
           "text": "an affidavit developed and made available to the individual by the State attesting that the individual does not possess the identification required under subparagraph (A) because the individual has a religious objection to being photographed."
         }
+      ],
+      "ssn-last-four-types": [
+        {
+          "symbol": "ssn-last-four-digits",
+          "source": "§ 303A(a)(2)(A)(ii)",
+          "text": "the last four digits of the individual's Social Security number"
+        }
+      ],
+      "inability-affidavit-types": [
+        {
+          "symbol": "affidavit-unable-to-obtain-copy",
+          "source": "§ 303A(a)(2)(A)(ii)",
+          "text": "an affidavit developed and made available to the individual by the State attesting that the individual is unable to obtain a copy of a valid photo identification after making reasonable efforts to obtain such a copy"
+        }
       ]
     },
     "trusted_base_by_book": {
@@ -180,17 +194,34 @@
           "qualifying-documents-negate-material-burden"
         ]
       },
+      "federal_save_act_burden_tiers": {
+        "theorems": 6,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": [
+          "standard-is-strict-iff-severe",
+          "non-severe-levels-get-important-interest-review",
+          "burden-rank-monotone",
+          "only-top-level-changes-the-standard",
+          "severe-level-means-strict-scrutiny-applies",
+          "non-severe-level-means-important-interest-review"
+        ]
+      },
       "federal_save_act_challenger_model": {
-        "theorems": 19,
+        "theorems": 22,
         "trusted_base": [
+          "challenger-bridge-poll-tax-invalid",
           "challenger-bridge-regulation-invalid",
           "challenger-bridge-removal-invalid",
           "challenger-bridge-right-to-vote",
           "challenger-bridge-voting-invalid",
           "challenger-scenario-alternative-process-denied",
           "challenger-scenario-c-material-burden",
+          "challenger-scenario-document-cost",
           "challenger-scenario-material-burden",
           "challenger-scenario-no-fault",
+          "challenger-scenario-no-fee-waiver",
           "challenger-scenario-no-presentation",
           "scenario-application",
           "scenario-attempts-to-register",
@@ -227,10 +258,10 @@
           "text-save-act-is-law",
           "text-save-act-removal-upon-verified-information"
         ],
-        "count": 43,
+        "count": 46,
         "by_decider": {
-          "court": 5,
-          "fact-finder": 3,
+          "court": 7,
+          "fact-finder": 4,
           "party-stipulation": 30,
           "legislature": 5
         },
@@ -253,11 +284,14 @@
           "challenger-uncounted-ballot-is-severe-burden",
           "challenger-voting-conflict-general",
           "challenger-lemma-c-protected-right",
-          "challenger-model-finds-voting-conflict"
+          "challenger-model-finds-voting-conflict",
+          "challenger-document-cost-is-poll-tax",
+          "challenger-poll-tax-conflict-general",
+          "challenger-model-finds-poll-tax-conflict"
         ]
       },
       "federal_save_act_consistency_audit": {
-        "theorems": 107,
+        "theorems": 311,
         "trusted_base": [],
         "count": 0,
         "by_decider": {},
@@ -269,6 +303,7 @@
           "aud-c-challenger-undue-burden-defeats-regulation",
           "aud-c-challenger-removal-without-process-is-violation",
           "aud-c-challenger-uncounted-ballot-is-severe-burden",
+          "aud-c-challenger-document-cost-is-poll-tax",
           "aud-c-text-save-act-documentary-proof-requirement",
           "aud-c-text-save-act-removal-upon-verified-information",
           "aud-c-text-photo-id-required-for-regular-ballot",
@@ -313,6 +348,105 @@
           "aud-c-challenger-bridge-removal-invalid",
           "aud-c-challenger-bridge-voting-invalid",
           "aud-c-challenger-scenario-c-material-burden",
+          "aud-c-challenger-bridge-poll-tax-invalid",
+          "aud-c-challenger-scenario-document-cost",
+          "aud-c-challenger-scenario-no-fee-waiver",
+          "aud-c-flip-text-save-act-documentary-proof-requirement-falsifies",
+          "aud-c-flip-text-save-act-documentary-proof-requirement-preserves-rest",
+          "aud-c-flip-text-save-act-removal-upon-verified-information-falsifies",
+          "aud-c-flip-text-save-act-removal-upon-verified-information-preserves-rest",
+          "aud-c-flip-text-photo-id-required-for-regular-ballot-falsifies",
+          "aud-c-flip-text-photo-id-required-for-regular-ballot-preserves-rest",
+          "aud-c-flip-text-save-act-is-law-falsifies",
+          "aud-c-flip-text-save-act-is-law-preserves-rest",
+          "aud-c-flip-text-documentary-proof-from-qualifying-documents-falsifies",
+          "aud-c-flip-text-documentary-proof-from-qualifying-documents-preserves-rest",
+          "aud-c-flip-scenario-person-falsifies",
+          "aud-c-flip-scenario-person-preserves-rest",
+          "aud-c-flip-scenario-citizen-falsifies",
+          "aud-c-flip-scenario-citizen-preserves-rest",
+          "aud-c-flip-scenario-eligible-falsifies",
+          "aud-c-flip-scenario-eligible-preserves-rest",
+          "aud-c-flip-scenario-application-falsifies",
+          "aud-c-flip-scenario-application-preserves-rest",
+          "aud-c-flip-scenario-attempts-to-register-falsifies",
+          "aud-c-flip-scenario-attempts-to-register-preserves-rest",
+          "aud-c-flip-scenario-no-documentary-proof-falsifies",
+          "aud-c-flip-scenario-no-documentary-proof-preserves-rest",
+          "aud-c-flip-scenario-b-person-falsifies",
+          "aud-c-flip-scenario-b-person-preserves-rest",
+          "aud-c-flip-scenario-b-citizen-falsifies",
+          "aud-c-flip-scenario-b-citizen-preserves-rest",
+          "aud-c-flip-scenario-b-eligible-falsifies",
+          "aud-c-flip-scenario-b-eligible-preserves-rest",
+          "aud-c-flip-scenario-b-registered-falsifies",
+          "aud-c-flip-scenario-b-registered-preserves-rest",
+          "aud-c-flip-scenario-b-verified-noncitizen-information-falsifies",
+          "aud-c-flip-scenario-b-verified-noncitizen-information-preserves-rest",
+          "aud-c-flip-scenario-b-no-notice-falsifies",
+          "aud-c-flip-scenario-b-no-notice-preserves-rest",
+          "aud-c-flip-scenario-b-no-hearing-falsifies",
+          "aud-c-flip-scenario-b-no-hearing-preserves-rest",
+          "aud-c-flip-scenario-c-person-falsifies",
+          "aud-c-flip-scenario-c-person-preserves-rest",
+          "aud-c-flip-scenario-c-citizen-falsifies",
+          "aud-c-flip-scenario-c-citizen-preserves-rest",
+          "aud-c-flip-scenario-c-eligible-falsifies",
+          "aud-c-flip-scenario-c-eligible-preserves-rest",
+          "aud-c-flip-scenario-c-registered-falsifies",
+          "aud-c-flip-scenario-c-registered-preserves-rest",
+          "aud-c-flip-scenario-c-ballot-falsifies",
+          "aud-c-flip-scenario-c-ballot-preserves-rest",
+          "aud-c-flip-scenario-c-votes-in-person-falsifies",
+          "aud-c-flip-scenario-c-votes-in-person-preserves-rest",
+          "aud-c-flip-scenario-c-no-valid-photo-id-falsifies",
+          "aud-c-flip-scenario-c-no-valid-photo-id-preserves-rest",
+          "aud-c-flip-scenario-c-no-cure-falsifies",
+          "aud-c-flip-scenario-c-no-cure-preserves-rest",
+          "aud-c-flip-scenario-d-person-falsifies",
+          "aud-c-flip-scenario-d-person-preserves-rest",
+          "aud-c-flip-scenario-d-citizen-falsifies",
+          "aud-c-flip-scenario-d-citizen-preserves-rest",
+          "aud-c-flip-scenario-d-eligible-falsifies",
+          "aud-c-flip-scenario-d-eligible-preserves-rest",
+          "aud-c-flip-scenario-d-registered-falsifies",
+          "aud-c-flip-scenario-d-registered-preserves-rest",
+          "aud-c-flip-scenario-d-ballot-falsifies",
+          "aud-c-flip-scenario-d-ballot-preserves-rest",
+          "aud-c-flip-scenario-d-votes-in-person-falsifies",
+          "aud-c-flip-scenario-d-votes-in-person-preserves-rest",
+          "aud-c-flip-scenario-d-no-valid-photo-id-falsifies",
+          "aud-c-flip-scenario-d-no-valid-photo-id-preserves-rest",
+          "aud-c-flip-scenario-d-cures-falsifies",
+          "aud-c-flip-scenario-d-cures-preserves-rest",
+          "aud-c-flip-semantic-b-discretionary-denial-falsifies",
+          "aud-c-flip-semantic-b-discretionary-denial-preserves-rest",
+          "aud-c-flip-challenger-bridge-right-to-vote-falsifies",
+          "aud-c-flip-challenger-bridge-right-to-vote-preserves-rest",
+          "aud-c-flip-challenger-bridge-regulation-invalid-falsifies",
+          "aud-c-flip-challenger-bridge-regulation-invalid-preserves-rest",
+          "aud-c-flip-challenger-scenario-no-presentation-falsifies",
+          "aud-c-flip-challenger-scenario-no-presentation-preserves-rest",
+          "aud-c-flip-challenger-scenario-no-fault-falsifies",
+          "aud-c-flip-challenger-scenario-no-fault-preserves-rest",
+          "aud-c-flip-challenger-scenario-material-burden-falsifies",
+          "aud-c-flip-challenger-scenario-material-burden-preserves-rest",
+          "aud-c-flip-challenger-scenario-alternative-process-denied-falsifies",
+          "aud-c-flip-challenger-scenario-alternative-process-denied-preserves-rest",
+          "aud-c-flip-challenger-scenario-alternative-process-denied-breaks-semantic-b-discretionary-denial",
+          "aud-c-flip-challenger-bridge-removal-invalid-falsifies",
+          "aud-c-flip-challenger-bridge-removal-invalid-preserves-rest",
+          "aud-c-flip-challenger-bridge-voting-invalid-falsifies",
+          "aud-c-flip-challenger-bridge-voting-invalid-preserves-rest",
+          "aud-c-flip-challenger-scenario-c-material-burden-falsifies",
+          "aud-c-flip-challenger-scenario-c-material-burden-preserves-rest",
+          "aud-c-flip-challenger-bridge-poll-tax-invalid-falsifies",
+          "aud-c-flip-challenger-bridge-poll-tax-invalid-preserves-rest",
+          "aud-c-flip-challenger-bridge-poll-tax-invalid-breaks-challenger-bridge-regulation-invalid",
+          "aud-c-flip-challenger-scenario-document-cost-falsifies",
+          "aud-c-flip-challenger-scenario-document-cost-preserves-rest",
+          "aud-c-flip-challenger-scenario-no-fee-waiver-falsifies",
+          "aud-c-flip-challenger-scenario-no-fee-waiver-preserves-rest",
           "aud-g-hinge-evidence-type",
           "aud-g-hinge-denial-type",
           "aud-g-government-valid-regulation-rule",
@@ -368,6 +502,110 @@
           "aud-g-government-bridge-voting-validates",
           "aud-g-government-photo-id-evenhanded",
           "aud-g-government-provisional-cure-adequate",
+          "aud-g-government-fee-waiver-available",
+          "aud-g-flip-text-save-act-documentary-proof-requirement-falsifies",
+          "aud-g-flip-text-save-act-documentary-proof-requirement-preserves-rest",
+          "aud-g-flip-text-save-act-removal-upon-verified-information-falsifies",
+          "aud-g-flip-text-save-act-removal-upon-verified-information-preserves-rest",
+          "aud-g-flip-text-photo-id-required-for-regular-ballot-falsifies",
+          "aud-g-flip-text-photo-id-required-for-regular-ballot-preserves-rest",
+          "aud-g-flip-text-save-act-is-law-falsifies",
+          "aud-g-flip-text-save-act-is-law-preserves-rest",
+          "aud-g-flip-text-documentary-proof-from-qualifying-documents-falsifies",
+          "aud-g-flip-text-documentary-proof-from-qualifying-documents-preserves-rest",
+          "aud-g-flip-scenario-person-falsifies",
+          "aud-g-flip-scenario-person-preserves-rest",
+          "aud-g-flip-scenario-citizen-falsifies",
+          "aud-g-flip-scenario-citizen-preserves-rest",
+          "aud-g-flip-scenario-eligible-falsifies",
+          "aud-g-flip-scenario-eligible-preserves-rest",
+          "aud-g-flip-scenario-application-falsifies",
+          "aud-g-flip-scenario-application-preserves-rest",
+          "aud-g-flip-scenario-attempts-to-register-falsifies",
+          "aud-g-flip-scenario-attempts-to-register-preserves-rest",
+          "aud-g-flip-scenario-no-documentary-proof-falsifies",
+          "aud-g-flip-scenario-no-documentary-proof-preserves-rest",
+          "aud-g-flip-scenario-b-person-falsifies",
+          "aud-g-flip-scenario-b-person-preserves-rest",
+          "aud-g-flip-scenario-b-citizen-falsifies",
+          "aud-g-flip-scenario-b-citizen-preserves-rest",
+          "aud-g-flip-scenario-b-eligible-falsifies",
+          "aud-g-flip-scenario-b-eligible-preserves-rest",
+          "aud-g-flip-scenario-b-registered-falsifies",
+          "aud-g-flip-scenario-b-registered-preserves-rest",
+          "aud-g-flip-scenario-b-verified-noncitizen-information-falsifies",
+          "aud-g-flip-scenario-b-verified-noncitizen-information-preserves-rest",
+          "aud-g-flip-scenario-b-no-notice-falsifies",
+          "aud-g-flip-scenario-b-no-notice-preserves-rest",
+          "aud-g-flip-scenario-b-no-hearing-falsifies",
+          "aud-g-flip-scenario-b-no-hearing-preserves-rest",
+          "aud-g-flip-scenario-c-person-falsifies",
+          "aud-g-flip-scenario-c-person-preserves-rest",
+          "aud-g-flip-scenario-c-citizen-falsifies",
+          "aud-g-flip-scenario-c-citizen-preserves-rest",
+          "aud-g-flip-scenario-c-eligible-falsifies",
+          "aud-g-flip-scenario-c-eligible-preserves-rest",
+          "aud-g-flip-scenario-c-registered-falsifies",
+          "aud-g-flip-scenario-c-registered-preserves-rest",
+          "aud-g-flip-scenario-c-ballot-falsifies",
+          "aud-g-flip-scenario-c-ballot-preserves-rest",
+          "aud-g-flip-scenario-c-votes-in-person-falsifies",
+          "aud-g-flip-scenario-c-votes-in-person-preserves-rest",
+          "aud-g-flip-scenario-c-no-valid-photo-id-falsifies",
+          "aud-g-flip-scenario-c-no-valid-photo-id-preserves-rest",
+          "aud-g-flip-scenario-c-no-cure-falsifies",
+          "aud-g-flip-scenario-c-no-cure-preserves-rest",
+          "aud-g-flip-scenario-d-person-falsifies",
+          "aud-g-flip-scenario-d-person-preserves-rest",
+          "aud-g-flip-scenario-d-citizen-falsifies",
+          "aud-g-flip-scenario-d-citizen-preserves-rest",
+          "aud-g-flip-scenario-d-eligible-falsifies",
+          "aud-g-flip-scenario-d-eligible-preserves-rest",
+          "aud-g-flip-scenario-d-registered-falsifies",
+          "aud-g-flip-scenario-d-registered-preserves-rest",
+          "aud-g-flip-scenario-d-ballot-falsifies",
+          "aud-g-flip-scenario-d-ballot-preserves-rest",
+          "aud-g-flip-scenario-d-votes-in-person-falsifies",
+          "aud-g-flip-scenario-d-votes-in-person-preserves-rest",
+          "aud-g-flip-scenario-d-no-valid-photo-id-falsifies",
+          "aud-g-flip-scenario-d-no-valid-photo-id-preserves-rest",
+          "aud-g-flip-scenario-d-cures-falsifies",
+          "aud-g-flip-scenario-d-cures-preserves-rest",
+          "aud-g-flip-semantic-a-mandatory-approval-falsifies",
+          "aud-g-flip-semantic-a-mandatory-approval-preserves-rest",
+          "aud-g-flip-government-bridge-defense-validates-falsifies",
+          "aud-g-flip-government-bridge-defense-validates-preserves-rest",
+          "aud-g-flip-government-election-integrity-interest-falsifies",
+          "aud-g-flip-government-election-integrity-interest-preserves-rest",
+          "aud-g-flip-government-important-interest-falsifies",
+          "aud-g-flip-government-important-interest-preserves-rest",
+          "aud-g-flip-government-reasonable-requirement-falsifies",
+          "aud-g-flip-government-reasonable-requirement-preserves-rest",
+          "aud-g-flip-government-procedure-evenhanded-falsifies",
+          "aud-g-flip-government-procedure-evenhanded-preserves-rest",
+          "aud-g-flip-government-rationally-connected-falsifies",
+          "aud-g-flip-government-rationally-connected-preserves-rest",
+          "aud-g-flip-government-adequate-alternative-falsifies",
+          "aud-g-flip-government-adequate-alternative-preserves-rest",
+          "aud-g-flip-government-burden-not-severe-falsifies",
+          "aud-g-flip-government-burden-not-severe-preserves-rest",
+          "aud-g-flip-government-assume-right-to-vote-arguendo-falsifies",
+          "aud-g-flip-government-assume-right-to-vote-arguendo-preserves-rest",
+          "aud-g-flip-government-scenario-alternative-process-approved-falsifies",
+          "aud-g-flip-government-scenario-alternative-process-approved-preserves-rest",
+          "aud-g-flip-government-scenario-alternative-process-approved-breaks-semantic-a-mandatory-approval",
+          "aud-g-flip-government-bridge-removal-validates-falsifies",
+          "aud-g-flip-government-bridge-removal-validates-preserves-rest",
+          "aud-g-flip-government-removal-procedure-evenhanded-falsifies",
+          "aud-g-flip-government-removal-procedure-evenhanded-preserves-rest",
+          "aud-g-flip-government-bridge-voting-validates-falsifies",
+          "aud-g-flip-government-bridge-voting-validates-preserves-rest",
+          "aud-g-flip-government-photo-id-evenhanded-falsifies",
+          "aud-g-flip-government-photo-id-evenhanded-preserves-rest",
+          "aud-g-flip-government-provisional-cure-adequate-falsifies",
+          "aud-g-flip-government-provisional-cure-adequate-preserves-rest",
+          "aud-g-flip-government-fee-waiver-available-falsifies",
+          "aud-g-flip-government-fee-waiver-available-preserves-rest",
           "parties-registration-bridges-jointly-unsatisfiable"
         ]
       },
@@ -537,7 +775,7 @@
         ]
       },
       "federal_save_act_government_model": {
-        "theorems": 11,
+        "theorems": 12,
         "trusted_base": [
           "government-adequate-alternative",
           "government-assume-right-to-vote-arguendo",
@@ -546,6 +784,7 @@
           "government-bridge-voting-validates",
           "government-burden-not-severe",
           "government-election-integrity-interest",
+          "government-fee-waiver-available",
           "government-important-interest",
           "government-photo-id-evenhanded",
           "government-procedure-evenhanded",
@@ -589,9 +828,9 @@
           "text-save-act-is-law",
           "text-save-act-removal-upon-verified-information"
         ],
-        "count": 49,
+        "count": 50,
         "by_decider": {
-          "court": 13,
+          "court": 14,
           "party-stipulation": 30,
           "fact-finder": 1,
           "legislature": 5
@@ -607,7 +846,8 @@
           "government-model-no-removal-conflict",
           "government-voting-defense-rule",
           "government-no-voting-conflict-general",
-          "government-model-no-voting-conflict"
+          "government-model-no-voting-conflict",
+          "government-no-poll-tax-route"
         ]
       },
       "federal_save_act_hinge_common": {
@@ -886,7 +1126,7 @@
         "theorem_names": []
       },
       "federal_save_act_voting_invariants": {
-        "theorems": 16,
+        "theorems": 22,
         "trusted_base": [],
         "count": 0,
         "by_decider": {},
@@ -906,7 +1146,13 @@
           "voting-id-does-not-entail-registration-proof",
           "append-preserves-valid-photo-id",
           "affidavit-cures-but-is-not-photo-id",
-          "photo-id-cures"
+          "photo-id-cures",
+          "mail-ballot-accepted-with-photo-id-copy",
+          "mail-ballot-accepted-with-ssn-and-affidavit",
+          "mail-ballot-rejected-with-ssn-alone",
+          "mail-ballot-rejected-with-affidavit-alone",
+          "in-person-id-implies-mail-acceptance",
+          "mail-route-not-available-in-person"
         ]
       },
       "federal_save_act_voting_table": {
@@ -1247,7 +1493,7 @@
         "party": "challenger",
         "verdict": "independent",
         "breaks": [],
-        "flip": "valid-regulationp['federal-save-act', 'registration-attempt-a'] := t",
+        "flip": "challenger-regulation-invalidp['federal-save-act', 'amend-v-equal-protection'] := t & valid-regulationp['federal-save-act', 'amend-v-equal-protection'] := t",
         "acl2": "not provable from the others within 8s"
       },
       "challenger-scenario-no-presentation": {
@@ -1299,6 +1545,29 @@
         "verdict": "independent",
         "breaks": [],
         "flip": "cannot-obtain-valid-photo-id-without-material-burdenp['citizen-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-bridge-poll-tax-invalid": {
+        "party": "challenger",
+        "verdict": "coupled",
+        "breaks": [
+          "challenger-bridge-regulation-invalid"
+        ],
+        "flip": "valid-regulationp['federal-save-act', 'registration-attempt-a'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-document-cost": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "document-acquisition-costp['citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-no-fee-waiver": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "fee-waiver-availablep['federal-save-act'] := t",
         "acl2": "not provable from the others within 8s"
       },
       "semantic-a-mandatory-approval": {
@@ -1414,13 +1683,20 @@
         "breaks": [],
         "flip": "provisional-cure-adequatep['federal-save-act'] := nil",
         "acl2": "not provable from the others within 8s"
+      },
+      "government-fee-waiver-available": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "fee-waiver-availablep['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
       }
     },
     "adversarial_summary": {
       "challenger": {
-        "total": 44,
-        "independent": 43,
-        "coupled": 1,
+        "total": 47,
+        "independent": 45,
+        "coupled": 2,
         "redundant": 0,
         "coupled_pairs": [
           [
@@ -1428,12 +1704,18 @@
             [
               "semantic-b-discretionary-denial"
             ]
+          ],
+          [
+            "challenger-bridge-poll-tax-invalid",
+            [
+              "challenger-bridge-regulation-invalid"
+            ]
           ]
         ]
       },
       "government": {
-        "total": 50,
-        "independent": 49,
+        "total": 51,
+        "independent": 50,
         "coupled": 1,
         "redundant": 0,
         "coupled_pairs": [
@@ -1448,16 +1730,16 @@
     },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Brief",
-    "version": "7.1.0",
-    "books_certified": 31,
-    "theorems": 374,
-    "axioms": 60,
+    "version": "7.3.0",
+    "books_certified": 32,
+    "theorems": 594,
+    "axioms": 66,
     "defun_sk_existentials": 4,
     "authoritative_sources": 34,
-    "trace_rows": 69,
-    "ace_statements": 13,
+    "trace_rows": 74,
+    "ace_statements": 14,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T14:06:29.193205+00:00"
+    "generated_at": "2026-08-23T14:19:42.952256+00:00"
   },
   "audit_details": {
     "books": [
@@ -1489,12 +1771,21 @@
         "existentials": 0
       },
       {
+        "name": "federal_save_act_burden_tiers",
+        "file": "federal_save_act_burden_tiers.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 6,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
         "name": "federal_save_act_challenger_model",
         "file": "federal_save_act_challenger_model.lisp",
         "layer": 4,
         "clean": false,
-        "theorems": 19,
-        "axioms": 9,
+        "theorems": 22,
+        "axioms": 12,
         "existentials": 0
       },
       {
@@ -1502,7 +1793,7 @@
         "file": "federal_save_act_consistency_audit.lisp",
         "layer": 6,
         "clean": true,
-        "theorems": 107,
+        "theorems": 311,
         "axioms": 0,
         "existentials": 0
       },
@@ -1592,8 +1883,8 @@
         "file": "federal_save_act_government_model.lisp",
         "layer": 4,
         "clean": false,
-        "theorems": 11,
-        "axioms": 15,
+        "theorems": 12,
+        "axioms": 16,
         "existentials": 0
       },
       {
@@ -1718,7 +2009,7 @@
         "file": "federal_save_act_voting_invariants.lisp",
         "layer": 5,
         "clean": true,
-        "theorems": 16,
+        "theorems": 22,
         "axioms": 0,
         "existentials": 0
       },
@@ -1802,6 +2093,14 @@
         "adequate-alternative-negates-severe-burden",
         "qualifying-documents-negate-material-burden"
       ],
+      "federal_save_act_burden_tiers": [
+        "standard-is-strict-iff-severe",
+        "non-severe-levels-get-important-interest-review",
+        "burden-rank-monotone",
+        "only-top-level-changes-the-standard",
+        "severe-level-means-strict-scrutiny-applies",
+        "non-severe-level-means-important-interest-review"
+      ],
       "federal_save_act_challenger_model": [
         "challenger-fundamental-right-rule",
         "challenger-documentary-proof-is-undue-burden",
@@ -1821,7 +2120,10 @@
         "challenger-uncounted-ballot-is-severe-burden",
         "challenger-voting-conflict-general",
         "challenger-lemma-c-protected-right",
-        "challenger-model-finds-voting-conflict"
+        "challenger-model-finds-voting-conflict",
+        "challenger-document-cost-is-poll-tax",
+        "challenger-poll-tax-conflict-general",
+        "challenger-model-finds-poll-tax-conflict"
       ],
       "federal_save_act_consistency_audit": [
         "aud-c-hinge-evidence-type",
@@ -1831,6 +2133,7 @@
         "aud-c-challenger-undue-burden-defeats-regulation",
         "aud-c-challenger-removal-without-process-is-violation",
         "aud-c-challenger-uncounted-ballot-is-severe-burden",
+        "aud-c-challenger-document-cost-is-poll-tax",
         "aud-c-text-save-act-documentary-proof-requirement",
         "aud-c-text-save-act-removal-upon-verified-information",
         "aud-c-text-photo-id-required-for-regular-ballot",
@@ -1875,6 +2178,105 @@
         "aud-c-challenger-bridge-removal-invalid",
         "aud-c-challenger-bridge-voting-invalid",
         "aud-c-challenger-scenario-c-material-burden",
+        "aud-c-challenger-bridge-poll-tax-invalid",
+        "aud-c-challenger-scenario-document-cost",
+        "aud-c-challenger-scenario-no-fee-waiver",
+        "aud-c-flip-text-save-act-documentary-proof-requirement-falsifies",
+        "aud-c-flip-text-save-act-documentary-proof-requirement-preserves-rest",
+        "aud-c-flip-text-save-act-removal-upon-verified-information-falsifies",
+        "aud-c-flip-text-save-act-removal-upon-verified-information-preserves-rest",
+        "aud-c-flip-text-photo-id-required-for-regular-ballot-falsifies",
+        "aud-c-flip-text-photo-id-required-for-regular-ballot-preserves-rest",
+        "aud-c-flip-text-save-act-is-law-falsifies",
+        "aud-c-flip-text-save-act-is-law-preserves-rest",
+        "aud-c-flip-text-documentary-proof-from-qualifying-documents-falsifies",
+        "aud-c-flip-text-documentary-proof-from-qualifying-documents-preserves-rest",
+        "aud-c-flip-scenario-person-falsifies",
+        "aud-c-flip-scenario-person-preserves-rest",
+        "aud-c-flip-scenario-citizen-falsifies",
+        "aud-c-flip-scenario-citizen-preserves-rest",
+        "aud-c-flip-scenario-eligible-falsifies",
+        "aud-c-flip-scenario-eligible-preserves-rest",
+        "aud-c-flip-scenario-application-falsifies",
+        "aud-c-flip-scenario-application-preserves-rest",
+        "aud-c-flip-scenario-attempts-to-register-falsifies",
+        "aud-c-flip-scenario-attempts-to-register-preserves-rest",
+        "aud-c-flip-scenario-no-documentary-proof-falsifies",
+        "aud-c-flip-scenario-no-documentary-proof-preserves-rest",
+        "aud-c-flip-scenario-b-person-falsifies",
+        "aud-c-flip-scenario-b-person-preserves-rest",
+        "aud-c-flip-scenario-b-citizen-falsifies",
+        "aud-c-flip-scenario-b-citizen-preserves-rest",
+        "aud-c-flip-scenario-b-eligible-falsifies",
+        "aud-c-flip-scenario-b-eligible-preserves-rest",
+        "aud-c-flip-scenario-b-registered-falsifies",
+        "aud-c-flip-scenario-b-registered-preserves-rest",
+        "aud-c-flip-scenario-b-verified-noncitizen-information-falsifies",
+        "aud-c-flip-scenario-b-verified-noncitizen-information-preserves-rest",
+        "aud-c-flip-scenario-b-no-notice-falsifies",
+        "aud-c-flip-scenario-b-no-notice-preserves-rest",
+        "aud-c-flip-scenario-b-no-hearing-falsifies",
+        "aud-c-flip-scenario-b-no-hearing-preserves-rest",
+        "aud-c-flip-scenario-c-person-falsifies",
+        "aud-c-flip-scenario-c-person-preserves-rest",
+        "aud-c-flip-scenario-c-citizen-falsifies",
+        "aud-c-flip-scenario-c-citizen-preserves-rest",
+        "aud-c-flip-scenario-c-eligible-falsifies",
+        "aud-c-flip-scenario-c-eligible-preserves-rest",
+        "aud-c-flip-scenario-c-registered-falsifies",
+        "aud-c-flip-scenario-c-registered-preserves-rest",
+        "aud-c-flip-scenario-c-ballot-falsifies",
+        "aud-c-flip-scenario-c-ballot-preserves-rest",
+        "aud-c-flip-scenario-c-votes-in-person-falsifies",
+        "aud-c-flip-scenario-c-votes-in-person-preserves-rest",
+        "aud-c-flip-scenario-c-no-valid-photo-id-falsifies",
+        "aud-c-flip-scenario-c-no-valid-photo-id-preserves-rest",
+        "aud-c-flip-scenario-c-no-cure-falsifies",
+        "aud-c-flip-scenario-c-no-cure-preserves-rest",
+        "aud-c-flip-scenario-d-person-falsifies",
+        "aud-c-flip-scenario-d-person-preserves-rest",
+        "aud-c-flip-scenario-d-citizen-falsifies",
+        "aud-c-flip-scenario-d-citizen-preserves-rest",
+        "aud-c-flip-scenario-d-eligible-falsifies",
+        "aud-c-flip-scenario-d-eligible-preserves-rest",
+        "aud-c-flip-scenario-d-registered-falsifies",
+        "aud-c-flip-scenario-d-registered-preserves-rest",
+        "aud-c-flip-scenario-d-ballot-falsifies",
+        "aud-c-flip-scenario-d-ballot-preserves-rest",
+        "aud-c-flip-scenario-d-votes-in-person-falsifies",
+        "aud-c-flip-scenario-d-votes-in-person-preserves-rest",
+        "aud-c-flip-scenario-d-no-valid-photo-id-falsifies",
+        "aud-c-flip-scenario-d-no-valid-photo-id-preserves-rest",
+        "aud-c-flip-scenario-d-cures-falsifies",
+        "aud-c-flip-scenario-d-cures-preserves-rest",
+        "aud-c-flip-semantic-b-discretionary-denial-falsifies",
+        "aud-c-flip-semantic-b-discretionary-denial-preserves-rest",
+        "aud-c-flip-challenger-bridge-right-to-vote-falsifies",
+        "aud-c-flip-challenger-bridge-right-to-vote-preserves-rest",
+        "aud-c-flip-challenger-bridge-regulation-invalid-falsifies",
+        "aud-c-flip-challenger-bridge-regulation-invalid-preserves-rest",
+        "aud-c-flip-challenger-scenario-no-presentation-falsifies",
+        "aud-c-flip-challenger-scenario-no-presentation-preserves-rest",
+        "aud-c-flip-challenger-scenario-no-fault-falsifies",
+        "aud-c-flip-challenger-scenario-no-fault-preserves-rest",
+        "aud-c-flip-challenger-scenario-material-burden-falsifies",
+        "aud-c-flip-challenger-scenario-material-burden-preserves-rest",
+        "aud-c-flip-challenger-scenario-alternative-process-denied-falsifies",
+        "aud-c-flip-challenger-scenario-alternative-process-denied-preserves-rest",
+        "aud-c-flip-challenger-scenario-alternative-process-denied-breaks-semantic-b-discretionary-denial",
+        "aud-c-flip-challenger-bridge-removal-invalid-falsifies",
+        "aud-c-flip-challenger-bridge-removal-invalid-preserves-rest",
+        "aud-c-flip-challenger-bridge-voting-invalid-falsifies",
+        "aud-c-flip-challenger-bridge-voting-invalid-preserves-rest",
+        "aud-c-flip-challenger-scenario-c-material-burden-falsifies",
+        "aud-c-flip-challenger-scenario-c-material-burden-preserves-rest",
+        "aud-c-flip-challenger-bridge-poll-tax-invalid-falsifies",
+        "aud-c-flip-challenger-bridge-poll-tax-invalid-preserves-rest",
+        "aud-c-flip-challenger-bridge-poll-tax-invalid-breaks-challenger-bridge-regulation-invalid",
+        "aud-c-flip-challenger-scenario-document-cost-falsifies",
+        "aud-c-flip-challenger-scenario-document-cost-preserves-rest",
+        "aud-c-flip-challenger-scenario-no-fee-waiver-falsifies",
+        "aud-c-flip-challenger-scenario-no-fee-waiver-preserves-rest",
         "aud-g-hinge-evidence-type",
         "aud-g-hinge-denial-type",
         "aud-g-government-valid-regulation-rule",
@@ -1930,6 +2332,110 @@
         "aud-g-government-bridge-voting-validates",
         "aud-g-government-photo-id-evenhanded",
         "aud-g-government-provisional-cure-adequate",
+        "aud-g-government-fee-waiver-available",
+        "aud-g-flip-text-save-act-documentary-proof-requirement-falsifies",
+        "aud-g-flip-text-save-act-documentary-proof-requirement-preserves-rest",
+        "aud-g-flip-text-save-act-removal-upon-verified-information-falsifies",
+        "aud-g-flip-text-save-act-removal-upon-verified-information-preserves-rest",
+        "aud-g-flip-text-photo-id-required-for-regular-ballot-falsifies",
+        "aud-g-flip-text-photo-id-required-for-regular-ballot-preserves-rest",
+        "aud-g-flip-text-save-act-is-law-falsifies",
+        "aud-g-flip-text-save-act-is-law-preserves-rest",
+        "aud-g-flip-text-documentary-proof-from-qualifying-documents-falsifies",
+        "aud-g-flip-text-documentary-proof-from-qualifying-documents-preserves-rest",
+        "aud-g-flip-scenario-person-falsifies",
+        "aud-g-flip-scenario-person-preserves-rest",
+        "aud-g-flip-scenario-citizen-falsifies",
+        "aud-g-flip-scenario-citizen-preserves-rest",
+        "aud-g-flip-scenario-eligible-falsifies",
+        "aud-g-flip-scenario-eligible-preserves-rest",
+        "aud-g-flip-scenario-application-falsifies",
+        "aud-g-flip-scenario-application-preserves-rest",
+        "aud-g-flip-scenario-attempts-to-register-falsifies",
+        "aud-g-flip-scenario-attempts-to-register-preserves-rest",
+        "aud-g-flip-scenario-no-documentary-proof-falsifies",
+        "aud-g-flip-scenario-no-documentary-proof-preserves-rest",
+        "aud-g-flip-scenario-b-person-falsifies",
+        "aud-g-flip-scenario-b-person-preserves-rest",
+        "aud-g-flip-scenario-b-citizen-falsifies",
+        "aud-g-flip-scenario-b-citizen-preserves-rest",
+        "aud-g-flip-scenario-b-eligible-falsifies",
+        "aud-g-flip-scenario-b-eligible-preserves-rest",
+        "aud-g-flip-scenario-b-registered-falsifies",
+        "aud-g-flip-scenario-b-registered-preserves-rest",
+        "aud-g-flip-scenario-b-verified-noncitizen-information-falsifies",
+        "aud-g-flip-scenario-b-verified-noncitizen-information-preserves-rest",
+        "aud-g-flip-scenario-b-no-notice-falsifies",
+        "aud-g-flip-scenario-b-no-notice-preserves-rest",
+        "aud-g-flip-scenario-b-no-hearing-falsifies",
+        "aud-g-flip-scenario-b-no-hearing-preserves-rest",
+        "aud-g-flip-scenario-c-person-falsifies",
+        "aud-g-flip-scenario-c-person-preserves-rest",
+        "aud-g-flip-scenario-c-citizen-falsifies",
+        "aud-g-flip-scenario-c-citizen-preserves-rest",
+        "aud-g-flip-scenario-c-eligible-falsifies",
+        "aud-g-flip-scenario-c-eligible-preserves-rest",
+        "aud-g-flip-scenario-c-registered-falsifies",
+        "aud-g-flip-scenario-c-registered-preserves-rest",
+        "aud-g-flip-scenario-c-ballot-falsifies",
+        "aud-g-flip-scenario-c-ballot-preserves-rest",
+        "aud-g-flip-scenario-c-votes-in-person-falsifies",
+        "aud-g-flip-scenario-c-votes-in-person-preserves-rest",
+        "aud-g-flip-scenario-c-no-valid-photo-id-falsifies",
+        "aud-g-flip-scenario-c-no-valid-photo-id-preserves-rest",
+        "aud-g-flip-scenario-c-no-cure-falsifies",
+        "aud-g-flip-scenario-c-no-cure-preserves-rest",
+        "aud-g-flip-scenario-d-person-falsifies",
+        "aud-g-flip-scenario-d-person-preserves-rest",
+        "aud-g-flip-scenario-d-citizen-falsifies",
+        "aud-g-flip-scenario-d-citizen-preserves-rest",
+        "aud-g-flip-scenario-d-eligible-falsifies",
+        "aud-g-flip-scenario-d-eligible-preserves-rest",
+        "aud-g-flip-scenario-d-registered-falsifies",
+        "aud-g-flip-scenario-d-registered-preserves-rest",
+        "aud-g-flip-scenario-d-ballot-falsifies",
+        "aud-g-flip-scenario-d-ballot-preserves-rest",
+        "aud-g-flip-scenario-d-votes-in-person-falsifies",
+        "aud-g-flip-scenario-d-votes-in-person-preserves-rest",
+        "aud-g-flip-scenario-d-no-valid-photo-id-falsifies",
+        "aud-g-flip-scenario-d-no-valid-photo-id-preserves-rest",
+        "aud-g-flip-scenario-d-cures-falsifies",
+        "aud-g-flip-scenario-d-cures-preserves-rest",
+        "aud-g-flip-semantic-a-mandatory-approval-falsifies",
+        "aud-g-flip-semantic-a-mandatory-approval-preserves-rest",
+        "aud-g-flip-government-bridge-defense-validates-falsifies",
+        "aud-g-flip-government-bridge-defense-validates-preserves-rest",
+        "aud-g-flip-government-election-integrity-interest-falsifies",
+        "aud-g-flip-government-election-integrity-interest-preserves-rest",
+        "aud-g-flip-government-important-interest-falsifies",
+        "aud-g-flip-government-important-interest-preserves-rest",
+        "aud-g-flip-government-reasonable-requirement-falsifies",
+        "aud-g-flip-government-reasonable-requirement-preserves-rest",
+        "aud-g-flip-government-procedure-evenhanded-falsifies",
+        "aud-g-flip-government-procedure-evenhanded-preserves-rest",
+        "aud-g-flip-government-rationally-connected-falsifies",
+        "aud-g-flip-government-rationally-connected-preserves-rest",
+        "aud-g-flip-government-adequate-alternative-falsifies",
+        "aud-g-flip-government-adequate-alternative-preserves-rest",
+        "aud-g-flip-government-burden-not-severe-falsifies",
+        "aud-g-flip-government-burden-not-severe-preserves-rest",
+        "aud-g-flip-government-assume-right-to-vote-arguendo-falsifies",
+        "aud-g-flip-government-assume-right-to-vote-arguendo-preserves-rest",
+        "aud-g-flip-government-scenario-alternative-process-approved-falsifies",
+        "aud-g-flip-government-scenario-alternative-process-approved-preserves-rest",
+        "aud-g-flip-government-scenario-alternative-process-approved-breaks-semantic-a-mandatory-approval",
+        "aud-g-flip-government-bridge-removal-validates-falsifies",
+        "aud-g-flip-government-bridge-removal-validates-preserves-rest",
+        "aud-g-flip-government-removal-procedure-evenhanded-falsifies",
+        "aud-g-flip-government-removal-procedure-evenhanded-preserves-rest",
+        "aud-g-flip-government-bridge-voting-validates-falsifies",
+        "aud-g-flip-government-bridge-voting-validates-preserves-rest",
+        "aud-g-flip-government-photo-id-evenhanded-falsifies",
+        "aud-g-flip-government-photo-id-evenhanded-preserves-rest",
+        "aud-g-flip-government-provisional-cure-adequate-falsifies",
+        "aud-g-flip-government-provisional-cure-adequate-preserves-rest",
+        "aud-g-flip-government-fee-waiver-available-falsifies",
+        "aud-g-flip-government-fee-waiver-available-preserves-rest",
         "parties-registration-bridges-jointly-unsatisfiable"
       ],
       "federal_save_act_consistency_check": [
@@ -2031,7 +2537,8 @@
         "government-model-no-removal-conflict",
         "government-voting-defense-rule",
         "government-no-voting-conflict-general",
-        "government-model-no-voting-conflict"
+        "government-model-no-voting-conflict",
+        "government-no-poll-tax-route"
       ],
       "federal_save_act_hinge_common": [
         "hinge-evidence-type",
@@ -2160,7 +2667,13 @@
         "voting-id-does-not-entail-registration-proof",
         "append-preserves-valid-photo-id",
         "affidavit-cures-but-is-not-photo-id",
-        "photo-id-cures"
+        "photo-id-cures",
+        "mail-ballot-accepted-with-photo-id-copy",
+        "mail-ballot-accepted-with-ssn-and-affidavit",
+        "mail-ballot-rejected-with-ssn-alone",
+        "mail-ballot-rejected-with-affidavit-alone",
+        "in-person-id-implies-mail-acceptance",
+        "mail-route-not-available-in-person"
       ]
     },
     "axioms_by_book": {
@@ -2177,7 +2690,7 @@
           "label": "BRIDGE_RULE",
           "decider": "court",
           "source_id": "anderson-v-celebrezze",
-          "clause_text": "Anderson-Burdick balancing: severe burden + no sufficient justification = invalid regulation"
+          "clause_text": "It must first consider the character and magnitude of the asserted injury to the rights protected by the First and Fourteenth Amendments that the plaintiff seeks to vindicate. It then must identify and evaluate the precise interests put forward by the State as justifications for the burden imposed by its rule -- interpretation: Anderson-Burdick balancing: a severe burden without sufficient justification makes the regulation invalid"
         },
         {
           "name": "challenger-scenario-no-presentation",
@@ -2191,14 +2704,14 @@
           "label": "EMPIRICAL_ASSUMPTION",
           "decider": "fact-finder",
           "source_id": "fish-v-kobach",
-          "clause_text": "approximately 18,000 applicants were unable to complete registration due to the documentary proof requirement"
+          "clause_text": "over 18,000 Kansans stood to lose the right to vote in the coming general elections"
         },
         {
           "name": "challenger-scenario-material-burden",
           "label": "EMPIRICAL_ASSUMPTION",
           "decider": "fact-finder",
           "source_id": "crawford-v-marion",
-          "clause_text": "the burden of obtaining a birth certificate... will be nontrivial for some voters"
+          "clause_text": "persons who because of economic or other personal limitations may find it difficult either to secure a copy of their birth certificate or to assemble the other required documentation to obtain a state-issued identification"
         },
         {
           "name": "challenger-scenario-alternative-process-denied",
@@ -2219,14 +2732,35 @@
           "label": "BRIDGE_RULE",
           "decider": "court",
           "source_id": "anderson-v-celebrezze",
-          "clause_text": "Anderson-Burdick balancing: severe burden + insufficient justification = invalid as applied"
+          "clause_text": "It must first consider the character and magnitude of the asserted injury to the rights protected by the First and Fourteenth Amendments that the plaintiff seeks to vindicate. It then must identify and evaluate the precise interests put forward by the State as justifications for the burden imposed by its rule -- interpretation: severe as-applied burden without sufficient justification is invalid as applied"
         },
         {
           "name": "challenger-scenario-c-material-burden",
           "label": "EMPIRICAL_ASSUMPTION",
           "decider": "fact-finder",
           "source_id": "crawford-v-marion",
-          "clause_text": "\"the burden of obtaining a birth certificate ... will be nontrivial for some voters\" — applied to obtaining an expiring photo identification"
+          "clause_text": "persons who because of economic or other personal limitations may find it difficult either to secure a copy of their birth certificate or to assemble the other required documentation to obtain a state-issued identification [empirical: applied to obtaining an expiring photo identification]"
+        },
+        {
+          "name": "challenger-bridge-poll-tax-invalid",
+          "label": "BRIDGE_RULE",
+          "decider": "court",
+          "source_id": "const-amend24",
+          "clause_text": "The right of citizens of the United States to vote ... shall not be denied or abridged by the United States or any State by reason of failure to pay any poll tax or other tax."
+        },
+        {
+          "name": "challenger-scenario-document-cost",
+          "label": "EMPIRICAL_ASSUMPTION",
+          "decider": "fact-finder",
+          "source_id": "crawford-v-marion",
+          "clause_text": "persons who because of economic or other personal limitations may find it difficult either to secure a copy of their birth certificate or to assemble the other required documentation to obtain a state-issued identification"
+        },
+        {
+          "name": "challenger-scenario-no-fee-waiver",
+          "label": "INTERPRETATION_CHALLENGER",
+          "decider": "court",
+          "source_id": "hr22-eh",
+          "clause_text": "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following -- interpretation: the Act lists documents but provides no free document or fee waiver"
         }
       ],
       "federal_save_act_facts": [
@@ -2251,7 +2785,7 @@
           "label": "BRIDGE_RULE",
           "decider": "court",
           "source_id": "crawford-v-marion",
-          "clause_text": "Crawford: regulation satisfying Anderson-Burdick is constitutionally valid"
+          "clause_text": "advanced by the State are therefore sufficient to defeat petitioners' facial challenge to SEA 483 -- interpretation: a regulation that satisfies the Anderson-Burdick standard is constitutionally valid"
         },
         {
           "name": "government-election-integrity-interest",
@@ -2265,7 +2799,7 @@
           "label": "DOCTRINAL_RULE",
           "decider": "court",
           "source_id": "crawford-v-marion",
-          "clause_text": "Crawford plurality: election integrity is an important governmental interest"
+          "clause_text": "There is no question about the legitimacy or importance of the State's interest in counting only the votes of eligible voters"
         },
         {
           "name": "government-reasonable-requirement",
@@ -2279,21 +2813,21 @@
           "label": "INTERPRETATION_GOVERNMENT",
           "decider": "court",
           "source_id": "burdick-v-takushi",
-          "clause_text": "when an election regulation imposes only reasonable, nondiscriminatory restrictions... the State's important regulatory interests are generally sufficient"
+          "clause_text": "when a state election law provision imposes only \"reasonable, nondiscriminatory restrictions\" upon the First and Fourteenth Amendment rights of voters"
         },
         {
           "name": "government-rationally-connected",
           "label": "INTERPRETATION_GOVERNMENT",
           "decider": "court",
           "source_id": "crawford-v-marion",
-          "clause_text": "the ID requirement is amply justified by the valid interest in protecting the integrity and reliability of the electoral process"
+          "clause_text": "The application of the statute to the vast majority of Indiana voters is amply justified by the valid interest in protecting"
         },
         {
           "name": "government-adequate-alternative",
           "label": "INTERPRETATION_GOVERNMENT",
           "decider": "court",
           "source_id": "hr22-eh",
-          "clause_text": "each State shall establish a process under which an applicant who cannot provide documentary proof... may submit such other evidence — interpretation: the process provides an adequate safety valve"
+          "clause_text": "each State shall establish a process under which an applicant who cannot provide documentary proof of United States citizenship under paragraph (1) may, if the applicant signs an attestation under penalty of perjury ... submit such other evidence to the appropriate State or local official demonstrating that the applicant is a citizen of the United States -- interpretation: the process provides an adequate safety valve"
         },
         {
           "name": "government-burden-not-severe",
@@ -2314,14 +2848,14 @@
           "label": "INTERPRETATION_GOVERNMENT",
           "decider": "court",
           "source_id": "hr22-eh",
-          "clause_text": "the process provides a guaranteed path to registration — interpretation: mandatory approval when evidence satisfies standards"
+          "clause_text": "such official shall make a determination as to whether the applicant has sufficiently established United States citizenship -- interpretation: the process provides a guaranteed path to registration for an eligible citizen"
         },
         {
           "name": "government-bridge-removal-validates",
           "label": "BRIDGE_RULE",
           "decider": "court",
           "source_id": "crawford-v-marion",
-          "clause_text": "Crawford: regulation satisfying the applicable standard is constitutionally valid"
+          "clause_text": "advanced by the State are therefore sufficient to defeat petitioners' facial challenge to SEA 483 -- interpretation: a removal procedure satisfying the applicable standard is constitutionally valid"
         },
         {
           "name": "government-removal-procedure-evenhanded",
@@ -2335,7 +2869,7 @@
           "label": "BRIDGE_RULE",
           "decider": "court",
           "source_id": "crawford-v-marion",
-          "clause_text": "Crawford: regulation satisfying the applicable standard is constitutionally valid"
+          "clause_text": "advanced by the State are therefore sufficient to defeat petitioners' facial challenge to SEA 483 -- interpretation: a regulation satisfying the applicable standard is valid for every ballot"
         },
         {
           "name": "government-photo-id-evenhanded",
@@ -2350,6 +2884,13 @@
           "decider": "court",
           "source_id": "s1383-eah",
           "clause_text": "\"shall be permitted to cast a provisional ballot ... not later than 3 days after casting the provisional ballot\" — interpretation: the cure window is an adequate safeguard"
+        },
+        {
+          "name": "government-fee-waiver-available",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
+          "source_id": "crawford-v-marion",
+          "clause_text": "the State offers free photo identification to qualified voters able to establish their residence and identity -- interpretation: States provide the qualifying documents without charge, so no fee is an electoral standard"
         }
       ],
       "federal_save_act_hinge_discretionary": [
@@ -3617,6 +4158,91 @@
       "description": "Under the government's voting premises (Crawford), no voting conflict exists for citizen-c.",
       "book": "federal_save_act_government_model.lisp",
       "path": "government"
+    },
+    {
+      "id": "src-harper",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Harper v. Virginia Bd. of Elections (1966)",
+      "description": "\"whenever it makes the affluence of the voter or payment of any fee an electoral standard\"",
+      "source_ref": "383 U.S. 663",
+      "path": "challenger"
+    },
+    {
+      "id": "ax-poll-tax",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Document cost with no free alternative is a poll tax (Harper; Amend. XXIV)",
+      "description": "Challenger rule: a qualified citizen who lacks proof, must pay to obtain it, and has no fee waiver faces a fee as an electoral standard; bridge: invalid as to registration.",
+      "acl2_event": "challenger-document-cost-is-poll-tax, challenger-bridge-poll-tax-invalid",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Harper 383 U.S. at 666; Amend. XXIV",
+      "trusted_base": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-document-cost",
+      "type": "EMPIRICAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "citizen-a must pay to obtain a qualifying document",
+      "acl2_event": "challenger-scenario-document-cost",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Crawford plurality",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-no-fee-waiver",
+      "type": "INTERPRETIVE_ASSUMPTION",
+      "layer": "formalization",
+      "label": "The Act provides no free document or fee waiver",
+      "acl2_event": "challenger-scenario-no-fee-waiver",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "SAVE Act § 3(b) (silence)",
+      "trusted_base": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-fee-waiver",
+      "type": "INTERPRETIVE_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Free identification is available (Crawford), so no fee is an electoral standard",
+      "acl2_event": "government-fee-waiver-available",
+      "book": "federal_save_act_government_model.lisp",
+      "source_ref": "Crawford 553 U.S. at 198",
+      "trusted_base": true,
+      "path": "government"
+    },
+    {
+      "id": "model-burden-tiers",
+      "type": "BURDEN_MODEL",
+      "layer": "executable",
+      "label": "Anderson–Burdick tiers as a decision table (none / minimal / moderate / severe → standard of review)",
+      "description": "Burdick: severe ⇒ strict scrutiny; otherwise important-interest review. The tier structure is now logic; the assigned level stays a fact-finder premise.",
+      "acl2_event": "standard-of-review, standard-is-strict-iff-severe",
+      "book": "federal_save_act_burden_tiers.lisp",
+      "trusted_base": false,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-mail-ballot",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Mail ballots: accepted with a copy of valid ID, or SSN last-4 + inability affidavit; neither half alone",
+      "acl2_event": "mail-ballot-accepted-with-ssn-and-affidavit, mail-ballot-rejected-with-ssn-alone, mail-route-not-available-in-person",
+      "book": "federal_save_act_voting_invariants.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-poll-tax-conflict",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Challenger (second route): document cost + no waiver ⇒ registration conflict",
+      "acl2_event": "challenger-poll-tax-conflict-general, challenger-model-finds-poll-tax-conflict",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
     }
   ],
   "edges": [
@@ -4368,6 +4994,78 @@
       "to": "thm-invalid-enables",
       "relation": "supports",
       "path": "neutral"
+    },
+    {
+      "from": "src-harper",
+      "to": "ax-poll-tax",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-const-24th",
+      "to": "ax-poll-tax",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-document-cost",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-crawford",
+      "to": "ax-fee-waiver",
+      "relation": "source_traces",
+      "path": "government"
+    },
+    {
+      "from": "ax-poll-tax",
+      "to": "thm-poll-tax-conflict",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-document-cost",
+      "to": "thm-poll-tax-conflict",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-no-fee-waiver",
+      "to": "thm-poll-tax-conflict",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "thm-poll-tax-conflict",
+      "to": "concl-challenger",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-fee-waiver",
+      "to": "concl-government",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "model-lib-enum",
+      "to": "model-burden-tiers",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-burden-tiers",
+      "to": "thm-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-voting",
+      "to": "thm-mail-ballot",
+      "relation": "supports",
+      "path": "neutral"
     }
   ],
   "hypotheticals": [
@@ -4520,6 +5218,46 @@
       "default": true,
       "controls": [
         "ax-photo-id-valid"
+      ],
+      "path": "government"
+    },
+    {
+      "id": "hyp-poll-tax",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "Document cost with no free alternative is a poll tax (Harper)",
+      "default": true,
+      "controls": [
+        "ax-poll-tax"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-document-cost",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "citizen-a must pay to obtain a qualifying document",
+      "default": true,
+      "controls": [
+        "ax-document-cost"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-no-fee-waiver",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "The Act provides no fee waiver or free document",
+      "default": true,
+      "controls": [
+        "ax-no-fee-waiver"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-fee-waiver",
+      "category": "Poll-tax Assumptions (Amend. XXIV)",
+      "label": "Free identification is available (Crawford)",
+      "default": true,
+      "controls": [
+        "ax-fee-waiver"
       ],
       "path": "government"
     }

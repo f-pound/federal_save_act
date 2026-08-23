@@ -1,7 +1,7 @@
 {
-  "version": "7.2.0",
-  "model_version": "6.7",
-  "documentation_version": "7.2.0",
+  "version": "7.3.0",
+  "model_version": "7.3",
+  "documentation_version": "7.3.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -15,9 +15,9 @@
     "senate_last_action": "cloture not invoked 53-47, 2026-03-26"
   },
   "census": {
-    "theorems": 374,
-    "axioms": 60,
-    "books": 31,
+    "theorems": 594,
+    "axioms": 66,
+    "books": 32,
     "defun": 63,
     "defstub": 60,
     "defconst": 73,
@@ -25,7 +25,7 @@
     "encapsulate": 10,
     "total_events": 414,
     "authoritative_sources": 34,
-    "traced_propositions": 69,
+    "traced_propositions": 68,
     "ace_statements": 13,
     "ace_readme_paragraphs": 13,
     "generic_library_theorems": 46,
@@ -39,26 +39,29 @@
       "fact-finder": 4,
       "party-stipulation": 31
     },
-    "audit_propositions": 107
+    "audit_propositions": 107,
+    "opinion_texts": 7,
+    "independence_certificates": 96
   },
   "certification": {
     "all_passed": true,
-    "books_certified": 31,
+    "books_certified": 32,
     "clean_books_no_axioms": 17,
     "ace_ape_strict_pass": 13,
     "ace_ape_strict_fail": 0,
     "party_theories_satisfiable": 2,
     "adversarial_audit": {
       "challenger": {
-        "independent": 43,
-        "coupled": 1,
+        "independent": 45,
+        "coupled": 2,
         "redundant": 0
       },
       "government": {
-        "independent": 49,
+        "independent": 50,
         "coupled": 1,
         "redundant": 0
-      }
+      },
+      "kernel_checked": true
     }
   },
   "high_risk_assumptions": [

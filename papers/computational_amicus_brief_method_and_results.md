@@ -1,10 +1,10 @@
 # The Computational Amicus Brief: Machine-Checked Conditional Legal Argument, with the Federal SAVE Act as a Worked Example
 
-*Version 7.1 · August 2026 · Repository: https://github.com/f-pound/federal_save_act · Live demo: https://f-pound.github.io/federal_save_act/*
+*Version 7.3 · August 2026 · Repository: https://github.com/f-pound/federal_save_act · Live demo: https://f-pound.github.io/federal_save_act/*
 
 ## Abstract
 
-A *computational amicus brief* is a legal argument whose every inference has been checked by a theorem prover and whose every premise is stated explicitly, traced to a public legal source, and tagged with who decides it. This paper describes a method and a working system, and reports its application to the Federal SAVE Act (H.R. 22, 119th Congress; now the SAVE America Act, S. 1383 as amended by the House) and, as a portability test, to a section of a second bill (H.R. 7300 § 113). The system formalizes statutory text in ACL2 through a deterministic intermediate representation from which the ACL2 definitions, an Attempto Controlled English paraphrase and an interactive explorer are all generated; models each party's legal theory as an encapsulated ACL2 theory with traced axioms; proves each party's conditional conclusion; and subjects the premises to three mechanical audits — certification, a *consistency audit* (every axiom proved satisfiable in a concrete model) and an *adversarial audit* (every axiom denied in turn to find which premises are load-bearing). The SAVE Act development comprises 31 certified books, 374 theorems and 60 traced axioms. Its findings include a statutory-faithfulness error in the earlier model (a birth certificate alone was treated as proof of citizenship; the statute requires a photo ID with it), two over-quantified bridge rules that would have let either party's registration theory decide an unrelated removal question, and the mechanical rediscovery — by the adversarial audit, without annotation — of the project's central interpretive hinge as the only coupled premise in each party's theory. We argue that the value of the approach lies not in deciding constitutional questions, which it does not do, but in making the structure of disagreement exact: which premises are shared, which are disputed, who decides each, and what follows from any chosen set.
+A *computational amicus brief* is a legal argument whose every inference has been checked by a theorem prover and whose every premise is stated explicitly, traced to a public legal source, and tagged with who decides it. This paper describes a method and a working system, and reports its application to the Federal SAVE Act (H.R. 22, 119th Congress; now the SAVE America Act, S. 1383 as amended by the House) and, as a portability test, to a section of a second bill (H.R. 7300 § 113). The system formalizes statutory text in ACL2 through a deterministic intermediate representation from which the ACL2 definitions, an Attempto Controlled English paraphrase and an interactive explorer are all generated; models each party's legal theory as an encapsulated ACL2 theory with traced axioms; proves each party's conditional conclusion; and subjects the premises to three mechanical audits — certification, a *consistency audit* (every axiom proved satisfiable in a concrete model) and an *adversarial audit* (every axiom denied in turn to find which premises are load-bearing). The SAVE Act development comprises 32 certified books, 594 theorems and 66 traced axioms, every quoted clause — statutory and judicial — verified verbatim against the fetched source text. Its findings include a statutory-faithfulness error in the earlier model (a birth certificate alone was treated as proof of citizenship; the statute requires a photo ID with it), two over-quantified bridge rules that would have let either party's registration theory decide an unrelated removal question, the mechanical rediscovery — by the adversarial audit, without annotation — of the project's central interpretive hinge as the only coupled premise in each party's theory, and, once quotes were checked against opinion text, the discovery that the model's most-cited line from *Crawford* was not in the opinion. We argue that the value of the approach lies not in deciding constitutional questions, which it does not do, but in making the structure of disagreement exact: which premises are shared, which are disputed, who decides each, and what follows from any chosen set.
 
 ---
 
@@ -109,7 +109,15 @@ Registration proof and voting identification are different lists. The system pro
 
 § 6.3 below: denying each of the 94 party axioms in turn, the only premise in each theory that cannot be denied without falsifying another is the scenario's alternative-process fact, which is locked to the hinge reading. No axiom is provable from the others.
 
-### 4.6 A second statute (H.R. 7300 § 113)
+### 4.6 A quotation that was not in the opinion
+
+When judicial quotes were put under the same verbatim check as statutory ones (v7.3, against opinion text fetched from the Caselaw Access Project), 19 of the trace file's court-sourced "quotes" failed. Most were paraphrases; one was worse. The model's most-cited authority for the challenger's burden premise — *Crawford*, "the burden of obtaining a birth certificate … will be nontrivial for some voters" — does not appear in the plurality opinion. "Nontrivial burdens" is Justice Souter's *dissent*. The plurality's actual words are narrower and more interesting: "a somewhat heavier burden may be placed on a limited number of persons … elderly persons born out of State, who may have difficulty obtaining a birth certificate; persons who because of economic or other personal limitations may find it difficult either to secure a copy of their birth certificate or to assemble the other required documentation." The axiom's *content* was defensible; its *citation* was not. The trace now carries the plurality's words.
+
+### 4.7 Overdetermination at the pivot
+
+Adding the poll-tax argument (Amend. XXIV; *Harper*: "whenever it makes the affluence of the voter or payment of any fee an electoral standard") as a second challenger route produced a new coupling in the adversarial audit: the poll-tax bridge and the undue-burden bridge both conclude "not valid as to the application," so neither can be denied alone. This is not an inconsistency; it is the audit reporting that the challenger's registration case is *overdetermined* — two independent legal theories reach the same pivot — and that the government must defeat both (it does so with one premise: free identification is available, *Crawford*).
+
+### 4.8 A second statute (H.R. 7300 § 113)
 
 Run through the pipeline on a text the project had never modeled, the system proved that the MEGA Act's removal section removes on DHS SAVE data "at any time" — exempt from its own 15-day pre-election freeze — while its notice-card procedure applies to residence removals only (`save-path-removes-without-notice`, `residence-removal-requires-return-card`): the same structural gap as § 8(k), in different words, found by the same tools (§ 8).
 
@@ -131,7 +139,7 @@ Run through the pipeline on a text the project had never modeled, the system pro
 | Derivations | `burden_proofs`, `doctrine_proofs`, `existentials`, `independence`, `model_consistency`, `consistency_check` | 0 own | burden chain, doctrine chains, `defun-sk` existentials, neutrality |
 | Audits | `functional_instantiation`, `consistency_audit` (generated) | 0 | `:functional-instance` transfers; satisfiability of each party's trusted base |
 
-Total: 31 books, 374 theorems, 60 `defaxiom`s, 10 `encapsulate`s, 4 `defun-sk`s. 17 books have an empty trusted base.
+Total: 32 books, 594 theorems, 66 `defaxiom`s, 11 `encapsulate`s, 4 `defun-sk`s. 18 books have an empty trusted base.
 
 ### 5.2 The clause IR
 
@@ -165,16 +173,18 @@ Interpretive rules are introduced as `encapsulate`s with local witnesses, so the
 
 ### 6.2 Adversarial audit (independence, coupling, redundancy)
 
-`adversarial_audit.py` takes each axiom A and constructs a *flipped world*: the base world with one stub value (or two at the same witness point) changed so that A is false, with the flip search descending into core `defun`s. It then evaluates every other axiom of the theory in the flipped world. Because the worlds are finite (membership over named constants plus one fresh symbol), evaluation over the universe is a complete finite-model check. Verdicts: **independent** (the flipped world is a model of T∖{A} ∧ ¬A); **coupled** (the flip falsifies the listed axioms — a load-bearing joint). With `--acl2` it also asserts T∖{A} in a fresh ACL2 session and attempts A as a theorem under a time limit: a success is a kernel-checked certificate of **redundancy**. The evaluator's verdicts are cross-checked against the certified consistency book: the base world must satisfy every axiom in both.
+`adversarial_audit.py` takes each axiom A and constructs a *flipped world*: the base world with one stub value (or two at the same witness point) changed so that A is false, with the flip search descending into core `defun`s. It then evaluates every other axiom of the theory in the flipped world. Because the worlds are finite (membership over named constants plus one fresh symbol), evaluation over the universe is a complete finite-model check. Verdicts: **independent** (the flipped world is a model of T∖{A} ∧ ¬A); **coupled** (the flip falsifies the listed axioms — a load-bearing joint). With `--acl2` it also asserts T∖{A} in a fresh ACL2 session and attempts A as a theorem under a time limit: a success is a kernel-checked certificate of **redundancy**.
+
+Since v7.3 the independence verdicts are themselves kernel-checked. The consistency-audit generator reads the adversarial audit's recorded flips and witnesses and emits a *flip-parameterised* world: every stub takes a `flip` argument naming the axiom being denied, and the one or two stub values the audit changed are overridden only when `flip` names that axiom. For each audited axiom A the book then proves two theorems — `aud-<party>-flip-A-falsifies` (A is false at its witness in the flipped world) and `aud-<party>-flip-A-preserves-rest` (the conjunction of every other proposition of the theory holds there; for a coupled A, the named coupled propositions are proved false instead). ACL2 certifies all 434 audit theorems in a few seconds; the evaluator is now a search procedure whose every verdict is checked by the kernel.
 
 ### 6.3 Results
 
 | Theory | axioms | independent | coupled | redundant |
 |---|---|---|---|---|
-| Challenger | 44 | 43 | 1 | 0 |
-| Government | 50 | 49 | 1 | 0 |
+| Challenger | 47 | 45 | 2 | 0 |
+| Government | 51 | 50 | 1 | 0 |
 
-The single coupled pair on each side is `challenger-scenario-alternative-process-denied ⇄ semantic-b-discretionary-denial` and its government mirror `…-approved ⇄ semantic-a-mandatory-approval`: the scenario's alternative-process fact cannot be denied without contradicting the hinge reading. Early runs reported several more couplings; each traced to a toy world that was too broad (a predicate true for every p lets a flip at an unrelated constant trip another bridge), and each tightening was re-proved by the certified audit book before the verdict was accepted. On the second statute (§ 8), the audit likewise found exactly the government theory's hinge joint.
+The hinge coupling on each side is `challenger-scenario-alternative-process-denied ⇄ semantic-b-discretionary-denial` and its government mirror `…-approved ⇄ semantic-a-mandatory-approval`: the scenario's alternative-process fact cannot be denied without contradicting the hinge reading. Early runs reported several more couplings; each traced to a toy world that was too broad (a predicate true for every p lets a flip at an unrelated constant trip another bridge), and each tightening was re-proved by the certified audit book before the verdict was accepted. The challenger's second coupling (v7.3) is the overdetermination of § 4.7: the poll-tax and undue-burden bridges share the pivot. On the second statute (§ 8), the audit likewise found exactly the government theory's hinge joint.
 
 The interpretation for legal readers: the claim that the whole dispute turns on one reading of "shall make a determination" is not an editorial framing. It is a structural property of the two axiom sets, computed.
 
@@ -182,15 +192,21 @@ The interpretation for legal readers: the claim that the whole dispute turns on 
 
 ## 7. Limitations and threats to validity
 
-- **The model is boolean.** Burden severity, cost, and error rates are predicates, not magnitudes. *Anderson–Burdick* weighing is represented as premises about the weighing's outcome, not as the weighing.
-- **Finite scenarios.** Four named individuals. Existential books (`defun-sk`) generalize to "there exists a citizen who…", but class-wide claims remain premises.
-- **Independence verdicts are evaluator-checked, not kernel-checked.** The finite-model check is complete for these worlds and is cross-validated against the certified consistency book on the base world, but the flipped-world evaluations themselves are performed by the Python evaluator. Redundancy certificates are kernel-checked.
-- **Worlds are authored.** A too-broad world produces spurious couplings (observed and corrected); a too-narrow world could mask one. The mitigation is that the consistency book must certify for every world used.
-- **Case-law quotes are traced but not yet verbatim-checked** against fetched opinion text, as statutory quotes are. This is the most important remaining gap for an autonomous pipeline.
-- **Legal completeness.** The poll-tax and Elections-Clause structural arguments, the mail-ballot branch of § 303A(a)(2), and § 8(j)(4)(C) "other data sources" are not modeled.
-- **The second-statute run was replayed.** Its four model-stage outputs were authored by a language model in an interactive session and replayed through the harness with every oracle live; a credentialed live run has not yet been performed.
+Several limitations reported in earlier versions have been removed; the remainder are stated here with what mitigates them.
 
----
+**Removed in v7.3.**
+- *Independence verdicts were evaluator-checked.* They are now kernel-checked: every verdict of the adversarial audit has a certified ACL2 theorem behind it (§ 6.2).
+- *Case-law quotes were traced but not verbatim-checked.* They now are, against opinion text fetched from the Caselaw Access Project, for 7 of the 10 cited cases; the check found and corrected 19 paraphrases including a mis-attributed dissent line (§ 4.6). The three cases the archive does not carry (*Reynolds v. Sims* volume page, *Husted*, and the 2025 district-court ruling) remain traced by citation only.
+- *Burden was boolean.* The Anderson–Burdick standard of review is now an explicit decision table over ordinal burden levels (`burden_tiers`): which standard applies at which level is logic; the level assigned is a fact-finder premise.
+- *The poll-tax and mail-ballot branches were unmodeled.* Both are now modeled (§ 4.7; `mail-ballot-identification-bundlep` and six theorems).
+
+**Remaining.**
+- **The weighing itself is a premise.** Within a tier, whether the state's interest meets the selected standard is still stated, not computed. Magnitudes (costs, error rates, counts) are not represented as numbers.
+- **Finite scenarios.** Four named individuals; class-wide claims are `defun-sk` existentials or premises.
+- **Worlds are authored.** The audit's toy worlds are hand-written. A too-broad world produces spurious couplings (observed and corrected); a too-narrow world could mask one. Mitigation: the consistency book must certify for every world used, and the flipped-world certificates are checked by ACL2, so a world cannot make a false verdict certify — it can only fail to find a true independence.
+- **Legal completeness.** The Elections-Clause structural argument, § 8(j)(4)(C) "other data sources," and the UOCAVA / disability exceptions of § 303A(a)(2)(B) are not modeled.
+- **The second-statute run was replayed.** Its four model-stage outputs were authored by a language model in an interactive session and replayed through the harness with every oracle live; a credentialed live run has not been performed.
+- **Opinion-text coverage.** Verbatim checking of judicial quotes depends on an archive that stops before 2018 for the Supreme Court; recent cases need another source.
 
 ## 8. Pipeline and agent harness
 
@@ -215,8 +231,9 @@ A theorem prover cannot decide a constitutional case, and this system does not t
 ```
 git clone https://github.com/f-pound/federal_save_act && cd federal_save_act
 brew install acl2            # or use the atwalter/acl2 Docker image via $ACL2_CMD
-./scripts/certify_books.sh   # pre-checks + 31 books; expect "Certified: 31 … Q.E.D.: 374"
+./scripts/certify_books.sh   # pre-checks + 32 books; expect "Certified: 32 … Q.E.D.: 594"
 python tools/validate_trace.py
+python tools/fetch_opinions.py && python tools/check_text_stability.py
 python tools/adversarial_audit.py --acl2
 python tools/serve_explorer.py
 ```
@@ -233,15 +250,16 @@ python tools/serve_explorer.py
 | deep_process_invariants | 11 | 0 |
 | document_proofs | 20 | 0 |
 | removal_invariants | 16 | 0 |
-| voting_invariants | 16 | 0 |
+| voting_invariants | 22 | 0 |
 | consistency_check | 17 | 0 |
 | functional_instantiation | 6 | 0 |
-| consistency_audit (generated) | 107 | 0 |
+| consistency_audit (generated) | 434 | 0 |
+| burden_tiers | 7 | 0 |
 | burden_proofs / doctrine_proofs / existentials / independence / model_consistency | 8 / 7 / 6 / 3 / 7 | 4 |
 | hinge_common / hinge_mandatory / hinge_discretionary | 4 / 2 / 3 | 4 / 5 / 5 |
 | scenario | 12 | 34 |
-| challenger_model | 19 | 43 |
-| government_model | 11 | 49 |
+| challenger_model | 23 | 47 |
+| government_model | 12 | 51 |
 
 ## Appendix C. The five structural theorems most worth reading
 

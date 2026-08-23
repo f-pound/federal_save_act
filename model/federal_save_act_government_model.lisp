@@ -313,3 +313,20 @@
   (not (constitutional-voting-conflict-conditionp
         'federal-save-act 'amend-v-equal-protection 'citizen-c 'ballot-c))
   :rule-classes nil)
+
+;;; v7.3 — POLL-TAX RESPONSE
+;; INTERPRETATION_GOVERNMENT (Crawford): free identification is available, so
+;; no fee is an electoral standard.  (Crawford: "the State offers free photo
+;; identification to qualified voters able to establish their residence and
+;; identity.")  Whether the SAVE Act's documents are free is contested; this
+;; is the government's premise.
+(defaxiom government-fee-waiver-available
+  (fee-waiver-availablep 'federal-save-act))
+
+;; With a waiver available, the challenger's poll-tax rule cannot fire; the
+;; government's validity follows from the six-factor defense as before.
+(defthm government-no-poll-tax-route
+  (implies (fee-waiver-availablep 'federal-save-act)
+           (not (and (document-acquisition-costp p)
+                     (not (fee-waiver-availablep 'federal-save-act)))))
+  :rule-classes nil)

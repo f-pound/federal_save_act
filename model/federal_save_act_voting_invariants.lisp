@@ -148,3 +148,36 @@
 (defthm photo-id-cures
   (implies (valid-photo-identification-bundlep docs)
            (provisional-cure-bundlep docs)))
+
+;;; =========================================================================
+;;; 5. MAIL BALLOTS  (§ 303A(a)(2)) — v7.3
+;;; A ballot cast other than in person is accepted with a copy of a valid
+;;; photo identification, or with the last four SSN digits TOGETHER WITH the
+;;; inability affidavit.  Exceptions (UOCAVA voters; VAEHA disability voters)
+;;; are in § 303A(a)(2)(B) and are not modeled as document bundles.
+;;; =========================================================================
+
+(defthm mail-ballot-accepted-with-photo-id-copy
+  (mail-ballot-identification-bundlep (list 'valid-us-passport)))
+
+(defthm mail-ballot-accepted-with-ssn-and-affidavit
+  (mail-ballot-identification-bundlep
+   (list 'ssn-last-four-digits 'affidavit-unable-to-obtain-copy)))
+
+(defthm mail-ballot-rejected-with-ssn-alone
+  (not (mail-ballot-identification-bundlep (list 'ssn-last-four-digits))))
+
+(defthm mail-ballot-rejected-with-affidavit-alone
+  (not (mail-ballot-identification-bundlep (list 'affidavit-unable-to-obtain-copy))))
+
+;; In-person validity implies mail validity (a copy of the same ID suffices),
+;; but not conversely: the SSN-plus-affidavit route exists only by mail.
+(defthm in-person-id-implies-mail-acceptance
+  (implies (valid-photo-identification-bundlep docs)
+           (mail-ballot-identification-bundlep docs)))
+
+(defthm mail-route-not-available-in-person
+  (and (mail-ballot-identification-bundlep
+        (list 'ssn-last-four-digits 'affidavit-unable-to-obtain-copy))
+       (not (valid-photo-identification-bundlep
+             (list 'ssn-last-four-digits 'affidavit-unable-to-obtain-copy)))))
