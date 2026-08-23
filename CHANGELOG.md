@@ -6,6 +6,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [7.0.1] — 2026-08-23
+
+### Added
+- The MEGA Act § 113 example has its own explorer, published at `/examples/mega_act_s113/` (link in the SAVE Act explorer footer). `tools/publish_example.py`.
+- Explorer and builder are now project-independent: title from `pipeline.json`, census from the book scan, presets derived from the hypotheticals' paths when a project has no curated presets, cartoon scenes hidden when a project has no document tables; deterministic graph stage wires sources → axioms → models → theorems → conclusions from the include graph.
+
 ## [7.0.0] — 2026-08-23
 
 ### Added — the agent harness and a second statute

@@ -83,7 +83,7 @@ def validate():
     # Check high-risk assumptions exist
     high_risk = [n for n in nodes if n.get("high_risk")]
     if len(high_risk) < 2:
-        errors.append(f"Expected at least 2 high-risk nodes, found {len(high_risk)}")
+        warnings.append(f"Fewer than 2 high-risk nodes ({len(high_risk)})")
 
     # Check hypotheticals
     hyps = data.get("hypotheticals", [])

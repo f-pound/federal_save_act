@@ -130,6 +130,10 @@
     // (v6.0 fix: previously all cards showed "Unsupported" on load.)
     data.hypotheticals.forEach(h => { if (h.default !== false) activeAssumptions.add(h.id); });
 
+    if (data.meta && data.meta.title) {
+      const h = document.querySelector('.header-title h1'); if (h) h.textContent = data.meta.title.split(' — ')[0];
+      document.title = data.meta.title;
+    }
     renderAuditBar();
     renderControls();
     renderGraph();
@@ -196,7 +200,35 @@
   }
 
   // ---- Preset Buttons ----
+  function adaptPresetsToProject() {
+    const ids = new Set(data.hypotheticals.map(h => h.id));
+    const known = PRESETS.compare.hyps.filter(id => ids.has(id));
+    if (known.length) return;   // this project uses the curated presets
+    const byPath = p => data.hypotheticals.filter(h => h.path === p).map(h => h.id);
+    PRESETS.compare.hyps = data.hypotheticals.map(h => h.id);
+    PRESETS.challenger.hyps = byPath('challenger');
+    PRESETS.government.hyps = byPath('government');
+    PRESETS.neutral.hyps = [];
+    PRESETS.citizendocs.hyps = byPath('government').concat(byPath('challenger').filter(id => !/burden|fault/.test(id)));
+    PRESETS.highrisk.hyps = data.hypotheticals.filter(h => /fact-finder|empirical/i.test(h.category)).map(h => h.id);
+    PRESETS.compare.description = 'Every premise from both parties is switched on. Both conditional conclusions are supported — each side\'s argument is internally valid; the tool does not say which wins.';
+    PRESETS.challenger.description = 'Only the challenger\'s premises (its reading of the statute and its doctrine). The government\'s conclusion loses its support.';
+    PRESETS.government.description = 'Only the government\'s premises. The challenger\'s conclusion loses its support.';
+    PRESETS.neutral.description = 'No legal or empirical premises — only the statute\'s text and the executable model. Neither conclusion is derivable; the structural theorems remain.';
+    PRESETS.citizendocs.description = 'Every legal premise of both sides on; the challenger\'s empirical premises (burden / fault) off.';
+    PRESETS.highrisk.description = 'Only the empirical (fact-finder) premises.';
+    const cd = document.querySelector('[data-preset="citizendocs"]'); if (cd) cd.textContent = 'Legal premises only';
+    // project-specific prose in the About modal and jump bar
+    const lead = document.querySelector('.modal-lead');
+    if (lead && data.meta && data.meta.project !== 'federal_save_act') {
+      lead.innerHTML = `This is a <strong>Computational Amicus Explorer</strong> for <strong>${data.meta.title || data.meta.project}</strong>: a theorem prover (ACL2) has checked, from explicitly stated premises, what each side's argument proves. You choose the premises; the outcomes follow mechanically.`;
+      document.querySelectorAll('.modal-section').forEach((sec, i) => { if (i === 0) sec.classList.add('hidden'); });
+    }
+    document.querySelectorAll('.jump-bar a[href="#voter-panel"], .jump-bar a[href="#poll-panel"]').forEach(a => a.classList.add('hidden'));
+  }
+
   function setupPresets() {
+    adaptPresetsToProject();
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         applyPreset(btn.dataset.preset);
@@ -336,7 +368,7 @@
   function renderVoterDocs() {
     const cats = data.meta && data.meta.document_categories;
     const host = document.getElementById('voter-doc-groups');
-    if (!cats || !host) return;
+    if (!cats || !host) { const p = document.getElementById('voter-panel'); if (p) p.classList.add('hidden'); return; }
     let html = '';
     for (const [cat, members] of Object.entries(cats)) {
       html += `<div class="voter-group"><div class="voter-group-name">${GROUP_LABELS[cat] || cat}</div>`;
@@ -462,7 +494,7 @@
   function renderPollDocs() {
     const cats = data.meta && data.meta.voting_categories;
     const host = document.getElementById('poll-doc-groups');
-    if (!cats || !host) return;
+    if (!cats || !host) { const p = document.getElementById('poll-panel'); if (p) p.classList.add('hidden'); return; }
     let html = '';
     for (const [cat, members] of Object.entries(cats)) {
       html += `<div class="voter-group"><div class="voter-group-name">${POLL_GROUPS[cat] || cat}</div>`;

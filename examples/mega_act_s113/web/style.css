@@ -1691,3 +1691,6 @@ body.reviewer-active .reviewer-detail {
 .sketch { filter: url(#vg-sketch); }
 .sketch rect, .sketch circle, .sketch path, .sketch ellipse { stroke: #2a1f1a; stroke-width: 1.4; stroke-linejoin: round; paint-order: stroke fill; }
 .sketch path[stroke] { stroke-width: 2.2; }
+
+.voter-panel.hidden { display: none; }
+.jump-bar a.hidden { display: none; }

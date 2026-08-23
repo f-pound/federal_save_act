@@ -177,24 +177,89 @@ def stage_parties(model, project, slug, feedback=""):
     return out
 
 def stage_graph(project, slug):
-    """Deterministic explorer graph from books + trace + audits — no model."""
-    import csv
+    """Deterministic explorer graph from books + trace + manifest — no model.
+    Layers: sources → formalization (axioms) → executable (generated tables,
+    invariant books) → theorems (party final theorems, neutral theorems) →
+    conclusions (one per party)."""
+    import csv, re as _re
+    sys.path.insert(0, str(project / "tools"))
+    import certify as C
+    info = {}
+    for f in sorted(list((project / "model").glob("*.lisp")) + list((project / "model").glob("lib/*.lisp"))):
+        name = f.relative_to(project / "model").with_suffix("").as_posix()
+        src = _re.sub(r";[^\n]*", "", f.read_text(encoding="utf-8", errors="replace"))
+        info[name] = {"includes": _re.findall(r'\(include-book\s+"([^"]+)"', src),
+                      "theorems": _re.findall(r'^\s*\(defthm\s+([\w\-]+)', src, _re.M),
+                      "has_axiom": bool(_re.search(r"^\s*\(defaxiom\s", src, _re.M))}
+    def closure(b, seen=None):
+        seen = set() if seen is None else seen
+        if b in seen or b not in info: return seen
+        seen.add(b); [closure(i, seen) for i in info[b]["includes"]]; return seen
+    party_books = {p: f"{slug}_{p}_model" for p in ("challenger", "government")}
+    closures = {p: closure(b) for p, b in party_books.items()}
+    def path_of_book(book):
+        inC, inG = book in closures["challenger"], book in closures["government"]
+        return "neutral" if (inC and inG) or (not inC and not inG) else ("challenger" if inC else "government")
     rows = list(csv.DictReader(open(project / "sources/clause_trace.csv", encoding="utf-8-sig")))
+    manifest = json.loads((project / "sources/source_manifest.json").read_text())
     layers = json.loads((TEMPLATE_ROOT / "data/parsed/explorer_graph.json").read_text())["layers"]
     nodes, edges, hyps = [], [], []
-    for r in rows:
-        nid = "ax-" + r["axiom_name"]
-        typ = {"SCENARIO_FACT": "SCENARIO_FACT", "EMPIRICAL_ASSUMPTION": "EMPIRICAL_ASSUMPTION", "BRIDGE_RULE": "BRIDGE_RULE", "TEXT_FACT": "TEXT_FACT", "PROHIBITION": "TEXT_FACT"}.get(r["label"], "DOCTRINAL_ASSUMPTION")
-        path = "challenger" if r["file"].startswith("challenger") else "government" if r["file"].startswith("government") else "neutral"
-        nodes.append({"id": nid, "type": typ, "layer": "formalization", "label": r["axiom_name"].replace("-", " "), "description": r["clause_text"][:300], "acl2_event": r["axiom_name"], "book": f"{r['file']}.lisp", "source_ref": f"{r['source_id']} {r['section']}", "trusted_base": True, "path": path, "high_risk": r["label"] == "EMPIRICAL_ASSUMPTION"})
-        if r["decider"] in ("court", "fact-finder") and path != "neutral":
-            hyps.append({"id": "hyp-" + r["axiom_name"], "category": f"{path.capitalize()} premises ({r['decider']})", "label": r["axiom_name"].replace("-", " "), "default": True, "controls": [nid], "path": path})
+    def node(**k): nodes.append(k)
+    def edge(f, t, rel, path="neutral"): edges.append({"from": f, "to": t, "relation": rel, "path": path})
+    # sources
+    used_sources = {r["source_id"] for r in rows if r["source_id"] != "n/a"}
+    for srcd in manifest.get("sources", []):
+        if srcd["id"] in used_sources:
+            node(id="src-" + srcd["id"], type="LEGAL_SOURCE", layer="sources", label=srcd["title"], description=srcd.get("citation", ""), source_ref=srcd.get("citation", ""), path="neutral")
+    # conclusions
     for party in ("challenger", "government"):
-        cid = f"concl-{party}"
-        nodes.append({"id": cid, "type": "FINAL_CONCLUSION", "layer": "conclusions", "label": f"{party.capitalize()} conclusion", "description": "Conditional conclusion under this party's premises.", "book": f"{slug}_{party}_model.lisp", "path": party})
-        for n in nodes:
-            if n["path"] == party and n["id"].startswith("ax-"):
-                edges.append({"from": n["id"], "to": cid, "relation": f"supports_{party}", "path": party})
+        node(id=f"concl-{party}", type="FINAL_CONCLUSION", layer="conclusions", label=f"{party.capitalize()}: conditional conclusion",
+             description=f"Proved under the {party}'s premises; see the final theorem in {party_books[party]}.lisp.", book=f"{party_books[party]}.lisp", path=party)
+    # axioms
+    axiom_book = {}
+    for b, inf in info.items():
+        src = (project / "model" / f"{b}.lisp").read_text(encoding="utf-8", errors="replace")
+        for a in _re.findall(r'^\s*\(defaxiom\s+([\w\-]+)', src, _re.M): axiom_book[a] = b
+        # encapsulate-exported constraints are traced too (interpretive rules)
+        for a in _re.findall(r'^\s+\(defthm\s+([\w\-]+)', src, _re.M): axiom_book.setdefault(a, b)
+    for r in rows:
+        book = axiom_book.get(r["axiom_name"]); 
+        if not book: continue
+        nid = "ax-" + r["axiom_name"]; path = path_of_book(book)
+        typ = {"SCENARIO_FACT": "SCENARIO_FACT", "EMPIRICAL_ASSUMPTION": "EMPIRICAL_ASSUMPTION", "BRIDGE_RULE": "BRIDGE_RULE", "TEXT_FACT": "TEXT_FACT", "PROHIBITION": "TEXT_FACT", "PROCEDURAL_FACT": "TEXT_FACT", "INTERPRETIVE_ASSUMPTION": "INTERPRETIVE_ASSUMPTION"}.get(r["label"], "DOCTRINAL_ASSUMPTION")
+        node(id=nid, type=typ, layer="formalization", label=r["axiom_name"].replace("-", " "), description=r["clause_text"][:300], acl2_event=r["axiom_name"], book=f"{book}.lisp",
+             source_ref=f"{r['source_id']} {r['section']}".strip(), trusted_base=True, path=path, high_risk=r["label"] == "EMPIRICAL_ASSUMPTION")
+        if r["source_id"] != "n/a": edge("src-" + r["source_id"], nid, "source_traces", path)
+        for party in (("challenger", "government") if path == "neutral" else (path,)):
+            edge(nid, f"concl-{party}", f"supports_{party}", party)
+        if r["decider"] in ("court", "fact-finder") and path != "neutral":
+            hyps.append({"id": "hyp-" + r["axiom_name"], "category": f"{path.capitalize()} premises — {r['decider']}", "label": r["axiom_name"].replace("-", " "), "default": True, "controls": [nid], "path": path})
+    # executable + neutral theorems
+    for b, inf in info.items():
+        if b.startswith("lib/") or b in party_books.values(): continue
+        if inf["has_axiom"] and not b.endswith("_text_rules"): continue
+        if not inf["theorems"] and not b.endswith("_table"): continue
+        mid = "model-" + b
+        node(id=mid, type="PROCESS_MODEL" if "table" in b or "invariants" in b else "DOCUMENT_MODEL", layer="executable",
+             label=b.replace(slug + "_", "").replace("_", " "), description=f"{len(inf['theorems'])} theorems; trusted base from its include closure.", book=f"{b}.lisp", path="neutral")
+        for inc in inf["includes"]:
+            if inc in info and not inc.startswith("lib/") and ("model-" + inc) not in {n["id"] for n in nodes}:
+                pass
+            if inc in info and (inc.endswith("_table") or inc.endswith("_rules")) and not inc.endswith("_text_rules"):
+                edge("model-" + inc, mid, "supports")
+        for t in inf["theorems"][:6]:
+            tid = "thm-" + t
+            node(id=tid, type="THEOREM", layer="theorems", label=t.replace("-", " "), acl2_event=t, book=f"{b}.lisp", axiom_free=not any(info[c]["has_axiom"] for c in closure(b)), path="neutral")
+            edge(mid, tid, "supports")
+            for party in ("challenger", "government"): edge(tid, f"concl-{party}", "supports", party)
+    # party theorems
+    for party, b in party_books.items():
+        for t in info[b]["theorems"]:
+            tid = "thm-" + t
+            node(id=tid, type="THEOREM", layer="theorems", label=t.replace("-", " "), acl2_event=t, book=f"{b}.lisp", path=party)
+            edge(tid, f"concl-{party}", f"supports_{party}", party)
+            for n in nodes:
+                if n["id"].startswith("ax-") and n["path"] == party: edge(n["id"], tid, "supports", party)
     (project / "data/parsed/explorer_graph.json").write_text(json.dumps({"layers": layers, "nodes": nodes, "edges": edges, "hypotheticals": hyps}, indent=2) + "\n")
     return len(nodes), len(edges), len(hyps)
 

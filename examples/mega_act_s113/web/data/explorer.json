@@ -1,4 +1,898 @@
 {
+  "meta": {
+    "legislative_status": null,
+    "document_categories": null,
+    "voting_categories": null,
+    "trusted_base_by_book": {
+      "lib/enum_list": {
+        "theorems": 21,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": [
+          "booleanp-all-in-catsp",
+          "booleanp-none-in-catsp",
+          "some-in-catsp-iff-not-none-in-catsp",
+          "all-in-catsp-append",
+          "none-in-catsp-append",
+          "some-in-catsp-append",
+          "all-in-catsp-and-consp-implies-some-in-catsp",
+          "member-in-cats-implies-some-in-catsp",
+          "some-in-catsp-singleton",
+          "all-in-catsp-member",
+          "none-in-catsp-member",
+          "all-in-catsp-remove-equal",
+          "none-in-catsp-remove-equal",
+          "all-in-catsp-filter-in-cats",
+          "consp-filter-in-cats",
+          "filter-in-cats-of-all-in-catsp",
+          "filter-in-cats-of-none-in-catsp",
+          "member-equal-of-subsetp-equal",
+          "all-in-catsp-widen",
+          "some-in-catsp-widen",
+          "none-in-catsp-narrow"
+        ]
+      },
+      "lib/lsm": {
+        "theorems": 25,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": [
+          "lsm-lookup-from",
+          "lsm-lookup-event",
+          "lsm-lookup-member",
+          "lsm-lookup-when-no-outgoing",
+          "lsm-lookup-closed",
+          "lsm-lookup-entry-guard",
+          "lsm-lookup-event-guard",
+          "lsm-lookup-closed-except",
+          "lsm-lookup-exit-guard",
+          "lsm-wf-tablep-implies-closedp",
+          "lsm-step-absorbing",
+          "lsm-step-closed",
+          "lsm-step-entry-guard",
+          "lsm-step-no-skip",
+          "lsm-step-event-guard",
+          "lsm-step-closed-except",
+          "lsm-step-exit-guard",
+          "lsm-step-noop-when-not-outgoing-event",
+          "lsm-run-absorbing",
+          "lsm-run-append",
+          "lsm-run-closed",
+          "lsm-run-entry-guard",
+          "lsm-run-event-guard",
+          "lsm-run-exit-guard",
+          "lsm-run-closed-except"
+        ]
+      },
+      "mega_act_s113_challenger_model": {
+        "theorems": 4,
+        "trusted_base": [
+          "challenger-bridge-removal-invalid",
+          "challenger-bridge-right-to-vote",
+          "scenario-r-citizen",
+          "scenario-r-eligible",
+          "scenario-r-no-hearing",
+          "scenario-r-no-notice",
+          "scenario-r-person",
+          "scenario-r-registered",
+          "scenario-r-save-indicates-noncitizen",
+          "semantic-a-save-data-is-determination",
+          "text-mega-act-is-law",
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 14,
+        "by_decider": {
+          "court": 3,
+          "party-stipulation": 7,
+          "legislature": 4
+        },
+        "theorem_names": [
+          "challenger-fundamental-right-rule",
+          "challenger-removal-without-process-is-violation",
+          "challenger-removal-conflict-general",
+          "challenger-model-finds-removal-conflict"
+        ]
+      },
+      "mega_act_s113_consistency_audit": {
+        "theorems": 35,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": [
+          "aud-c-challenger-fundamental-right-rule",
+          "aud-c-challenger-removal-without-process-is-violation",
+          "aud-c-text-s113-noncitizen-determination-removes",
+          "aud-c-text-s113-noncitizen-removal-at-any-time",
+          "aud-c-text-s113-residence-removal-requires-return-card",
+          "aud-c-scenario-r-person",
+          "aud-c-scenario-r-citizen",
+          "aud-c-scenario-r-eligible",
+          "aud-c-scenario-r-registered",
+          "aud-c-scenario-r-save-indicates-noncitizen",
+          "aud-c-scenario-r-no-notice",
+          "aud-c-scenario-r-no-hearing",
+          "aud-c-text-mega-act-is-law",
+          "aud-c-semantic-a-save-data-is-determination",
+          "aud-c-challenger-bridge-right-to-vote",
+          "aud-c-challenger-bridge-removal-invalid",
+          "aud-g-government-removal-defense-rule",
+          "aud-g-text-s113-noncitizen-determination-removes",
+          "aud-g-text-s113-noncitizen-removal-at-any-time",
+          "aud-g-text-s113-residence-removal-requires-return-card",
+          "aud-g-scenario-r-person",
+          "aud-g-scenario-r-citizen",
+          "aud-g-scenario-r-eligible",
+          "aud-g-scenario-r-registered",
+          "aud-g-scenario-r-save-indicates-noncitizen",
+          "aud-g-scenario-r-no-notice",
+          "aud-g-scenario-r-no-hearing",
+          "aud-g-text-mega-act-is-law",
+          "aud-g-semantic-b-determination-requires-notice",
+          "aud-g-government-bridge-removal-validates",
+          "aud-g-government-important-interest",
+          "aud-g-government-removal-procedure-evenhanded",
+          "aud-g-government-save-data-reliable",
+          "aud-g-government-assume-right-to-vote-arguendo",
+          "parties-registration-bridges-jointly-unsatisfiable"
+        ]
+      },
+      "mega_act_s113_core": {
+        "theorems": 2,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": [
+          "core-valid-regulation-defeats-removal-conflict",
+          "core-removal-conflict-pivots-on-valid-regulation"
+        ]
+      },
+      "mega_act_s113_government_model": {
+        "theorems": 4,
+        "trusted_base": [
+          "government-assume-right-to-vote-arguendo",
+          "government-bridge-removal-validates",
+          "government-important-interest",
+          "government-removal-procedure-evenhanded",
+          "government-save-data-reliable",
+          "scenario-r-citizen",
+          "scenario-r-eligible",
+          "scenario-r-no-hearing",
+          "scenario-r-no-notice",
+          "scenario-r-person",
+          "scenario-r-registered",
+          "scenario-r-save-indicates-noncitizen",
+          "semantic-b-determination-requires-notice",
+          "text-mega-act-is-law",
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 17,
+        "by_decider": {
+          "party-stipulation": 8,
+          "court": 4,
+          "fact-finder": 1,
+          "legislature": 4
+        },
+        "theorem_names": [
+          "government-removal-defense-rule",
+          "government-no-removal-conflict-general",
+          "government-model-no-removal-conflict",
+          "government-no-determination-without-notice"
+        ]
+      },
+      "mega_act_s113_hinge_common": {
+        "theorems": 1,
+        "trusted_base": [
+          "scenario-r-citizen",
+          "scenario-r-eligible",
+          "scenario-r-no-hearing",
+          "scenario-r-no-notice",
+          "scenario-r-person",
+          "scenario-r-registered",
+          "scenario-r-save-indicates-noncitizen",
+          "text-mega-act-is-law",
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 11,
+        "by_decider": {
+          "party-stipulation": 7,
+          "legislature": 4
+        },
+        "theorem_names": [
+          "hinge-common-placeholder"
+        ]
+      },
+      "mega_act_s113_hinge_data": {
+        "theorems": 1,
+        "trusted_base": [
+          "scenario-r-citizen",
+          "scenario-r-eligible",
+          "scenario-r-no-hearing",
+          "scenario-r-no-notice",
+          "scenario-r-person",
+          "scenario-r-registered",
+          "scenario-r-save-indicates-noncitizen",
+          "semantic-a-save-data-is-determination",
+          "text-mega-act-is-law",
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 12,
+        "by_decider": {
+          "party-stipulation": 7,
+          "court": 1,
+          "legislature": 4
+        },
+        "theorem_names": [
+          "hinge-data-statute-removes-on-save-data"
+        ]
+      },
+      "mega_act_s113_hinge_process": {
+        "theorems": 1,
+        "trusted_base": [
+          "scenario-r-citizen",
+          "scenario-r-eligible",
+          "scenario-r-no-hearing",
+          "scenario-r-no-notice",
+          "scenario-r-person",
+          "scenario-r-registered",
+          "scenario-r-save-indicates-noncitizen",
+          "semantic-b-determination-requires-notice",
+          "text-mega-act-is-law",
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 12,
+        "by_decider": {
+          "party-stipulation": 7,
+          "court": 1,
+          "legislature": 4
+        },
+        "theorem_names": [
+          "hinge-process-no-determination-for-registrant-r"
+        ]
+      },
+      "mega_act_s113_removal_grounds": {
+        "theorems": 0,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": []
+      },
+      "mega_act_s113_removal_invariants": {
+        "theorems": 3,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": [
+          "save-path-removes-without-notice",
+          "residence-removal-requires-return-card",
+          "removed-is-absorbing"
+        ]
+      },
+      "mega_act_s113_removal_table": {
+        "theorems": 0,
+        "trusted_base": [],
+        "count": 0,
+        "by_decider": {},
+        "theorem_names": []
+      },
+      "mega_act_s113_scenario": {
+        "theorems": 2,
+        "trusted_base": [
+          "scenario-r-citizen",
+          "scenario-r-eligible",
+          "scenario-r-no-hearing",
+          "scenario-r-no-notice",
+          "scenario-r-person",
+          "scenario-r-registered",
+          "scenario-r-save-indicates-noncitizen",
+          "text-mega-act-is-law",
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 11,
+        "by_decider": {
+          "party-stipulation": 7,
+          "legislature": 4
+        },
+        "theorem_names": [
+          "scenario-r-qualified-voter",
+          "scenario-r-removal-transaction"
+        ]
+      },
+      "mega_act_s113_text_rules": {
+        "theorems": 0,
+        "trusted_base": [
+          "text-s113-noncitizen-determination-removes",
+          "text-s113-noncitizen-removal-at-any-time",
+          "text-s113-residence-removal-requires-return-card"
+        ],
+        "count": 3,
+        "by_decider": {
+          "legislature": 3
+        },
+        "theorem_names": []
+      }
+    },
+    "adversarial_audit": {
+      "text-s113-noncitizen-determination-removes": {
+        "party": "government",
+        "verdict": "coupled",
+        "breaks": [
+          "text-s113-noncitizen-removal-at-any-time",
+          "semantic-b-determination-requires-notice"
+        ],
+        "flip": "determined-ineligible-noncitizenp['registrant-r'] := t",
+        "acl2": null
+      },
+      "text-s113-noncitizen-removal-at-any-time": {
+        "party": "government",
+        "verdict": "coupled",
+        "breaks": [
+          "semantic-b-determination-requires-notice"
+        ],
+        "flip": "determined-ineligible-noncitizenp['amend-v-due-process'] := t & personp['amend-v-due-process'] := t",
+        "acl2": null
+      },
+      "text-s113-residence-removal-requires-return-card": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "removed-for-residence-changep['registrant-r'] := t",
+        "acl2": null
+      },
+      "scenario-r-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "personp['registrant-r'] := nil",
+        "acl2": null
+      },
+      "scenario-r-citizen": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "citizen-of-usp['registrant-r'] := nil",
+        "acl2": null
+      },
+      "scenario-r-eligible": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "eligible-voterp['registrant-r'] := nil",
+        "acl2": null
+      },
+      "scenario-r-registered": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "registered-voterp['registrant-r'] := nil",
+        "acl2": null
+      },
+      "scenario-r-save-indicates-noncitizen": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "save-indicates-noncitizenp['registrant-r'] := nil",
+        "acl2": null
+      },
+      "scenario-r-no-notice": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "adequate-notice-before-removalp['registrant-r'] := t",
+        "acl2": null
+      },
+      "scenario-r-no-hearing": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "opportunity-to-be-heardp['registrant-r'] := t",
+        "acl2": null
+      },
+      "text-mega-act-is-law": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "lawp['mega-act'] := nil",
+        "acl2": null
+      },
+      "semantic-a-save-data-is-determination": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "determined-ineligible-noncitizenp['registrant-r'] := nil",
+        "acl2": null
+      },
+      "challenger-bridge-right-to-vote": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "challenger-right-to-vote-establishedp['amend-v-due-process'] := t",
+        "acl2": null
+      },
+      "challenger-bridge-removal-invalid": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['mega-act', 'registrant-r'] := t",
+        "acl2": null
+      },
+      "semantic-b-determination-requires-notice": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "determined-ineligible-noncitizenp['amend-v-due-process'] := t",
+        "acl2": null
+      },
+      "government-bridge-removal-validates": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['amend-v-due-process', 'registrant-r'] := nil",
+        "acl2": null
+      },
+      "government-important-interest": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "important-government-interestp['mega-act'] := nil",
+        "acl2": null
+      },
+      "government-removal-procedure-evenhanded": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "removal-procedure-evenhandedp['mega-act'] := nil",
+        "acl2": null
+      },
+      "government-save-data-reliable": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "save-data-reliablep['mega-act'] := nil",
+        "acl2": null
+      },
+      "government-assume-right-to-vote-arguendo": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "protected-right-to-votep['amend-v-due-process', 'registrant-r'] := nil",
+        "acl2": null
+      }
+    },
+    "project": "mega_act_s113",
+    "title": "H.R. 7300 (119th Congress), MEGA Act § 113 — removal of ineligible voters",
+    "version": "0.1.0",
+    "books_certified": 14,
+    "theorems": 99,
+    "axioms": 20,
+    "defun_sk_existentials": 0,
+    "authoritative_sources": 6,
+    "trace_rows": 23,
+    "ace_statements": 4,
+    "repo_url": "https://github.com/f-pound/federal_save_act",
+    "generated_at": "2026-08-23T13:04:31.297140+00:00"
+  },
+  "audit_details": {
+    "books": [
+      {
+        "name": "lib/enum_list",
+        "file": "lib/enum_list.lisp",
+        "layer": -1,
+        "clean": true,
+        "theorems": 21,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "lib/lsm",
+        "file": "lib/lsm.lisp",
+        "layer": -1,
+        "clean": true,
+        "theorems": 25,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_challenger_model",
+        "file": "mega_act_s113_challenger_model.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 4,
+        "axioms": 2,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_consistency_audit",
+        "file": "mega_act_s113_consistency_audit.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 35,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_core",
+        "file": "mega_act_s113_core.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 2,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_government_model",
+        "file": "mega_act_s113_government_model.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 4,
+        "axioms": 5,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_hinge_common",
+        "file": "mega_act_s113_hinge_common.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 1,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_hinge_data",
+        "file": "mega_act_s113_hinge_data.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 1,
+        "axioms": 1,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_hinge_process",
+        "file": "mega_act_s113_hinge_process.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 1,
+        "axioms": 1,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_removal_grounds",
+        "file": "mega_act_s113_removal_grounds.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 0,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_removal_invariants",
+        "file": "mega_act_s113_removal_invariants.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 3,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_removal_table",
+        "file": "mega_act_s113_removal_table.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 0,
+        "axioms": 0,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_scenario",
+        "file": "mega_act_s113_scenario.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 2,
+        "axioms": 8,
+        "existentials": 0
+      },
+      {
+        "name": "mega_act_s113_text_rules",
+        "file": "mega_act_s113_text_rules.lisp",
+        "layer": -1,
+        "clean": false,
+        "theorems": 0,
+        "axioms": 3,
+        "existentials": 0
+      }
+    ],
+    "theorems_by_book": {
+      "lib/enum_list": [
+        "booleanp-all-in-catsp",
+        "booleanp-none-in-catsp",
+        "some-in-catsp-iff-not-none-in-catsp",
+        "all-in-catsp-append",
+        "none-in-catsp-append",
+        "some-in-catsp-append",
+        "all-in-catsp-and-consp-implies-some-in-catsp",
+        "member-in-cats-implies-some-in-catsp",
+        "some-in-catsp-singleton",
+        "all-in-catsp-member",
+        "none-in-catsp-member",
+        "all-in-catsp-remove-equal",
+        "none-in-catsp-remove-equal",
+        "all-in-catsp-filter-in-cats",
+        "consp-filter-in-cats",
+        "filter-in-cats-of-all-in-catsp",
+        "filter-in-cats-of-none-in-catsp",
+        "member-equal-of-subsetp-equal",
+        "all-in-catsp-widen",
+        "some-in-catsp-widen",
+        "none-in-catsp-narrow"
+      ],
+      "lib/lsm": [
+        "lsm-lookup-from",
+        "lsm-lookup-event",
+        "lsm-lookup-member",
+        "lsm-lookup-when-no-outgoing",
+        "lsm-lookup-closed",
+        "lsm-lookup-entry-guard",
+        "lsm-lookup-event-guard",
+        "lsm-lookup-closed-except",
+        "lsm-lookup-exit-guard",
+        "lsm-wf-tablep-implies-closedp",
+        "lsm-step-absorbing",
+        "lsm-step-closed",
+        "lsm-step-entry-guard",
+        "lsm-step-no-skip",
+        "lsm-step-event-guard",
+        "lsm-step-closed-except",
+        "lsm-step-exit-guard",
+        "lsm-step-noop-when-not-outgoing-event",
+        "lsm-run-absorbing",
+        "lsm-run-append",
+        "lsm-run-closed",
+        "lsm-run-entry-guard",
+        "lsm-run-event-guard",
+        "lsm-run-exit-guard",
+        "lsm-run-closed-except"
+      ],
+      "mega_act_s113_challenger_model": [
+        "challenger-fundamental-right-rule",
+        "challenger-removal-without-process-is-violation",
+        "challenger-removal-conflict-general",
+        "challenger-model-finds-removal-conflict"
+      ],
+      "mega_act_s113_consistency_audit": [
+        "aud-c-challenger-fundamental-right-rule",
+        "aud-c-challenger-removal-without-process-is-violation",
+        "aud-c-text-s113-noncitizen-determination-removes",
+        "aud-c-text-s113-noncitizen-removal-at-any-time",
+        "aud-c-text-s113-residence-removal-requires-return-card",
+        "aud-c-scenario-r-person",
+        "aud-c-scenario-r-citizen",
+        "aud-c-scenario-r-eligible",
+        "aud-c-scenario-r-registered",
+        "aud-c-scenario-r-save-indicates-noncitizen",
+        "aud-c-scenario-r-no-notice",
+        "aud-c-scenario-r-no-hearing",
+        "aud-c-text-mega-act-is-law",
+        "aud-c-semantic-a-save-data-is-determination",
+        "aud-c-challenger-bridge-right-to-vote",
+        "aud-c-challenger-bridge-removal-invalid",
+        "aud-g-government-removal-defense-rule",
+        "aud-g-text-s113-noncitizen-determination-removes",
+        "aud-g-text-s113-noncitizen-removal-at-any-time",
+        "aud-g-text-s113-residence-removal-requires-return-card",
+        "aud-g-scenario-r-person",
+        "aud-g-scenario-r-citizen",
+        "aud-g-scenario-r-eligible",
+        "aud-g-scenario-r-registered",
+        "aud-g-scenario-r-save-indicates-noncitizen",
+        "aud-g-scenario-r-no-notice",
+        "aud-g-scenario-r-no-hearing",
+        "aud-g-text-mega-act-is-law",
+        "aud-g-semantic-b-determination-requires-notice",
+        "aud-g-government-bridge-removal-validates",
+        "aud-g-government-important-interest",
+        "aud-g-government-removal-procedure-evenhanded",
+        "aud-g-government-save-data-reliable",
+        "aud-g-government-assume-right-to-vote-arguendo",
+        "parties-registration-bridges-jointly-unsatisfiable"
+      ],
+      "mega_act_s113_core": [
+        "core-valid-regulation-defeats-removal-conflict",
+        "core-removal-conflict-pivots-on-valid-regulation"
+      ],
+      "mega_act_s113_government_model": [
+        "government-removal-defense-rule",
+        "government-no-removal-conflict-general",
+        "government-model-no-removal-conflict",
+        "government-no-determination-without-notice"
+      ],
+      "mega_act_s113_hinge_common": [
+        "hinge-common-placeholder"
+      ],
+      "mega_act_s113_hinge_data": [
+        "hinge-data-statute-removes-on-save-data"
+      ],
+      "mega_act_s113_hinge_process": [
+        "hinge-process-no-determination-for-registrant-r"
+      ],
+      "mega_act_s113_removal_invariants": [
+        "save-path-removes-without-notice",
+        "residence-removal-requires-return-card",
+        "removed-is-absorbing"
+      ],
+      "mega_act_s113_scenario": [
+        "scenario-r-qualified-voter",
+        "scenario-r-removal-transaction"
+      ]
+    },
+    "axioms_by_book": {
+      "mega_act_s113_challenger_model": [
+        {
+          "name": "challenger-bridge-right-to-vote",
+          "label": "BRIDGE_RULE",
+          "decider": "court",
+          "source_id": "const-amend5",
+          "clause_text": "nor be deprived of life, liberty, or property, without due process of law"
+        },
+        {
+          "name": "challenger-bridge-removal-invalid",
+          "label": "BRIDGE_RULE",
+          "decider": "court",
+          "source_id": "mathews-v-eldridge",
+          "clause_text": "due process balancing: a deprivation without adequate process is invalid as applied"
+        }
+      ],
+      "mega_act_s113_government_model": [
+        {
+          "name": "government-bridge-removal-validates",
+          "label": "BRIDGE_RULE",
+          "decider": "court",
+          "source_id": "husted-v-randolph",
+          "clause_text": "a compliant list-maintenance procedure is valid"
+        },
+        {
+          "name": "government-important-interest",
+          "label": "DOCTRINAL_RULE",
+          "decider": "court",
+          "source_id": "crawford-v-marion",
+          "clause_text": "interest in counting only the votes of eligible voters"
+        },
+        {
+          "name": "government-removal-procedure-evenhanded",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
+          "source_id": "hr7300-ih",
+          "clause_text": "Each State shall take such affirmative steps as are necessary on an ongoing basis — interpretation: the procedure applies to every registrant alike"
+        },
+        {
+          "name": "government-save-data-reliable",
+          "label": "EMPIRICAL_ASSUMPTION",
+          "decider": "fact-finder",
+          "source_id": "hr7300-ih",
+          "clause_text": "information with respect to citizenship status supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen of the United States ... [empirical: SAVE citizenship data is reliable enough to act on]"
+        },
+        {
+          "name": "government-assume-right-to-vote-arguendo",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "concession arguendo that registrant-r has a protected right to vote"
+        }
+      ],
+      "mega_act_s113_hinge_data": [
+        {
+          "name": "semantic-a-save-data-is-determination",
+          "label": "INTERPRETIVE_ASSUMPTION",
+          "decider": "court",
+          "source_id": "hr7300-ih",
+          "clause_text": "information ... supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen — interpretation: the SAVE information is itself the determination"
+        }
+      ],
+      "mega_act_s113_hinge_process": [
+        {
+          "name": "semantic-b-determination-requires-notice",
+          "label": "INTERPRETIVE_ASSUMPTION",
+          "decider": "court",
+          "source_id": "hr7300-ih",
+          "clause_text": "registrants who are determined to be ineligible voters — interpretation: a determination requires notice to the registrant (cf. the return-card procedure of subsection (c))"
+        }
+      ],
+      "mega_act_s113_scenario": [
+        {
+          "name": "scenario-r-person",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "registrant-r is a person"
+        },
+        {
+          "name": "scenario-r-citizen",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "registrant-r is a U.S. citizen"
+        },
+        {
+          "name": "scenario-r-eligible",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "registrant-r is eligible"
+        },
+        {
+          "name": "scenario-r-registered",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "registrant-r is on the official list"
+        },
+        {
+          "name": "scenario-r-save-indicates-noncitizen",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "DHS SAVE data (erroneously) indicates registrant-r is a noncitizen"
+        },
+        {
+          "name": "scenario-r-no-notice",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "no notice before removal"
+        },
+        {
+          "name": "scenario-r-no-hearing",
+          "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
+          "source_id": "n/a",
+          "clause_text": "no opportunity to contest"
+        },
+        {
+          "name": "text-mega-act-is-law",
+          "label": "TEXT_FACT",
+          "decider": "legislature",
+          "source_id": "hr7300-ih",
+          "clause_text": "This Act may be cited as the ``Make Elections Great Again Act''."
+        }
+      ],
+      "mega_act_s113_text_rules": [
+        {
+          "name": "text-s113-noncitizen-determination-removes",
+          "label": "PROHIBITION",
+          "decider": "legislature",
+          "source_id": "hr7300-ih",
+          "clause_text": "to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen"
+        },
+        {
+          "name": "text-s113-noncitizen-removal-at-any-time",
+          "label": "TEXT_FACT",
+          "decider": "legislature",
+          "source_id": "hr7300-ih",
+          "clause_text": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)"
+        },
+        {
+          "name": "text-s113-residence-removal-requires-return-card",
+          "label": "PROCEDURAL_FACT",
+          "decider": "legislature",
+          "source_id": "hr7300-ih",
+          "clause_text": "If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters"
+        }
+      ]
+    },
+    "existentials": []
+  },
   "layers": [
     {
       "id": "sources",
@@ -93,7 +987,8 @@
       "label": "Challenger: conditional conclusion",
       "description": "Proved under the challenger's premises; see the final theorem in mega_act_s113_challenger_model.lisp.",
       "book": "mega_act_s113_challenger_model.lisp",
-      "path": "challenger"
+      "path": "challenger",
+      "why_it_matters": "Under challenger assumptions (no-fault, material burden, discretionary reading, invalid regulation), ACL2 derives that a formal constitutional conflict exists."
     },
     {
       "id": "concl-government",
@@ -102,7 +997,8 @@
       "label": "Government: conditional conclusion",
       "description": "Proved under the government's premises; see the final theorem in mega_act_s113_government_model.lisp.",
       "book": "mega_act_s113_government_model.lisp",
-      "path": "government"
+      "path": "government",
+      "why_it_matters": "Under government assumptions (burden not severe, adequate alternative, mandatory reading, valid regulation), ACL2 derives that no formal constitutional conflict exists."
     },
     {
       "id": "ax-text-mega-act-is-law",
@@ -112,7 +1008,7 @@
       "description": "This Act may be cited as the ``Make Elections Great Again Act''.",
       "acl2_event": "text-mega-act-is-law",
       "book": "mega_act_s113_scenario.lisp",
-      "source_ref": "hr7300-ih \u00a7 1",
+      "source_ref": "hr7300-ih § 1",
       "trusted_base": true,
       "path": "neutral",
       "high_risk": false
@@ -125,7 +1021,7 @@
       "description": "to remove from the official list of eligible voters in elections for Federal office in the State registrants who are determined to be ineligible voters by reason of ... the registrant's status as a noncitizen",
       "acl2_event": "text-s113-noncitizen-determination-removes",
       "book": "mega_act_s113_text_rules.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(a)(1)(E)",
+      "source_ref": "hr7300-ih § 113(a)(1)(E)",
       "trusted_base": true,
       "path": "neutral",
       "high_risk": false
@@ -138,7 +1034,7 @@
       "description": "the removal of names from official lists of voters at any time on a basis described in paragraph (1)(A), (1)(B), or (1)(E) of subsection (a)",
       "acl2_event": "text-s113-noncitizen-removal-at-any-time",
       "book": "mega_act_s113_text_rules.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(b)(1)",
+      "source_ref": "hr7300-ih § 113(b)(1)",
       "trusted_base": true,
       "path": "neutral",
       "high_risk": false
@@ -151,7 +1047,7 @@
       "description": "If the pre-addressed return card described in paragraph (2) is not returned, or if the notice described in such paragraph is returned as undeliverable-- (A) the registrant shall be removed from the official list of eligible voters",
       "acl2_event": "text-s113-residence-removal-requires-return-card",
       "book": "mega_act_s113_text_rules.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(c)(3)",
+      "source_ref": "hr7300-ih § 113(c)(3)",
       "trusted_base": true,
       "path": "neutral",
       "high_risk": false
@@ -252,10 +1148,10 @@
       "type": "INTERPRETIVE_ASSUMPTION",
       "layer": "formalization",
       "label": "semantic a save data is determination",
-      "description": "information ... supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen \u2014 interpretation: the SAVE information is itself the determination",
+      "description": "information ... supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen — interpretation: the SAVE information is itself the determination",
       "acl2_event": "semantic-a-save-data-is-determination",
       "book": "mega_act_s113_hinge_data.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(a)(1)(E)",
+      "source_ref": "hr7300-ih § 113(a)(1)(E)",
       "trusted_base": true,
       "path": "challenger",
       "high_risk": false
@@ -265,10 +1161,10 @@
       "type": "INTERPRETIVE_ASSUMPTION",
       "layer": "formalization",
       "label": "semantic b determination requires notice",
-      "description": "registrants who are determined to be ineligible voters \u2014 interpretation: a determination requires notice to the registrant (cf. the return-card procedure of subsection (c))",
+      "description": "registrants who are determined to be ineligible voters — interpretation: a determination requires notice to the registrant (cf. the return-card procedure of subsection (c))",
       "acl2_event": "semantic-b-determination-requires-notice",
       "book": "mega_act_s113_hinge_process.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(a)(1)",
+      "source_ref": "hr7300-ih § 113(a)(1)",
       "trusted_base": true,
       "path": "government",
       "high_risk": false
@@ -369,10 +1265,10 @@
       "type": "DOCTRINAL_ASSUMPTION",
       "layer": "formalization",
       "label": "government removal procedure evenhanded",
-      "description": "Each State shall take such affirmative steps as are necessary on an ongoing basis \u2014 interpretation: the procedure applies to every registrant alike",
+      "description": "Each State shall take such affirmative steps as are necessary on an ongoing basis — interpretation: the procedure applies to every registrant alike",
       "acl2_event": "government-removal-procedure-evenhanded",
       "book": "mega_act_s113_government_model.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(a)(1)",
+      "source_ref": "hr7300-ih § 113(a)(1)",
       "trusted_base": true,
       "path": "government",
       "high_risk": false
@@ -385,7 +1281,7 @@
       "description": "information with respect to citizenship status supplied by the Department of Homeland Security through the Systematic Alien Verification for Entitlements (``SAVE'') system that demonstrates a registrant is not a citizen of the United States ... [empirical: SAVE citizenship data is reliable enough to",
       "acl2_event": "government-save-data-reliable",
       "book": "mega_act_s113_government_model.lisp",
-      "source_ref": "hr7300-ih \u00a7 113(a)(1)(E)",
+      "source_ref": "hr7300-ih § 113(a)(1)(E)",
       "trusted_base": true,
       "path": "government",
       "high_risk": true
@@ -1498,7 +2394,7 @@
   "hypotheticals": [
     {
       "id": "hyp-semantic-a-save-data-is-determination",
-      "category": "Challenger premises \u2014 court",
+      "category": "Challenger premises — court",
       "label": "semantic a save data is determination",
       "default": true,
       "controls": [
@@ -1508,7 +2404,7 @@
     },
     {
       "id": "hyp-semantic-b-determination-requires-notice",
-      "category": "Government premises \u2014 court",
+      "category": "Government premises — court",
       "label": "semantic b determination requires notice",
       "default": true,
       "controls": [
@@ -1518,7 +2414,7 @@
     },
     {
       "id": "hyp-challenger-fundamental-right-rule",
-      "category": "Challenger premises \u2014 court",
+      "category": "Challenger premises — court",
       "label": "challenger fundamental right rule",
       "default": true,
       "controls": [
@@ -1528,7 +2424,7 @@
     },
     {
       "id": "hyp-challenger-removal-without-process-is-violation",
-      "category": "Challenger premises \u2014 court",
+      "category": "Challenger premises — court",
       "label": "challenger removal without process is violation",
       "default": true,
       "controls": [
@@ -1538,7 +2434,7 @@
     },
     {
       "id": "hyp-challenger-bridge-right-to-vote",
-      "category": "Challenger premises \u2014 court",
+      "category": "Challenger premises — court",
       "label": "challenger bridge right to vote",
       "default": true,
       "controls": [
@@ -1548,7 +2444,7 @@
     },
     {
       "id": "hyp-challenger-bridge-removal-invalid",
-      "category": "Challenger premises \u2014 court",
+      "category": "Challenger premises — court",
       "label": "challenger bridge removal invalid",
       "default": true,
       "controls": [
@@ -1558,7 +2454,7 @@
     },
     {
       "id": "hyp-government-removal-defense-rule",
-      "category": "Government premises \u2014 court",
+      "category": "Government premises — court",
       "label": "government removal defense rule",
       "default": true,
       "controls": [
@@ -1568,7 +2464,7 @@
     },
     {
       "id": "hyp-government-bridge-removal-validates",
-      "category": "Government premises \u2014 court",
+      "category": "Government premises — court",
       "label": "government bridge removal validates",
       "default": true,
       "controls": [
@@ -1578,7 +2474,7 @@
     },
     {
       "id": "hyp-government-important-interest",
-      "category": "Government premises \u2014 court",
+      "category": "Government premises — court",
       "label": "government important interest",
       "default": true,
       "controls": [
@@ -1588,7 +2484,7 @@
     },
     {
       "id": "hyp-government-removal-procedure-evenhanded",
-      "category": "Government premises \u2014 court",
+      "category": "Government premises — court",
       "label": "government removal procedure evenhanded",
       "default": true,
       "controls": [
@@ -1598,7 +2494,7 @@
     },
     {
       "id": "hyp-government-save-data-reliable",
-      "category": "Government premises \u2014 fact-finder",
+      "category": "Government premises — fact-finder",
       "label": "government save data reliable",
       "default": true,
       "controls": [

@@ -28,7 +28,7 @@ def main():
 
     # Step 2: Serve
     os.chdir(WEB)
-    port = 8000
+    port = int(os.environ.get("PORT", "8000"))
     server = ThreadingHTTPServer(("127.0.0.1", port), SimpleHTTPRequestHandler)
     url = f"http://127.0.0.1:{port}"
     print(f"Serving Federal SAVE Act Computational Amicus Explorer at {url}")

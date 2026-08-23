@@ -211,20 +211,9 @@
     PRESETS.neutral.hyps = [];
     PRESETS.citizendocs.hyps = byPath('government').concat(byPath('challenger').filter(id => !/burden|fault/.test(id)));
     PRESETS.highrisk.hyps = data.hypotheticals.filter(h => /fact-finder|empirical/i.test(h.category)).map(h => h.id);
-    PRESETS.compare.description = 'Every premise from both parties is switched on. Both conditional conclusions are supported — each side\'s argument is internally valid; the tool does not say which wins.';
-    PRESETS.challenger.description = 'Only the challenger\'s premises (its reading of the statute and its doctrine). The government\'s conclusion loses its support.';
-    PRESETS.government.description = 'Only the government\'s premises. The challenger\'s conclusion loses its support.';
-    PRESETS.neutral.description = 'No legal or empirical premises — only the statute\'s text and the executable model. Neither conclusion is derivable; the structural theorems remain.';
+    ['compare', 'challenger', 'government', 'neutral'].forEach(k => PRESETS[k].description = PRESETS[k].description.replace(/SAVE Act/g, 'statute'));
     PRESETS.citizendocs.description = 'Every legal premise of both sides on; the challenger\'s empirical premises (burden / fault) off.';
     PRESETS.highrisk.description = 'Only the empirical (fact-finder) premises.';
-    const cd = document.querySelector('[data-preset="citizendocs"]'); if (cd) cd.textContent = 'Legal premises only';
-    // project-specific prose in the About modal and jump bar
-    const lead = document.querySelector('.modal-lead');
-    if (lead && data.meta && data.meta.project !== 'federal_save_act') {
-      lead.innerHTML = `This is a <strong>Computational Amicus Explorer</strong> for <strong>${data.meta.title || data.meta.project}</strong>: a theorem prover (ACL2) has checked, from explicitly stated premises, what each side's argument proves. You choose the premises; the outcomes follow mechanically.`;
-      document.querySelectorAll('.modal-section').forEach((sec, i) => { if (i === 0) sec.classList.add('hidden'); });
-    }
-    document.querySelectorAll('.jump-bar a[href="#voter-panel"], .jump-bar a[href="#poll-panel"]').forEach(a => a.classList.add('hidden'));
   }
 
   function setupPresets() {

@@ -223,13 +223,16 @@ def scan_lisp_events(model_dir):
 
 
 def build():
-    ir_path = Path(__file__).resolve().parents[1] / "data" / "parsed" / "federal_save_act_document_rules.json"
+    _root = Path(__file__).resolve().parents[1]
+    _pc = json.loads((_root / "pipeline.json").read_text()) if (_root / "pipeline.json").exists() else {}
+    _slug = _pc.get("slug", "federal_save_act")
+    ir_path = _root / "data" / "parsed" / f"{_slug}_document_rules.json"
     document_ir = json.loads(ir_path.read_text(encoding="utf-8")) if ir_path.exists() else None
     document_categories = None
     if document_ir:
         document_categories = {c["name"]: [{"symbol": m["symbol"], "source": m.get("source", ""), "text": m.get("text", "")}
                                            for m in c["members"]] for c in document_ir["categories"]}
-    vir_path = Path(__file__).resolve().parents[1] / "data" / "parsed" / "federal_save_act_voting_id_rules.json"
+    vir_path = _root / "data" / "parsed" / f"{_slug}_voting_id_rules.json"
     voting_categories = None
     if vir_path.exists():
         vir = json.loads(vir_path.read_text(encoding="utf-8"))
@@ -247,10 +250,15 @@ def build():
     legislative_status = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else None
     # --- Load inputs ---
     graph = load_json(ROOT / "data" / "parsed" / "explorer_graph.json")
-    ace = load_json(ROOT / "data" / "parsed" / "federal_save_act_ace.json")
+    _ace_files = sorted((ROOT / "data" / "parsed").glob("*_ace.json"))
+    ace = load_json(_ace_files[0]) if _ace_files else {"ace_statements": []}
     manifest = load_json(ROOT / "sources" / "source_manifest.json")
     trace_rows = load_csv(ROOT / "sources" / "clause_trace.csv")
-    version = load_json(ROOT / "version.json")
+    if (ROOT / "version.json").exists():
+        version = load_json(ROOT / "version.json")
+    else:
+        _pcfg = load_json(ROOT / "pipeline.json") if (ROOT / "pipeline.json").exists() else {}
+        version = {"project": _pcfg.get("slug", ROOT.name), "version": "0.1.0", "census": {}}
 
     # --- Build meta ---
     meta = {
@@ -260,12 +268,12 @@ def build():
         "trusted_base_by_book": trusted_base,
         "adversarial_audit": adversarial,
         "project": version.get("project", "federal_save_act"),
-        "title": "Federal SAVE Act — Computational Amicus Explorer",
+        "title": _pc.get("title", "Federal SAVE Act — Computational Amicus Explorer") if _pc else "Federal SAVE Act — Computational Amicus Explorer",
         "version": version.get("version", "unknown"),
-        "books_certified": version.get("census", {}).get("books", 17),
-        "theorems": version.get("census", {}).get("theorems", 126),
-        "axioms": version.get("census", {}).get("axioms", 33),
-        "defun_sk_existentials": version.get("census", {}).get("defun_sk", 4),
+        "books_certified": version.get("census", {}).get("books"),
+        "theorems": version.get("census", {}).get("theorems"),
+        "axioms": version.get("census", {}).get("axioms"),
+        "defun_sk_existentials": version.get("census", {}).get("defun_sk", 0),
         "authoritative_sources": len(manifest.get("sources", [])),
         "trace_rows": len(trace_rows),
         "ace_statements": len(ace.get("ace_statements", [])),
@@ -276,6 +284,9 @@ def build():
     # --- Scan .lisp files for audit details ---
     model_dir = ROOT / "model"
     books, theorems_by_book, axioms_by_book, existentials_list = scan_lisp_events(model_dir)
+    if meta["books_certified"] is None: meta["books_certified"] = len(books)
+    if meta["theorems"] is None: meta["theorems"] = sum(b["theorems"] for b in books)
+    if meta["axioms"] is None: meta["axioms"] = sum(b["axioms"] for b in books)
 
     audit_details = {
         "books": books,
