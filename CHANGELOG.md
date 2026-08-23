@@ -6,6 +6,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.4.0] — 2026-08-23
+
+### Added — explorer: "a citizen at the registration counter"
+- Cartoon panel above the graph: tick what the applicant presents (checkboxes generated from the same § 3(b) category tables the ACL2 books are compiled from, embedded in `explorer.json` by the builder), optionally sign the § 8(j)(2)(A) attestation, and say whether the applicant is in fact a citizen. The clerk's speech bubble and the outcome box follow the statute mechanically — a JS mirror of `documentary-proof-bundlep` and the denial rule — then the mandatory/discretionary hinge, then the user's premises (reads the live conclusion statuses). Each step names who decides it (legislature / court / fact-finder).
+- Demonstrates in one place: a birth certificate alone is denied, with a photo ID it is accepted, a plain REAL ID is not proof, attestation outcomes turn on the court's reading, and a denied citizen's constitutional meaning turns on the selected premises.
+
 ## [6.3.0] — 2026-08-23
 
 ### Added — "no grey areas in the logic; every grey area is a choice, and here is whose"

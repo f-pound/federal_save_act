@@ -132,6 +132,7 @@
     renderGraph();
     renderFooter();
     renderStatusBar();
+    renderVoterDocs();
 
     // Bind filter checkboxes
     document.getElementById('filter-axiom-free').addEventListener('change', renderGraph);
@@ -286,6 +287,128 @@
   }
 
   // ---- Footer ----
+  // ---- Voter cartoon: same tables, same rule, then the user's premises ----
+  const DOC_LABELS = {
+    'real-id-indicating-citizenship': 'REAL ID that indicates citizenship (enhanced licence, 5 states)',
+    'valid-us-passport': 'U.S. passport',
+    'military-id-with-us-birth': 'Military ID + service record showing U.S. birth',
+    'govt-photo-id-showing-us-birth': 'Government photo ID showing U.S. birthplace',
+    'govt-photo-id': 'Government photo ID (ordinary driver\'s licence / REAL ID)',
+    'certified-birth-certificate': 'Certified birth certificate',
+    'hospital-birth-record': 'Hospital record of birth',
+    'final-adoption-decree': 'Final adoption decree showing U.S. birth',
+    'consular-report-of-birth-abroad': 'Consular Report of Birth Abroad',
+    'naturalization-certificate': 'Naturalization Certificate / Certificate of Citizenship',
+    'american-indian-card-kic': 'American Indian Card (KIC)',
+  };
+  const GROUP_LABELS = {
+    'standalone-proof-types': 'Proof on its own — § 3(b)(1)-(4)',
+    'anchor-photo-id-types': 'Photo ID that must be PAIRED — § 3(b)(5)',
+    'supporting-document-types': 'Supporting document, counts only with the photo ID — § 3(b)(5)(A)-(F)',
+  };
+  const voterDocs = new Set();
+
+  function renderVoterDocs() {
+    const cats = data.meta && data.meta.document_categories;
+    const host = document.getElementById('voter-doc-groups');
+    if (!cats || !host) return;
+    let html = '';
+    for (const [cat, members] of Object.entries(cats)) {
+      html += `<div class="voter-group"><div class="voter-group-name">${GROUP_LABELS[cat] || cat}</div>`;
+      members.forEach(m => {
+        html += `<label class="voter-doc" title="${(m.text || '').replace(/"/g, '')}"><input type="checkbox" data-doc="${m.symbol}"> ${DOC_LABELS[m.symbol] || m.symbol} <span class="who">${m.source}</span></label>`;
+      });
+      html += '</div>';
+    }
+    host.innerHTML = html;
+    host.querySelectorAll('input[data-doc]').forEach(cb => cb.addEventListener('change', () => {
+      if (cb.checked) voterDocs.add(cb.dataset.doc); else voterDocs.delete(cb.dataset.doc);
+      renderVoterOutcome();
+    }));
+    document.getElementById('voter-attest').addEventListener('change', renderVoterOutcome);
+    document.getElementById('voter-citizen').addEventListener('change', renderVoterOutcome);
+    renderVoterOutcome();
+  }
+
+  // Mirror of the generated documentary-proof-bundlep:
+  //   some standalone  OR  (some anchor AND some supporting)
+  function documentaryProofBundle(docs, cats) {
+    const some = c => (cats[c] || []).some(m => docs.has(m.symbol));
+    return some('standalone-proof-types') ||
+           (some('anchor-photo-id-types') && some('supporting-document-types'));
+  }
+
+  function conclusionStatus(id) {
+    const el = document.getElementById(`status-${id}`);
+    return el ? el.textContent : '—';
+  }
+
+  function renderVoterOutcome() {
+    const cats = data.meta && data.meta.document_categories;
+    if (!cats) return;
+    const attest = document.getElementById('voter-attest').checked;
+    const citizen = document.getElementById('voter-citizen').checked;
+    const proof = documentaryProofBundle(voterDocs, cats);
+    const mandatory = activeAssumptions.has('hyp-mandatory');
+    const discretionary = activeAssumptions.has('hyp-discretionary');
+
+    // cards in hand
+    const cards = document.getElementById('voter-cards');
+    let ch = '';
+    let i = 0;
+    voterDocs.forEach(d => {
+      const short = (DOC_LABELS[d] || d).split(' ').slice(0, 2).join(' ');
+      ch += `<g transform="translate(${22 + i * 9},${-18 - i * 4}) rotate(${-8 + i * 6})"><rect width="40" height="26" rx="3" fill="#fff" stroke="#888"/><text class="voter-card" x="3" y="11" fill="#333">${short}</text></g>`;
+      i++;
+    });
+    if (!voterDocs.size) ch = '<text x="34" y="2" font-size="9" fill="#9aa7b4">(nothing)</text>';
+    cards.innerHTML = ch;
+
+    const steps = [];
+    let bubble, face = ': |';
+    if (proof) {
+      bubble = 'Documentary proof presented — application accepted and processed (§ 4(b)).';
+      face = ': )';
+      steps.push(`<span class="step"><b class="ok">Registered.</b> The bundle satisfies § 3(b) (${[...voterDocs].join(', ')}). <span class="who">Who decides: legislature (statutory text) — no premise needed.</span></span>`);
+      steps.push(`<span class="step">Neither constitutional conflict condition applies to this applicant: the statute does not deny registration.</span>`);
+    } else if (!attest) {
+      bubble = 'No documentary proof of citizenship presented — the State may not accept and process this application (§ 4(b), § 8(j)(1)).';
+      face = ': (';
+      steps.push(`<span class="step"><b class="bad">Denied.</b> Nothing presented is in the § 3(b) table${voterDocs.size ? ' (a supporting document without a photo ID, or a plain REAL ID, does not count)' : ''}, and the alternative process was not invoked. <span class="who">Who decides: legislature.</span></span>`);
+    } else if (mandatory && !discretionary) {
+      bubble = 'Attestation and other evidence received — citizenship sufficiently established; I must register you (mandatory reading of § 8(j)(2)(A)).';
+      face = ': )';
+      steps.push(`<span class="step"><b class="ok">Registered through the alternative process.</b> <span class="who">Who decides: court — you have the MANDATORY reading switched on.</span></span>`);
+    } else if (discretionary && !mandatory) {
+      bubble = '"I shall make a determination"… I am not satisfied. Denied (discretionary reading of § 8(j)(2)(A)).';
+      face = ': (';
+      steps.push(`<span class="step"><b class="mid">Denial possible.</b> Under the DISCRETIONARY reading the official may find citizenship not sufficiently established. <span class="who">Who decides: court (interpretation of "shall make a determination").</span></span>`);
+    } else if (mandatory && discretionary) {
+      bubble = 'Depends on how a court reads § 8(j)(2)(A): "shall make a determination" — must I register you, or may I decide?';
+      face = ': ?';
+      steps.push(`<span class="step"><b class="mid">Unresolved hinge.</b> Both readings are switched on; the model treats them as separate paths. Turn one off to see the outcome. <span class="who">Who decides: court.</span></span>`);
+    } else {
+      bubble = 'Attestation received, but no reading of § 8(j)(2)(A) is in force — no outcome can be derived.';
+      face = ': ?';
+      steps.push(`<span class="step"><b class="mid">No hinge premise on.</b> Switch on the mandatory or the discretionary reading.</span>`);
+    }
+
+    const denied = !proof && (!attest || (discretionary && !mandatory));
+    if (denied) {
+      if (!citizen) {
+        steps.push(`<span class="step">The applicant is not a citizen, so no protected right to vote is engaged: <b>no constitutional conflict on either model</b> — the statute did what it says.</span>`);
+      } else {
+        const c = conclusionStatus('concl-challenger'), g = conclusionStatus('concl-government');
+        steps.push(`<span class="step">A qualified <b>citizen</b> has been denied. What that means depends on your premises:</span>`);
+        steps.push(`<span class="step">• Challenger — constitutional conflict: <b class="${c === 'Supported' ? 'bad' : 'mid'}">${c}</b> <span class="who">(needs: no-fault, material burden, severe burden defeats — fact-finder + court)</span></span>`);
+        steps.push(`<span class="step">• Government — valid regulation, no conflict: <b class="${g === 'Supported' ? 'ok' : 'mid'}">${g}</b> <span class="who">(needs: important interest, evenhanded, burden not severe, adequate alternative — court + fact-finder)</span></span>`);
+      }
+    }
+    document.getElementById('voter-bubble-text').textContent = bubble;
+    document.getElementById('voter-face').textContent = face;
+    document.getElementById('voter-outcome').innerHTML = steps.join('');
+  }
+
   function renderStatusBar() {
     const st = data.meta && data.meta.legislative_status;
     const bar = document.getElementById('status-bar');
@@ -650,6 +773,7 @@
 
     // Update conclusion status badges
     updateConclusionStatuses();
+    if (typeof renderVoterOutcome === 'function' && data.meta && data.meta.document_categories) renderVoterOutcome();
     updateScenarioStatus();
   }
 

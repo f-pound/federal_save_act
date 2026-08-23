@@ -4,7 +4,7 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 6.3.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 6.4.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Legislative Status (as of 2026-08-22)
 
@@ -59,6 +59,7 @@ python tools/serve_explorer.py
 
 The explorer lets users toggle empirical, interpretive, and doctrinal assumptions to see which proof paths and conditional conclusions remain supported. It visualizes existing certified ACL2 proof dependencies across 6 layers (sources → formalization → executable model → derivations → theorems → conclusions).
 
+- **Try it**: the cartoon panel lets you hand the clerk any combination of § 3(b) documents and see the outcome, who decides each step, and what it means under your premises
 - **Click the audit stats** in the header bar to drill into books, theorems, axioms, and existentials
 - **It does not run ACL2 live** — it renders pre-certified proof structure
 - **It does not decide constitutionality** — final conclusions are conditional on selected assumptions

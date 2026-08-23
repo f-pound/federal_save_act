@@ -57,6 +57,69 @@
       ],
       "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled § 2 text unchanged."
     },
+    "document_categories": {
+      "standalone-proof-types": [
+        {
+          "symbol": "real-id-indicating-citizenship",
+          "source": "§ 3(b)(1)",
+          "text": "A form of identification issued consistent with the requirements of the REAL ID Act of 2005 that indicates the applicant is a citizen of the United States."
+        },
+        {
+          "symbol": "valid-us-passport",
+          "source": "§ 3(b)(2)",
+          "text": "A valid United States passport."
+        },
+        {
+          "symbol": "military-id-with-us-birth",
+          "source": "§ 3(b)(3)",
+          "text": "The applicant's official United States military identification card, together with a United States military record of service showing that the applicant's place of birth was in the United States."
+        },
+        {
+          "symbol": "govt-photo-id-showing-us-birth",
+          "source": "§ 3(b)(4)",
+          "text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government showing that the applicant's place of birth was in the United States."
+        }
+      ],
+      "anchor-photo-id-types": [
+        {
+          "symbol": "govt-photo-id",
+          "source": "§ 3(b)(5)",
+          "text": "A valid government-issued photo identification card issued by a Federal, State or Tribal government other than an identification described in paragraphs (1) through (4)."
+        }
+      ],
+      "supporting-document-types": [
+        {
+          "symbol": "certified-birth-certificate",
+          "source": "§ 3(b)(5)(A)",
+          "text": "A certified birth certificate issued by a State, a unit of local government in a State, or a Tribal government which-- [clauses (i)-(vii)]"
+        },
+        {
+          "symbol": "hospital-birth-record",
+          "source": "§ 3(b)(5)(B)",
+          "text": "An extract from a United States hospital Record of Birth created at the time of the applicant's birth which indicates that the applicant's place of birth was in the United States."
+        },
+        {
+          "symbol": "final-adoption-decree",
+          "source": "§ 3(b)(5)(C)",
+          "text": "A final adoption decree showing the applicant's name and that the applicant's place of birth was in the United States."
+        },
+        {
+          "symbol": "consular-report-of-birth-abroad",
+          "source": "§ 3(b)(5)(D)",
+          "text": "A Consular Report of Birth Abroad of a citizen of the United States or a certification of the applicant's Report of Birth of a United States citizen issued by the Secretary of State."
+        },
+        {
+          "symbol": "naturalization-certificate",
+          "source": "§ 3(b)(5)(E)",
+          "text": "A Naturalization Certificate or Certificate of Citizenship issued by the Secretary of Homeland Security or any other document or method of proof of United States citizenship issued by the Federal government pursuant to the Immigration and Nationality Act."
+        },
+        {
+          "symbol": "american-indian-card-kic",
+          "source": "§ 3(b)(5)(F)",
+          "text": "An American Indian Card issued by the Department of Homeland Security with the classification 'KIC'."
+        }
+      ]
+    },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
     "version": "6.3.0",
@@ -68,7 +131,7 @@
     "trace_rows": 45,
     "ace_statements": 9,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T04:07:16.616958+00:00"
+    "generated_at": "2026-08-23T04:12:11.330514+00:00"
   },
   "audit_details": {
     "books": [

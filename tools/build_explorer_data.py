@@ -214,6 +214,12 @@ def scan_lisp_events(model_dir):
 
 
 def build():
+    ir_path = Path(__file__).resolve().parents[1] / "data" / "parsed" / "federal_save_act_document_rules.json"
+    document_ir = json.loads(ir_path.read_text(encoding="utf-8")) if ir_path.exists() else None
+    document_categories = None
+    if document_ir:
+        document_categories = {c["name"]: [{"symbol": m["symbol"], "source": m.get("source", ""), "text": m.get("text", "")}
+                                           for m in c["members"]] for c in document_ir["categories"]}
     status_path = Path(__file__).resolve().parents[1] / "data" / "legislative_status.json"
     legislative_status = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else None
     # --- Load inputs ---
@@ -226,6 +232,7 @@ def build():
     # --- Build meta ---
     meta = {
         "legislative_status": legislative_status,
+        "document_categories": document_categories,
         "project": version.get("project", "federal_save_act"),
         "title": "Federal SAVE Act — Computational Amicus Explorer",
         "version": version.get("version", "unknown"),

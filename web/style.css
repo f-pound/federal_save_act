@@ -1645,3 +1645,26 @@ body.reviewer-active .reviewer-detail {
 .decider-party-stipulation { background: rgba(93,173,226,.18); color:#a9dcff; border-color: rgba(93,173,226,.4); }
 .decider-untagged { background: rgba(231,76,60,.18); color:#ff9d93; }
 .drawer-summary-label { font-size: 11px; color:#9aa7b4; margin-right: 4px; }
+
+/* v6.4 voter cartoon panel */
+.voter-panel { margin: 0 0 14px; border: 1px solid rgba(74,144,217,.3); border-radius: 10px; background: rgba(74,144,217,.06); }
+.voter-summary { cursor: pointer; padding: 10px 14px; list-style: none; display: flex; flex-direction: column; gap: 3px; }
+.voter-summary::-webkit-details-marker { display: none; }
+.voter-title { font-weight: 700; font-size: 13px; color: #dfe6ee; }
+.voter-sub { font-size: 11.5px; color: #9aa7b4; }
+.voter-body { display: grid; grid-template-columns: minmax(220px, 280px) 1fr; gap: 16px; padding: 0 14px 14px; }
+.voter-docs-title { font-size: 11px; font-weight: 600; color: #8fc1ff; margin-bottom: 6px; letter-spacing: .03em; }
+.voter-group { margin-bottom: 8px; }
+.voter-group-name { font-size: 10.5px; color: #9aa7b4; margin: 4px 0 2px; text-transform: uppercase; letter-spacing: .05em; }
+.voter-doc, .voter-toggle { display: flex; gap: 6px; align-items: flex-start; font-size: 11.5px; color: #c9d3dd; margin: 2px 0; cursor: pointer; }
+.voter-doc input, .voter-toggle input { margin-top: 2px; }
+.voter-toggle { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.08); }
+.voter-scene svg { width: 100%; height: auto; max-height: 340px; background: rgba(0,0,0,.15); border-radius: 8px; }
+.voter-bubble-text { font: 600 12.5px/1.25 Inter, system-ui, sans-serif; color: #1c1f2e; }
+.voter-outcome { margin-top: 8px; font-size: 11.5px; line-height: 1.45; color: #c9d3dd; }
+.voter-outcome .step { display: block; padding: 3px 0; }
+.voter-outcome .step b { color: #dfe6ee; }
+.voter-outcome .who { color: #8fc1ff; font-size: 10.5px; }
+.voter-outcome .ok { color: #2ECC71; } .voter-outcome .bad { color: #E74C3C; } .voter-outcome .mid { color: #F39C12; }
+.voter-card { font: 700 7.5px Inter, sans-serif; }
+@media (max-width: 900px) { .voter-body { grid-template-columns: 1fr; } }
