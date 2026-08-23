@@ -1666,5 +1666,5 @@ body.reviewer-active .reviewer-detail {
 .voter-outcome .step b { color: #dfe6ee; }
 .voter-outcome .who { color: #8fc1ff; font-size: 10.5px; }
 .voter-outcome .ok { color: #2ECC71; } .voter-outcome .bad { color: #E74C3C; } .voter-outcome .mid { color: #F39C12; }
-.voter-card { font: 700 7.5px Inter, sans-serif; }
+.voter-card { font: 800 7px Inter, sans-serif; letter-spacing: .02em; }
 @media (max-width: 900px) { .voter-body { grid-template-columns: 1fr; } }

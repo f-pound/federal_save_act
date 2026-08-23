@@ -6,6 +6,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.4.1] — 2026-08-23
+
+### Changed
+- Cartoon redrawn: drawn facial expressions (smile / frown / flat / puzzled with a "?"), arms, a fanned hand of labelled ID cards over the counter, a counter sign, and a larger speech bubble; clerk's expression follows the outcome.
+
 ## [6.4.0] — 2026-08-23
 
 ### Added — explorer: "a citizen at the registration counter"

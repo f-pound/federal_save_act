@@ -301,6 +301,26 @@
     'naturalization-certificate': 'Naturalization Certificate / Certificate of Citizenship',
     'american-indian-card-kic': 'American Indian Card (KIC)',
   };
+  const CARD_LABELS = {
+    'real-id-indicating-citizenship': 'ENH. ID', 'valid-us-passport': 'PASSPORT',
+    'military-id-with-us-birth': 'MIL ID', 'govt-photo-id-showing-us-birth': 'PHOTO ID*',
+    'govt-photo-id': 'PHOTO ID', 'certified-birth-certificate': 'BIRTH CERT',
+    'hospital-birth-record': 'HOSP. REC', 'final-adoption-decree': 'ADOPTION',
+    'consular-report-of-birth-abroad': 'CRBA', 'naturalization-certificate': 'NAT. CERT',
+    'american-indian-card-kic': 'KIC CARD',
+  };
+  const MOUTHS = {
+    smile: 'M134 101 q9 9 18 0', frown: 'M134 106 q9 -9 18 0', flat: 'M135 103 h16', unsure: 'M134 104 q4 -4 8 0 q4 4 8 0',
+  };
+  function setExpression(kind) {
+    const m = document.getElementById('voter-mouth');
+    const mark = document.getElementById('voter-mark');
+    const clerk = document.getElementById('clerk-mouth');
+    if (m) m.setAttribute('d', MOUTHS[kind] || MOUTHS.flat);
+    if (mark) mark.setAttribute('opacity', kind === 'unsure' ? '1' : '0');
+    if (clerk) clerk.setAttribute('d', kind === 'smile' ? 'M410 110 q8 7 16 0' : kind === 'frown' ? 'M410 113 q8 -5 16 0' : 'M410 111 h16');
+  }
+
   const GROUP_LABELS = {
     'standalone-proof-types': 'Proof on its own — § 3(b)(1)-(4)',
     'anchor-photo-id-types': 'Photo ID that must be PAIRED — § 3(b)(5)',
@@ -352,44 +372,49 @@
     const mandatory = activeAssumptions.has('hyp-mandatory');
     const discretionary = activeAssumptions.has('hyp-discretionary');
 
-    // cards in hand
+    // cards fanned in the applicant's hand, over the counter
     const cards = document.getElementById('voter-cards');
+    const list = [...voterDocs];
     let ch = '';
-    let i = 0;
-    voterDocs.forEach(d => {
-      const short = (DOC_LABELS[d] || d).split(' ').slice(0, 2).join(' ');
-      ch += `<g transform="translate(${22 + i * 9},${-18 - i * 4}) rotate(${-8 + i * 6})"><rect width="40" height="26" rx="3" fill="#fff" stroke="#888"/><text class="voter-card" x="3" y="11" fill="#333">${short}</text></g>`;
-      i++;
+    list.forEach((d, i) => {
+      const n = list.length;
+      const angle = -18 + (n === 1 ? 18 : (36 * i) / (n - 1));
+      const dx = 6 + i * (n > 4 ? 9 : 14);
+      ch += `<g transform="translate(${dx},${-34}) rotate(${angle} 0 34)">` +
+            `<rect width="46" height="30" rx="3" fill="#fdfdfd" stroke="#8a93a3" stroke-width="1"/>` +
+            `<rect x="4" y="5" width="12" height="12" rx="2" fill="#cfd6e2"/>` +
+            `<rect x="19" y="7" width="22" height="2.5" fill="#b7c0cf"/><rect x="19" y="12" width="16" height="2.5" fill="#b7c0cf"/>` +
+            `<text class="voter-card" x="23" y="25" text-anchor="middle" fill="#333">${CARD_LABELS[d] || d}</text></g>`;
     });
-    if (!voterDocs.size) ch = '<text x="34" y="2" font-size="9" fill="#9aa7b4">(nothing)</text>';
+    if (!list.length) ch = '<text x="-4" y="-6" font-size="10" font-style="italic" fill="#9aa7b4" font-family="Inter, sans-serif">empty-handed</text>';
     cards.innerHTML = ch;
 
     const steps = [];
-    let bubble, face = ': |';
+    let bubble, face = 'flat';
     if (proof) {
       bubble = 'Documentary proof presented — application accepted and processed (§ 4(b)).';
-      face = ': )';
+      face = 'smile';
       steps.push(`<span class="step"><b class="ok">Registered.</b> The bundle satisfies § 3(b) (${[...voterDocs].join(', ')}). <span class="who">Who decides: legislature (statutory text) — no premise needed.</span></span>`);
       steps.push(`<span class="step">Neither constitutional conflict condition applies to this applicant: the statute does not deny registration.</span>`);
     } else if (!attest) {
       bubble = 'No documentary proof of citizenship presented — the State may not accept and process this application (§ 4(b), § 8(j)(1)).';
-      face = ': (';
+      face = 'frown';
       steps.push(`<span class="step"><b class="bad">Denied.</b> Nothing presented is in the § 3(b) table${voterDocs.size ? ' (a supporting document without a photo ID, or a plain REAL ID, does not count)' : ''}, and the alternative process was not invoked. <span class="who">Who decides: legislature.</span></span>`);
     } else if (mandatory && !discretionary) {
       bubble = 'Attestation and other evidence received — citizenship sufficiently established; I must register you (mandatory reading of § 8(j)(2)(A)).';
-      face = ': )';
+      face = 'smile';
       steps.push(`<span class="step"><b class="ok">Registered through the alternative process.</b> <span class="who">Who decides: court — you have the MANDATORY reading switched on.</span></span>`);
     } else if (discretionary && !mandatory) {
       bubble = '"I shall make a determination"… I am not satisfied. Denied (discretionary reading of § 8(j)(2)(A)).';
-      face = ': (';
+      face = 'frown';
       steps.push(`<span class="step"><b class="mid">Denial possible.</b> Under the DISCRETIONARY reading the official may find citizenship not sufficiently established. <span class="who">Who decides: court (interpretation of "shall make a determination").</span></span>`);
     } else if (mandatory && discretionary) {
       bubble = 'Depends on how a court reads § 8(j)(2)(A): "shall make a determination" — must I register you, or may I decide?';
-      face = ': ?';
+      face = 'unsure';
       steps.push(`<span class="step"><b class="mid">Unresolved hinge.</b> Both readings are switched on; the model treats them as separate paths. Turn one off to see the outcome. <span class="who">Who decides: court.</span></span>`);
     } else {
       bubble = 'Attestation received, but no reading of § 8(j)(2)(A) is in force — no outcome can be derived.';
-      face = ': ?';
+      face = 'unsure';
       steps.push(`<span class="step"><b class="mid">No hinge premise on.</b> Switch on the mandatory or the discretionary reading.</span>`);
     }
 
@@ -405,7 +430,7 @@
       }
     }
     document.getElementById('voter-bubble-text').textContent = bubble;
-    document.getElementById('voter-face').textContent = face;
+    setExpression(face);
     document.getElementById('voter-outcome').innerHTML = steps.join('');
   }
 
