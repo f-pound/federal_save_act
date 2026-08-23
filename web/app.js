@@ -42,11 +42,26 @@
       description: 'No legal, empirical or interpretive premises — just the statute\'s text and the executable process model. Neither constitutional outcome is derivable; only the structural theorems (green "0 axioms") and the § 8(k) removal result remain.',
       hyps: [],
     },
+    citizendocs: {
+      label: 'Citizenship implies documents',
+      description: 'Grants the challenger every LEGAL premise (fundamental right, discretionary reading, severe burden defeats regulation, removal due process) but denies the two EMPIRICAL ones: citizens can and do hold documents, and a waivable $15-35 fee is not a material burden. The challenger\'s registration conflict then rests on nothing; the government\'s no-conflict holds. Shows exactly which factual claim the registration dispute turns on.',
+      hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory', 'hyp-discretionary',
+             'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats',
+             'hyp-removal-due-process', 'hyp-removal-valid-maintenance'],
+    },
     highrisk: {
       label: 'Contested premises only',
       description: 'Keeps only the three empirically contestable premises about burden severity and drops every doctrinal and interpretive one. Shows how little is settled by facts alone.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe'],
     },
+  };
+
+  // ---- Decider display names (who makes the determination an axiom encodes) ----
+  const DECIDER_LABELS = {
+    'legislature': 'Legislature — statutory text',
+    'court': 'Court — doctrine / statutory interpretation',
+    'fact-finder': 'Fact-finder — empirical finding',
+    'party-stipulation': 'Party stipulation — conceded by both sides (or arguendo)',
   };
 
   // ---- Node type display names ----
@@ -381,6 +396,11 @@
     container.innerHTML = html;
   }
 
+  function deciderChip(d) {
+    if (!d) return '';
+    return `<span class="decider-chip decider-${d}" title="${(DECIDER_LABELS[d] || d).replace(/"/g, '')}">${d}</span>`;
+  }
+
   function renderAxiomsDrawer(container) {
     const ad = data.audit_details;
     if (!ad || !ad.axioms_by_book) { container.innerHTML = '<p>No axiom data available.</p>'; return; }
@@ -403,6 +423,17 @@
       html += `<span class="drawer-chip ${cls}">${cnt} ${lbl.replace(/_/g, ' ').toLowerCase()}</span>`;
     }
     html += '</div>';
+    // Who decides — every axiom is a choice; this is whose.
+    const deciderCounts = {};
+    Object.values(ad.axioms_by_book).forEach(arr => arr.forEach(ax => {
+      const d = ax.decider || 'untagged';
+      deciderCounts[d] = (deciderCounts[d] || 0) + 1;
+    }));
+    html += '<div class="drawer-summary drawer-deciders"><span class="drawer-summary-label">Who decides:</span>';
+    for (const [d, cnt] of Object.entries(deciderCounts)) {
+      html += `<span class="decider-chip decider-${d}" title="${(DECIDER_LABELS[d] || d).replace(/"/g, '')}">${cnt} ${d}</span>`;
+    }
+    html += '</div>';
 
     for (const [book, axms] of Object.entries(ad.axioms_by_book)) {
       const shortName = book.replace('federal_save_act_', '');
@@ -417,6 +448,7 @@
         html += `<div class="drawer-axiom-row">`;
         html += `<span class="drawer-axiom-name mono">${ax.name}</span>`;
         html += `<span class="drawer-chip-small ${labelCls}">${(ax.label || '').replace(/_/g, ' ')}</span>`;
+        html += deciderChip(ax.decider);
         if (ax.source_id && ax.source_id !== 'n/a') html += `<span class="drawer-axiom-source">${ax.source_id}</span>`;
         if (ax.clause_text) html += `<div class="drawer-axiom-clause">${ax.clause_text}</div>`;
         html += `</div>`;
@@ -941,6 +973,25 @@
     }
 
     // Trusted base
+    // Who decides?  Logic has no grey areas; every axiom is a CHOICE and
+    // the trace CSV records whose.  Match the node's ACL2 events against
+    // the traced axioms and show the distinct deciders.
+    if (node.acl2_event && data.audit_details && data.audit_details.axioms_by_book) {
+      const ev = String(node.acl2_event);
+      const hits = [];
+      Object.values(data.audit_details.axioms_by_book).forEach(list => list.forEach(a => {
+        if (a.decider && ev.indexOf(a.name) !== -1) hits.push(a);
+      }));
+      const deciders = [...new Set(hits.map(a => a.decider))];
+      if (deciders.length) {
+        addDetailBlock(container, 'Who decides this',
+          deciders.map(d => DECIDER_LABELS[d] || d).join(' · ') +
+          (hits.length > 1 ? ` (${hits.length} axioms)` : ''));
+      }
+    } else if (node.axiom_free || (node.type === 'THEOREM' || node.type === 'LEMMA' || node.type === 'LIBRARY')) {
+      addDetailBlock(container, 'Who decides this', 'Nobody — proved by ACL2 from definitions');
+    }
+
     if (node.trusted_base !== undefined) {
       addDetailBlock(container, 'Trusted Base', node.trusted_base ? 'Yes — not proved by ACL2' : 'No');
     }

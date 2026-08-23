@@ -1,7 +1,7 @@
 {
-  "version": "6.2.0",
+  "version": "6.3.0",
   "model_version": "6.1",
-  "documentation_version": "6.2.0",
+  "documentation_version": "6.3.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -15,7 +15,7 @@
     "senate_last_action": "cloture not invoked 53-47, 2026-03-26"
   },
   "census": {
-    "theorems": 216,
+    "theorems": 219,
     "axioms": 38,
     "books": 25,
     "defun": 51,
@@ -32,7 +32,13 @@
     "generated_books": 4,
     "ace_generated_statements": 5,
     "scenarios": 2,
-    "tracked_bill_texts": 2
+    "tracked_bill_texts": 2,
+    "decider_tags": {
+      "legislature": 4,
+      "court": 16,
+      "fact-finder": 3,
+      "party-stipulation": 15
+    }
   },
   "certification": {
     "all_passed": true,
@@ -47,5 +53,5 @@
     "government-burden-not-severe",
     "scenario-b-verified-noncitizen-information"
   ],
-  "last_updated": "2026-08-22"
+  "last_updated": "2026-08-23"
 }

@@ -4,7 +4,7 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 6.2.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 6.3.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Legislative Status (as of 2026-08-22)
 
@@ -88,11 +88,11 @@ The explorer lets users toggle empirical, interpretive, and doctrinal assumption
 | Independence | 3 | structural decomposition, pivot theorem | ✅ All Q.E.D. |
 | Challenger model | 15 | encapsulate + bridge rules + shared scenario; registration and removal branches | ✅ All Q.E.D. |
 | Government model | 8 | encapsulate + bridge rules + shared scenario; registration and removal branches | ✅ All Q.E.D. |
-| Document proofs | 17 | enum_list instances over generated § 3(b) tables | ✅ All Q.E.D. |
+| Document proofs | 20 | enum_list instances over generated § 3(b) tables; plain REAL ID ≠ proof | ✅ All Q.E.D. |
 | Burden proofs | 8 | derivation chain, contrapositives | ✅ All Q.E.D. |
 | Doctrine proofs | 7 | conditional doctrine, encapsulate | ✅ All Q.E.D. |
 | Model consistency | 7 | compositional decomposition | ✅ All Q.E.D. |
-| **Total** | **216** | | **✅ All Q.E.D.** |
+| **Total** | **219** | | **✅ All Q.E.D.** |
 
 **Second hinge (v6.1)**: Whether removal under § 8(k) on "verified information" with no notice or hearing is a valid regulation as applied to a registered citizen. The challenger (Mathews v. Eldridge) and government (Husted) removal branches reach opposite conditional conclusions for `citizen-b`.
 
@@ -255,7 +255,7 @@ federal_save_act/
 
 The § 8(k) removal process is modeled structurally (`federal_save_act_removal_invariants.lisp`: the statutory path to removal provably contains no notice or hearing event) and doctrinally (v6.1: `constitutional-removal-conflict-conditionp`, with challenger and government removal branches for `citizen-b`). The neutral books do **not** assert that removal without notice is unconstitutional; the party books derive opposite conditional conclusions from traced assumptions.
 
-- **38 defaxioms** across 6 books — see `reports/axiom_inventory.md` for the full classification
+- **38 defaxioms** across 6 books — see `reports/axiom_inventory.md` for the full classification. Every one carries a **decider** tag (legislature 4 · court 16 · fact-finder 3 · party-stipulation 15): the logic has no grey areas; each axiom is a choice, and the tag says whose. A CI lint guarantees the 18 neutral books contain no axiom at all.
 - **13 scenario facts** stipulating citizen-a (registration) and citizen-b (removal), shared by both party models (self-evidently consistent)
 - **3 empirical assumptions** about burden severity (contestable, source-linked)
 - **2 interpretive assumptions** encoding the hinge semantics (mutually exclusive)

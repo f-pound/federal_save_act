@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.3.0] — 2026-08-23
+
+### Added — "no grey areas in the logic; every grey area is a choice, and here is whose"
+- **Decider tag** on every axiom: `sources/clause_trace.csv` gains a `decider` column — `legislature` (statutory text, 4), `court` (doctrine / interpretation, 16), `fact-finder` (empirical, 3), `party-stipulation` (conceded by both sides or arguendo, 15). Validated in CI (check 5); shown in the explorer's details panel ("Who decides this") and axioms drawer; theorems show "Nobody — proved by ACL2 from definitions".
+- **Neutrality lint** (CI check 6): the 18 neutral books (libraries, core, generated tables, process/document/removal invariants, consistency, burden, doctrine, existentials, independence, hinge_common) must contain **no** `defaxiom`. Currently 0 violations.
+- **Preset "Citizenship implies documents"**: grants the challenger every *legal* premise and denies only the two *empirical* ones. The challenger's registration conflict goes unsupported; the government's holds — making explicit that the registration dispute turns on one factual claim.
+- **Theorems** `plain-real-id-is-not-recognized`, `plain-real-id-alone-is-not-proof`, `real-id-indicating-citizenship-alone-is-proof`: a plain REAL ID (what ~81% of air travellers now carry) is not in any § 3(b) category; only the five-state enhanced licence is. Structural, axiom-free.
+
+### Census
+- Theorems: 216 → **219**; axioms 38 (unchanged); decider tags 38/38.
+
 ## [6.2.0] — 2026-08-22
 
 ### Added — legislative currency

@@ -19,6 +19,29 @@ import sys
 import os
 from pathlib import Path
 
+# Who makes the determination an axiom encodes.  The logic (defun/defthm)
+# has no grey areas; every grey area is a CHOICE, and this says whose.
+ALLOWED_DECIDERS = {
+    "legislature",        # statutory text: Congress chose these words
+    "court",              # doctrine and statutory interpretation
+    "fact-finder",        # empirical findings (trial court / record)
+    "party-stipulation",  # conceded by both sides, or conceded arguendo
+}
+
+# Books that must contain NO defaxiom (neutrality lint).  Every legal
+# choice lives in a party, hinge, facts, scenario, or generated text book.
+NEUTRAL_BOOKS = {
+    "lib/enum_list.lisp", "lib/lsm.lisp",
+    "federal_save_act_core.lisp", "federal_save_act_process.lisp",
+    "federal_save_act_document_rules.lisp", "federal_save_act_process_table.lisp",
+    "federal_save_act_removal_table.lisp", "federal_save_act_removal_invariants.lisp",
+    "federal_save_act_process_invariants.lisp", "federal_save_act_deep_process_invariants.lisp",
+    "federal_save_act_document_proofs.lisp", "federal_save_act_consistency_check.lisp",
+    "federal_save_act_burden_proofs.lisp", "federal_save_act_existentials.lisp",
+    "federal_save_act_doctrine_proofs.lisp", "federal_save_act_model_consistency.lisp",
+    "federal_save_act_independence.lisp", "federal_save_act_hinge_common.lisp",
+}
+
 ALLOWED_LABELS = {
     "TEXT_FACT",
     "DOCTRINAL_RULE",
@@ -37,10 +60,11 @@ ALLOWED_LABELS = {
 def find_defaxioms(lisp_dir):
     """Scan all .lisp files and return {axiom_name: filename}."""
     axioms = {}
-    for f in sorted(Path(lisp_dir).glob("*.lisp")):
+    for f in sorted(list(Path(lisp_dir).glob("*.lisp")) + list(Path(lisp_dir).glob("lib/*.lisp"))):
         content = f.read_text(encoding="utf-8", errors="replace")
-        for m in re.finditer(r'\(defaxiom\s+([\w\-]+)', content):
-            axioms[m.group(1)] = f.name
+        rel = f.relative_to(lisp_dir).as_posix()
+        for m in re.finditer(r'^\s*\(defaxiom\s+([\w\-]+)', content, re.MULTILINE):
+            axioms[m.group(1)] = rel
     return axioms
 
 def find_defthms(lisp_dir):
@@ -140,6 +164,27 @@ def main():
         label = row.get("label", row.get("category", "")).strip()
         if label and label not in ALLOWED_LABELS:
             errors.append(f"CHECK 4 FAIL: Row {i} has label '{label}' not in allowed set: {ALLOWED_LABELS}")
+
+    # --- Check 5: Every traced defaxiom carries a valid decider tag ---
+    for i, row in enumerate(trace_rows, 1):
+        name = row.get("axiom_name", "").strip()
+        if name in all_axioms:
+            dec = row.get("decider", "").strip()
+            if dec not in ALLOWED_DECIDERS:
+                errors.append(f"CHECK 5 FAIL: Row {i} ('{name}') decider '{dec}' not in {sorted(ALLOWED_DECIDERS)}")
+
+    # --- Check 6: Neutrality lint — no defaxiom in a neutral book ---
+    for ax, book in all_axioms.items():
+        if book in NEUTRAL_BOOKS:
+            errors.append(f"CHECK 6 FAIL: defaxiom '{ax}' appears in NEUTRAL book {book}; legal choices belong in party/hinge/facts/scenario/text_rules books")
+    neutral_present = [b for b in NEUTRAL_BOOKS if (model_dir / b).exists()]
+    print(f"Neutrality lint: {len(neutral_present)} neutral books checked, {sum(1 for b in all_axioms.values() if b in NEUTRAL_BOOKS)} violations")
+    deciders = {}
+    for row in trace_rows:
+        if row.get("axiom_name", "").strip() in all_axioms:
+            deciders[row.get("decider", "")] = deciders.get(row.get("decider", ""), 0) + 1
+    print(f"Deciders: {deciders}")
+    print()
 
     # --- Print results ---
     if warnings:

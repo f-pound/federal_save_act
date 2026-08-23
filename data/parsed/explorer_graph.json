@@ -775,6 +775,17 @@
       "description": "Under the government's removal premises, ACL2 derives that no removal conflict exists for citizen-b.",
       "book": "federal_save_act_government_model.lisp",
       "path": "government"
+    },
+    {
+      "id": "thm-plain-real-id-not-proof",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "A plain REAL ID is not documentary proof of citizenship (§ 3(b)(1) needs \"indicates citizenship\")",
+      "description": "Structural fact from the generated § 3(b) table: real-id is not in any category; only real-id-indicating-citizenship is. REAL IDs are issued to all lawful-status holders; only five states issue enhanced licences that denote citizenship.",
+      "acl2_event": "plain-real-id-is-not-recognized, plain-real-id-alone-is-not-proof, real-id-indicating-citizenship-alone-is-proof",
+      "book": "federal_save_act_document_proofs.lisp",
+      "axiom_free": true,
+      "path": "neutral"
     }
   ],
   "edges": [
@@ -1337,6 +1348,12 @@
       "relation": "supports",
       "path": "government",
       "description": "If valid as applied to the registrant"
+    },
+    {
+      "from": "model-documents",
+      "to": "thm-plain-real-id-not-proof",
+      "relation": "supports",
+      "path": "neutral"
     }
   ],
   "hypotheticals": [

@@ -113,6 +113,7 @@ def scan_lisp_events(model_dir):
             for row in reader:
                 trace_lookup[row.get("axiom_name", "")] = {
                     "label": row.get("label", ""),
+                    "decider": row.get("decider", ""),
                     "source_id": row.get("source_id", ""),
                     "clause_text": row.get("clause_text", ""),
                 }
@@ -181,6 +182,7 @@ def scan_lisp_events(model_dir):
                     axms.append({
                         "name": name,
                         "label": trace_info.get("label", ""),
+                        "decider": trace_info.get("decider", ""),
                         "source_id": trace_info.get("source_id", ""),
                         "clause_text": trace_info.get("clause_text", ""),
                     })

@@ -151,3 +151,33 @@
                 (subsetp-equal *standalone-proof-types* wider))
            (documentary-proof-bundlep-under
             docs wider *anchor-photo-id-types* *supporting-document-types*)))
+
+;;; =========================================================================
+;;; 9. A PLAIN REAL ID IS NOT DOCUMENTARY PROOF OF CITIZENSHIP
+;;;
+;;; § 3(b)(1) counts a REAL ID-compliant identification only if it
+;;; "indicates the applicant is a citizen of the United States".  A REAL ID
+;;; is issued to anyone with lawful status (permanent residents, visa
+;;; holders, DACA recipients); only the five states that issue "Enhanced"
+;;; licenses (MI, MN, NY, VT, WA) denote citizenship on the card.  So the
+;;; document most travellers now carry is NOT, by itself, in any § 3(b)
+;;; category — the generated tables contain real-id-indicating-citizenship,
+;;; not real-id.  Pure structural fact from the statute's own enumeration;
+;;; no legal premise involved.
+;;; =========================================================================
+
+(defconst *doc-plain-real-id* 'real-id)
+
+(defthm plain-real-id-is-not-recognized
+  (not (recognized-document-typep *doc-plain-real-id*)))
+
+(defthm plain-real-id-alone-is-not-proof
+  (not (has-qualifying-docs-from-listp (list *doc-plain-real-id*))))
+
+;; ... and pairing it with a supporting document does not help either,
+;; because a plain REAL ID is not an anchor photo ID in the statute's list
+;; unless it is the (5) "government-issued photo identification card".
+;; (A REAL ID driver's licence IS such a card; the point is that the
+;; statute's benefit comes from the PAIRING, not from REAL ID status.)
+(defthm real-id-indicating-citizenship-alone-is-proof
+  (has-qualifying-docs-from-listp (list *doc-real-id*)))

@@ -59,16 +59,16 @@
     },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "6.2.0",
+    "version": "6.3.0",
     "books_certified": 25,
-    "theorems": 216,
+    "theorems": 219,
     "axioms": 38,
     "defun_sk_existentials": 4,
     "authoritative_sources": 34,
     "trace_rows": 45,
     "ace_statements": 9,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T03:46:24.345524+00:00"
+    "generated_at": "2026-08-23T04:07:16.616958+00:00"
   },
   "audit_details": {
     "books": [
@@ -149,7 +149,7 @@
         "file": "federal_save_act_document_proofs.lisp",
         "layer": 5,
         "clean": true,
-        "theorems": 17,
+        "theorems": 20,
         "axioms": 0,
         "existentials": 0
       },
@@ -437,7 +437,10 @@
         "all-nonqualifying-append",
         "pairing-two-insufficient-bundles-can-create-proof",
         "qualifying-list-implies-not-all-nonqualifying",
-        "widening-standalone-list-preserves-proof"
+        "widening-standalone-list-preserves-proof",
+        "plain-real-id-is-not-recognized",
+        "plain-real-id-alone-is-not-proof",
+        "real-id-indicating-citizenship-alone-is-proof"
       ],
       "federal_save_act_existentials": [
         "exists-burdened-citizen-implies-lacking-proof",
@@ -561,42 +564,49 @@
         {
           "name": "challenger-bridge-right-to-vote",
           "label": "BRIDGE_RULE",
+          "decider": "court",
           "source_id": "const-amend5",
           "clause_text": "nor shall any person be... deprived of life, liberty, or property, without due process of law"
         },
         {
           "name": "challenger-bridge-regulation-invalid",
           "label": "BRIDGE_RULE",
+          "decider": "court",
           "source_id": "anderson-v-celebrezze",
           "clause_text": "Anderson-Burdick balancing: severe burden + no sufficient justification = invalid regulation"
         },
         {
           "name": "challenger-scenario-no-presentation",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario: citizen-a does not present documentary proof with application"
         },
         {
           "name": "challenger-scenario-no-fault",
           "label": "EMPIRICAL_ASSUMPTION",
+          "decider": "fact-finder",
           "source_id": "fish-v-kobach",
           "clause_text": "approximately 18,000 applicants were unable to complete registration due to the documentary proof requirement"
         },
         {
           "name": "challenger-scenario-material-burden",
           "label": "EMPIRICAL_ASSUMPTION",
+          "decider": "fact-finder",
           "source_id": "crawford-v-marion",
           "clause_text": "the burden of obtaining a birth certificate... will be nontrivial for some voters"
         },
         {
           "name": "challenger-scenario-alternative-process-denied",
           "label": "INTERPRETATION_CHALLENGER",
+          "decider": "court",
           "source_id": "hr22-eh",
           "clause_text": "such official shall make a determination — interpretation: the determination is discretionary and may result in denial"
         },
         {
           "name": "challenger-bridge-removal-invalid",
           "label": "BRIDGE_RULE",
+          "decider": "court",
           "source_id": "const-amend5",
           "clause_text": "nor be deprived of life, liberty, or property, without due process of law"
         }
@@ -605,12 +615,14 @@
         {
           "name": "text-save-act-is-law",
           "label": "TEXT_FACT",
+          "decider": "legislature",
           "source_id": "hr22-eh",
           "clause_text": "This Act may be cited as the \"Safeguard American Voter Eligibility Act\" or the \"SAVE Act\"."
         },
         {
           "name": "text-documentary-proof-from-qualifying-documents",
           "label": "BRIDGE_RULE",
+          "decider": "legislature",
           "source_id": "hr22-eh",
           "clause_text": "the term 'documentary proof of United States citizenship' means, with respect to an applicant for voter registration, any of the following ... (1) A form of identification issued consistent with the requirements of the REAL ID Act of 2005 that indicates the applicant is a citizen of the United States. ... (2) A valid United States passport. ... (5) A valid government-issued photo identification card issued by a Federal, State or Tribal government other than an identification described in paragraphs (1) through (4), but only if presented together with one or more of the following"
         }
@@ -619,72 +631,84 @@
         {
           "name": "government-bridge-defense-validates",
           "label": "BRIDGE_RULE",
+          "decider": "court",
           "source_id": "crawford-v-marion",
           "clause_text": "Crawford: regulation satisfying Anderson-Burdick is constitutionally valid"
         },
         {
           "name": "government-election-integrity-interest",
           "label": "DOCTRINAL_RULE",
+          "decider": "court",
           "source_id": "crawford-v-marion",
           "clause_text": "there is no question about the legitimacy or importance of the State's interest in counting only the votes of eligible voters"
         },
         {
           "name": "government-important-interest",
           "label": "DOCTRINAL_RULE",
+          "decider": "court",
           "source_id": "crawford-v-marion",
           "clause_text": "Crawford plurality: election integrity is an important governmental interest"
         },
         {
           "name": "government-reasonable-requirement",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
           "source_id": "crawford-v-marion",
           "clause_text": "for most voters who need them, the inconvenience of making a trip to the BMV... does not qualify as a substantial burden"
         },
         {
           "name": "government-procedure-evenhanded",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
           "source_id": "burdick-v-takushi",
           "clause_text": "when an election regulation imposes only reasonable, nondiscriminatory restrictions... the State's important regulatory interests are generally sufficient"
         },
         {
           "name": "government-rationally-connected",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
           "source_id": "crawford-v-marion",
           "clause_text": "the ID requirement is amply justified by the valid interest in protecting the integrity and reliability of the electoral process"
         },
         {
           "name": "government-adequate-alternative",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
           "source_id": "hr22-eh",
           "clause_text": "each State shall establish a process under which an applicant who cannot provide documentary proof... may submit such other evidence — interpretation: the process provides an adequate safety valve"
         },
         {
           "name": "government-burden-not-severe",
           "label": "EMPIRICAL_ASSUMPTION",
+          "decider": "fact-finder",
           "source_id": "crawford-v-marion",
           "clause_text": "the inconvenience... does not qualify as a substantial burden on the right to vote"
         },
         {
           "name": "government-assume-right-to-vote-arguendo",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Government concedes arguendo that citizen-a has a protected right to vote"
         },
         {
           "name": "government-scenario-alternative-process-approved",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
           "source_id": "hr22-eh",
           "clause_text": "the process provides a guaranteed path to registration — interpretation: mandatory approval when evidence satisfies standards"
         },
         {
           "name": "government-bridge-removal-validates",
           "label": "BRIDGE_RULE",
+          "decider": "court",
           "source_id": "crawford-v-marion",
           "clause_text": "Crawford: regulation satisfying the applicable standard is constitutionally valid"
         },
         {
           "name": "government-removal-procedure-evenhanded",
           "label": "INTERPRETATION_GOVERNMENT",
+          "decider": "court",
           "source_id": "hr22-eh",
           "clause_text": "\"upon receipt of documentation or verified information\" — interpretation: the trigger applies evenhandedly to every registrant"
         }
@@ -693,6 +717,7 @@
         {
           "name": "semantic-b-discretionary-denial",
           "label": "INTERPRETIVE_ASSUMPTION",
+          "decider": "court",
           "source_id": "hr22-eh",
           "clause_text": "\"shall make a determination as to whether the applicant has sufficiently established\" — interpretation: duty to decide, but determination may be denial"
         }
@@ -701,6 +726,7 @@
         {
           "name": "semantic-a-mandatory-approval",
           "label": "INTERPRETIVE_ASSUMPTION",
+          "decider": "court",
           "source_id": "hr22-eh",
           "clause_text": "\"shall make a determination\" — interpretation: mandatory duty to approve when attestation + evidence satisfies EAC standards"
         }
@@ -709,78 +735,91 @@
         {
           "name": "scenario-person",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): citizen-a is a person"
         },
         {
           "name": "scenario-citizen",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): citizen-a is a U.S. citizen"
         },
         {
           "name": "scenario-eligible",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): citizen-a is eligible to vote"
         },
         {
           "name": "scenario-application",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): registration-attempt-a is a voter registration application"
         },
         {
           "name": "scenario-attempts-to-register",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): citizen-a attempts to register via registration-attempt-a"
         },
         {
           "name": "scenario-no-documentary-proof",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): citizen-a does not possess documentary proof"
         },
         {
           "name": "scenario-b-person",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is a person"
         },
         {
           "name": "scenario-b-citizen",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is a U.S. citizen"
         },
         {
           "name": "scenario-b-eligible",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is eligible to vote"
         },
         {
           "name": "scenario-b-registered",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is on the official list of eligible voters"
         },
         {
           "name": "scenario-b-verified-noncitizen-information",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): the State holds (erroneous) verified information that citizen-b is not a citizen"
         },
         {
           "name": "scenario-b-no-notice",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b received no notice before removal"
         },
         {
           "name": "scenario-b-no-hearing",
           "label": "SCENARIO_FACT",
+          "decider": "party-stipulation",
           "source_id": "n/a",
           "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b had no opportunity to contest removal"
         }
@@ -789,12 +828,14 @@
         {
           "name": "text-save-act-documentary-proof-requirement",
           "label": "PROHIBITION",
+          "decider": "legislature",
           "source_id": "hr22-eh",
           "clause_text": "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application"
         },
         {
           "name": "text-save-act-removal-upon-verified-information",
           "label": "PROHIBITION",
+          "decider": "legislature",
           "source_id": "hr22-eh",
           "clause_text": "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters ... at any time upon receipt of documentation or verified information that a registrant is not a United States citizen."
         }
@@ -1637,6 +1678,17 @@
       "description": "Under the government's removal premises, ACL2 derives that no removal conflict exists for citizen-b.",
       "book": "federal_save_act_government_model.lisp",
       "path": "government"
+    },
+    {
+      "id": "thm-plain-real-id-not-proof",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "A plain REAL ID is not documentary proof of citizenship (§ 3(b)(1) needs \"indicates citizenship\")",
+      "description": "Structural fact from the generated § 3(b) table: real-id is not in any category; only real-id-indicating-citizenship is. REAL IDs are issued to all lawful-status holders; only five states issue enhanced licences that denote citizenship.",
+      "acl2_event": "plain-real-id-is-not-recognized, plain-real-id-alone-is-not-proof, real-id-indicating-citizenship-alone-is-proof",
+      "book": "federal_save_act_document_proofs.lisp",
+      "axiom_free": true,
+      "path": "neutral"
     }
   ],
   "edges": [
@@ -2199,6 +2251,12 @@
       "relation": "supports",
       "path": "government",
       "description": "If valid as applied to the registrant"
+    },
+    {
+      "from": "model-documents",
+      "to": "thm-plain-real-id-not-proof",
+      "relation": "supports",
+      "path": "neutral"
     }
   ],
   "hypotheticals": [

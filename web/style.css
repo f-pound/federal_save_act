@@ -1636,3 +1636,12 @@ body.reviewer-active .reviewer-detail {
 .status-bar.hidden { display: none; }
 .status-chip { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #8fc1ff; }
 .status-bar a { color: #8fc1ff; }
+
+/* v6.3 decider chips */
+.decider-chip { display:inline-block; padding:1px 7px; border-radius:10px; font-size:10px; font-weight:600; letter-spacing:.03em; margin-left:6px; border:1px solid transparent; }
+.decider-legislature { background: rgba(74,144,217,.18); color:#8fc1ff; border-color: rgba(74,144,217,.4); }
+.decider-court { background: rgba(155,89,182,.18); color:#d7aaff; border-color: rgba(155,89,182,.4); }
+.decider-fact-finder { background: rgba(232,168,56,.18); color:#ffd28a; border-color: rgba(232,168,56,.45); }
+.decider-party-stipulation { background: rgba(93,173,226,.18); color:#a9dcff; border-color: rgba(93,173,226,.4); }
+.decider-untagged { background: rgba(231,76,60,.18); color:#ff9d93; }
+.drawer-summary-label { font-size: 11px; color:#9aa7b4; margin-right: 4px; }
