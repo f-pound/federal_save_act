@@ -179,6 +179,22 @@
       "type": "case",
       "holding": "Kansas's documentary proof-of-citizenship requirement for voter registration (the SAFE Act) likely violates § 5 of the NVRA because it adds a condition beyond the federal form's attestation requirement. The 10th Circuit affirmed the district court's preliminary injunction.",
       "relevance": "Most directly analogous precedent: a state-level documentary proof requirement substantially similar to the SAVE Act was enjoined as inconsistent with the NVRA. Key factual finding: approximately 18,000 applicants were unable to complete registration due to the documentary proof requirement."
+    },
+    {
+      "id": "mathews-v-eldridge",
+      "title": "Mathews v. Eldridge",
+      "citation": "424 U.S. 319 (1976)",
+      "url": "https://supreme.justia.com/cases/federal/us/424/319/",
+      "type": "case",
+      "note": "Procedural due process balancing: private interest, risk of erroneous deprivation, government interest."
+    },
+    {
+      "id": "husted-v-randolph",
+      "title": "Husted v. A. Philip Randolph Institute",
+      "citation": "584 U.S. 756 (2018)",
+      "url": "https://supreme.justia.com/cases/federal/us/584/16-980/",
+      "type": "case",
+      "note": "NVRA voter-list maintenance procedure upheld."
     }
   ]
 }

@@ -6,7 +6,7 @@
 ;; federal_save_act_text_rules.lisp  —  GENERATED FILE, DO NOT EDIT
 ;; Source IR : data/parsed/federal_save_act_text_rules.json
 ;; Generator : tools/clauses_to_acl2.py
-;; IR sha256 : 8ba0e4908d1d4a7265b71ffcd3c2b065e799fd9c3f6b6cb05c8c732ba98fed81
+;; IR sha256 : e2d3effbe0741a35b0f7bac40ab44a0e6e429d61aa68b380c7f77fed7f196cce
 ;; SAVE Act text-derived constraints on the neutral vocabulary (defaxiom)
 ;;
 ;; Every defconst below is a statutory enumeration; every defun is a
@@ -26,3 +26,14 @@
         (not (presents-documentary-proofp p x))
         (not (alternative-process-approvedp p x)))
    (statute-denies-registrationp 'federal-save-act p x)))
+
+;;; =========================================================================
+;;; AXIOM text-save-act-removal-upon-verified-information   [PROHIBITION]  § 2(f) / NVRA § 8(k); NVRA § 8(a)(3)(D)
+;;; "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters for elections for Federal office held in the State at any time upon receipt of documentation or verified information that a registrant is not a United States citizen."
+;;; =========================================================================
+(defaxiom text-save-act-removal-upon-verified-information
+  (implies
+   (and (personp p)
+        (registered-voterp p)
+        (verified-noncitizen-informationp p))
+   (statute-removes-registrantp 'federal-save-act p)))

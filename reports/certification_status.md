@@ -17,15 +17,15 @@ All **25 books** certify with ACL2 `certify-book` (tested: ACL2 8.7 native via H
 |---|---|---|---|---|---|
 | `lib/enum_list` | L | ✅ clean | None | 21 | — (generic) |
 | `lib/lsm` | L | ✅ clean | None | 22 | includes lib/enum_list |
-| `federal_save_act_core` | 0 | ✅ clean | None | 2 | — |
+| `federal_save_act_core` | 0 | ✅ clean | None | 4 | — |
 | `federal_save_act_document_rules` | 0 | ✅ clean (generated) | None | 0 | includes lib/enum_list |
 | `federal_save_act_process_table` | 0 | ✅ clean (generated) | None | 0 | — |
 | `federal_save_act_removal_table` | 0 | ✅ clean (generated) | None | 0 | — |
 | `federal_save_act_process` | 0 | ✅ clean | None | 28 | includes core, document_rules, process_table, lib/lsm |
 | `federal_save_act_removal_invariants` | 5 | ✅ clean | None | 11 | includes removal_table, lib/lsm |
-| `federal_save_act_text_rules` | 1 | ✅ defaxioms-okp (generated) | 1 own | 0 | includes core |
+| `federal_save_act_text_rules` | 1 | ✅ defaxioms-okp (generated) | 2 own | 0 | includes core |
 | `federal_save_act_facts` | 1 | ✅ defaxioms-okp | 2 own | 0 | includes core, text_rules |
-| `federal_save_act_scenario` | 1 | ✅ defaxioms-okp | 6 own | 3 | includes facts |
+| `federal_save_act_scenario` | 1 | ✅ defaxioms-okp | 13 own | 6 | includes facts |
 | `federal_save_act_hinge_common` | 2 | ✅ defaxioms-okp | 0 own, inherited | 4 | includes facts |
 | `federal_save_act_hinge_mandatory` | 3 | ✅ defaxioms-okp | 1 own | 2 | includes hinge_common |
 | `federal_save_act_hinge_discretionary` | 3 | ✅ defaxioms-okp | 1 own | 3 | includes hinge_common |
@@ -34,14 +34,14 @@ All **25 books** certify with ACL2 `certify-book` (tested: ACL2 8.7 native via H
 | `federal_save_act_doctrine_proofs` | 4 | ✅ defaxioms-okp | 0 own, inherited | 7 | includes facts |
 | `federal_save_act_model_consistency` | 4 | ✅ defaxioms-okp | 0 own, inherited | 7 | includes facts |
 | `federal_save_act_independence` | 4 | ✅ defaxioms-okp | 0 own, inherited | 3 | includes facts |
-| `federal_save_act_challenger_model` | 4 | ✅ defaxioms-okp | 6 own | 11 | includes scenario |
-| `federal_save_act_government_model` | 4 | ✅ defaxioms-okp | 10 own | 5 | includes scenario |
+| `federal_save_act_challenger_model` | 4 | ✅ defaxioms-okp | 7 own | 15 | includes scenario |
+| `federal_save_act_government_model` | 4 | ✅ defaxioms-okp | 12 own | 8 | includes scenario |
 | `federal_save_act_process_invariants` | 5 | ✅ clean | None | 16 | includes process |
 | `federal_save_act_deep_process_invariants` | 5 | ✅ clean | None | 11 | includes process_invariants |
 | `federal_save_act_document_proofs` | 5 | ✅ clean | None | 17 | includes process |
 | `federal_save_act_consistency_check` | 6 | ✅ clean | None | 17 | includes core |
 
-Total defaxioms: 1 (text_rules) + 2 (facts) + 6 + 1 + 1 + 6 + 10 = **27**.  Total theorems: **204**.
+Total defaxioms: 2 (text_rules) + 2 (facts) + 13 (scenario) + 1 + 1 (hinges) + 7 (challenger) + 12 (government) = **38**.  Total theorems: **216**.
 
 ## Dependency Graph
 

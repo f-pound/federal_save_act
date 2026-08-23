@@ -118,9 +118,12 @@
 ;;; Removal predicates (NVRA § 8(k))
 ;;; =========================================================================
 
-(defstub verified-noncitizen-informationp (p) t) ; verified info that p is not a citizen
+(defstub registered-voterp (p) t)                 ; p is on the official list of eligible voters
+(defstub verified-noncitizen-informationp (p) t) ; State holds documentation/verified info that p is not a citizen
 (defstub adequate-notice-before-removalp (p) t)  ; p received adequate notice before removal
 (defstub opportunity-to-be-heardp (p) t)          ; p had opportunity to contest removal
+(defstub statute-removes-registrantp (law p) t)  ; law removes registrant p from the rolls
+(defstub removal-procedure-evenhandedp (law) t)  ; (government-side) removal procedure is evenhanded
 
 ;;; =========================================================================
 ;;; Penalty predicates
@@ -250,6 +253,30 @@
        (not (valid-regulationp law x))))
 
 ;;; =========================================================================
+;;; Removal-side conflict condition (v6.1)
+;;;
+;;; § 8(k) acts on a REGISTRANT, not on an application, so removal gets its
+;;; own conflict condition with the same shape as the registration one.
+;;; The object of valid-regulationp is the registrant p: "the removal rule
+;;; is a valid regulation as applied to p".  (The registration condition
+;;; uses the application x.)  Party models constrain valid-regulationp for
+;;; applications and for registrants SEPARATELY — see the v6.1 narrowing of
+;;; the bridge rules in the challenger and government books.
+;;; =========================================================================
+
+(defun removal-transactionp (p)
+  (and (personp p)
+       (registered-voterp p)))
+
+(defun constitutional-removal-conflict-conditionp (law constitution-section p)
+  (and (lawp law)
+       (qualified-federal-voterp p)
+       (protected-right-to-votep constitution-section p)
+       (removal-transactionp p)
+       (statute-removes-registrantp law p)
+       (not (valid-regulationp law p))))
+
+;;; =========================================================================
 ;;; Shared structural lemmas about the conflict condition (v6.0)
 ;;;
 ;;; v5 restated the two facts below in five different books
@@ -273,3 +300,17 @@
                 (statute-denies-registrationp law p x))
            (iff (constitutional-conflict-conditionp law cs p x)
                 (not (valid-regulationp law x)))))
+
+;; Removal-side twins of the two lemmas above.
+(defthm core-valid-regulation-defeats-removal-conflict
+  (implies (valid-regulationp law p)
+           (not (constitutional-removal-conflict-conditionp law cs p))))
+
+(defthm core-removal-conflict-pivots-on-valid-regulation
+  (implies (and (lawp law)
+                (qualified-federal-voterp p)
+                (protected-right-to-votep cs p)
+                (removal-transactionp p)
+                (statute-removes-registrantp law p))
+           (iff (constitutional-removal-conflict-conditionp law cs p)
+                (not (valid-regulationp law p)))))

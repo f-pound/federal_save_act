@@ -1,7 +1,7 @@
 {
-  "version": "6.0.1",
-  "model_version": "6.0",
-  "documentation_version": "6.0.1",
+  "version": "6.1.0",
+  "model_version": "6.1",
+  "documentation_version": "6.1.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -13,22 +13,23 @@
     "vote_date": "2025-04-10"
   },
   "census": {
-    "theorems": 204,
-    "axioms": 27,
+    "theorems": 216,
+    "axioms": 38,
     "books": 25,
-    "defun": 49,
-    "defstub": 49,
+    "defun": 51,
+    "defstub": 52,
     "defconst": 51,
     "defun_sk": 4,
-    "encapsulate": 4,
-    "total_events": 386,
-    "authoritative_sources": 21,
-    "traced_propositions": 32,
-    "ace_statements": 8,
+    "encapsulate": 6,
+    "total_events": 414,
+    "authoritative_sources": 23,
+    "traced_propositions": 45,
+    "ace_statements": 9,
     "ace_readme_paragraphs": 13,
     "generic_library_theorems": 43,
     "generated_books": 4,
-    "ace_generated_statements": 4
+    "ace_generated_statements": 5,
+    "scenarios": 2
   },
   "certification": {
     "all_passed": true,
@@ -40,7 +41,8 @@
   "high_risk_assumptions": [
     "challenger-scenario-no-fault",
     "challenger-scenario-material-burden",
-    "government-burden-not-severe"
+    "government-burden-not-severe",
+    "scenario-b-verified-noncitizen-information"
   ],
   "last_updated": "2026-08-23"
 }

@@ -2,16 +2,16 @@
   "meta": {
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "6.0.1",
+    "version": "6.1.0",
     "books_certified": 25,
-    "theorems": 204,
-    "axioms": 27,
+    "theorems": 216,
+    "axioms": 38,
     "defun_sk_existentials": 4,
-    "authoritative_sources": 21,
-    "trace_rows": 32,
-    "ace_statements": 8,
+    "authoritative_sources": 23,
+    "trace_rows": 45,
+    "ace_statements": 9,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T03:17:36.703317+00:00"
+    "generated_at": "2026-08-23T03:30:07.248399+00:00"
   },
   "audit_details": {
     "books": [
@@ -47,8 +47,8 @@
         "file": "federal_save_act_challenger_model.lisp",
         "layer": 4,
         "clean": false,
-        "theorems": 11,
-        "axioms": 6,
+        "theorems": 15,
+        "axioms": 7,
         "existentials": 0
       },
       {
@@ -65,7 +65,7 @@
         "file": "federal_save_act_core.lisp",
         "layer": 0,
         "clean": true,
-        "theorems": 2,
+        "theorems": 4,
         "axioms": 0,
         "existentials": 0
       },
@@ -128,8 +128,8 @@
         "file": "federal_save_act_government_model.lisp",
         "layer": 4,
         "clean": false,
-        "theorems": 5,
-        "axioms": 10,
+        "theorems": 8,
+        "axioms": 12,
         "existentials": 0
       },
       {
@@ -227,8 +227,8 @@
         "file": "federal_save_act_scenario.lisp",
         "layer": 1,
         "clean": false,
-        "theorems": 3,
-        "axioms": 6,
+        "theorems": 6,
+        "axioms": 13,
         "existentials": 0
       },
       {
@@ -237,7 +237,7 @@
         "layer": 1,
         "clean": false,
         "theorems": 0,
-        "axioms": 1,
+        "axioms": 2,
         "existentials": 0
       }
     ],
@@ -310,7 +310,11 @@
         "challenger-lemma-not-valid-regulation",
         "challenger-lemma-denial",
         "challenger-conflict-general",
-        "challenger-model-finds-conflict"
+        "challenger-model-finds-conflict",
+        "challenger-removal-without-process-is-violation",
+        "challenger-removal-conflict-general",
+        "challenger-lemma-b-protected-right",
+        "challenger-model-finds-removal-conflict"
       ],
       "federal_save_act_consistency_check": [
         "consistency-check-qualifying-document-passport",
@@ -333,7 +337,9 @@
       ],
       "federal_save_act_core": [
         "core-valid-regulation-defeats-conflict",
-        "core-conflict-pivots-on-valid-regulation"
+        "core-conflict-pivots-on-valid-regulation",
+        "core-valid-regulation-defeats-removal-conflict",
+        "core-removal-conflict-pivots-on-valid-regulation"
       ],
       "federal_save_act_deep_process_invariants": [
         "terminal-state-remains-terminal-under-run-trace",
@@ -389,7 +395,10 @@
         "government-lemma-defense-established",
         "government-lemma-regulation-valid",
         "government-no-conflict-general",
-        "government-model-no-conflict"
+        "government-model-no-conflict",
+        "government-removal-defense-rule",
+        "government-no-removal-conflict-general",
+        "government-model-no-removal-conflict"
       ],
       "federal_save_act_hinge_common": [
         "hinge-evidence-type",
@@ -484,7 +493,10 @@
       "federal_save_act_scenario": [
         "scenario-qualified-voter",
         "scenario-registration-transaction",
-        "scenario-lacks-all-qualifying-documents"
+        "scenario-lacks-all-qualifying-documents",
+        "scenario-b-qualified-voter",
+        "scenario-b-removal-transaction",
+        "scenario-b-statute-removes"
       ]
     },
     "axioms_by_book": {
@@ -524,6 +536,12 @@
           "label": "INTERPRETATION_CHALLENGER",
           "source_id": "hr22-eh",
           "clause_text": "such official shall make a determination — interpretation: the determination is discretionary and may result in denial"
+        },
+        {
+          "name": "challenger-bridge-removal-invalid",
+          "label": "BRIDGE_RULE",
+          "source_id": "const-amend5",
+          "clause_text": "nor be deprived of life, liberty, or property, without due process of law"
         }
       ],
       "federal_save_act_facts": [
@@ -600,6 +618,18 @@
           "label": "INTERPRETATION_GOVERNMENT",
           "source_id": "hr22-eh",
           "clause_text": "the process provides a guaranteed path to registration — interpretation: mandatory approval when evidence satisfies standards"
+        },
+        {
+          "name": "government-bridge-removal-validates",
+          "label": "BRIDGE_RULE",
+          "source_id": "crawford-v-marion",
+          "clause_text": "Crawford: regulation satisfying the applicable standard is constitutionally valid"
+        },
+        {
+          "name": "government-removal-procedure-evenhanded",
+          "label": "INTERPRETATION_GOVERNMENT",
+          "source_id": "hr22-eh",
+          "clause_text": "\"upon receipt of documentation or verified information\" — interpretation: the trigger applies evenhandedly to every registrant"
         }
       ],
       "federal_save_act_hinge_discretionary": [
@@ -654,6 +684,48 @@
           "label": "SCENARIO_FACT",
           "source_id": "n/a",
           "clause_text": "Stipulated test scenario (shared by both party models): citizen-a does not possess documentary proof"
+        },
+        {
+          "name": "scenario-b-person",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is a person"
+        },
+        {
+          "name": "scenario-b-citizen",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is a U.S. citizen"
+        },
+        {
+          "name": "scenario-b-eligible",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is eligible to vote"
+        },
+        {
+          "name": "scenario-b-registered",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b is on the official list of eligible voters"
+        },
+        {
+          "name": "scenario-b-verified-noncitizen-information",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): the State holds (erroneous) verified information that citizen-b is not a citizen"
+        },
+        {
+          "name": "scenario-b-no-notice",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b received no notice before removal"
+        },
+        {
+          "name": "scenario-b-no-hearing",
+          "label": "SCENARIO_FACT",
+          "source_id": "n/a",
+          "clause_text": "Stipulated removal scenario (shared by both party models): citizen-b had no opportunity to contest removal"
         }
       ],
       "federal_save_act_text_rules": [
@@ -662,6 +734,12 @@
           "label": "PROHIBITION",
           "source_id": "hr22-eh",
           "clause_text": "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application"
+        },
+        {
+          "name": "text-save-act-removal-upon-verified-information",
+          "label": "PROHIBITION",
+          "source_id": "hr22-eh",
+          "clause_text": "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters ... at any time upon receipt of documentation or verified information that a registrant is not a United States citizen."
         }
       ]
     },
@@ -1388,6 +1466,120 @@
       "description": "Neutral structural result: the statutory process admits removal from the rolls with no notice or hearing event. The model does NOT assert this is unconstitutional; it gives a due-process argument a precise mechanical target.",
       "book": "federal_save_act_removal_invariants.lisp",
       "path": "neutral"
+    },
+    {
+      "id": "src-mathews",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Mathews v. Eldridge (1976)",
+      "description": "Procedural due process: private interest, risk of erroneous deprivation, government interest.",
+      "source_ref": "424 U.S. 319",
+      "path": "challenger"
+    },
+    {
+      "id": "src-husted",
+      "type": "LEGAL_SOURCE",
+      "layer": "sources",
+      "label": "Husted v. A. Philip Randolph Inst. (2018)",
+      "description": "NVRA list-maintenance procedure upheld.",
+      "source_ref": "584 U.S. 756",
+      "path": "government"
+    },
+    {
+      "id": "ax-citizen-b",
+      "type": "SCENARIO_FACT",
+      "layer": "formalization",
+      "label": "citizen-b: registered citizen, erroneously flagged, removed without notice",
+      "description": "Shared scenario B: citizen-b is a person, citizen, eligible, on the rolls; the State holds (erroneous) verified information of noncitizenship; no notice, no hearing.",
+      "acl2_event": "scenario-b-* (7 axioms)",
+      "book": "federal_save_act_scenario.lisp",
+      "source_ref": "stipulated",
+      "trusted_base": true,
+      "high_risk": true,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-statute-removes",
+      "type": "TEXT_FACT",
+      "layer": "formalization",
+      "label": "§ 8(k): statute removes registrant on verified information",
+      "description": "Generated text rule: person + on rolls + verified noncitizen information ⇒ the SAVE Act removes the registrant.",
+      "acl2_event": "text-save-act-removal-upon-verified-information",
+      "book": "federal_save_act_text_rules.lisp",
+      "source_ref": "SAVE Act § 2(f) / NVRA § 8(k)",
+      "trusted_base": true,
+      "path": "neutral"
+    },
+    {
+      "id": "ax-removal-due-process",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Removal without notice or hearing violates due process",
+      "description": "Challenger interpretive rule (Mathews): a qualified registered voter removed without notice and hearing suffers a due-process violation; bridge: not a valid regulation as applied.",
+      "acl2_event": "challenger-removal-without-process-is-violation, challenger-bridge-removal-invalid",
+      "book": "federal_save_act_challenger_model.lisp",
+      "source_ref": "Mathews v. Eldridge; Amend. V",
+      "trusted_base": true,
+      "path": "challenger"
+    },
+    {
+      "id": "ax-removal-valid-maintenance",
+      "type": "DOCTRINAL_ASSUMPTION",
+      "layer": "formalization",
+      "label": "Removal on verified information is valid list maintenance",
+      "description": "Government interpretive rule (Husted): verified information + important interest + evenhanded procedure establish the removal defense, notice or no notice; bridge: valid as applied.",
+      "acl2_event": "government-removal-defense-rule, government-bridge-removal-validates, government-removal-procedure-evenhanded",
+      "book": "federal_save_act_government_model.lisp",
+      "source_ref": "Husted; Crawford",
+      "trusted_base": true,
+      "path": "government"
+    },
+    {
+      "id": "deriv-removal-pivot",
+      "type": "LEMMA",
+      "layer": "derivations",
+      "label": "Removal conflict pivots on valid-regulationp as applied to the registrant",
+      "description": "Given law, qualified voter, protected right, removal transaction and statutory removal, the removal conflict condition is exactly (not (valid-regulationp law p)).",
+      "acl2_event": "core-removal-conflict-pivots-on-valid-regulation",
+      "book": "federal_save_act_core.lisp",
+      "axiom_free": true,
+      "path": "neutral"
+    },
+    {
+      "id": "thm-removal-conflict-general",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Challenger: any registered citizen removed on verified info without notice/hearing ⇒ removal conflict",
+      "acl2_event": "challenger-removal-conflict-general",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "thm-no-removal-conflict-general",
+      "type": "THEOREM",
+      "layer": "theorems",
+      "label": "Government: verified info + important interest + evenhanded ⇒ no removal conflict",
+      "acl2_event": "government-no-removal-conflict-general",
+      "book": "federal_save_act_government_model.lisp",
+      "path": "government"
+    },
+    {
+      "id": "concl-challenger-removal",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Challenger: § 8(k) REMOVAL CONFLICT (citizen-b)",
+      "description": "Under the challenger's removal premises, ACL2 derives a constitutional removal conflict for citizen-b.",
+      "book": "federal_save_act_challenger_model.lisp",
+      "path": "challenger"
+    },
+    {
+      "id": "concl-government-removal",
+      "type": "FINAL_CONCLUSION",
+      "layer": "conclusions",
+      "label": "Government: NO § 8(k) REMOVAL CONFLICT (citizen-b)",
+      "description": "Under the government's removal premises, ACL2 derives that no removal conflict exists for citizen-b.",
+      "book": "federal_save_act_government_model.lisp",
+      "path": "government"
     }
   ],
   "edges": [
@@ -1839,6 +2031,117 @@
       "relation": "contests",
       "path": "neutral",
       "description": "Only with the overlay: a contested removal can return to the rolls"
+    },
+    {
+      "from": "src-mathews",
+      "to": "ax-removal-due-process",
+      "relation": "source_traces",
+      "path": "challenger"
+    },
+    {
+      "from": "src-husted",
+      "to": "ax-removal-valid-maintenance",
+      "relation": "source_traces",
+      "path": "government"
+    },
+    {
+      "from": "src-nvra",
+      "to": "ax-statute-removes",
+      "relation": "source_traces",
+      "path": "neutral"
+    },
+    {
+      "from": "ir-clause-ir",
+      "to": "ax-statute-removes",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-statute-removes",
+      "to": "deriv-removal-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "ax-citizen-b",
+      "to": "deriv-removal-pivot",
+      "relation": "supports",
+      "path": "neutral"
+    },
+    {
+      "from": "model-removal",
+      "to": "ax-citizen-b",
+      "relation": "supports",
+      "path": "neutral",
+      "description": "Scenario B follows the statutory path (no notice event)"
+    },
+    {
+      "from": "deriv-removal-pivot",
+      "to": "thm-removal-conflict-general",
+      "relation": "supports",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-removal-due-process",
+      "to": "thm-removal-conflict-general",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "thm-removal-conflict-general",
+      "to": "concl-challenger-removal",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "ax-citizen-b",
+      "to": "concl-challenger-removal",
+      "relation": "supports_challenger",
+      "path": "challenger"
+    },
+    {
+      "from": "deriv-removal-pivot",
+      "to": "thm-no-removal-conflict-general",
+      "relation": "supports",
+      "path": "government"
+    },
+    {
+      "from": "ax-removal-valid-maintenance",
+      "to": "thm-no-removal-conflict-general",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-election-integrity",
+      "to": "thm-no-removal-conflict-general",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "thm-no-removal-conflict-general",
+      "to": "concl-government-removal",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "ax-citizen-b",
+      "to": "concl-government-removal",
+      "relation": "supports_government",
+      "path": "government"
+    },
+    {
+      "from": "pivot-valid-regulation",
+      "to": "concl-challenger-removal",
+      "relation": "negates",
+      "path": "challenger",
+      "description": "If NOT valid as applied to the registrant"
+    },
+    {
+      "from": "pivot-valid-regulation",
+      "to": "concl-government-removal",
+      "relation": "supports",
+      "path": "government",
+      "description": "If valid as applied to the registrant"
     }
   ],
   "hypotheticals": [
@@ -1943,6 +2246,26 @@
         "ax-notice-overlay"
       ],
       "path": "neutral"
+    },
+    {
+      "id": "hyp-removal-due-process",
+      "category": "Removal (§ 8(k)) Assumptions",
+      "label": "Removal without notice/hearing violates due process (Mathews)",
+      "default": true,
+      "controls": [
+        "ax-removal-due-process"
+      ],
+      "path": "challenger"
+    },
+    {
+      "id": "hyp-removal-valid-maintenance",
+      "category": "Removal (§ 8(k)) Assumptions",
+      "label": "Removal on verified information is valid list maintenance (Husted)",
+      "default": true,
+      "controls": [
+        "ax-removal-valid-maintenance"
+      ],
+      "path": "government"
     }
   ]
 }

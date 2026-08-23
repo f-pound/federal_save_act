@@ -23,18 +23,19 @@
       label: 'Both sides',
       description: 'Every premise from both parties is switched on. Both conditional conclusions are supported — the model is showing that each side\'s argument is internally valid, not which one wins.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-adequate-alt',
-             'hyp-mandatory', 'hyp-discretionary', 'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats'],
+             'hyp-mandatory', 'hyp-discretionary', 'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats',
+             'hyp-removal-due-process', 'hyp-removal-valid-maintenance'],
     },
     challenger: {
       label: "Challenger's case",
       description: 'Only the challenger\'s premises: citizens lack documents through no fault, obtaining them is a material burden, the alternative process is discretionary, and a severe burden defeats the regulation. The government\'s no-conflict conclusion loses its support.',
-      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats'],
+      hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats', 'hyp-removal-due-process'],
     },
     government: {
       label: "Government's defense",
       description: 'Only the government\'s premises: election integrity is an important interest, the requirement is reasonable and evenhanded, the burden is not severe, and the alternative process is adequate and mandatory. The challenger\'s conflict conclusion loses its support.',
       hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory',
-             'hyp-election-integrity', 'hyp-reasonable'],
+             'hyp-election-integrity', 'hyp-reasonable', 'hyp-removal-valid-maintenance'],
     },
     neutral: {
       label: 'Statute text only',

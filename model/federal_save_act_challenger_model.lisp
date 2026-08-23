@@ -88,9 +88,14 @@
   ;; is invalid.
   ;;
   ;; Doctrinal basis: Crawford; Anderson v. Celebrezze, 460 U.S. 780.
+  ;;
+  ;; v6.1: narrowed to voter registration APPLICATIONS.  The undue-burden
+  ;; argument is about the documentary-proof requirement at registration;
+  ;; it says nothing about § 8(k) removal, which has its own chain below.
   (defthm challenger-undue-burden-defeats-regulation
     (implies
-     (challenger-undue-burden-establishedp 'federal-save-act p)
+     (and (challenger-undue-burden-establishedp 'federal-save-act p)
+          (voter-registration-applicationp x))
      (challenger-regulation-invalidp 'federal-save-act x))))
 
 ;;; =========================================================================
@@ -164,13 +169,15 @@
 (defthm challenger-lemma-undue-burden
   (challenger-undue-burden-establishedp 'federal-save-act 'citizen-a))
 
-;; Step 4: challenger regulation invalid
+;; Step 4: challenger regulation invalid (for registration applications)
 (defthm challenger-lemma-regulation-invalid
-  (challenger-regulation-invalidp 'federal-save-act x))
+  (implies (voter-registration-applicationp x)
+           (challenger-regulation-invalidp 'federal-save-act x)))
 
 ;; Step 5: bridges to core valid-regulationp
 (defthm challenger-lemma-not-valid-regulation
-  (not (valid-regulationp 'federal-save-act x)))
+  (implies (voter-registration-applicationp x)
+           (not (valid-regulationp 'federal-save-act x))))
 
 ;; Step 6: statute denies registration
 ;; (scenario-registration-transaction supplies the transaction facts)
@@ -219,4 +226,68 @@
    'amend-v-equal-protection
    'citizen-a
    'registration-attempt-a)
+  :rule-classes nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; v6.1 — REMOVAL BRANCH (§ 8(k), citizen-b)
+;;;
+;;; Theory of the case: removing a registered citizen from the rolls on
+;;; "verified information" with no notice and no opportunity to be heard
+;;; deprives the citizen of the vote without due process (Amend. V).
+;;;
+;;; Doctrinal basis: Mathews v. Eldridge, 424 U.S. 319 (1976) (pre-
+;;; deprivation process); the NVRA's own removal safeguards, 52 U.S.C.
+;;; § 20507(d) (notice and waiting period before removal for change of
+;;; residence), which § 8(k) bypasses ("at any time").
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(encapsulate
+  ((challenger-removal-due-process-violationp (law p) t))
+
+  (local (defun challenger-removal-due-process-violationp (law p)
+    (declare (ignore law p)) t))
+
+  ;; INTERPRETATION_CHALLENGER: removing a qualified, registered voter
+  ;; without notice or hearing is a due-process violation.
+  (defthm challenger-removal-without-process-is-violation
+    (implies
+     (and (qualified-federal-voterp p)
+          (registered-voterp p)
+          (statute-removes-registrantp 'federal-save-act p)
+          (not (adequate-notice-before-removalp p))
+          (not (opportunity-to-be-heardp p)))
+     (challenger-removal-due-process-violationp 'federal-save-act p))))
+
+;; BRIDGE_RULE: a due-process violation means the removal rule is not a
+;; valid regulation AS APPLIED TO THAT REGISTRANT.
+(defaxiom challenger-bridge-removal-invalid
+  (implies
+   (challenger-removal-due-process-violationp 'federal-save-act p)
+   (not (valid-regulationp 'federal-save-act p))))
+
+;; PROOF OBLIGATION 3: general removal theorem
+(defthm challenger-removal-conflict-general
+  (implies
+   (and (personp p)
+        (citizen-of-usp p)
+        (eligible-voterp p)
+        (registered-voterp p)
+        (verified-noncitizen-informationp p)
+        (not (adequate-notice-before-removalp p))
+        (not (opportunity-to-be-heardp p)))
+   (constitutional-removal-conflict-conditionp
+    'federal-save-act 'amend-v-equal-protection p))
+  :hints (("Goal" :in-theory (enable constitutional-removal-conflict-conditionp
+                               removal-transactionp
+                               qualified-federal-voterp)))
+  :rule-classes nil)
+
+;; Right to vote for citizen-b (same fundamental-right rule as citizen-a)
+(defthm challenger-lemma-b-protected-right
+  (protected-right-to-votep 'amend-v-equal-protection 'citizen-b))
+
+;; PROOF OBLIGATION 4: concrete citizen-b corollary
+(defthm challenger-model-finds-removal-conflict
+  (constitutional-removal-conflict-conditionp
+   'federal-save-act 'amend-v-equal-protection 'citizen-b)
   :rule-classes nil)

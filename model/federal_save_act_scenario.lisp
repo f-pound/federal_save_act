@@ -66,3 +66,52 @@
   (not (has-any-qualifying-documentp 'citizen-a))
   :hints (("Goal" :use ((:instance text-documentary-proof-from-qualifying-documents
                                    (p 'citizen-a))))))
+
+;;; =========================================================================
+;;; v6.1 — Second scenario: citizen-b, an ERRONEOUS § 8(k) REMOVAL
+;;;
+;;;   citizen-b: a registered U.S. citizen whose record is matched, by a
+;;;   database check of the kind § 8(j)(4) authorizes, to "verified
+;;;   information" that they are not a citizen.  The information is wrong
+;;;   (citizen-b IS a citizen), and — consistent with the statutory path in
+;;;   federal_save_act_removal_invariants.lisp — no notice or hearing
+;;;   precedes removal.
+;;;
+;;; Both parties concede these facts; they diverge on whether removal on
+;;; verified information without notice is a valid regulation.
+;;; =========================================================================
+
+(defaxiom scenario-b-person
+  (personp 'citizen-b))
+
+(defaxiom scenario-b-citizen
+  (citizen-of-usp 'citizen-b))
+
+(defaxiom scenario-b-eligible
+  (eligible-voterp 'citizen-b))
+
+(defaxiom scenario-b-registered
+  (registered-voterp 'citizen-b))
+
+;; The State holds "verified information" that citizen-b is a noncitizen.
+;; (Stipulated; it is erroneous given scenario-b-citizen.)
+(defaxiom scenario-b-verified-noncitizen-information
+  (verified-noncitizen-informationp 'citizen-b))
+
+;; Consistent with the statutory path: no notice, no hearing.
+(defaxiom scenario-b-no-notice
+  (not (adequate-notice-before-removalp 'citizen-b)))
+
+(defaxiom scenario-b-no-hearing
+  (not (opportunity-to-be-heardp 'citizen-b)))
+
+;; Derived: citizen-b is a qualified voter in a removal transaction, and the
+;; statute (text rule) removes citizen-b.
+(defthm scenario-b-qualified-voter
+  (qualified-federal-voterp 'citizen-b))
+
+(defthm scenario-b-removal-transaction
+  (removal-transactionp 'citizen-b))
+
+(defthm scenario-b-statute-removes
+  (statute-removes-registrantp 'federal-save-act 'citizen-b))

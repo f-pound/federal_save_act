@@ -6,6 +6,22 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.1.0] — 2026-08-23
+
+### Added — § 8(k) removal → conflict bridge
+- **Core**: `registered-voterp`, `statute-removes-registrantp`, `removal-procedure-evenhandedp` stubs; `removal-transactionp`; `constitutional-removal-conflict-conditionp (law cs p)` — the removal-side twin of the registration conflict condition (the object of `valid-regulationp` is the registrant p, "valid as applied to p"); twin pivot lemmas.
+- **Text rule (generated)**: `text-save-act-removal-upon-verified-information` — § 8(k) as a `defaxiom` compiled from the IR with its ACE (`ace-gen-removal-requirement`, APE strict PASS).
+- **Scenario B (shared)**: `citizen-b`, a registered citizen erroneously matched to "verified information" of noncitizenship and removed with no notice or hearing (7 conceded facts; `scenario-b-statute-removes` derived from the text rule).
+- **Challenger removal branch**: encapsulated `challenger-removal-due-process-violationp` (Mathews v. Eldridge), bridge to `(not (valid-regulationp law p))`, `challenger-removal-conflict-general`, `challenger-model-finds-removal-conflict`.
+- **Government removal branch**: encapsulated `government-removal-defense-establishedp` (Husted v. A. Philip Randolph Inst.), bridge, `government-removal-procedure-evenhanded`, `government-no-removal-conflict-general`, `government-model-no-removal-conflict`.
+- Sources: `mathews-v-eldridge`, `husted-v-randolph` added to the manifest; 13 new trace rows.
+
+### Changed — bridge rules narrowed (faithfulness)
+- `challenger-undue-burden-defeats-regulation` and `government-bridge-defense-validates` previously concluded `(not (valid-regulationp law x))` / `(valid-regulationp law x)` for **every** x. Both are now conditioned on `(voter-registration-applicationp x)`: the undue-burden argument and the six-factor defense are about registration, and say nothing about removal. Without this narrowing either party's registration theory would have decided the removal question for free. All prior registration theorems still certify unchanged.
+
+### Census
+- Theorems: 204 → **216**; axioms: 27 → **38** (7 scenario-b facts, 1 text rule, 5 party removal assumptions); books: 25 (unchanged); encapsulates: 4 → 6.
+
 ## [6.0.1] — 2026-08-23
 
 ### Changed (explorer UX)

@@ -3,38 +3,202 @@
   "book": "federal_save_act_text_rules",
   "title": "SAVE Act text-derived constraints on the neutral vocabulary (defaxiom)",
   "source_id": "hr22-eh",
-  "includes": ["federal_save_act_core"],
+  "includes": [
+    "federal_save_act_core"
+  ],
   "atoms": {
-    "personp":                          {"args": ["p"],      "ace": "{p} is a n:natural-person"},
-    "voter-registration-applicationp":  {"args": ["x"],      "ace": "{x} is a n:application-for-a-federal-election"},
-    "attempts-to-registerp":            {"args": ["p", "x"], "ace": "{p} submits {x}"},
-    "presents-documentary-proofp":      {"args": ["p", "x"], "ace": "{p} presents a n:documentary-proof-of-citizenship with {x}", "ace_neg": "{p} does not present a n:documentary-proof-of-citizenship with {x}"},
-    "alternative-process-approvedp":    {"args": ["p", "x"], "ace": "a n:state-official approves {p} through a n:alternative-process for {x}", "ace_neg": "no n:state-official approves {p} through a n:alternative-process for {x}"},
-    "statute-denies-registrationp":     {"args": ["law", "p", "x"], "ace": "{law} denies a n:registration of {p} through {x}", "constants": {"federal-save-act": "the n:SAVE-Act"}}
+    "personp": {
+      "args": [
+        "p"
+      ],
+      "ace": "{p} is a n:natural-person"
+    },
+    "voter-registration-applicationp": {
+      "args": [
+        "x"
+      ],
+      "ace": "{x} is a n:application-for-a-federal-election"
+    },
+    "attempts-to-registerp": {
+      "args": [
+        "p",
+        "x"
+      ],
+      "ace": "{p} submits {x}"
+    },
+    "presents-documentary-proofp": {
+      "args": [
+        "p",
+        "x"
+      ],
+      "ace": "{p} presents a n:documentary-proof-of-citizenship with {x}",
+      "ace_neg": "{p} does not present a n:documentary-proof-of-citizenship with {x}"
+    },
+    "alternative-process-approvedp": {
+      "args": [
+        "p",
+        "x"
+      ],
+      "ace": "a n:state-official approves {p} through a n:alternative-process for {x}",
+      "ace_neg": "no n:state-official approves {p} through a n:alternative-process for {x}"
+    },
+    "statute-denies-registrationp": {
+      "args": [
+        "law",
+        "p",
+        "x"
+      ],
+      "ace": "{law} denies a n:registration of {p} through {x}",
+      "constants": {
+        "federal-save-act": "the n:SAVE-Act"
+      }
+    },
+    "registered-voterp": {
+      "args": [
+        "p"
+      ],
+      "ace": "{p} is on a n:official-list-of-eligible-voters"
+    },
+    "verified-noncitizen-informationp": {
+      "args": [
+        "p"
+      ],
+      "ace": "a n:state receives a n:verified-information and the n:verified-information shows that {p} is not a n:citizen-of-the-United-States"
+    },
+    "statute-removes-registrantp": {
+      "args": [
+        "law",
+        "p"
+      ],
+      "ace": "{law} removes {p} from the n:official-list-of-eligible-voters",
+      "constants": {
+        "federal-save-act": "the n:SAVE-Act"
+      }
+    }
   },
   "rules": [
     {
       "name": "text-save-act-documentary-proof-requirement",
       "kind": "axiom",
-      "args": ["p", "x"],
+      "args": [
+        "p",
+        "x"
+      ],
       "label": "PROHIBITION",
       "source": "§ 2(b) / NVRA § 4(b); § 2(d) / NVRA § 6(e)(1); § 2(f) / NVRA § 8(j)(1)",
       "text": "the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application [§ 4(b)]; a State may not register an individual ... unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship [§ 8(j)(1)]",
-      "hyps": {"and": [
-        {"pred": ["personp", "p"]},
-        {"pred": ["voter-registration-applicationp", "x"]},
-        {"pred": ["attempts-to-registerp", "p", "x"]},
-        {"not": {"pred": ["presents-documentary-proofp", "p", "x"]}},
-        {"not": {"pred": ["alternative-process-approvedp", "p", "x"]}}
-      ]},
-      "concl": {"pred": ["statute-denies-registrationp", "'federal-save-act", "p", "x"]},
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "voter-registration-applicationp",
+              "x"
+            ]
+          },
+          {
+            "pred": [
+              "attempts-to-registerp",
+              "p",
+              "x"
+            ]
+          },
+          {
+            "not": {
+              "pred": [
+                "presents-documentary-proofp",
+                "p",
+                "x"
+              ]
+            }
+          },
+          {
+            "not": {
+              "pred": [
+                "alternative-process-approvedp",
+                "p",
+                "x"
+              ]
+            }
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "statute-denies-registrationp",
+          "'federal-save-act",
+          "p",
+          "x"
+        ]
+      },
       "ace": {
         "id": "ace-gen-documentary-proof-requirement",
         "subject": "p",
-        "entities": {"p": "n:person", "x": "n:voter-registration-application"},
+        "entities": {
+          "p": "n:person",
+          "x": "n:voter-registration-application"
+        },
         "classification": "PROHIBITION",
         "source_ref": "SAVE Act § 2(b) / NVRA § 4(b); § 2(d) / NVRA § 6(e)(1); § 2(f) / NVRA § 8(j)(1)",
-        "replaces": ["ace-006", "ace-007", "ace-013"]
+        "replaces": [
+          "ace-006",
+          "ace-007",
+          "ace-013"
+        ]
+      }
+    },
+    {
+      "name": "text-save-act-removal-upon-verified-information",
+      "kind": "axiom",
+      "args": [
+        "p"
+      ],
+      "label": "PROHIBITION",
+      "source": "§ 2(f) / NVRA § 8(k); NVRA § 8(a)(3)(D)",
+      "text": "A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters for elections for Federal office held in the State at any time upon receipt of documentation or verified information that a registrant is not a United States citizen.",
+      "hyps": {
+        "and": [
+          {
+            "pred": [
+              "personp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "registered-voterp",
+              "p"
+            ]
+          },
+          {
+            "pred": [
+              "verified-noncitizen-informationp",
+              "p"
+            ]
+          }
+        ]
+      },
+      "concl": {
+        "pred": [
+          "statute-removes-registrantp",
+          "'federal-save-act",
+          "p"
+        ]
+      },
+      "ace": {
+        "id": "ace-gen-removal-requirement",
+        "subject": "p",
+        "entities": {
+          "p": "n:registrant"
+        },
+        "classification": "PROHIBITION",
+        "source_ref": "SAVE Act § 2(f) / NVRA § 8(k)",
+        "replaces": []
       }
     }
   ]

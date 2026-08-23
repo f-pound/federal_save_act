@@ -4,7 +4,7 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 6.0.1** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 6.1.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## What This Project Proves
 
@@ -66,14 +66,14 @@ The explorer lets users toggle empirical, interpretive, and doctrinal assumption
 |---|---|---|---|
 | **lib/enum_list** | **21** | **generic enumerated-category algebra, hint-free** | ✅ All Q.E.D. |
 | **lib/lsm** | **22** | **generic labeled state machine invariants, hint-free** | ✅ All Q.E.D. |
-| Core | 2 | shared conflict pivot | ✅ All Q.E.D. |
+| Core | 4 | shared conflict pivots (registration + removal) | ✅ All Q.E.D. |
 | Document rules (generated) | 0 | compiled from clause IR | ✅ certified |
 | Process table (generated) | 0 | compiled from clause IR (13 cited edges) | ✅ certified |
 | Removal table (generated) | 0 | compiled from clause IR (§ 8(k)) | ✅ certified |
 | Text rules (generated) | 0 | defaxiom compiled from clause IR | ✅ certified |
 | Process model | 28 | generated edge table + library instances, evaluation | ✅ All Q.E.D. |
 | **Removal invariants (§ 8(k))** | **11** | **lsm instances: statutory path has no notice/hearing** | ✅ All Q.E.D. |
-| Scenario (shared) | 3 | conceded ground facts | ✅ All Q.E.D. |
+| Scenario (shared) | 6 | conceded ground facts: citizen-a (registration), citizen-b (removal) | ✅ All Q.E.D. |
 | Consistency check | 17 | defun decomposition, neutrality | ✅ All Q.E.D. |
 | Process invariants | 16 | `:use` instances of lsm lemmas (0 inductions) | ✅ All Q.E.D. |
 | Deep process invariants | 11 | `:use` instances of lsm lemmas (0 inductions) | ✅ All Q.E.D. |
@@ -82,13 +82,15 @@ The explorer lets users toggle empirical, interpretive, and doctrinal assumption
 | Hinge discretionary | 3 | defaxiom bridge, defun enable | ✅ All Q.E.D. |
 | Existentials | 6 | defun-sk Skolemization | ✅ All Q.E.D. |
 | Independence | 3 | structural decomposition, pivot theorem | ✅ All Q.E.D. |
-| Challenger model | 11 | encapsulate + bridge rules + shared scenario | ✅ All Q.E.D. |
-| Government model | 5 | encapsulate + bridge rules + shared scenario | ✅ All Q.E.D. |
+| Challenger model | 15 | encapsulate + bridge rules + shared scenario; registration and removal branches | ✅ All Q.E.D. |
+| Government model | 8 | encapsulate + bridge rules + shared scenario; registration and removal branches | ✅ All Q.E.D. |
 | Document proofs | 17 | enum_list instances over generated § 3(b) tables | ✅ All Q.E.D. |
 | Burden proofs | 8 | derivation chain, contrapositives | ✅ All Q.E.D. |
 | Doctrine proofs | 7 | conditional doctrine, encapsulate | ✅ All Q.E.D. |
 | Model consistency | 7 | compositional decomposition | ✅ All Q.E.D. |
-| **Total** | **204** | | **✅ All Q.E.D.** |
+| **Total** | **216** | | **✅ All Q.E.D.** |
+
+**Second hinge (v6.1)**: Whether removal under § 8(k) on "verified information" with no notice or hearing is a valid regulation as applied to a registered citizen. The challenger (Mathews v. Eldridge) and government (Husted) removal branches reach opposite conditional conclusions for `citizen-b`.
 
 **Primary interpretive hinge**: Whether the alternative attestation process (§ 8(j)(2)(A)) provides a constitutionally adequate safety valve. See the split hinge books (`model/federal_save_act_hinge_mandatory.lisp` / `model/federal_save_act_hinge_discretionary.lisp`) for the formal analysis.
 
@@ -215,6 +217,7 @@ federal_save_act/
 
 - **citizen-a**: An elderly U.S. citizen born at home in a rural area, who lacks a REAL ID, passport, birth certificate, or other qualifying document under the SAVE Act
 - **registration-attempt-a**: A mail voter registration application for a federal election
+- **citizen-b** (v6.1): A registered U.S. citizen whose record is erroneously matched to "verified information" of noncitizenship and removed under § 8(k) with no notice or hearing
 
 ## Constitutional Provisions
 
@@ -244,18 +247,18 @@ federal_save_act/
 
 ## What Remains Assumed
 
-The § 8(k) removal process is now modeled (`federal_save_act_removal_invariants.lisp`): the statutory path to removal provably contains no notice or hearing event. The model does **not** assert that this is unconstitutional.
+The § 8(k) removal process is modeled structurally (`federal_save_act_removal_invariants.lisp`: the statutory path to removal provably contains no notice or hearing event) and doctrinally (v6.1: `constitutional-removal-conflict-conditionp`, with challenger and government removal branches for `citizen-b`). The neutral books do **not** assert that removal without notice is unconstitutional; the party books derive opposite conditional conclusions from traced assumptions.
 
-- **27 defaxioms** across 6 books — see `reports/axiom_inventory.md` for the full classification
-- **6 scenario facts** stipulating citizen-a's properties, shared by both party models (self-evidently consistent)
+- **38 defaxioms** across 6 books — see `reports/axiom_inventory.md` for the full classification
+- **13 scenario facts** stipulating citizen-a (registration) and citizen-b (removal), shared by both party models (self-evidently consistent)
 - **3 empirical assumptions** about burden severity (contestable, source-linked)
 - **2 interpretive assumptions** encoding the hinge semantics (mutually exclusive)
 - **5 bridge rules** connecting encapsulate predicates to core defstubs
 
 ## What Is Source-Traced
 
-- 32 axiom-to-source mappings in `sources/clause_trace.csv`
-- 21 authoritative sources in `sources/source_manifest.json`
+- 45 axiom-to-source mappings in `sources/clause_trace.csv`
+- 23 authoritative sources in `sources/source_manifest.json`
 - Every defaxiom has a classification, source_id, section reference, and quoted clause text
 - Machine-checkable via `tools/validate_trace.py` (runs in CI)
 

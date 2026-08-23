@@ -69,9 +69,14 @@
 ;;; under the core vocabulary, defeating the constitutional conflict.
 ;;; =========================================================================
 
+;;
+;; v6.1: narrowed to voter registration APPLICATIONS.  The six-factor
+;; defense is about the documentary-proof requirement at registration; the
+;; § 8(k) removal rule needs its own defense (below).
 (defaxiom government-bridge-defense-validates
   (implies
-   (government-defense-establishedp law)
+   (and (government-defense-establishedp law)
+        (voter-registration-applicationp x))
    (valid-regulationp law x)))
 
 ;;; =========================================================================
@@ -147,9 +152,10 @@
 (defthm government-lemma-defense-established
   (government-defense-establishedp 'federal-save-act))
 
-;; Step 2: Regulation is valid (via bridge rule)
+;; Step 2: Regulation is valid for every registration application
 (defthm government-lemma-regulation-valid
-  (valid-regulationp 'federal-save-act x))
+  (implies (voter-registration-applicationp x)
+           (valid-regulationp 'federal-save-act x)))
 
 ;;; =========================================================================
 ;;; PROOF OBLIGATION 1: General theorem
@@ -190,4 +196,61 @@
     'amend-v-equal-protection
     'citizen-a
     'registration-attempt-a))
+  :rule-classes nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; v6.1 — REMOVAL BRANCH (§ 8(k), citizen-b)
+;;;
+;;; Theory of the case: removal upon "documentation or verified
+;;; information" of noncitizenship is a reasonable, evenhanded list-
+;;; maintenance rule serving the State's interest in registering only
+;;; eligible voters; the verification requirement itself is the process
+;;; that is due, and provisional-ballot and re-registration avenues remain.
+;;;
+;;; Doctrinal basis: Husted v. A. Philip Randolph Institute, 584 U.S. 756
+;;; (2018) (NVRA list-maintenance procedures upheld); Crawford (interest in
+;;; counting only eligible votes).
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(encapsulate
+  ((government-removal-defense-establishedp (law p) t))
+
+  (local (defun government-removal-defense-establishedp (law p)
+    (declare (ignore law p)) t))
+
+  ;; INTERPRETATION_GOVERNMENT: verified information + important interest +
+  ;; evenhanded procedure establish the removal defense, regardless of
+  ;; pre-removal notice.
+  (defthm government-removal-defense-rule
+    (implies
+     (and (verified-noncitizen-informationp p)
+          (important-government-interestp law)
+          (removal-procedure-evenhandedp law))
+     (government-removal-defense-establishedp law p))))
+
+;; BRIDGE_RULE: the removal defense validates the rule as applied to p.
+(defaxiom government-bridge-removal-validates
+  (implies
+   (government-removal-defense-establishedp law p)
+   (valid-regulationp law p)))
+
+;; INTERPRETATION_GOVERNMENT: the removal procedure is evenhanded
+(defaxiom government-removal-procedure-evenhanded
+  (removal-procedure-evenhandedp 'federal-save-act))
+
+;; PROOF OBLIGATION 3: no removal conflict for anyone the State holds
+;; verified information about — notice or no notice.
+(defthm government-no-removal-conflict-general
+  (implies
+   (and (verified-noncitizen-informationp p)
+        (important-government-interestp law)
+        (removal-procedure-evenhandedp law))
+   (not (constitutional-removal-conflict-conditionp law cs p)))
+  :hints (("Goal" :in-theory (enable constitutional-removal-conflict-conditionp)))
+  :rule-classes nil)
+
+;; PROOF OBLIGATION 4: concrete citizen-b corollary
+(defthm government-model-no-removal-conflict
+  (not (constitutional-removal-conflict-conditionp
+        'federal-save-act 'amend-v-equal-protection 'citizen-b))
   :rule-classes nil)

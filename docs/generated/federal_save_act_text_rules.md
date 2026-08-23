@@ -6,3 +6,8 @@ _Generated from the same IR as the ACL2 book; do not edit._
 > the State shall not accept and process an application to register to vote in an election for Federal office unless the applicant presents documentary proof of United States citizenship with the application [§ 4(b)]; a State may not register an individual ... unless, at the time the individual applies to register to vote, the individual provides documentary proof of United States citizenship [§ 8(j)(1)]
 
 If personp(p) AND voter-registration-applicationp(x) AND attempts-to-registerp(p, x) AND it is not the case that presents-documentary-proofp(p, x) AND it is not the case that alternative-process-approvedp(p, x), then statute-denies-registrationp('federal-save-act, p, x).
+
+## Axiom `text-save-act-removal-upon-verified-information(p)` — § 2(f) / NVRA § 8(k); NVRA § 8(a)(3)(D)
+> A State shall remove an individual who is not a citizen of the United States from the official list of eligible voters for elections for Federal office held in the State at any time upon receipt of documentation or verified information that a registrant is not a United States citizen.
+
+If personp(p) AND registered-voterp(p) AND verified-noncitizen-informationp(p), then statute-removes-registrantp('federal-save-act, p).
