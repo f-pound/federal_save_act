@@ -1672,4 +1672,4 @@ body.reviewer-active .reviewer-detail {
 .voter-whatsthis { margin: 0 0 8px; font-size: 11px; color: #9aa7b4; }
 .voter-whatsthis summary { cursor: pointer; color: #8fc1ff; font-weight: 600; }
 .voter-whatsthis p { margin: 6px 0 0; line-height: 1.45; }
-.voter-whatsthis code { font-family: "JetBrains Mono", monospace; font-size: 10px; color: #c9d3dd; }
+.voter-whatsthis code { font-family: "JetBrains Mono", monospace; font-size: 10px; color: #c9d3dd; word-break: break-all; }
