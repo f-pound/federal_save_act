@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.4.2">
+  <link rel="stylesheet" href="style.css?v=6.4.3">
 </head>
 <body>
   <header id="app-header">
@@ -101,11 +101,17 @@
       <details id="voter-panel" class="voter-panel" open>
         <summary class="voter-summary">
           <span class="voter-title">Try it — a citizen at the registration counter</span>
-          <span class="voter-sub">Pick what they bring; the clerk answers using the statute's own document table, then your premises decide what that outcome means.</span>
+          <span class="voter-sub">Pick what they bring. The clerk answers from the statute's own list of acceptable documents; then the court's reading of the attestation process and your premises decide what that outcome means.</span>
         </summary>
         <div class="voter-body">
           <div class="voter-docs">
-            <div class="voter-docs-title">What the applicant presents (§ 3(b) table, generated from the clause IR)</div>
+            <div class="voter-docs-title">What the applicant presents</div>
+            <details class="voter-whatsthis">
+              <summary>Where does this list come from?</summary>
+              <p>It is the statute's own list. The SAVE Act (new NVRA § 3(b)) defines "documentary proof of United States citizenship" as exactly these documents, in three groups: four that count <em>on their own</em>; an ordinary government photo ID that counts <em>only when paired</em>; and six supporting documents that count <em>only with that photo ID</em>.</p>
+              <p>We typed that definition once, as structured data (<code>data/parsed/federal_save_act_document_rules.json</code> — each entry carries the section number and the exact statutory wording). A small compiler turns that one file into three things that therefore cannot disagree: the ACL2 definitions the 219 theorems are proved against, a plain-English paraphrase, and the checkboxes you see here. A CI check also confirms every quoted clause appears verbatim in both the H.R. 22 text and the current S. 1383 vehicle.</p>
+              <p>So when the clerk says "accepted" or "denied", that is the statute's list applied mechanically — not an opinion.</p>
+            </details>
             <div id="voter-doc-groups"></div>
             <label class="voter-toggle"><input type="checkbox" id="voter-attest"> Signs attestation under penalty of perjury + submits other evidence (§ 8(j)(2)(A))</label>
             <label class="voter-toggle"><input type="checkbox" id="voter-citizen" checked> The applicant is in fact a U.S. citizen</label>
@@ -282,6 +288,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6.4.2"></script>
+  <script src="app.js?v=6.4.3"></script>
 </body>
 </html>

@@ -322,9 +322,9 @@
   }
 
   const GROUP_LABELS = {
-    'standalone-proof-types': 'Proof on its own — § 3(b)(1)-(4)',
-    'anchor-photo-id-types': 'Photo ID that must be PAIRED — § 3(b)(5)',
-    'supporting-document-types': 'Supporting document, counts only with the photo ID — § 3(b)(5)(A)-(F)',
+    'standalone-proof-types': 'Counts on its own — § 3(b)(1)-(4)',
+    'anchor-photo-id-types': 'Counts only when paired with a supporting document — § 3(b)(5)',
+    'supporting-document-types': 'Supporting document — counts only together with the photo ID above — § 3(b)(5)(A)-(F)',
   };
   const voterDocs = new Set();
 
