@@ -55,7 +55,7 @@
           "status": "Signed Mar. 31, 2026; challenged (D.D.C. 1:26-cv-01132)"
         }
       ],
-      "headline": "Not law. Current vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. Modeled § 2 text unchanged; S. 1383 additions (§ 3 photo ID, name-discrepancy process, SAVE-match removal with notice) modeled."
+      "headline": "Not law. Vehicle S. 1383 (SAVE America Act): House 218-213 Feb 11 2026; Senate cloture failed 53-47 Mar 26 2026. § 2 text unchanged and modeled; S. 1383 additions modeled."
     },
     "document_categories": {
       "standalone-proof-types": [
@@ -167,7 +167,7 @@
     "trace_rows": 69,
     "ace_statements": 13,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T04:47:04.240294+00:00"
+    "generated_at": "2026-08-23T04:47:36.921733+00:00"
   },
   "audit_details": {
     "books": [
