@@ -6,6 +6,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.0.1] — 2026-08-23
+
+### Changed (explorer UX)
+- Left panel rewritten as a three-step guide: **1 Start from a point of view** (presets renamed to "Both sides / Challenger's case / Government's defense / Statute text only / Contested premises only", each with a tooltip and a one-paragraph description of what it switches on), **2 Outcome under these premises** (scenario badges with an inline legend for Supported / Contested / Unsupported), **3 Doubt a premise? Untick it**.
+- Details panel placeholder explains what clicking a box shows and what dimming means; About-modal steps updated; stale hard-coded counts removed.
+- New node-type labels/colours for libraries, clause IR, and the due-process overlay.
+
 ## [6.0.0] — 2026-08-22
 
 ### Added

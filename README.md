@@ -4,7 +4,7 @@ Formal constitutional stress-test of the Safeguard American Voter Eligibility Ac
 
 This project uses the [AGENTS.md](../AGENTS.md) framework to separate text-derived statutory facts from interpretive assumptions, then runs competing ACL2 proof obligations to identify which assumptions control the constitutional outcome.
 
-**Current version: 6.0.0** — See [CHANGELOG.md](CHANGELOG.md) for version history.
+**Current version: 6.0.1** — See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## What This Project Proves
 

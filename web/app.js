@@ -20,25 +20,30 @@
   // ---- Preset definitions ----
   const PRESETS = {
     compare: {
-      label: 'Compare Both',
+      label: 'Both sides',
+      description: 'Every premise from both parties is switched on. Both conditional conclusions are supported — the model is showing that each side\'s argument is internally valid, not which one wins.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe', 'hyp-adequate-alt',
              'hyp-mandatory', 'hyp-discretionary', 'hyp-election-integrity', 'hyp-reasonable', 'hyp-severe-defeats'],
     },
     challenger: {
-      label: 'Challenger',
+      label: "Challenger's case",
+      description: 'Only the challenger\'s premises: citizens lack documents through no fault, obtaining them is a material burden, the alternative process is discretionary, and a severe burden defeats the regulation. The government\'s no-conflict conclusion loses its support.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-discretionary', 'hyp-severe-defeats'],
     },
     government: {
-      label: 'Government',
+      label: "Government's defense",
+      description: 'Only the government\'s premises: election integrity is an important interest, the requirement is reasonable and evenhanded, the burden is not severe, and the alternative process is adequate and mandatory. The challenger\'s conflict conclusion loses its support.',
       hyps: ['hyp-burden-not-severe', 'hyp-adequate-alt', 'hyp-mandatory',
              'hyp-election-integrity', 'hyp-reasonable'],
     },
     neutral: {
-      label: 'Neutral',
+      label: 'Statute text only',
+      description: 'No legal, empirical or interpretive premises — just the statute\'s text and the executable process model. Neither constitutional outcome is derivable; only the structural theorems (green "0 axioms") and the § 8(k) removal result remain.',
       hyps: [],
     },
     highrisk: {
-      label: 'High-Risk',
+      label: 'Contested premises only',
+      description: 'Keeps only the three empirically contestable premises about burden severity and drops every doctrinal and interpretive one. Shows how little is settled by facts alone.',
       hyps: ['hyp-no-fault', 'hyp-material-burden', 'hyp-burden-not-severe'],
     },
   };
@@ -61,6 +66,9 @@
     LEMMA: 'Lemma',
     THEOREM: 'Theorem',
     FINAL_CONCLUSION: 'Final Conclusion',
+    LIBRARY: 'Generic Lemma Library',
+    CLAUSE_IR: 'Clause IR (generated)',
+    DUE_PROCESS_OVERLAY: 'Due-Process Overlay (not in statute)',
   };
 
   // ---- Type → CSS color var ----
@@ -81,6 +89,9 @@
     LEMMA: '#1ABC9C',
     THEOREM: '#2ECC71',
     FINAL_CONCLUSION: '#E74C3C',
+    LIBRARY: '#2ECC71',
+    CLAUSE_IR: '#708090',
+    DUE_PROCESS_OVERLAY: '#F39C12',
   };
 
   // ---- Boot ----
@@ -196,6 +207,12 @@
   }
 
   function updatePresetHighlight() {
+    const desc = document.getElementById('preset-description');
+    if (desc) {
+      desc.textContent = activePreset && PRESETS[activePreset]
+        ? PRESETS[activePreset].description
+        : 'Custom selection — you have changed premises by hand. Pick a preset to reset.';
+    }
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.preset === activePreset);
     });

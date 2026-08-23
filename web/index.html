@@ -7,7 +7,7 @@
   <title>Federal SAVE Act — Computational Amicus Explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.0.0">
+  <link rel="stylesheet" href="style.css?v=6.0.1">
 </head>
 <body>
   <header id="app-header">
@@ -40,7 +40,7 @@
   </div>
 
   <div class="mobile-panel-toggles" id="mobile-toggles">
-    <button class="mobile-toggle-btn" id="toggle-hypotheticals" data-panel="left">☰ Hypotheticals</button>
+    <button class="mobile-toggle-btn" id="toggle-hypotheticals" data-panel="left">☰ Choose premises</button>
     <button class="mobile-toggle-btn" id="toggle-details" data-panel="right">ℹ Details</button>
   </div>
 
@@ -52,33 +52,37 @@
 
   <main id="app-main">
     <aside id="panel-left" class="panel panel-left">
-      <h2 class="panel-title">Hypotheticals</h2>
-      <p class="panel-hint">Toggle assumptions to explore which conclusions remain supported.</p>
-
+      <h2 class="panel-title">Choose what to assume</h2>
+      <p class="panel-hint">Every proof here is conditional: <em>if</em> these premises hold, <em>then</em> a conclusion follows. ACL2 checked the "then"; you decide the "if".</p>
+      <div class="step-label"><span class="step-chip">1</span> Start from a point of view</div>
       <div id="preset-bar" class="preset-bar">
-        <button class="preset-btn" data-preset="compare">Compare Both</button>
-        <button class="preset-btn" data-preset="challenger">Challenger</button>
-        <button class="preset-btn" data-preset="government">Government</button>
-        <button class="preset-btn" data-preset="neutral">Neutral</button>
-        <button class="preset-btn" data-preset="highrisk">High-Risk</button>
+        <button class="preset-btn" data-preset="compare" title="Turn on every premise from both sides and compare the two outcomes side by side">⚖ Both sides</button>
+        <button class="preset-btn preset-challenger" data-preset="challenger" title="Only the premises the challenger needs: documents are hard to get, the alternative process can deny">Challenger's case</button>
+        <button class="preset-btn preset-government" data-preset="government" title="Only the premises the government needs: important interest, evenhanded, adequate alternative">Government's defense</button>
+        <button class="preset-btn" data-preset="neutral" title="No legal or empirical premises at all — just the statute's text and structure. Neither outcome is supported.">Statute text only</button>
+        <button class="preset-btn" data-preset="highrisk" title="Keep only the three empirically contestable premises and drop everything doctrinal">Contested premises only</button>
       </div>
-
+      <p id="preset-description" class="preset-description"></p>
+      <div class="step-label"><span class="step-chip">2</span> Outcome under these premises</div>
       <div id="scenario-status" class="scenario-status">
-        <div class="scenario-title">Current Scenario</div>
         <div class="scenario-row">
-          <span class="scenario-path-label path-challenger">Challenger conflict</span>
+          <span class="scenario-path-label path-challenger">Challenger: constitutional conflict</span>
           <span class="scenario-badge" id="scenario-challenger">—</span>
         </div>
         <div class="scenario-row">
-          <span class="scenario-path-label path-government">Government no-conflict</span>
+          <span class="scenario-path-label path-government">Government: no conflict</span>
           <span class="scenario-badge" id="scenario-government">—</span>
         </div>
+        <div class="scenario-legend">
+          <span><b class="lg lg-supported">Supported</b> every premise this side's proof needs is on</span>
+          <span><b class="lg lg-contested">Contested</b> a premise is off but another path still holds</span>
+          <span><b class="lg lg-unsupported">Unsupported</b> a premise this side's proof needs is off</span>
+        </div>
       </div>
-
+      <div class="step-label"><span class="step-chip">3</span> Doubt a premise? Untick it and watch the outcome change</div>
       <div id="controls-container"></div>
-
       <div class="filter-section">
-        <h3 class="filter-title">Filters</h3>
+        <h3 class="filter-title">Display options</h3>
         <label class="filter-toggle"><input type="checkbox" id="filter-axiom-free"> Highlight axiom-free theorems</label>
         <label class="filter-toggle"><input type="checkbox" id="filter-high-risk"> Highlight high-risk assumptions</label>
         <label class="filter-toggle"><input type="checkbox" id="filter-challenger" checked> Show challenger path</label>
@@ -94,7 +98,7 @@
     <aside id="panel-right" class="panel panel-right">
       <h2 class="panel-title">Details</h2>
       <div id="detail-content">
-        <p class="detail-placeholder">Click a node in the graph to view details.</p>
+        <p class="detail-placeholder">Click any box in the graph to see where it comes from — the legal source, the ACL2 theorem or axiom name, the book it lives in, and what it depends on.<br><br>Boxes that go dim have lost the premises they rely on. The final conclusions are at the bottom of the graph.</p>
       </div>
     </aside>
   </main>
@@ -146,7 +150,7 @@
           <div class="modal-step">
             <span class="step-num">3</span>
             <div>
-              <strong>Toggle assumptions</strong> in the left panel. Uncheck an assumption and watch
+              <strong>Pick a point of view</strong> with the preset buttons, then <strong>untick any premise you doubt</strong> in the left panel and watch
               dependent nodes dim and conclusion status badges change from
               <span class="inline-badge badge-supported">Supported</span> to
               <span class="inline-badge badge-unsupported">Unsupported</span>.
@@ -155,7 +159,7 @@
           <div class="modal-step">
             <span class="step-num">4</span>
             <div>
-              <strong>Click the audit stats</strong> in the header bar (17 Books, 126 Theorems, 33 Axioms, 4 Existentials).
+              <strong>Click the audit stats</strong> in the header bar (Books, Theorems, Axioms, Existentials).
               A detail drawer slides open showing the full supporting data — every book with its theorem/axiom count, every
               theorem grouped by book, every axiom with its source trace, or every existential proposition.
             </div>
@@ -163,8 +167,8 @@
           <div class="modal-step">
             <span class="step-num">5</span>
             <div>
-              <strong>Try a scenario:</strong> Uncheck all challenger assumptions and keep only government
-              assumptions. The Government "NO CONFLICT" conclusion will show
+              <strong>Try it:</strong> press <em>Government's defense</em> in the left panel.
+              The Government "NO CONFLICT" conclusion will show
               <span class="inline-badge badge-supported">Supported</span> while the Challenger conclusion
               shows <span class="inline-badge badge-unsupported">Unsupported</span>.
             </div>
@@ -202,6 +206,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6.0.0"></script>
+  <script src="app.js?v=6.0.1"></script>
 </body>
 </html>

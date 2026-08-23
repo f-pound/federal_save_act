@@ -2,7 +2,7 @@
   "meta": {
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "6.0.0",
+    "version": "6.0.1",
     "books_certified": 25,
     "theorems": 204,
     "axioms": 27,
@@ -11,7 +11,7 @@
     "trace_rows": 32,
     "ace_statements": 8,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T02:51:05.997579+00:00"
+    "generated_at": "2026-08-23T03:17:36.703317+00:00"
   },
   "audit_details": {
     "books": [

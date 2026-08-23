@@ -1,7 +1,7 @@
 {
-  "version": "6.0.0",
+  "version": "6.0.1",
   "model_version": "6.0",
-  "documentation_version": "6.0.0",
+  "documentation_version": "6.0.1",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -42,5 +42,5 @@
     "challenger-scenario-material-burden",
     "government-burden-not-severe"
   ],
-  "last_updated": "2026-08-22"
+  "last_updated": "2026-08-23"
 }
