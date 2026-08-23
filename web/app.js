@@ -655,9 +655,10 @@
     const governmentEl = document.getElementById('scenario-government');
     if (!challengerEl || !governmentEl || !data) return;
 
-    const conclusions = data.nodes.filter(n => n.type === 'FINAL_CONCLUSION');
+    const badgeFor = { 'concl-challenger': challengerEl, 'concl-government': governmentEl };
+    const conclusions = data.nodes.filter(n => n.type === 'FINAL_CONCLUSION' && badgeFor[n.id]);
     conclusions.forEach(concl => {
-      const targetEl = concl.id === 'concl-challenger' ? challengerEl : governmentEl;
+      const targetEl = badgeFor[concl.id];
 
       if (dimmedNodes.has(concl.id)) {
         targetEl.textContent = 'Unsupported';
