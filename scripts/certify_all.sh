@@ -18,6 +18,7 @@ BOOKS=(
   model/federal_save_act_voting_invariants.lisp
   model/federal_save_act_voting_text_rules.lisp
   model/federal_save_act_functional_instantiation.lisp
+  model/federal_save_act_consistency_audit.lisp
   model/federal_save_act_process.lisp
   model/federal_save_act_scenario.lisp
   model/federal_save_act_consistency_check.lisp

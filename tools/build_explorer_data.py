@@ -129,6 +129,7 @@ def scan_lisp_events(model_dir):
         "federal_save_act_removal_table", "federal_save_act_removal_invariants",
         "federal_save_act_voting_id_rules", "federal_save_act_voting_table",
         "federal_save_act_voting_invariants", "federal_save_act_functional_instantiation",
+        "federal_save_act_consistency_audit",
         "federal_save_act_core", "federal_save_act_process",
         "federal_save_act_process_invariants",
         "federal_save_act_deep_process_invariants",
@@ -151,6 +152,7 @@ def scan_lisp_events(model_dir):
         "federal_save_act_voting_text_rules": 1,
         "federal_save_act_voting_invariants": 5,
         "federal_save_act_functional_instantiation": 6,
+        "federal_save_act_consistency_audit": 6,
         "federal_save_act_process": 0,
         "federal_save_act_facts": 1,
         "federal_save_act_scenario": 1,
@@ -233,6 +235,8 @@ def build():
         vir = json.loads(vir_path.read_text(encoding="utf-8"))
         voting_categories = {c["name"]: [{"symbol": m["symbol"], "source": m.get("source", ""), "text": m.get("text", "")}
                                          for m in c["members"]] for c in vir["categories"]}
+    tb_path = Path(__file__).resolve().parents[1] / "reports" / "trusted_base_by_book.json"
+    trusted_base = json.loads(tb_path.read_text(encoding="utf-8")) if tb_path.exists() else None
     status_path = Path(__file__).resolve().parents[1] / "data" / "legislative_status.json"
     legislative_status = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else None
     # --- Load inputs ---
@@ -247,6 +251,7 @@ def build():
         "legislative_status": legislative_status,
         "document_categories": document_categories,
         "voting_categories": voting_categories,
+        "trusted_base_by_book": trusted_base,
         "project": version.get("project", "federal_save_act"),
         "title": "Federal SAVE Act — Computational Amicus Explorer",
         "version": version.get("version", "unknown"),

@@ -6,6 +6,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.7.0] — 2026-08-23
+
+### Added — three ideas from Vero (Ye et al., arXiv:2608.13522)
+- **Consistency audit** (`tools/gen_consistency_audit.py` → `model/federal_save_act_consistency_audit.lisp`, neutral, 107 theorems): the ACL2 analogue of Vero's `unsat`/`joint_unsat` audit. For each party theory (core + facts + text rules + scenario + its hinge reading + its party book) every defstub gets a concrete toy-world definition, every core defun is re-defined over the world, and every defaxiom and encapsulate-exported constraint is restated and **proved** — challenger: 44 axioms + 7 constraints; government: 50 + 5. Both trusted bases are therefore jointly satisfiable, which ACL2's `:defaxioms-okp t` never checked. A propositional theorem records why the two registration bridges cannot share a world.
+- **`#print axioms` analogue** (`tools/print_axioms.py` → `reports/trusted_base_by_book.{json,md}`): per book, the defaxioms in its `include-book` closure, classified by decider — a sound upper bound on every theorem's trusted base. Shown in the explorer details panel ("Trusted base of this book"). 12 books with theorems have an empty trusted base.
+- **Proof-trivialising lint** (CI check 7): `skip-proofs`, `defttag`, `defattach`, `progn!`, `include-raw`, `sys-call`, `:skip-proofs-okp`, `set-ld-skip-proofsp` are forbidden anywhere in `model/`. 0 hits.
+- Both generators are `--check`ed in CI and in `certify_books.sh`.
+
+### Census
+- Theorems 267 → **374** (107 audit); books 30 → **31** (17 clean).
+
 ## [6.6.0] — 2026-08-23
 
 ### Added — the last unmodeled SAVE America Act material

@@ -62,6 +62,10 @@ echo ""
 # Modeled clauses must be present verbatim in both tracked bill texts.
 python3 tools/check_text_stability.py
 
+# Consistency-audit book and trusted-base report must match their generators.
+python3 tools/gen_consistency_audit.py --check
+python3 tools/print_axioms.py --check
+
 # Generated book must match its IR before anything is certified.
 python3 tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json data/parsed/federal_save_act_voting_id_rules.json data/parsed/federal_save_act_voting_table.json data/parsed/federal_save_act_voting_text_rules.json --check --english --ace
 
@@ -108,8 +112,9 @@ certify_book model/federal_save_act_process_invariants clean
 certify_book model/federal_save_act_deep_process_invariants clean
 certify_book model/federal_save_act_document_proofs clean
 
-# Layer 6: consistency check (includes core only)
+# Layer 6: consistency check (includes core only) and the party-theory consistency audit
 certify_book model/federal_save_act_consistency_check clean
+certify_book model/federal_save_act_consistency_audit clean
 
 echo ""
 echo "=== Summary ==="

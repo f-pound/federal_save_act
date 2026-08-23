@@ -16,6 +16,7 @@ $books = @(
   "federal_save_act_voting_invariants",
   "federal_save_act_voting_text_rules",
   "federal_save_act_functional_instantiation",
+  "federal_save_act_consistency_audit",
   "federal_save_act_process",
   "federal_save_act_scenario",
   "federal_save_act_consistency_check",

@@ -37,6 +37,7 @@ NEUTRAL_BOOKS = {
     "federal_save_act_removal_table.lisp", "federal_save_act_removal_invariants.lisp",
     "federal_save_act_voting_id_rules.lisp", "federal_save_act_voting_table.lisp",
     "federal_save_act_voting_invariants.lisp", "federal_save_act_functional_instantiation.lisp",
+    "federal_save_act_consistency_audit.lisp",
     "federal_save_act_process_invariants.lisp", "federal_save_act_deep_process_invariants.lisp",
     "federal_save_act_document_proofs.lisp", "federal_save_act_consistency_check.lisp",
     "federal_save_act_burden_proofs.lisp", "federal_save_act_existentials.lisp",
@@ -186,6 +187,19 @@ def main():
         if row.get("axiom_name", "").strip() in all_axioms:
             deciders[row.get("decider", "")] = deciders.get(row.get("decider", ""), 0) + 1
     print(f"Deciders: {deciders}")
+    print()
+
+    # --- Check 7: No proof-trivialising constructs anywhere in model/ ---
+    # (cf. Vero's declaration screening: things that certify but decouple
+    #  logical content from what was actually proved)
+    FORBIDDEN = [r"\(skip-proofs\b", r"\(defttag\b", r"\(defattach\b", r"\(progn!\b",
+                 r"\(include-raw\b", r"\(sys-call\b", r":skip-proofs-okp\s+t", r"\(set-ld-skip-proofsp\b"]
+    for f in sorted(list(model_dir.glob("*.lisp")) + list(model_dir.glob("lib/*.lisp"))):
+        src = re.sub(r";[^\n]*", "", f.read_text(encoding="utf-8", errors="replace"))
+        for pat in FORBIDDEN:
+            if re.search(pat, src):
+                errors.append(f"CHECK 7 FAIL: {f.relative_to(model_dir)} uses forbidden construct {pat}")
+    print("Proof-trivialising lint: 8 patterns, 0 hits" if not any(e.startswith("CHECK 7") for e in errors) else "Proof-trivialising lint: violations found")
     print()
 
     # --- Print results ---

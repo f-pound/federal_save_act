@@ -43,6 +43,11 @@ jobs:
       - name: Check modeled clauses are verbatim in both tracked bill texts
         run: python tools/check_text_stability.py
 
+      - name: Check consistency-audit book and trusted-base report match generators
+        run: |
+          python tools/gen_consistency_audit.py --check
+          python tools/print_axioms.py --check
+
       - name: Check generated ACL2 book matches clause IR
         run: python tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json data/parsed/federal_save_act_voting_id_rules.json data/parsed/federal_save_act_voting_table.json data/parsed/federal_save_act_voting_text_rules.json --check --english --ace
 

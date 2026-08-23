@@ -1332,6 +1332,18 @@
       addDetailBlock(container, 'Who decides this', 'Nobody — proved by ACL2 from definitions');
     }
 
+    // #print-axioms analogue: the defaxioms in the closure of this node's book.
+    if (node.book && data.meta && data.meta.trusted_base_by_book) {
+      const key = String(node.book).replace(/\.lisp$/, '');
+      const tb = data.meta.trusted_base_by_book[key];
+      if (tb) {
+        const by = Object.entries(tb.by_decider || {}).map(([d, n]) => `${n} ${d}`).join(', ');
+        addDetailBlock(container, 'Trusted base of this book (#print axioms)',
+          tb.count === 0 ? '0 axioms — everything in this book is proved from definitions'
+                         : `${tb.count} axioms in the include-book closure (${by})`);
+      }
+    }
+
     if (node.trusted_base !== undefined) {
       addDetailBlock(container, 'Trusted Base', node.trusted_base ? 'Yes — not proved by ACL2' : 'No');
     }
