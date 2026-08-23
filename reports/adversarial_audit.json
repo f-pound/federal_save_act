@@ -1,0 +1,762 @@
+{
+  "challenger": [
+    {
+      "axiom": "text-save-act-documentary-proof-requirement",
+      "book": "federal_save_act_text_rules",
+      "verdict": "independent",
+      "flip": "attempts-to-registerp['citizen-b', 'registration-attempt-a'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-save-act-removal-upon-verified-information",
+      "book": "federal_save_act_text_rules",
+      "verdict": "independent",
+      "flip": "statute-removes-registrantp['federal-save-act', 'citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-photo-id-required-for-regular-ballot",
+      "book": "federal_save_act_voting_text_rules",
+      "verdict": "independent",
+      "flip": "statute-denies-regular-ballotp['federal-save-act', 'citizen-c', 'ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-save-act-is-law",
+      "book": "federal_save_act_facts",
+      "verdict": "independent",
+      "flip": "lawp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-documentary-proof-from-qualifying-documents",
+      "book": "federal_save_act_facts",
+      "verdict": "independent",
+      "flip": "has-govt-photo-id-showing-us-birthp['amend-v-equal-protection'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-application",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "voter-registration-applicationp['registration-attempt-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-attempts-to-register",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "attempts-to-registerp['citizen-a', 'registration-attempt-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-no-documentary-proof",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "has-documentary-proofp['citizen-a'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-registered",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-verified-noncitizen-information",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "verified-noncitizen-informationp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-no-notice",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "adequate-notice-before-removalp['citizen-b'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-no-hearing",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "opportunity-to-be-heardp['citizen-b'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-registered",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-ballot",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "ballotp['ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-votes-in-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "votes-in-personp['citizen-c', 'ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-no-valid-photo-id",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "presents-valid-photo-idp['citizen-c', 'ballot-c'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-no-cure",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "cures-within-deadlinep['citizen-c', 'ballot-c'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-registered",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-ballot",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "ballotp['ballot-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-votes-in-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "votes-in-personp['citizen-d', 'ballot-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-no-valid-photo-id",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "presents-valid-photo-idp['citizen-d', 'ballot-d'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-cures",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "cures-within-deadlinep['citizen-d', 'ballot-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "semantic-b-discretionary-denial",
+      "book": "federal_save_act_hinge_discretionary",
+      "verdict": "independent",
+      "flip": "alternative-process-approvedp['amend-v-equal-protection', 'amend-v-equal-protection'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-bridge-right-to-vote",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "challenger-right-to-vote-establishedp['amend-v-equal-protection'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-bridge-regulation-invalid",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['federal-save-act', 'registration-attempt-a'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-scenario-no-presentation",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "presents-documentary-proofp['citizen-a', 'registration-attempt-a'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-scenario-no-fault",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "lacks-qualifying-documents-through-no-faultp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-scenario-material-burden",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "cannot-obtain-qualifying-documents-without-material-burdenp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-scenario-alternative-process-denied",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "coupled",
+      "flip": "alternative-process-approvedp['citizen-a', 'registration-attempt-a'] := t",
+      "breaks": [
+        "semantic-b-discretionary-denial"
+      ],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-bridge-removal-invalid",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['federal-save-act', 'citizen-b'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-bridge-voting-invalid",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['federal-save-act', 'ballot-c'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "challenger-scenario-c-material-burden",
+      "book": "federal_save_act_challenger_model",
+      "verdict": "independent",
+      "flip": "cannot-obtain-valid-photo-id-without-material-burdenp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    }
+  ],
+  "government": [
+    {
+      "axiom": "text-save-act-documentary-proof-requirement",
+      "book": "federal_save_act_text_rules",
+      "verdict": "independent",
+      "flip": "alternative-process-approvedp['citizen-b', 'registration-attempt-a'] := nil & attempts-to-registerp['citizen-b', 'registration-attempt-a'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-save-act-removal-upon-verified-information",
+      "book": "federal_save_act_text_rules",
+      "verdict": "independent",
+      "flip": "statute-removes-registrantp['federal-save-act', 'citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-photo-id-required-for-regular-ballot",
+      "book": "federal_save_act_voting_text_rules",
+      "verdict": "independent",
+      "flip": "statute-denies-regular-ballotp['federal-save-act', 'citizen-c', 'ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-save-act-is-law",
+      "book": "federal_save_act_facts",
+      "verdict": "independent",
+      "flip": "lawp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "text-documentary-proof-from-qualifying-documents",
+      "book": "federal_save_act_facts",
+      "verdict": "independent",
+      "flip": "has-govt-photo-id-showing-us-birthp['amend-v-equal-protection'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-application",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "voter-registration-applicationp['registration-attempt-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-attempts-to-register",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "attempts-to-registerp['citizen-a', 'registration-attempt-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-no-documentary-proof",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "has-documentary-proofp['citizen-a'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-registered",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-verified-noncitizen-information",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "verified-noncitizen-informationp['citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-no-notice",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "adequate-notice-before-removalp['citizen-b'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-b-no-hearing",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "opportunity-to-be-heardp['citizen-b'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-registered",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['citizen-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-ballot",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "ballotp['ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-votes-in-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "votes-in-personp['citizen-c', 'ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-no-valid-photo-id",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "presents-valid-photo-idp['citizen-c', 'ballot-c'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-c-no-cure",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "cures-within-deadlinep['citizen-c', 'ballot-c'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "personp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-citizen",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "citizen-of-usp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-eligible",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "eligible-voterp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-registered",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "registered-voterp['citizen-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-ballot",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "ballotp['ballot-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-votes-in-person",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "votes-in-personp['citizen-d', 'ballot-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-no-valid-photo-id",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "presents-valid-photo-idp['citizen-d', 'ballot-d'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "scenario-d-cures",
+      "book": "federal_save_act_scenario",
+      "verdict": "independent",
+      "flip": "cures-within-deadlinep['citizen-d', 'ballot-d'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "semantic-a-mandatory-approval",
+      "book": "federal_save_act_hinge_mandatory",
+      "verdict": "independent",
+      "flip": "alternative-process-approvedp['citizen-a', 'amend-v-equal-protection'] := nil & attestation-evidence-satisfies-standardsp['citizen-a', 'amend-v-equal-protection'] := t",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-bridge-defense-validates",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['amend-v-equal-protection', 'registration-attempt-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-election-integrity-interest",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "election-integrity-interestp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-important-interest",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "important-government-interestp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-reasonable-requirement",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "reasonable-registration-requirementp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-procedure-evenhanded",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "registration-procedure-evenhandedp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-rationally-connected",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "documentary-proof-requirement-rationally-connectedp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-adequate-alternative",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "adequate-alternative-processp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-burden-not-severe",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "burden-not-severep['federal-save-act', 'amend-v-equal-protection'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-assume-right-to-vote-arguendo",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "protected-right-to-votep['amend-v-equal-protection', 'citizen-a'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-scenario-alternative-process-approved",
+      "book": "federal_save_act_government_model",
+      "verdict": "coupled",
+      "flip": "alternative-process-approvedp['citizen-a', 'registration-attempt-a'] := nil",
+      "breaks": [
+        "semantic-a-mandatory-approval"
+      ],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-bridge-removal-validates",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['amend-v-equal-protection', 'citizen-b'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-removal-procedure-evenhanded",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "removal-procedure-evenhandedp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-bridge-voting-validates",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "valid-regulationp['amend-v-equal-protection', 'ballot-c'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-photo-id-evenhanded",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "photo-id-requirement-evenhandedp['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    },
+    {
+      "axiom": "government-provisional-cure-adequate",
+      "book": "federal_save_act_government_model",
+      "verdict": "independent",
+      "flip": "provisional-cure-adequatep['federal-save-act'] := nil",
+      "breaks": [],
+      "acl2_redundancy": "not provable from the others within 8s"
+    }
+  ]
+}

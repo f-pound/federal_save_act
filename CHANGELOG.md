@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 
 ---
 
+## [6.8.0] — 2026-08-23
+
+### Added — adversarial audit (the `disprove` route)
+- `tools/adversarial_audit.py`: for every axiom of each party theory, flip one (or two same-point) stub values in the audit world so the axiom is false, then check every other axiom there — a complete finite-model independence check — and, with `--acl2`, attempt to prove the axiom from the others in a fresh ACL2 session (kernel-checked redundancy certificate). Verdicts **independent / coupled / redundant**; `reports/adversarial_audit.{json,md}`; `--check` in CI; verdicts shown per assumption in the explorer details panel.
+- **Result**: challenger 43 independent, 1 coupled, 0 redundant; government 49 independent, 1 coupled, 0 redundant. The only coupling on each side is the § 8(j)(2)(A) hinge (scenario fact ⇄ hinge reading) — the project's central claim, rediscovered mechanically. No axiom is provable from the others.
+- `docs/AUDITS.md`: the three audits explained for laypersons and academics.
+- Audit worlds tightened to the scenario domain (several apparent couplings were artifacts of over-broad toy worlds; the prover and the evaluator agreed on every retained verdict).
+
 ## [6.7.0] — 2026-08-23
 
 ### Added — three ideas from Vero (Ye et al., arXiv:2608.13522)

@@ -82,9 +82,9 @@
 (defun aud-c-official-discretionary-denialp (p x) (declare (ignore p x)) (if t t nil))
 (defun aud-c-challenger-right-to-vote-establishedp (p) (if (member-equal p '(citizen-a citizen-b citizen-c citizen-d)) t nil))
 (defun aud-c-challenger-undue-burden-establishedp (law p) (declare (ignore p)) (if (equal law 'federal-save-act) t nil))
-(defun aud-c-challenger-regulation-invalidp (law x) (declare (ignore x)) (if (equal law 'federal-save-act) t nil))
-(defun aud-c-challenger-removal-due-process-violationp (law p) (declare (ignore p)) (if (equal law 'federal-save-act) t nil))
-(defun aud-c-challenger-voting-burden-establishedp (law p) (declare (ignore p)) (if (equal law 'federal-save-act) t nil))
+(defun aud-c-challenger-regulation-invalidp (law x) (if (and (equal law 'federal-save-act) (equal x 'registration-attempt-a)) t nil))
+(defun aud-c-challenger-removal-due-process-violationp (law p) (if (and (equal law 'federal-save-act) (member-equal p '(citizen-b citizen-c citizen-d))) t nil))
+(defun aud-c-challenger-voting-burden-establishedp (law p) (if (and (equal law 'federal-save-act) (member-equal p '(citizen-a citizen-b citizen-c citizen-d))) t nil))
 
 ;; --- 12 core definitions over the world ---
 (defun aud-c-has-supporting-documentp (x)
@@ -351,9 +351,9 @@
 (defun aud-g-registers-at-dmvp (p x) (declare (ignore p x)) nil)
 (defun aud-g-alternative-process-availablep (p x) (declare (ignore p x)) (if t t nil))
 (defun aud-g-alternative-process-approvedp (p x) (declare (ignore p x)) (if t t nil))
-(defun aud-g-signs-attestation-under-perjuryp (p) (declare (ignore p)) (if t t nil))
-(defun aud-g-submits-other-evidencep (p) (declare (ignore p)) (if t t nil))
-(defun aud-g-official-determines-citizenshipp (p) (declare (ignore p)) (if t t nil))
+(defun aud-g-signs-attestation-under-perjuryp (p) (if (equal p 'citizen-a) t nil))
+(defun aud-g-submits-other-evidencep (p) (if (equal p 'citizen-a) t nil))
+(defun aud-g-official-determines-citizenshipp (p) (if (equal p 'citizen-a) t nil))
 (defun aud-g-registered-voterp (p) (if (member-equal p '(citizen-b citizen-c citizen-d)) t nil))
 (defun aud-g-verified-noncitizen-informationp (p) (if (equal p 'citizen-b) t nil))
 (defun aud-g-adequate-notice-before-removalp (p) (declare (ignore p)) nil)
@@ -384,10 +384,10 @@
 (defun aud-g-cannot-obtain-valid-photo-id-without-material-burdenp (p) (declare (ignore p)) nil)
 (defun aud-g-photo-id-requirement-evenhandedp (law) (declare (ignore law)) (if t t nil))
 (defun aud-g-provisional-cure-adequatep (law) (declare (ignore law)) (if t t nil))
-(defun aud-g-attestation-evidence-satisfies-standardsp (p x) (declare (ignore p x)) (if t t nil))
+(defun aud-g-attestation-evidence-satisfies-standardsp (p x) (if (and (equal p 'citizen-a) (equal x 'registration-attempt-a)) t nil))
 (defun aud-g-official-discretionary-denialp (p x) (declare (ignore p x)) (if nil t nil))
 (defun aud-g-government-defense-establishedp (law) (declare (ignore law)) (if t t nil))
-(defun aud-g-government-removal-defense-establishedp (law p) (declare (ignore law p)) (if t t nil))
+(defun aud-g-government-removal-defense-establishedp (law p) (declare (ignore law)) (if (equal p 'citizen-b) t nil))
 (defun aud-g-government-voting-defense-establishedp (law) (declare (ignore law)) (if t t nil))
 
 ;; --- 12 core definitions over the world ---

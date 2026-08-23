@@ -235,6 +235,12 @@ def build():
         vir = json.loads(vir_path.read_text(encoding="utf-8"))
         voting_categories = {c["name"]: [{"symbol": m["symbol"], "source": m.get("source", ""), "text": m.get("text", "")}
                                          for m in c["members"]] for c in vir["categories"]}
+    aa_path = Path(__file__).resolve().parents[1] / "reports" / "adversarial_audit.json"
+    adversarial = None
+    if aa_path.exists():
+        raw = json.loads(aa_path.read_text(encoding="utf-8"))
+        adversarial = {r["axiom"]: {"party": party, "verdict": r["verdict"], "breaks": r["breaks"], "flip": r.get("flip"), "acl2": r.get("acl2_redundancy")}
+                       for party, rs in raw.items() for r in rs}
     tb_path = Path(__file__).resolve().parents[1] / "reports" / "trusted_base_by_book.json"
     trusted_base = json.loads(tb_path.read_text(encoding="utf-8")) if tb_path.exists() else None
     status_path = Path(__file__).resolve().parents[1] / "data" / "legislative_status.json"
@@ -252,6 +258,7 @@ def build():
         "document_categories": document_categories,
         "voting_categories": voting_categories,
         "trusted_base_by_book": trusted_base,
+        "adversarial_audit": adversarial,
         "project": version.get("project", "federal_save_act"),
         "title": "Federal SAVE Act — Computational Amicus Explorer",
         "version": version.get("version", "unknown"),

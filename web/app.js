@@ -1332,6 +1332,21 @@
       addDetailBlock(container, 'Who decides this', 'Nobody — proved by ACL2 from definitions');
     }
 
+    // Adversarial audit: is this axiom independent of the rest of its party's theory?
+    if (node.acl2_event && data.meta && data.meta.adversarial_audit) {
+      const ev = String(node.acl2_event);
+      const hits = Object.entries(data.meta.adversarial_audit).filter(([name]) => ev.indexOf(name) !== -1);
+      if (hits.length) {
+        const lines = hits.map(([name, a]) => {
+          const v = a.verdict === 'independent' ? 'independent — can be denied without disturbing any other premise'
+                  : a.verdict === 'coupled' ? `coupled — denying it also falsifies: ${a.breaks.join(', ')} (a load-bearing joint / hinge)`
+                  : a.verdict;
+          return `${name}: ${v}` + (a.acl2 ? ` · ACL2: ${a.acl2}` : '');
+        });
+        addDetailBlock(container, 'Adversarial audit (is this premise load-bearing?)', lines.join('\n'));
+      }
+    }
+
     // #print-axioms analogue: the defaxioms in the closure of this node's book.
     if (node.book && data.meta && data.meta.trusted_base_by_book) {
       const key = String(node.book).replace(/\.lisp$/, '');

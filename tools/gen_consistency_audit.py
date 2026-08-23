@@ -56,7 +56,9 @@ def parse(tokens):
 
 def read_forms(path):
     """Robust reader: uses a small recursive descent handling ' properly."""
-    src = path.read_text(encoding="utf-8")
+    return read_forms_from_string(path.read_text(encoding="utf-8"))
+
+def read_forms_from_string(src):
     src = re.sub(r";[^\n]*", "", src)
     toks = re.findall(r"\(|\)|'|\"(?:[^\"\\]|\\.)*\"|[^\s()']+", src)
     pos = 0
@@ -154,17 +156,17 @@ CHALLENGER = dict(COMMON, **{
   # encapsulate signatures (challenger theory)
   "challenger-right-to-vote-establishedp": ("(p)", f"(member-equal p {PERSONS})"),
   "challenger-undue-burden-establishedp": ("(law p)", "(equal law 'federal-save-act)"),
-  "challenger-regulation-invalidp": ("(law x)", "(equal law 'federal-save-act)"),
-  "challenger-removal-due-process-violationp": ("(law p)", "(equal law 'federal-save-act)"),
-  "challenger-voting-burden-establishedp": ("(law p)", "(equal law 'federal-save-act)"),
+  "challenger-regulation-invalidp": ("(law x)", "(and (equal law 'federal-save-act) (equal x 'registration-attempt-a))"),
+  "challenger-removal-due-process-violationp": ("(law p)", f"(and (equal law 'federal-save-act) (member-equal p {REGISTERED}))"),
+  "challenger-voting-burden-establishedp": ("(law p)", f"(and (equal law 'federal-save-act) (member-equal p {PERSONS}))"),
 })
 GOVERNMENT = dict(COMMON, **{
   "valid-regulationp": ("(law x)", "t"),
   "alternative-process-approvedp": ("(p x)", "t"),
-  "signs-attestation-under-perjuryp": ("(p)", "t"),
-  "submits-other-evidencep": ("(p)", "t"),
-  "official-determines-citizenshipp": ("(p)", "t"),
-  "attestation-evidence-satisfies-standardsp": ("(p x)", "t"),
+  "signs-attestation-under-perjuryp": ("(p)", "(equal p 'citizen-a)"),
+  "submits-other-evidencep": ("(p)", "(equal p 'citizen-a)"),
+  "official-determines-citizenshipp": ("(p)", "(equal p 'citizen-a)"),
+  "attestation-evidence-satisfies-standardsp": ("(p x)", "(and (equal p 'citizen-a) (equal x 'registration-attempt-a))"),
   "important-government-interestp": ("(law)", "t"),
   "election-integrity-interestp": ("(law)", "t"),
   "registration-procedure-evenhandedp": ("(law)", "t"),
@@ -177,7 +179,7 @@ GOVERNMENT = dict(COMMON, **{
   "provisional-cure-adequatep": ("(law)", "t"),
   # encapsulate signatures (government theory)
   "government-defense-establishedp": ("(law)", "t"),
-  "government-removal-defense-establishedp": ("(law p)", "t"),
+  "government-removal-defense-establishedp": ("(law p)", "(equal p 'citizen-b)"),
   "government-voting-defense-establishedp": ("(law)", "t"),
 })
 

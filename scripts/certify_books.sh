@@ -65,6 +65,7 @@ python3 tools/check_text_stability.py
 # Consistency-audit book and trusted-base report must match their generators.
 python3 tools/gen_consistency_audit.py --check
 python3 tools/print_axioms.py --check
+python3 tools/adversarial_audit.py --check
 
 # Generated book must match its IR before anything is certified.
 python3 tools/clauses_to_acl2.py data/parsed/federal_save_act_document_rules.json data/parsed/federal_save_act_process_table.json data/parsed/federal_save_act_removal_table.json data/parsed/federal_save_act_text_rules.json data/parsed/federal_save_act_voting_id_rules.json data/parsed/federal_save_act_voting_table.json data/parsed/federal_save_act_voting_text_rules.json --check --english --ace

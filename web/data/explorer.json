@@ -990,9 +990,435 @@
         ]
       }
     },
+    "adversarial_audit": {
+      "text-save-act-documentary-proof-requirement": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "alternative-process-approvedp['citizen-b', 'registration-attempt-a'] := nil & attempts-to-registerp['citizen-b', 'registration-attempt-a'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "text-save-act-removal-upon-verified-information": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "statute-removes-registrantp['federal-save-act', 'citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "text-photo-id-required-for-regular-ballot": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "statute-denies-regular-ballotp['federal-save-act', 'citizen-c', 'ballot-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "text-save-act-is-law": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "lawp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "text-documentary-proof-from-qualifying-documents": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "has-govt-photo-id-showing-us-birthp['amend-v-equal-protection'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "personp['citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-citizen": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "citizen-of-usp['citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-eligible": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "eligible-voterp['citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-application": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "voter-registration-applicationp['registration-attempt-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-attempts-to-register": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "attempts-to-registerp['citizen-a', 'registration-attempt-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-no-documentary-proof": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "has-documentary-proofp['citizen-a'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "personp['citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-citizen": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "citizen-of-usp['citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-eligible": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "eligible-voterp['citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-registered": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "registered-voterp['citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-verified-noncitizen-information": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "verified-noncitizen-informationp['citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-no-notice": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "adequate-notice-before-removalp['citizen-b'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-b-no-hearing": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "opportunity-to-be-heardp['citizen-b'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "personp['citizen-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-citizen": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "citizen-of-usp['citizen-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-eligible": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "eligible-voterp['citizen-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-registered": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "registered-voterp['citizen-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-ballot": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "ballotp['ballot-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-votes-in-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "votes-in-personp['citizen-c', 'ballot-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-no-valid-photo-id": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "presents-valid-photo-idp['citizen-c', 'ballot-c'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-c-no-cure": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "cures-within-deadlinep['citizen-c', 'ballot-c'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "personp['citizen-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-citizen": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "citizen-of-usp['citizen-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-eligible": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "eligible-voterp['citizen-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-registered": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "registered-voterp['citizen-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-ballot": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "ballotp['ballot-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-votes-in-person": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "votes-in-personp['citizen-d', 'ballot-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-no-valid-photo-id": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "presents-valid-photo-idp['citizen-d', 'ballot-d'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "scenario-d-cures": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "cures-within-deadlinep['citizen-d', 'ballot-d'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "semantic-b-discretionary-denial": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "alternative-process-approvedp['amend-v-equal-protection', 'amend-v-equal-protection'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-bridge-right-to-vote": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "challenger-right-to-vote-establishedp['amend-v-equal-protection'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-bridge-regulation-invalid": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['federal-save-act', 'registration-attempt-a'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-no-presentation": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "presents-documentary-proofp['citizen-a', 'registration-attempt-a'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-no-fault": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "lacks-qualifying-documents-through-no-faultp['citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-material-burden": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "cannot-obtain-qualifying-documents-without-material-burdenp['citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-alternative-process-denied": {
+        "party": "challenger",
+        "verdict": "coupled",
+        "breaks": [
+          "semantic-b-discretionary-denial"
+        ],
+        "flip": "alternative-process-approvedp['citizen-a', 'registration-attempt-a'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-bridge-removal-invalid": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['federal-save-act', 'citizen-b'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-bridge-voting-invalid": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['federal-save-act', 'ballot-c'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "challenger-scenario-c-material-burden": {
+        "party": "challenger",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "cannot-obtain-valid-photo-id-without-material-burdenp['citizen-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "semantic-a-mandatory-approval": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "alternative-process-approvedp['citizen-a', 'amend-v-equal-protection'] := nil & attestation-evidence-satisfies-standardsp['citizen-a', 'amend-v-equal-protection'] := t",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-bridge-defense-validates": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['amend-v-equal-protection', 'registration-attempt-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-election-integrity-interest": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "election-integrity-interestp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-important-interest": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "important-government-interestp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-reasonable-requirement": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "reasonable-registration-requirementp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-procedure-evenhanded": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "registration-procedure-evenhandedp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-rationally-connected": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "documentary-proof-requirement-rationally-connectedp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-adequate-alternative": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "adequate-alternative-processp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-burden-not-severe": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "burden-not-severep['federal-save-act', 'amend-v-equal-protection'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-assume-right-to-vote-arguendo": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "protected-right-to-votep['amend-v-equal-protection', 'citizen-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-scenario-alternative-process-approved": {
+        "party": "government",
+        "verdict": "coupled",
+        "breaks": [
+          "semantic-a-mandatory-approval"
+        ],
+        "flip": "alternative-process-approvedp['citizen-a', 'registration-attempt-a'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-bridge-removal-validates": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['amend-v-equal-protection', 'citizen-b'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-removal-procedure-evenhanded": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "removal-procedure-evenhandedp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-bridge-voting-validates": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "valid-regulationp['amend-v-equal-protection', 'ballot-c'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-photo-id-evenhanded": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "photo-id-requirement-evenhandedp['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      },
+      "government-provisional-cure-adequate": {
+        "party": "government",
+        "verdict": "independent",
+        "breaks": [],
+        "flip": "provisional-cure-adequatep['federal-save-act'] := nil",
+        "acl2": "not provable from the others within 8s"
+      }
+    },
     "project": "federal_save_act",
     "title": "Federal SAVE Act — Computational Amicus Explorer",
-    "version": "6.7.0",
+    "version": "6.8.0",
     "books_certified": 31,
     "theorems": 374,
     "axioms": 60,
@@ -1001,7 +1427,7 @@
     "trace_rows": 69,
     "ace_statements": 13,
     "repo_url": "https://github.com/f-pound/federal_save_act",
-    "generated_at": "2026-08-23T05:08:54.985721+00:00"
+    "generated_at": "2026-08-23T12:04:39.975483+00:00"
   },
   "audit_details": {
     "books": [

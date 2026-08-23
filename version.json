@@ -1,7 +1,7 @@
 {
-  "version": "6.7.0",
+  "version": "6.8.0",
   "model_version": "6.7",
-  "documentation_version": "6.7.0",
+  "documentation_version": "6.8.0",
   "project": "federal_save_act",
   "legislation": {
     "id": "hr22-eh",
@@ -47,7 +47,19 @@
     "clean_books_no_axioms": 17,
     "ace_ape_strict_pass": 13,
     "ace_ape_strict_fail": 0,
-    "party_theories_satisfiable": 2
+    "party_theories_satisfiable": 2,
+    "adversarial_audit": {
+      "challenger": {
+        "independent": 43,
+        "coupled": 1,
+        "redundant": 0
+      },
+      "government": {
+        "independent": 49,
+        "coupled": 1,
+        "redundant": 0
+      }
+    }
   },
   "high_risk_assumptions": [
     "challenger-scenario-no-fault",
